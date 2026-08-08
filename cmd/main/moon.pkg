@@ -1,0 +1,10 @@
+import {
+  "001-Elsa/medseal/src/app",
+  "moonbitlang/async",
+  "moonbitlang/core/env",
+  "moonbitlang/x/sys",
+}
+
+supported_targets = "+native"
+
+pkgtype(kind: "executable")

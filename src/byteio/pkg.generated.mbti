@@ -1,0 +1,46 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/byteio"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/buffer",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct ByteReader {
+  data : Bytes
+  mut position_ : Int
+}
+pub fn ByteReader::length(Self) -> Int
+pub fn ByteReader::new(Bytes) -> Self
+pub fn ByteReader::peek_u16_le(Self) -> UInt raise @model.MedSealError
+pub fn ByteReader::position(Self) -> Int
+pub fn ByteReader::read_bytes(Self, Int) -> Bytes raise @model.MedSealError
+pub fn ByteReader::read_u16_le(Self) -> UInt raise @model.MedSealError
+pub fn ByteReader::read_u32_le(Self) -> UInt raise @model.MedSealError
+pub fn ByteReader::read_u8(Self) -> UInt raise @model.MedSealError
+pub fn ByteReader::remaining(Self) -> Int
+pub fn ByteReader::seek(Self, Int) -> Unit raise @model.MedSealError
+pub fn ByteReader::skip(Self, Int) -> Unit raise @model.MedSealError
+
+pub struct ByteWriter {
+  buffer : @buffer.Buffer
+}
+pub fn ByteWriter::new() -> Self
+pub fn ByteWriter::position(Self) -> Int
+pub fn ByteWriter::to_bytes(Self) -> Bytes
+pub fn ByteWriter::write_ascii(Self, String) -> Unit
+pub fn ByteWriter::write_bytes(Self, Bytes) -> Unit
+pub fn ByteWriter::write_u16_le(Self, UInt) -> Unit
+pub fn ByteWriter::write_u32_le(Self, UInt) -> Unit
+pub fn ByteWriter::write_u8(Self, UInt) -> Unit
+pub fn ByteWriter::write_view(Self, BytesView) -> Unit
+
+// Type aliases
+
+// Traits
+

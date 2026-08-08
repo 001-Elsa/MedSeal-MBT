@@ -1,0 +1,45 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/validator"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn private_element_count(@model.DataSet) -> Int
+
+pub fn validate(@parser.ParsedFile) -> ValidationReport
+
+pub fn validate_dataset(@model.DataSet) -> ValidationReport
+
+// Errors
+
+// Types and methods
+pub struct ValidationIssue {
+  severity : ValidationSeverity
+  code : String
+  message : String
+  tag : @model.Tag?
+  offset : Int?
+} derive(Eq, @debug.Debug)
+pub fn ValidationIssue::new(ValidationSeverity, String, String, tag? : @model.Tag?, offset? : Int?) -> Self
+
+pub struct ValidationReport {
+  issues : Array[ValidationIssue]
+  elements_checked : Int
+} derive(Eq, @debug.Debug)
+pub fn ValidationReport::errors(Self) -> Int
+pub fn ValidationReport::is_valid(Self) -> Bool
+pub fn ValidationReport::warnings(Self) -> Int
+
+pub(all) enum ValidationSeverity {
+  Error
+  Warning
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits
+

@@ -1,0 +1,50 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/deid"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn anonymize(@model.DataSet, remove_private? : Bool) -> AnonymizeResult
+
+pub fn audit_json(AnonymizeResult, String, String, String, Int) -> String
+
+pub fn basic_policy() -> Map[@model.Tag, DeIdAction]
+
+// Errors
+
+// Types and methods
+pub struct AnonymizeResult {
+  dataset : @model.DataSet
+  elements_changed : Int
+  elements_removed : Int
+  private_elements_removed : Int
+  changes : Array[AuditEvent]
+  warnings : Array[AuditWarning]
+} derive(Eq, @debug.Debug)
+
+pub struct AuditEvent {
+  tag : String
+  name : String
+  action : String
+} derive(Eq, @debug.Debug)
+
+pub struct AuditWarning {
+  code : String
+  message : String
+} derive(Eq, @debug.Debug)
+
+pub(all) enum DeIdAction {
+  Keep
+  Empty
+  Replace(String)
+  Remove
+} derive(Eq, @debug.Debug)
+pub fn DeIdAction::name(Self) -> String
+
+// Type aliases
+
+// Traits
+

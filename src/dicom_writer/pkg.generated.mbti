@@ -1,0 +1,22 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/dicom_writer"
+
+import {
+  "001-Elsa/medseal/src/byteio",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+}
+
+// Values
+pub fn write_bytes(@parser.ParsedFile, dataset? : @model.DataSet) -> Bytes
+
+pub fn write_element(@byteio.ByteWriter, @model.DataElement) -> Unit
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

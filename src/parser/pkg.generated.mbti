@@ -1,0 +1,34 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/parser"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn check_preamble(Bytes) -> Unit raise @model.MedSealError
+
+pub let explicit_vr_little_endian_uid : String
+
+pub let max_sequence_depth : Int
+
+pub fn parse(Bytes) -> ParsedFile raise @model.MedSealError
+
+pub fn parse_dataset_bytes(Bytes) -> @model.DataSet raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub(all) struct ParsedFile {
+  preamble : Bytes
+  file_meta : @model.DataSet
+  dataset : @model.DataSet
+  transfer_syntax : String
+  element_count : Int
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits
+

@@ -1,0 +1,36 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/app"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub async fn anonymize_file(String, String, String?, Bool, Bool) -> Unit raise @model.MedSealError
+
+pub fn help_text(String?) -> String
+
+pub fn inspect_file(String, Bool) -> Unit raise @model.MedSealError
+
+pub fn parse_command(Array[String]) -> Command raise @model.MedSealError
+
+pub async fn run(Array[String]) -> Int
+
+pub fn validate_file(String, Bool) -> Bool raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub(all) enum Command {
+  Inspect(String, Bool)
+  Validate(String, Bool)
+  Anonymize(String, String, String?, Bool, Bool)
+  Help(String?)
+  Version
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits
+

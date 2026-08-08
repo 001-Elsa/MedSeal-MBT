@@ -1,0 +1,13 @@
+import {
+  "001-Elsa/medseal/src/deid",
+  "001-Elsa/medseal/src/dicom_writer",
+  "001-Elsa/medseal/src/dictionary",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "001-Elsa/medseal/src/validator",
+  "moonbitlang/async/fs" @async_fs,
+  "moonbitlang/x/fs",
+  "moonbitlang/x/path",
+}
+
+supported_targets = "+native"

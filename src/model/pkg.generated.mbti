@@ -1,0 +1,120 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/model"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub let pixel_data_tag : Tag
+
+pub let transfer_syntax_uid_tag : Tag
+
+// Errors
+pub(all) suberror MedSealError {
+  FileTooSmall
+  MissingDicmMarker
+  UnexpectedEndOfFile(Int)
+  UnsupportedTransferSyntax(String)
+  InvalidVr(String, Int)
+  InvalidLength(Tag, UInt, Int)
+  InvalidSequence(Int)
+  ExcessiveNesting(Int)
+  PixelDataTruncated
+  TooManyElements(Int)
+  ElementTooLarge(UInt, Int)
+  FileTooLarge(Int)
+  OutputAlreadyExists(String)
+  IoError(String)
+  OutputVerificationFailed(String)
+  InvalidArgument(String)
+} derive(@debug.Debug)
+pub fn MedSealError::code(Self) -> String
+pub fn MedSealError::display(Self) -> String
+pub fn MedSealError::message(Self) -> String
+
+// Types and methods
+pub struct DataElement {
+  tag : Tag
+  vr : Vr
+  value_length : UInt
+  value : ElementValue
+  original_order : Int
+} derive(Eq, @debug.Debug)
+pub fn DataElement::new(Tag, Vr, UInt, ElementValue, Int) -> Self
+
+pub struct DataSet {
+  elements : Array[DataElement]
+} derive(Eq, @debug.Debug)
+pub fn DataSet::count_recursive(Self) -> Int
+pub fn DataSet::empty() -> Self
+pub fn DataSet::find(Self, Tag) -> DataElement?
+pub fn DataSet::new(Array[DataElement]) -> Self
+pub fn DataSet::remove(Self, Tag) -> Self
+pub fn DataSet::replace_text(Self, Tag, String) -> Self
+
+pub(all) enum ElementValue {
+  Text(String)
+  UnsignedShort(Array[UInt])
+  SignedShort(Array[Int])
+  UnsignedLong(Array[UInt])
+  SignedLong(Array[Int])
+  Sequence(Array[DataSet])
+  Raw(Bytes)
+  Empty
+} derive(Eq, @debug.Debug)
+
+pub struct Tag {
+  group : UInt
+  element : UInt
+} derive(Eq, Hash, @debug.Debug)
+pub fn Tag::compact(Self) -> String
+pub fn Tag::is_private(Self) -> Bool
+pub fn Tag::new(UInt, UInt) -> Self
+pub fn Tag::to_string(Self) -> String
+
+pub(all) enum Vr {
+  AE
+  AS
+  AT
+  CS
+  DA
+  DS
+  DT
+  FL
+  FD
+  IS
+  LO
+  LT
+  OB
+  OD
+  OF
+  OL
+  OV
+  OW
+  PN
+  SH
+  SL
+  SQ
+  SS
+  ST
+  SV
+  TM
+  UC
+  UI
+  UL
+  UN
+  UR
+  US
+  UT
+  UV
+} derive(Eq, @debug.Debug)
+pub fn Vr::from_string(String) -> Self?
+pub fn Vr::is_text(Self) -> Bool
+pub fn Vr::to_string(Self) -> String
+pub fn Vr::uses_u32_length(Self) -> Bool
+
+// Type aliases
+
+// Traits
+
