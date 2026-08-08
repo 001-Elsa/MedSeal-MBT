@@ -183,3 +183,214 @@ test "reject sequence nesting deeper than 32" {
   }
   assert_true(rejected)
 }
+
+///|
+fn write_item(
+  writer : @byteio.ByteWriter,
+  value : Bytes,
+  undefined? : Bool = false,
+) -> Unit {
+  writer.write_u16_le(0xFFFEU)
+  writer.write_u16_le(0xE000U)
+  writer.write_u32_le(
+    if undefined {
+      0xFFFFFFFFU
+    } else {
+      value.length().reinterpret_as_uint()
+    },
+  )
+  writer.write_bytes(value)
+  if undefined {
+    writer.write_u16_le(0xFFFEU)
+    writer.write_u16_le(0xE00DU)
+    writer.write_u32_le(0U)
+  }
+}
+
+///|
+test "parse empty defined length sequence" {
+  let writer = @byteio.ByteWriter::new()
+  write_element(writer, 0x0040U, 0x0275U, "SQ", b"")
+  let dataset = parse_dataset_bytes(writer.to_bytes())
+  assert_true(dataset.elements[0].value is @model.ElementValue::Sequence([]))
+}
+
+///|
+test "parse defined length sequence with two items" {
+  let first = @byteio.ByteWriter::new()
+  write_element(first, 0x0010U, 0x0010U, "PN", b"FIRST ")
+  let second = @byteio.ByteWriter::new()
+  write_element(second, 0x0010U, 0x0020U, "LO", b"SECOND")
+  let sequence_value = @byteio.ByteWriter::new()
+  write_item(sequence_value, first.to_bytes())
+  write_item(sequence_value, second.to_bytes())
+  let writer = @byteio.ByteWriter::new()
+  write_element(writer, 0x0040U, 0x0275U, "SQ", sequence_value.to_bytes())
+  let dataset = parse_dataset_bytes(writer.to_bytes())
+  match dataset.elements[0].value {
+    @model.ElementValue::Sequence(items) => {
+      assert_eq(items.length(), 2)
+      assert_true(
+        items[0].elements[0].value is @model.ElementValue::Text("FIRST"),
+      )
+      assert_true(
+        items[1].elements[0].value is @model.ElementValue::Text("SECOND"),
+      )
+    }
+    _ => fail("expected sequence")
+  }
+}
+
+///|
+test "parse multiple undefined length sequence items" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_u16_le(0x0040U)
+  writer.write_u16_le(0x0275U)
+  writer.write_ascii("SQ")
+  writer.write_u16_le(0U)
+  writer.write_u32_le(0xFFFFFFFFU)
+  for value in [b"ONE ", b"TWO "] {
+    let item = @byteio.ByteWriter::new()
+    write_element(item, 0x0010U, 0x0010U, "PN", value)
+    write_item(writer, item.to_bytes(), undefined=true)
+  }
+  writer.write_u16_le(0xFFFEU)
+  writer.write_u16_le(0xE0DDU)
+  writer.write_u32_le(0U)
+  let dataset = parse_dataset_bytes(writer.to_bytes())
+  match dataset.elements[0].value {
+    @model.ElementValue::Sequence(items) => assert_eq(items.length(), 2)
+    _ => fail("expected sequence")
+  }
+}
+
+///|
+test "reject undefined sequence without sequence delimiter" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_u16_le(0x0040U)
+  writer.write_u16_le(0x0275U)
+  writer.write_ascii("SQ")
+  writer.write_u16_le(0U)
+  writer.write_u32_le(0xFFFFFFFFU)
+  let rejected = try {
+    ignore(parse_dataset_bytes(writer.to_bytes()))
+    false
+  } catch {
+    @model.MedSealError::InvalidSequence(_) => true
+    _ => false
+  }
+  assert_true(rejected)
+}
+
+///|
+test "reject undefined item without item delimiter" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_u16_le(0x0040U)
+  writer.write_u16_le(0x0275U)
+  writer.write_ascii("SQ")
+  writer.write_u16_le(0U)
+  writer.write_u32_le(0xFFFFFFFFU)
+  writer.write_u16_le(0xFFFEU)
+  writer.write_u16_le(0xE000U)
+  writer.write_u32_le(0xFFFFFFFFU)
+  write_element(writer, 0x0010U, 0x0010U, "PN", b"TEST")
+  let rejected = try {
+    ignore(parse_dataset_bytes(writer.to_bytes()))
+    false
+  } catch {
+    @model.MedSealError::InvalidSequence(_) => true
+    _ => false
+  }
+  assert_true(rejected)
+}
+
+///|
+test "reject non-zero reserved field for long VR" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_u16_le(0x7FE0U)
+  writer.write_u16_le(0x0010U)
+  writer.write_ascii("OB")
+  writer.write_u16_le(1U)
+  writer.write_u32_le(0U)
+  let rejected = try {
+    ignore(parse_dataset_bytes(writer.to_bytes()))
+    false
+  } catch {
+    @model.MedSealError::InvalidLength(_, 1U, _) => true
+    _ => false
+  }
+  assert_true(rejected)
+}
+
+///|
+test "reject numeric value lengths that are not element aligned" {
+  for
+    value in [
+      ("US", b"\x01"),
+      ("SS", b"\x01\x02\x03"),
+      ("UL", b"\x01\x02"),
+      ("SL", b"\x01\x02\x03"),
+    ] {
+    let (vr, bytes) = value
+    let writer = @byteio.ByteWriter::new()
+    write_element(writer, 0x0028U, 0x0010U, vr, bytes)
+    let rejected = try {
+      ignore(parse_dataset_bytes(writer.to_bytes()))
+      false
+    } catch {
+      @model.MedSealError::InvalidLength(_, _, _) => true
+      _ => false
+    }
+    assert_true(rejected)
+  }
+}
+
+///|
+test "OB OW and UN values remain raw bytes" {
+  for value in [("OB", b"\x01\x02"), ("OW", b"\x03\x04"), ("UN", b"\x05\x06")] {
+    let (vr, bytes) = value
+    let writer = @byteio.ByteWriter::new()
+    write_element(writer, 0x7776U, 0x0010U, vr, bytes)
+    let dataset = parse_dataset_bytes(writer.to_bytes())
+    match dataset.elements[0].value {
+      @model.ElementValue::Raw(actual) => assert_eq(actual, bytes)
+      _ => fail("expected raw bytes")
+    }
+  }
+}
+
+///|
+test "invalid VR reports the VR byte offset" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_u16_le(0x0010U)
+  writer.write_u16_le(0x0010U)
+  writer.write_ascii("ZZ")
+  writer.write_u16_le(0U)
+  let rejected = try {
+    ignore(parse_dataset_bytes(writer.to_bytes()))
+    false
+  } catch {
+    @model.MedSealError::InvalidVr("ZZ", 4) => true
+    _ => false
+  }
+  assert_true(rejected)
+}
+
+///|
+test "truncated ordinary element reports its tag and value offset" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_u16_le(0x0010U)
+  writer.write_u16_le(0x0010U)
+  writer.write_ascii("PN")
+  writer.write_u16_le(4U)
+  writer.write_ascii("AB")
+  let rejected = try {
+    ignore(parse_dataset_bytes(writer.to_bytes()))
+    false
+  } catch {
+    @model.MedSealError::InvalidLength(tag, 4U, 8) =>
+      tag == @model.Tag::new(0x0010U, 0x0010U)
+    _ => false
+  }
+  assert_true(rejected)
+}

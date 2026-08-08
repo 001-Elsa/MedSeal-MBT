@@ -87,3 +87,160 @@ test "write then parse preserves order, sequence and pixel bytes" {
     _ => fail("expected sequence")
   }
 }
+
+///|
+fn ordinary_element(
+  group : UInt,
+  element : UInt,
+  vr : @model.Vr,
+  value : @model.ElementValue,
+) -> @model.DataElement {
+  @model.DataElement::new(@model.Tag::new(group, element), vr, 0U, value, 0)
+}
+
+///|
+test "odd length UI is padded with a null byte" {
+  let writer = @byteio.ByteWriter::new()
+  write_element(
+    writer,
+    ordinary_element(
+      0x0008U,
+      0x0018U,
+      @model.Vr::UI,
+      @model.ElementValue::Text("1.2"),
+    ),
+  )
+  assert_eq(writer.to_bytes(), b"\x08\x00\x18\x00UI\x04\x001.2\x00")
+}
+
+///|
+test "odd length ordinary text is padded with a space" {
+  let writer = @byteio.ByteWriter::new()
+  write_element(
+    writer,
+    ordinary_element(
+      0x0010U,
+      0x0020U,
+      @model.Vr::LO,
+      @model.ElementValue::Text("ABC"),
+    ),
+  )
+  assert_eq(writer.to_bytes(), b"\x10\x00\x20\x00LO\x04\x00ABC ")
+}
+
+///|
+test "long VR header contains reserved bytes and a u32 length" {
+  let writer = @byteio.ByteWriter::new()
+  write_element(
+    writer,
+    ordinary_element(
+      0x7FE0U,
+      0x0010U,
+      @model.Vr::OB,
+      @model.ElementValue::Raw(b"\x01\x02\x03\x04"),
+    ),
+  )
+  assert_eq(
+    writer.to_bytes(),
+    b"\xe0\x7f\x10\x00OB\x00\x00\x04\x00\x00\x00\x01\x02\x03\x04",
+  )
+}
+
+///|
+test "numeric arrays are encoded little endian and reparse exactly" {
+  let writer = @byteio.ByteWriter::new()
+  write_element(
+    writer,
+    ordinary_element(
+      0x0028U,
+      0x0010U,
+      @model.Vr::US,
+      @model.ElementValue::UnsignedShort([1U, 0xFFFFU]),
+    ),
+  )
+  write_element(
+    writer,
+    ordinary_element(
+      0x7776U,
+      0x0001U,
+      @model.Vr::SS,
+      @model.ElementValue::SignedShort([-32768, -1, 32767]),
+    ),
+  )
+  write_element(
+    writer,
+    ordinary_element(
+      0x7776U,
+      0x0002U,
+      @model.Vr::UL,
+      @model.ElementValue::UnsignedLong([0U, 0xFFFFFFFFU]),
+    ),
+  )
+  write_element(
+    writer,
+    ordinary_element(
+      0x7776U,
+      0x0003U,
+      @model.Vr::SL,
+      @model.ElementValue::SignedLong([-2147483648, 2147483647]),
+    ),
+  )
+  let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
+  assert_true(
+    dataset.elements[0].value
+    is @model.ElementValue::UnsignedShort([1U, 0xFFFFU]),
+  )
+  assert_true(
+    dataset.elements[1].value
+    is @model.ElementValue::SignedShort([-32768, -1, 32767]),
+  )
+  assert_true(
+    dataset.elements[2].value
+    is @model.ElementValue::UnsignedLong([0U, 0xFFFFFFFFU]),
+  )
+  assert_true(
+    dataset.elements[3].value
+    is @model.ElementValue::SignedLong([-2147483648, 2147483647]),
+  )
+}
+
+///|
+test "writer recomputes empty and sequence lengths" {
+  let empty_writer = @byteio.ByteWriter::new()
+  write_element(
+    empty_writer,
+    ordinary_element(
+      0x0010U,
+      0x0030U,
+      @model.Vr::DA,
+      @model.ElementValue::Empty,
+    ),
+  )
+  assert_eq(empty_writer.to_bytes(), b"\x10\x00\x30\x00DA\x00\x00")
+  let nested = @model.DataSet::new([
+    ordinary_element(
+      0x0010U,
+      0x0010U,
+      @model.Vr::PN,
+      @model.ElementValue::Text("A"),
+    ),
+  ])
+  let sequence_writer = @byteio.ByteWriter::new()
+  write_element(
+    sequence_writer,
+    ordinary_element(
+      0x0040U,
+      0x0275U,
+      @model.Vr::SQ,
+      @model.ElementValue::Sequence([nested]),
+    ),
+  )
+  let reparsed = @parser.parse_dataset_bytes(sequence_writer.to_bytes())
+  match reparsed.elements[0].value {
+    @model.ElementValue::Sequence(items) => {
+      assert_eq(items.length(), 1)
+      assert_true(items[0].elements[0].value is @model.ElementValue::Text("A"))
+    }
+    _ => fail("expected sequence")
+  }
+}
