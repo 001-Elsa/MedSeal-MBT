@@ -46,6 +46,20 @@ fn changed_element(
 }
 
 ///|
+fn action_changes(element : @model.DataElement, action : DeIdAction) -> Bool {
+  match action {
+    Keep => false
+    Remove => true
+    Empty => element.value != @model.ElementValue::Empty
+    Replace(value) =>
+      match element.value {
+        @model.ElementValue::Text(current) => current != value
+        _ => true
+      }
+  }
+}
+
+///|
 fn anonymize_dataset(
   dataset : @model.DataSet,
   policy : Map[@model.Tag, DeIdAction],
@@ -96,15 +110,26 @@ fn anonymize_dataset(
           _ => output.push(element)
         }
       }
-      Some(action) => {
-        audit.changed = audit.changed + 1
+      Some(Remove) => {
+        audit.removed = audit.removed + 1
         audit.changes.push({
           tag: element.tag.compact(),
           name: @dictionary.tag_name(element.tag),
-          action: action.name(),
+          action: "remove",
         })
-        output.push(changed_element(element, action))
       }
+      Some(action) =>
+        if action_changes(element, action) {
+          audit.changed = audit.changed + 1
+          audit.changes.push({
+            tag: element.tag.compact(),
+            name: @dictionary.tag_name(element.tag),
+            action: action.name(),
+          })
+          output.push(changed_element(element, action))
+        } else {
+          output.push(element)
+        }
       None =>
         match element.value {
           @model.ElementValue::Sequence(items) => {
