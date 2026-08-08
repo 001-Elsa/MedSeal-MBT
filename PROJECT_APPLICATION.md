@@ -1,37 +1,21 @@
-# 项目申报书
+# MedSeal-MBT 项目申报书
 
-## 正式信息
+- 项目名称：MedSeal-MBT（MoonBit DICOM 医学影像元数据清理工具）
+- 参赛账号：001-Elsa；联系方式：766903826@qq.com
+- 项目方向：MoonBit 医学影像文件处理工具 / 格式解析与安全写回
+- GitHub：https://github.com/001-Elsa/MedSeal-MBT
+- Mooncakes：https://mooncakes.io/docs/001-Elsa/medseal
+- 项目性质：原创实现，未移植或复制其他开源项目
 
-- 项目名称：MedSeal-MBT
-- 中文名称：MoonBit DICOM 医学影像元数据清理工具
-- 参赛者姓名／账号：001-Elsa
-- 赛事联系方式：766903826@qq.com
-- GitHub 仓库：https://github.com/001-Elsa/MedSeal-MBT
-- Gitlink 仓库：导入 GitHub 仓库后填写实际公开链接
-- Mooncakes 模块：001-Elsa/medseal
+## 项目简介与适用场景
+MedSeal-MBT 是 MoonBit 编写的轻量级 DICOM Part 10 解析、结构校验和基础元数据脱敏工具，面向开发测试、教学演示和数据交付前的直接身份字段清理。它仅接受 Explicit VR Little Endian，不支持的格式会明确拒绝，避免猜测解析医疗文件。
 
-## 项目简介
+## 核心功能与技术路线
+- 安全解析 File Meta、常用 VR、定义/未定义长度 Sequence，并对文件、元素、数量和嵌套深度设硬限制。
+- 检查截断、长度越界、非法 VR/UI/文本字段和基础图像元数据，输出稳定错误码。
+- 替换或清空患者、机构、医生等直接身份字段，递归处理 Sequence，可选删除 Private Tag。
+- Pixel Data 和 UID 原样保留；审计 JSON 不记录任何原始敏感值。
+- 写入临时文件后重新解析校验，再原子替换目标；提供 inspect、validate、anonymize CLI。
 
-MedSeal-MBT 是一个使用 MoonBit 编写的轻量级 DICOM Part 10 文件解析、
-结构校验和基础元数据脱敏工具。项目仅支持 Explicit VR Little Endian，
-能够识别并处理常见直接身份字段、递归处理基础 Sequence、选择性删除
-Private Tag、保持 Pixel Data 原始字节，并输出不包含原始敏感值的 JSON
-审计报告。
-
-项目不解码压缩图像，不检查 Pixel Data 中烧录的文字，不提供医学诊断，
-也不宣称完全匿名化或医疗法规合规。
-
-## 技术与安全特点
-
-- 使用有界 ByteReader，在读取前检查剩余长度。
-- 文件、元素、元素数量和 Sequence 深度均有硬限制。
-- 不支持的 Transfer Syntax 明确拒绝，不猜测解析。
-- 写回采用临时文件、重新解析校验和原子替换。
-- CLI 和审计报告均不输出原始患者姓名或编号。
-- 测试样本全部由仓库内生成器构造，不包含真实患者数据。
-
-## 本地验收
-
-项目通过 `moon fmt --check`、`moon check --target all --deny-warn`、
-`moon test --target all --deny-warn`、`moon info` 和 `moon package`。
-
+## 交付与质量
+交付公开源码、Apache-2.0 许可证、合成 DICOM 样本、可运行 CLI、JSON 审计示例、三平台 CI、全后端检查与核心回归测试，并发布 `001-Elsa/medseal@0.1.0`。项目不提供诊断，不检查像素中烧录文字，也不宣称完全匿名化或医疗法规合规。

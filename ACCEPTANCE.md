@@ -41,13 +41,13 @@ moon info
 moon package
 ```
 
-Expected test totals with the 2026-07-24 MoonBit toolchain or newer:
+Verified test totals with the 2026-07-24 MoonBit toolchain or newer:
 
 ```text
-wasm:    16 passed
-wasm-gc: 16 passed
-js:      16 passed
-native:  22 passed
+wasm:    47 passed
+wasm-gc: 47 passed
+js:      47 passed
+native:  68 passed
 ```
 
 The Native-only CLI and filesystem integration tests are intentionally skipped
@@ -62,5 +62,15 @@ all backends.
 - source packages and generated `.mbti` interfaces
 - complete synthetic samples and audit-report example
 - `PROJECT_APPLICATION.md`
+- one-page `output/pdf/MedSeal-MBT-project-proposal.pdf`
+- `ARCHITECTURE.md` and `THIRD_PARTY.md`
 - reproducible Mooncakes package archive from `moon package`
 
+## Competition acceptance evidence
+
+- GitHub default branch is public and contains more than 10 meaningful commits.
+- GitHub Actions runs the full workflow on Ubuntu, macOS, and Windows.
+- `001-Elsa/medseal@0.1.0` is published on Mooncakes with build status
+  `success`.
+- The GitLink mirror URL must be inserted here and in the official form after
+  the GitHub repository has been imported into the contestant's GitLink account.
