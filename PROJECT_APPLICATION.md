@@ -4,6 +4,7 @@
 - 参赛账号：001-Elsa；联系方式：766903826@qq.com
 - 项目方向：MoonBit 医学影像文件处理工具 / 格式解析与安全写回
 - GitHub：https://github.com/001-Elsa/MedSeal-MBT
+- GitLink：https://gitlink.org.cn/Hzhhhh/MedSeal-MBT
 - Mooncakes：https://mooncakes.io/docs/001-Elsa/medseal
 - 项目性质：原创实现，未移植或复制其他开源项目
 

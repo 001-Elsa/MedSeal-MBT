@@ -125,6 +125,11 @@ Competition submission metadata is in
 are documented in [ARCHITECTURE.md](ARCHITECTURE.md) and
 [THIRD_PARTY.md](THIRD_PARTY.md).
 
+Repository mirrors:
+
+- GitHub: <https://github.com/001-Elsa/MedSeal-MBT>
+- GitLink: <https://gitlink.org.cn/Hzhhhh/MedSeal-MBT>
+
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).

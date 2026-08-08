@@ -69,8 +69,7 @@ all backends.
 ## Competition acceptance evidence
 
 - GitHub default branch is public and contains more than 10 meaningful commits.
+- GitLink mirror: `https://gitlink.org.cn/Hzhhhh/MedSeal-MBT`.
 - GitHub Actions runs the full workflow on Ubuntu, macOS, and Windows.
 - `001-Elsa/medseal@0.1.1` is published on Mooncakes with build status
   `success`.
-- The GitLink mirror URL must be inserted here and in the official form after
-  the GitHub repository has been imported into the contestant's GitLink account.
