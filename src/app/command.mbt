@@ -113,6 +113,6 @@ pub fn help_text(command : String?) -> String {
     Some("anonymize") =>
       "Usage: medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]"
     _ =>
-      "MedSeal-MBT 0.1.0\nA DICOM metadata validator and basic de-identification tool.\n\nUsage:\n  medseal inspect <input> [--json]\n  medseal validate <input> [--json]\n  medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]\n  medseal --version"
+      "MedSeal-MBT \{@model.medseal_version}\nA DICOM metadata validator and basic de-identification tool.\n\nUsage:\n  medseal inspect <input> [--json]\n  medseal validate <input> [--json]\n  medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]\n  medseal --version"
   }
 }

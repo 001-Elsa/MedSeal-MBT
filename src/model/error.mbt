@@ -49,7 +49,7 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     MissingDicmMarker => "missing DICM marker at offset 128"
     UnexpectedEndOfFile(offset) => "unexpected end of file at offset \{offset}"
     UnsupportedTransferSyntax(uid) =>
-      "unsupported transfer syntax: \{uid}\nOnly Explicit VR Little Endian is supported in version 0.1.0."
+      "unsupported transfer syntax: \{uid}\nOnly Explicit VR Little Endian is supported in version \{medseal_version}."
     MissingRequiredFileMeta(tag) =>
       "missing required File Meta Information element \{tag.to_string()}"
     InvalidFileMetaGroupLength(declared, actual) =>

@@ -50,6 +50,6 @@ and Sequence lengths are recalculated from the serialized values.
 
 ## Non-goals
 
-Version 0.1.0 does not implement compressed pixel decoding, other transfer
+Version 0.1.1 does not implement compressed pixel decoding, other transfer
 syntaxes, DICOM networking, PACS/DICOMweb, OCR, pixel redaction, a complete
 DICOM dictionary, diagnosis, or a guarantee of complete anonymization.

@@ -34,10 +34,9 @@ moon package
 MedSeal-MBT performs basic metadata de-identification only. It does not
 inspect Pixel Data for burned-in personal information, does not provide
 medical diagnosis, and does not guarantee complete anonymization. Version
-0.1.0 rejects every Transfer Syntax except Explicit VR Little Endian.
+0.1.1 rejects every Transfer Syntax except Explicit VR Little Endian.
 
 See [README.md](README.md) for the complete feature list, policy, usage,
 security boundaries, error behavior, and sample documentation.
 
 Licensed under Apache-2.0.
-

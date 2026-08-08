@@ -108,7 +108,7 @@ def build() -> None:
     meta = [
         ["参赛账号", "001-Elsa", "项目性质", "原创实现"],
         ["项目方向", "医学影像格式解析与安全工具", "许可证", "Apache-2.0"],
-        ["GitHub", "https://github.com/001-Elsa/MedSeal-MBT", "版本", "0.1.0"],
+        ["GitHub", "https://github.com/001-Elsa/MedSeal-MBT", "版本", "0.1.1"],
         ["Mooncakes", "https://mooncakes.io/docs/001-Elsa/medseal", "后端", "Native"],
     ]
     table = Table(meta, colWidths=[22 * mm, 74 * mm, 20 * mm, 58 * mm])
@@ -152,7 +152,7 @@ def build() -> None:
             ),
             section(
                 "交付与质量",
-                "交付公开 GitHub/GitLink 仓库、Apache-2.0 许可证、合成 DICOM 样本、可运行 Native CLI、审计示例、三平台 CI 和核心回归测试。Mooncakes 包 001-Elsa/medseal@0.1.0 已发布并构建成功。所有样本由仓库生成器创建，不含真实患者数据；直接依赖 moonbitlang/async 与 moonbitlang/x 均为 Apache-2.0。",
+                "交付公开 GitHub/GitLink 仓库、Apache-2.0 许可证、合成 DICOM 样本、可运行 Native CLI、审计示例、三平台 CI 和核心回归测试。Mooncakes 包 001-Elsa/medseal@0.1.1 已发布并构建成功。所有样本由仓库生成器创建，不含真实患者数据；直接依赖 moonbitlang/async 与 moonbitlang/x 均为 Apache-2.0。",
                 styles,
             ),
             Spacer(1, 3 * mm),

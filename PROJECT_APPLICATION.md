@@ -18,4 +18,4 @@ MedSeal-MBT 是 MoonBit 编写的轻量级 DICOM Part 10 解析、结构校验�
 - 写入临时文件后重新解析校验，再原子替换目标；提供 inspect、validate、anonymize CLI。
 
 ## 交付与质量
-交付公开源码、Apache-2.0 许可证、合成 DICOM 样本、可运行 CLI、JSON 审计示例、三平台 CI、全后端检查与核心回归测试，并发布 `001-Elsa/medseal@0.1.0`。项目不提供诊断，不检查像素中烧录文字，也不宣称完全匿名化或医疗法规合规。
+交付公开源码、Apache-2.0 许可证、合成 DICOM 样本、可运行 CLI、JSON 审计示例、三平台 CI、全后端检查与核心回归测试，并发布 `001-Elsa/medseal@0.1.1`。项目不提供诊断，不检查像素中烧录文字，也不宣称完全匿名化或医疗法规合规。

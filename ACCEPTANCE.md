@@ -1,4 +1,4 @@
-# MedSeal-MBT 0.1.0 Acceptance
+# MedSeal-MBT 0.1.1 Acceptance
 
 This document records the reproducible release and competition-submission
 checks for MedSeal-MBT.
@@ -70,7 +70,7 @@ all backends.
 
 - GitHub default branch is public and contains more than 10 meaningful commits.
 - GitHub Actions runs the full workflow on Ubuntu, macOS, and Windows.
-- `001-Elsa/medseal@0.1.0` is published on Mooncakes with build status
+- `001-Elsa/medseal@0.1.1` is published on Mooncakes with build status
   `success`.
 - The GitLink mirror URL must be inserted here and in the official form after
   the GitHub repository has been imported into the contestant's GitLink account.

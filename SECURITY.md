@@ -18,9 +18,8 @@ synthetic or fully de-identified sample. Never submit real patient data.
 MedSeal-MBT performs basic metadata de-identification only. Pixel Data is not
 inspected for burned-in identifying text. Private elements can contain
 identifying information unless `--remove-private` is used. UID values are
-retained in version 0.1.0. The tool does not guarantee complete anonymization
+retained in version 0.1.1. The tool does not guarantee complete anonymization
 or regulatory compliance and is not medical diagnostic software.
 
 The parser enforces explicit size, element-count, and nesting limits. Files
 using unsupported transfer syntaxes are rejected rather than guessed.
-

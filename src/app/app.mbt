@@ -30,7 +30,7 @@ pub async fn run(args : Array[String]) -> Int {
         0
       }
       Version => {
-        println("medseal 0.1.0")
+        println("medseal \{@model.medseal_version}")
         0
       }
       Inspect(path, json) => {

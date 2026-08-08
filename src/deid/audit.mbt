@@ -53,7 +53,7 @@ pub fn audit_json(
   Json::object(
     Map::from_array([
       ("tool", Json::string("medseal")),
-      ("version", Json::string("0.1.0")),
+      ("version", Json::string(@model.medseal_version)),
       ("status", Json::string("success")),
       ("input_file", Json::string(input_file)),
       ("output_file", Json::string(output_file)),

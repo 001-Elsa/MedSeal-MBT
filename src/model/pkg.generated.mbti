@@ -6,6 +6,8 @@ import {
 }
 
 // Values
+pub let medseal_version : String
+
 pub let pixel_data_tag : Tag
 
 pub let transfer_syntax_uid_tag : Tag
