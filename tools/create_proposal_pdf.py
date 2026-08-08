@@ -25,6 +25,9 @@ PURPLE = colors.HexColor("#6F46FF")
 INK = colors.HexColor("#18212F")
 MUTED = colors.HexColor("#5E6878")
 PANEL = colors.HexColor("#F5F3FF")
+GRID = colors.HexColor("#666666")
+HEADER_BG = colors.HexColor("#E8E8E8")
+LINK_BLUE = colors.HexColor("#0000EE")
 
 
 def section(title: str, body: str, styles: dict[str, ParagraphStyle]):
@@ -35,6 +38,17 @@ def section(title: str, body: str, styles: dict[str, ParagraphStyle]):
             Paragraph(body, styles["body"]),
         ]
     )
+
+
+def link(text: str, styles: dict[str, ParagraphStyle]):
+    return Paragraph(
+        f'<font color="#0000EE"><u>{text}</u></font>',
+        styles["meta"],
+    )
+
+
+def cell(text: str, styles: dict[str, ParagraphStyle]):
+    return Paragraph(text, styles["meta"])
 
 
 def build() -> None:
@@ -82,9 +96,18 @@ def build() -> None:
             "meta",
             parent=base["BodyText"],
             fontName="STSong-Light",
-            fontSize=8.3,
-            leading=11.2,
+            fontSize=8.1,
+            leading=10.7,
             textColor=INK,
+        ),
+        "basic": ParagraphStyle(
+            "basic",
+            parent=base["Heading2"],
+            fontName="STSong-Light",
+            fontSize=12.5,
+            leading=15,
+            textColor=INK,
+            spaceAfter=1.8 * mm,
         ),
     }
     doc = SimpleDocTemplate(
@@ -106,35 +129,40 @@ def build() -> None:
         Spacer(1, 3.2 * mm),
     ]
     meta = [
-        ["参赛者", "以官方报名问卷填写为准", "参赛账号", "001-Elsa"],
-        ["项目方向", "医学影像格式解析与安全工具", "许可证", "Apache-2.0"],
-        ["GitHub", "https://github.com/001-Elsa/MedSeal-MBT", "版本", "0.1.1"],
-        ["GitLink", "https://gitlink.org.cn/Hzhhhh/MedSeal-MBT", "后端", "Native"],
-        ["Mooncakes", "https://mooncakes.io/docs/001-Elsa/medseal", "项目性质", "原创实现"],
+        [cell("项目", styles), cell("内容", styles)],
+        [cell("项目名称", styles), cell("MedSeal-MBT（MoonBit DICOM 医学影像元数据清理工具）", styles)],
+        [cell("参赛者", styles), cell("韩枕", styles)],
+        [cell("邮箱", styles), link("766903826@qq.com", styles)],
+        [cell("手机号", styles), cell("17889572851", styles)],
+        [cell("GitHub 仓库链接", styles), link("https://github.com/001-Elsa/MedSeal-MBT", styles)],
+        [cell("Gitlink 仓库链接", styles), link("https://gitlink.org.cn/Hzhhhh/MedSeal-MBT", styles)],
+        [cell("Mooncakes 包", styles), link("https://mooncakes.io/docs/001-Elsa/medseal", styles)],
+        [cell("项目方向", styles), cell("MoonBit 医学影像文件处理工具 / 格式解析与安全写回", styles)],
+        [cell("项目类型", styles), cell("围绕实际开发需求制作的开发工具（原创 MoonBit 项目）", styles)],
     ]
-    table = Table(meta, colWidths=[22 * mm, 74 * mm, 20 * mm, 58 * mm])
+    table = Table(meta, colWidths=[45 * mm, 130 * mm])
     table.setStyle(
         TableStyle(
             [
-                ("BACKGROUND", (0, 0), (-1, -1), PANEL),
+                ("BACKGROUND", (0, 0), (-1, 0), HEADER_BG),
                 ("TEXTCOLOR", (0, 0), (-1, -1), INK),
                 ("FONTNAME", (0, 0), (-1, -1), "STSong-Light"),
                 ("FONTSIZE", (0, 0), (-1, -1), 8.1),
-                ("LEADING", (0, 0), (-1, -1), 10.5),
-                ("TEXTCOLOR", (0, 0), (0, -1), PURPLE),
-                ("TEXTCOLOR", (2, 0), (2, -1), PURPLE),
+                ("LEADING", (0, 0), (-1, -1), 10.7),
+                ("TEXTCOLOR", (0, 0), (-1, 0), INK),
                 ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                ("BOX", (0, 0), (-1, -1), 0.6, colors.HexColor("#D9D2FF")),
-                ("INNERGRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#E3DEFF")),
+                ("BOX", (0, 0), (-1, -1), 0.7, GRID),
+                ("INNERGRID", (0, 0), (-1, -1), 0.55, GRID),
                 ("LEFTPADDING", (0, 0), (-1, -1), 4),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-                ("TOPPADDING", (0, 0), (-1, -1), 4),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+                ("TOPPADDING", (0, 0), (-1, -1), 3),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
             ]
         )
     )
     story.extend(
         [
+            Paragraph("基本信息", styles["basic"]),
             table,
             section(
                 "项目简介",

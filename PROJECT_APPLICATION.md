@@ -1,10 +1,18 @@
 # MedSeal-MBT 项目申报书
 
-## 个人信息
-- 参赛者：以官方报名问卷填写信息为准；参赛账号：001-Elsa；联系邮箱：766903826@qq.com
-- GitHub 仓库：https://github.com/001-Elsa/MedSeal-MBT
-- GitLink 仓库：https://gitlink.org.cn/Hzhhhh/MedSeal-MBT
-- Mooncakes 包：https://mooncakes.io/docs/001-Elsa/medseal
+## 基本信息
+
+| 项目 | 内容 |
+| --- | --- |
+| 项目名称 | MedSeal-MBT（MoonBit DICOM 医学影像元数据清理工具） |
+| 参赛者 | 韩枕 |
+| 邮箱 | 766903826@qq.com |
+| 手机号 | 17889572851 |
+| GitHub 仓库链接 | https://github.com/001-Elsa/MedSeal-MBT |
+| Gitlink 仓库链接 | https://gitlink.org.cn/Hzhhhh/MedSeal-MBT |
+| Mooncakes 包 | https://mooncakes.io/docs/001-Elsa/medseal |
+| 项目方向 | MoonBit 医学影像文件处理工具 / 格式解析与安全写回 |
+| 项目类型 | 围绕实际开发需求制作的开发工具（原创 MoonBit 项目） |
 
 ## 项目简介
 MedSeal-MBT 是一个使用 MoonBit 编写的轻量级 DICOM 医学影像元数据解析、结构校验和基础元数据脱敏工具。项目支持 DICOM Part 10 文件与 Explicit VR Little Endian 传输语法，可读取常见数据元素、基础嵌套 Sequence 和 Pixel Data，并在处理后输出新的 DICOM 文件与不包含原始敏感值的 JSON 审计报告。
