@@ -1,0 +1,10 @@
+import {
+  "001-Elsa/medseal/src/deid",
+  "001-Elsa/medseal/src/dicom_writer",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "001-Elsa/medseal/src/validator",
+  "moonbitlang/x/fs",
+} for "test"
+
+supported_targets = "+native"

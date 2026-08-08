@@ -1,0 +1,68 @@
+{
+  "tool": "medseal",
+  "version": "0.1.0",
+  "status": "success",
+  "input_file": "samples/input.dcm",
+  "output_file": "samples/output.dcm",
+  "transfer_syntax": "1.2.840.10008.1.2.1",
+  "elements_read": 26,
+  "elements_changed": 5,
+  "elements_removed": 1,
+  "private_elements_removed": 1,
+  "pixel_data_modified": false,
+  "uid_values_modified": false,
+  "changes": [
+    {
+      "tag": "0010,0010",
+      "name": "PatientName",
+      "action": "replace"
+    },
+    {
+      "tag": "0010,0020",
+      "name": "PatientID",
+      "action": "replace"
+    },
+    {
+      "tag": "0010,0030",
+      "name": "PatientBirthDate",
+      "action": "empty"
+    },
+    {
+      "tag": "0008,0080",
+      "name": "InstitutionName",
+      "action": "empty"
+    },
+    {
+      "tag": "0008,0090",
+      "name": "ReferringPhysicianName",
+      "action": "empty"
+    },
+    {
+      "tag": "0011,1010",
+      "name": "Unknown",
+      "action": "remove"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "MEDSEAL-W103",
+      "message": "Study Description may contain sensitive text"
+    },
+    {
+      "code": "MEDSEAL-W104",
+      "message": "Series Description may contain sensitive text"
+    },
+    {
+      "code": "MEDSEAL-W107",
+      "message": "Protocol Name may contain sensitive text"
+    },
+    {
+      "code": "MEDSEAL-W105",
+      "message": "UID values were retained"
+    },
+    {
+      "code": "MEDSEAL-W106",
+      "message": "Pixel data was not inspected"
+    }
+  ]
+}

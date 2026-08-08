@@ -1,0 +1,12 @@
+import {
+  "001-Elsa/medseal/src/byteio",
+  "001-Elsa/medseal/src/dicom_writer",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/x/fs",
+}
+
+supported_targets = "+native"
+
+pkgtype(kind: "executable")
