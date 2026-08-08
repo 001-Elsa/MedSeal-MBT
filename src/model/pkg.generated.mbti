@@ -16,6 +16,8 @@ pub(all) suberror MedSealError {
   MissingDicmMarker
   UnexpectedEndOfFile(Int)
   UnsupportedTransferSyntax(String)
+  MissingRequiredFileMeta(Tag)
+  InvalidFileMetaGroupLength(UInt, UInt)
   InvalidVr(String, Int)
   InvalidLength(Tag, UInt, Int)
   InvalidSequence(Int)
