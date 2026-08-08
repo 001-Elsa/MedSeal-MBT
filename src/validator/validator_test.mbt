@@ -41,3 +41,82 @@ test "invalid UID creates a stable error" {
   let report = validate_dataset(@model.DataSet::new([uid]))
   assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E210" }))
 }
+
+///|
+fn text_value(
+  vr : @model.Vr,
+  value : String,
+  order : Int,
+) -> @model.DataElement {
+  @model.DataElement::new(
+    @model.Tag::new(0x0008U, 0x0100U + order.reinterpret_as_uint()),
+    vr,
+    value.length().reinterpret_as_uint(),
+    @model.ElementValue::Text(value),
+    order,
+  )
+}
+
+///|
+test "UI rejects empty components and edge dots" {
+  for value in [".1.2", "1.2.", "1..2"] {
+    let report = validate_dataset(
+      @model.DataSet::new([text_value(@model.Vr::UI, value, 0)]),
+    )
+    assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E210" }))
+  }
+}
+
+///|
+test "bounded text VRs enforce their character limits" {
+  let report = validate_dataset(
+    @model.DataSet::new([
+      text_value(@model.Vr::AE, "12345678901234567", 0),
+      text_value(@model.Vr::SH, "12345678901234567", 1),
+      text_value(
+        @model.Vr::LO,
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        2,
+      ),
+    ]),
+  )
+  assert_eq(
+    report.issues.filter(fn(issue) { issue.code == "MEDSEAL-E212" }).length(),
+    3,
+  )
+}
+
+///|
+test "CS AS and DA syntax checks have stable error codes" {
+  let report = validate_dataset(
+    @model.DataSet::new([
+      text_value(@model.Vr::CS, "lower-case", 0),
+      text_value(@model.Vr::AS, "12Y", 1),
+      text_value(@model.Vr::DA, "2026-08-08", 2),
+    ]),
+  )
+  assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E213" }))
+  assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E214" }))
+  assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E215" }))
+}
+
+///|
+test "valid constrained text values pass their syntax rules" {
+  let report = validate_dataset(
+    @model.DataSet::new([
+      text_value(@model.Vr::UI, "1.2.840.10008.1.2.1", 0),
+      text_value(@model.Vr::CS, "ORIGINAL_PRIMARY", 1),
+      text_value(@model.Vr::AS, "032Y", 2),
+      text_value(@model.Vr::DA, "20260808", 3),
+    ]),
+  )
+  assert_false(
+    report.issues.any(fn(issue) {
+      issue.code == "MEDSEAL-E210" ||
+      issue.code == "MEDSEAL-E212" ||
+      issue.code == "MEDSEAL-E213" ||
+      issue.code == "MEDSEAL-E214" ||
+      issue.code == "MEDSEAL-E215"
+    }),
+  )
+}
