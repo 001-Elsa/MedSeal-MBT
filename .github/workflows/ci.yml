@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v5
       - name: Install MoonBit
         uses: hustcer/setup-moonbit@v1
+        with:
+          version: 0.10.5+5e7afb0c0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Toolchain
