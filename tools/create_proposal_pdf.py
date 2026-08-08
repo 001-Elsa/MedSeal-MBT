@@ -106,10 +106,11 @@ def build() -> None:
         Spacer(1, 3.2 * mm),
     ]
     meta = [
-        ["参赛账号", "001-Elsa", "项目性质", "原创实现"],
+        ["参赛者", "以官方报名问卷填写为准", "参赛账号", "001-Elsa"],
         ["项目方向", "医学影像格式解析与安全工具", "许可证", "Apache-2.0"],
         ["GitHub", "https://github.com/001-Elsa/MedSeal-MBT", "版本", "0.1.1"],
-        ["Mooncakes", "https://mooncakes.io/docs/001-Elsa/medseal", "后端", "Native"],
+        ["GitLink", "https://gitlink.org.cn/Hzhhhh/MedSeal-MBT", "后端", "Native"],
+        ["Mooncakes", "https://mooncakes.io/docs/001-Elsa/medseal", "项目性质", "原创实现"],
     ]
     table = Table(meta, colWidths=[22 * mm, 74 * mm, 20 * mm, 58 * mm])
     table.setStyle(
@@ -136,8 +137,13 @@ def build() -> None:
         [
             table,
             section(
-                "项目简介与场景",
-                "MedSeal-MBT 是使用 MoonBit 编写的轻量级 DICOM Part 10 文件解析、结构校验和基础元数据脱敏工具，面向开发测试、教学演示与数据交付前的直接身份字段清理。第一版仅接受 Explicit VR Little Endian；遇到其他 Transfer Syntax 会明确拒绝，不猜测解析医疗文件。",
+                "项目简介",
+                "MedSeal-MBT 是使用 MoonBit 编写的轻量级 DICOM 医学影像元数据解析、结构校验和基础元数据脱敏工具。项目支持 DICOM Part 10 文件与 Explicit VR Little Endian 传输语法，可读取常见数据元素、基础嵌套 Sequence 和 Pixel Data，并在处理后输出新的 DICOM 文件与不包含原始敏感值的 JSON 审计报告。",
+                styles,
+            ),
+            section(
+                "项目方向与适用场景",
+                "项目方向属于围绕实际开发需求制作的 MoonBit 开发工具，适用于公开测试数据整理、教学演示、DICOM 文件结构学习、开发联调前的样本清理，以及 MoonBit 在医学影像文件格式解析领域的生态实践。项目避免做医疗诊断、网络服务、PACS、DICOMweb 或像素内容识别，边界清晰、可离线运行。",
                 styles,
             ),
             section(
@@ -146,13 +152,13 @@ def build() -> None:
                 styles,
             ),
             section(
-                "技术路线与安全边界",
-                "项目按 byteio、model、parser、validator、deid、writer、app 分包。所有读取先检查剩余字节，并限制文件 256 MiB、单元素 128 MiB、元素 100,000 个、Sequence 深度 32 层。项目不解码压缩图像，不检查 Pixel Data 中烧录文字，不提供诊断，也不宣称完全匿名化或医疗法规合规。",
+                "项目性质与开源合规",
+                "本项目为原创 MoonBit 实现，不是对其他成熟开源项目的移植或复制。仓库采用 Apache-2.0 许可证，第三方依赖和样本来源在 THIRD_PARTY.md 与 samples/README.md 中说明；测试样本由项目工具人工生成，不包含真实患者隐私信息。项目已同步公开到 GitHub 与 GitLink，并发布至 mooncakes.io。",
                 styles,
             ),
             section(
-                "交付与质量",
-                "交付公开 GitHub/GitLink 仓库、Apache-2.0 许可证、合成 DICOM 样本、可运行 Native CLI、审计示例、三平台 CI 和核心回归测试。Mooncakes 包 001-Elsa/medseal@0.1.1 已发布并构建成功。所有样本由仓库生成器创建，不含真实患者数据；直接依赖 moonbitlang/async 与 moonbitlang/x 均为 Apache-2.0。",
+                "质量与边界",
+                "项目核心功能主要由 MoonBit 实现，仓库包含 README、架构说明、更新日志、安全说明、CI、可运行示例和自动化测试。当前版本通过 moon fmt --check、moon check --target all --deny-warn、moon test --target all --deny-warn、moon build --target native 与 GitHub Actions。MedSeal-MBT 只做基础元数据脱敏，不检查 Pixel Data 中烧录的个人信息，不保证完全匿名化，也不宣称医疗法规合规。",
                 styles,
             ),
             Spacer(1, 3 * mm),
