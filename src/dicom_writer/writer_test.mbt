@@ -18,10 +18,28 @@ fn meta_element(
 test "write then parse preserves order, sequence and pixel bytes" {
   let meta = @model.DataSet::new([
     meta_element(
+      @model.Tag::new(0x0002U, 0x0002U),
+      @model.Vr::UI,
+      "1.2.840.10008.5.1.4.1.1.7",
+      0,
+    ),
+    meta_element(
+      @model.Tag::new(0x0002U, 0x0003U),
+      @model.Vr::UI,
+      "1.2.826.0.1.3680043.10.999.1",
+      1,
+    ),
+    meta_element(
       @model.transfer_syntax_uid_tag,
       @model.Vr::UI,
       @parser.explicit_vr_little_endian_uid,
-      0,
+      2,
+    ),
+    meta_element(
+      @model.Tag::new(0x0002U, 0x0012U),
+      @model.Vr::UI,
+      "1.2.826.0.1.3680043.10.999",
+      3,
     ),
   ])
   let nested = @model.DataSet::new([

@@ -24,8 +24,35 @@ fn minimal_file(ts : String) -> Bytes {
   let writer = @byteio.ByteWriter::new()
   writer.write_bytes(Bytes::make(128, b'\x00'))
   writer.write_ascii("DICM")
+  let meta = @byteio.ByteWriter::new()
+  write_element(
+    meta,
+    0x0002U,
+    0x0002U,
+    "UI",
+    @utf8.encode("1.2.840.10008.5.1.4.1.1.7\u{0000}"),
+  )
+  write_element(
+    meta,
+    0x0002U,
+    0x0003U,
+    "UI",
+    @utf8.encode("1.2.826.0.1.3680043.10.999.1\u{0000}"),
+  )
   let uid = if ts.length() % 2 == 0 { ts } else { "\{ts}\u{0000}" }
-  write_element(writer, 0x0002U, 0x0010U, "UI", @utf8.encode(uid))
+  write_element(meta, 0x0002U, 0x0010U, "UI", @utf8.encode(uid))
+  write_element(
+    meta,
+    0x0002U,
+    0x0012U,
+    "UI",
+    @utf8.encode("1.2.826.0.1.3680043.10.999\u{0000}"),
+  )
+  let meta_bytes = meta.to_bytes()
+  let group_length = @byteio.ByteWriter::new()
+  group_length.write_u32_le(meta_bytes.length().reinterpret_as_uint())
+  write_element(writer, 0x0002U, 0x0000U, "UL", group_length.to_bytes())
+  writer.write_bytes(meta_bytes)
   write_element(writer, 0x0010U, 0x0010U, "PN", b"ALPHA^TEST")
   writer.to_bytes()
 }
@@ -59,6 +86,36 @@ test "reject unsupported transfer syntax" {
     false
   } catch {
     @model.MedSealError::UnsupportedTransferSyntax("1.2.840.10008.1.2") => true
+    _ => false
+  }
+  assert_true(rejected)
+}
+
+///|
+test "reject missing required File Meta Information" {
+  let writer = @byteio.ByteWriter::new()
+  writer.write_bytes(Bytes::make(128, b'\x00'))
+  writer.write_ascii("DICM")
+  let rejected = try {
+    ignore(parse(writer.to_bytes()))
+    false
+  } catch {
+    @model.MedSealError::MissingRequiredFileMeta(tag) =>
+      tag == @model.Tag::new(0x0002U, 0x0000U)
+    _ => false
+  }
+  assert_true(rejected)
+}
+
+///|
+test "reject incorrect File Meta Information Group Length" {
+  let bytes = minimal_file(explicit_vr_little_endian_uid).to_array()
+  bytes[140] = b'\x01'
+  let rejected = try {
+    ignore(parse(Bytes::from_array(bytes)))
+    false
+  } catch {
+    @model.MedSealError::InvalidFileMetaGroupLength(_, _) => true
     _ => false
   }
   assert_true(rejected)

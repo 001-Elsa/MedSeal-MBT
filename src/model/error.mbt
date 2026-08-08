@@ -4,6 +4,8 @@ pub(all) suberror MedSealError {
   MissingDicmMarker
   UnexpectedEndOfFile(Int)
   UnsupportedTransferSyntax(String)
+  MissingRequiredFileMeta(Tag)
+  InvalidFileMetaGroupLength(UInt, UInt)
   InvalidVr(String, Int)
   InvalidLength(Tag, UInt, Int)
   InvalidSequence(Int)
@@ -24,6 +26,8 @@ pub fn MedSealError::code(self : MedSealError) -> String {
     FileTooSmall => "MEDSEAL-E101"
     MissingDicmMarker => "MEDSEAL-E102"
     UnsupportedTransferSyntax(_) => "MEDSEAL-E103"
+    MissingRequiredFileMeta(_) => "MEDSEAL-E104"
+    InvalidFileMetaGroupLength(_, _) => "MEDSEAL-E105"
     UnexpectedEndOfFile(_) => "MEDSEAL-E201"
     InvalidVr(_, _) => "MEDSEAL-E202"
     InvalidLength(_, _, _) | ElementTooLarge(_, _) => "MEDSEAL-E203"
@@ -46,6 +50,10 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     UnexpectedEndOfFile(offset) => "unexpected end of file at offset \{offset}"
     UnsupportedTransferSyntax(uid) =>
       "unsupported transfer syntax: \{uid}\nOnly Explicit VR Little Endian is supported in version 0.1.0."
+    MissingRequiredFileMeta(tag) =>
+      "missing required File Meta Information element \{tag.to_string()}"
+    InvalidFileMetaGroupLength(declared, actual) =>
+      "File Meta Information Group Length declares \{declared} bytes but \{actual} bytes were parsed"
     InvalidVr(vr, offset) => "invalid VR '\{vr}' at offset \{offset}"
     InvalidLength(tag, length, offset) =>
       "element length \{length} exceeds remaining file size at offset \{offset}, tag \{tag.to_string()}"
