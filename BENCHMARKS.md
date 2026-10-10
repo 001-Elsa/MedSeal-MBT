@@ -24,3 +24,13 @@ does not by itself prove a measured memory ceiling. Reproduce with:
 python tools/verify_with_pydicom.py --count 100 --record docs/evidence/pydicom-100.json
 python tools/verify_with_pydicom.py --count 1000 --record docs/evidence/pydicom-1000.json
 ```
+
+## P0 large-payload baseline
+
+`tools/benchmark_resources.py` now records native child-process RSS for synthetic
+1/16/64/120 MiB single-object payloads, five repetitions each, in
+`docs/evidence/p0-resources.json`. This measures the existing whole-file path;
+fixture generation and the independent pydicom payload check run outside the
+measured process. A 120 MiB payload reached about 491 MiB RSS in the recorded
+run. This is a baseline for streaming work, not clinical throughput or an
+IOD-conformance claim. The earlier no-RSS statement describes the 0.2.0 baseline.

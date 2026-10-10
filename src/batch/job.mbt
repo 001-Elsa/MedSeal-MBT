@@ -2,6 +2,7 @@
 pub struct Job {
   priv root : String
   priv paths : Array[String]
+  priv inventory : @inventory.Inventory
   priv snapshots : Array[(Int64, (Int64, Int))]
   priv hashes : Array[String]
   priv metadata : Array[@model.DataSet]
@@ -14,38 +15,6 @@ pub struct Job {
 ///|
 fn join(parent : String, name : String) -> String {
   @path.Path(parent).join(@path.Path(name)).0
-}
-
-///|
-async fn scan(
-  root : String,
-  paths : Array[String],
-  depth : Int,
-) -> Unit raise @model.MedSealError {
-  if depth > 16 {
-    raise @model.MedSealError::InvalidArgument("directory nesting exceeds 16")
-  }
-  for name in @storage.list(root) {
-    let path = join(root, name)
-    match @storage.kind(path) {
-      @async_fs.FileKind::SymLink =>
-        raise @model.MedSealError::InvalidArgument(
-          "symbolic links in input directory are rejected",
-        )
-      @async_fs.FileKind::Directory => scan(path, paths, depth + 1)
-      @async_fs.FileKind::Regular if name.to_lower().has_suffix(".dcm") => {
-        paths.push(path)
-        if paths.length() > 10000 {
-          raise @model.MedSealError::InvalidArgument("job exceeds 10000 files")
-        }
-      }
-      @async_fs.FileKind::Regular => ()
-      _ =>
-        raise @model.MedSealError::InvalidArgument(
-          "non-regular input directory entry",
-        )
-    }
-  }
 }
 
 ///|
@@ -95,9 +64,8 @@ pub async fn plan(
     )
   }
   let root = @storage.canonical(input)
-  let paths : Array[String] = []
-  scan(root, paths, 0)
-  paths.sort()
+  let inventory = @inventory.discover(root)
+  let paths = inventory.candidates
   let metadata : Array[@model.DataSet] = []
   let snapshots : Array[(Int64, (Int64, Int))] = []
   let hashes : Array[String] = []
@@ -139,6 +107,7 @@ pub async fn plan(
   {
     root,
     paths,
+    inventory,
     snapshots,
     hashes,
     metadata,
@@ -154,6 +123,8 @@ pub fn Job::preview(self : Job) -> String {
   Json::object(
     Map::from_array([
       ("status", Json::string("planned")),
+      ("inventory", self.inventory.summary()),
+      ("release_authorized", Json::boolean(false)),
       ("objects", Json::number(self.report.objects.to_double())),
       ("references", Json::number(self.report.references.to_double())),
       (
@@ -208,6 +179,8 @@ fn nested(left : String, right : String) -> Bool {
 pub async fn Job::execute(
   self : Job,
   output : String,
+  faults? : @storage.Faults? = None,
+  checkpoint? : (async (String, Int) -> Unit raise @model.MedSealError)? = None,
 ) -> String raise @model.MedSealError {
   if self.consumed {
     raise @model.MedSealError::InvalidArgument(
@@ -215,10 +188,9 @@ pub async fn Job::execute(
     )
   }
   self.consumed = true
-  let current : Array[String] = []
-  scan(self.root, current, 0)
-  current.sort()
-  if current != self.paths {
+  let current = @inventory.discover(self.root)
+  if current.candidates != self.paths ||
+    current.excluded != self.inventory.excluded {
     raise @model.MedSealError::IoError("input file set changed after planning")
   }
   let output = @storage.output_path(output)
@@ -235,9 +207,15 @@ pub async fn Job::execute(
   let stage = "\{output}.medseal-\{@storage.token()}"
   @storage.mkdir(stage)
   defer (@async_fs.rmdir(stage, recursive=true) catch { _ => () })
+  if checkpoint is Some(callback) {
+    callback("stage-created", 0)
+  }
   let outputs : Array[@model.DataSet] = []
   let objects : Array[Json] = []
   for index, path in self.paths {
+    if checkpoint is Some(callback) {
+      callback("before-object", index)
+    }
     if @storage.snapshot(path) != self.snapshots[index] {
       raise @model.MedSealError::IoError("input changed after planning")
     }
@@ -259,7 +237,7 @@ pub async fn Job::execute(
     let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
     let id = "object-\{index + 1}"
     let path = join(stage, "\{id}.dcm")
-    @storage.write_new(path, bytes)
+    @storage.write_new(path, bytes, faults~)
     let reparsed = @parser.parse(@storage.read(path))
     check_meta(reparsed)
     if !@verification.same_values(result.dataset, reparsed.dataset) ||
@@ -275,7 +253,10 @@ pub async fn Job::execute(
         "audit report exceeds 16 MiB limit",
       )
     }
-    @storage.write_new(join(stage, "\{id}.audit.json"), audit_bytes)
+    @storage.write_new(join(stage, "\{id}.audit.json"), audit_bytes, faults~)
+    if checkpoint is Some(callback) {
+      callback("object-verified", index)
+    }
     objects.push(
       Json::object(
         Map::from_array([
@@ -290,11 +271,18 @@ pub async fn Job::execute(
     outputs,
     allow_external=self.policy.allow_external_references,
   )
+  if checkpoint is Some(callback) {
+    callback("before-manifest", self.paths.length())
+  }
   let manifest = Json::object(
     Map::from_array([
       ("version", Json::number(1.0)),
       ("tool_version", Json::string(@model.medseal_version)),
       ("status", Json::string("complete")),
+      ("conversion_status", Json::string("metadata-subset-transformed")),
+      ("integrity_status", Json::string("verified")),
+      ("release_authorized", Json::boolean(false)),
+      ("inventory", self.inventory.summary()),
       ("policy", Json::string("research-v1")),
       (
         "allow_external_references",
@@ -316,22 +304,29 @@ pub async fn Job::execute(
       ),
     ]),
   ).stringify(indent=2)
-  @storage.write_new(join(stage, "manifest.json"), @utf8.encode(manifest))
-  let final_paths : Array[String] = []
-  scan(self.root, final_paths, 0)
-  final_paths.sort()
-  if final_paths != self.paths {
+  @storage.write_new(
+    join(stage, "manifest.json"),
+    @utf8.encode(manifest),
+    faults~,
+  )
+  if checkpoint is Some(callback) {
+    callback("before-publication", self.paths.length())
+  }
+  let final_inventory = @inventory.discover(self.root)
+  if final_inventory.candidates != self.paths ||
+    final_inventory.excluded != self.inventory.excluded {
     raise @model.MedSealError::IoError(
       "input file set changed during execution",
     )
   }
   for index, path in self.paths {
-    if @storage.snapshot(path) != self.snapshots[index] {
+    if @storage.snapshot(path) != self.snapshots[index] ||
+      @checksum.sha256(@storage.read(path)) != self.hashes[index] {
       raise @model.MedSealError::IoError("input changed during execution")
     }
   }
   // No overwrite; the sibling staging directory keeps the rename on one FS.
-  @storage.publish(stage, output)
+  @storage.publish(stage, output, faults~)
   manifest
 }
 

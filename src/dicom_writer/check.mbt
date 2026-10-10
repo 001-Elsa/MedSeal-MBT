@@ -14,7 +14,8 @@ fn check_model(element : @model.DataElement) -> Unit raise @model.MedSealError {
     @model.ElementValue::Raw(bytes) =>
       !element.vr.is_text() &&
       element.vr != @model.Vr::SQ &&
-      bytes.length() % 2 == 0
+      bytes.length() % 2 == 0 &&
+      bytes.length() % element.vr.value_unit_size() == 0
   }
   if !valid {
     raise @model.MedSealError::InvalidModel(

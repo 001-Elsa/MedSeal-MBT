@@ -1,0 +1,8 @@
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/storage",
+  "moonbitlang/async/fs" @async_fs,
+  "moonbitlang/x/path",
+}
+
+supported_targets = "+native"

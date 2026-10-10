@@ -1,0 +1,23 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/inventory"
+
+import {
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+pub async fn discover(String) -> Inventory raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub struct Inventory {
+  candidates : Array[String]
+  excluded : Array[String]
+  entries : Int
+}
+pub fn Inventory::summary(Self) -> Json
+
+// Type aliases
+
+// Traits

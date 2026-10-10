@@ -152,6 +152,7 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
   Json::object(
     Map::from_array([
       ("status", Json::string("integrity-and-structure-verified")),
+      ("release_authorized", Json::boolean(false)),
       ("objects", Json::number(report.objects.to_double())),
       ("references", Json::number(report.references.to_double())),
       (

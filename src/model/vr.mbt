@@ -120,7 +120,7 @@ pub fn Vr::to_string(self : Vr) -> String {
 ///|
 pub fn Vr::uses_u32_length(self : Vr) -> Bool {
   match self {
-    OB | OD | OF | OL | OV | OW | SQ | UC | UN | UR | UT => true
+    OB | OD | OF | OL | OV | OW | SQ | SV | UC | UN | UR | UT | UV => true
     _ => false
   }
 }
@@ -146,6 +146,16 @@ pub fn Vr::is_text(self : Vr) -> Bool {
     | UR
     | UT => true
     _ => false
+  }
+}
+
+///|
+pub fn Vr::value_unit_size(self : Vr) -> Int {
+  match self {
+    US | SS | OW => 2
+    AT | UL | SL | FL | OF | OL => 4
+    FD | OD | OV | SV | UV => 8
+    _ => 1
   }
 }
 

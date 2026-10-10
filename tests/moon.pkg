@@ -1,6 +1,8 @@
 import {
   "moonbitlang/async",
   "001-Elsa/medseal/src/batch",
+  "001-Elsa/medseal/src/byteio",
+  "001-Elsa/medseal/src/inventory",
   "001-Elsa/medseal/src/policy",
   "001-Elsa/medseal/src/identity",
   "001-Elsa/medseal/src/verification",

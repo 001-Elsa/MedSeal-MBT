@@ -2,11 +2,12 @@ import {
   "001-Elsa/medseal/src/model",
   "moonbitlang/async/fs" @async_fs,
   "moonbitlang/core/bigint",
+  "moonbitlang/core/encoding/utf8",
   "moonbitlang/x/path",
 }
 
 supported_targets = "+native"
 
 options(
-  "native-stub": [ "entropy.c" ],
+  "native-stub": [ "entropy.c", "source_guard.c" ],
 )

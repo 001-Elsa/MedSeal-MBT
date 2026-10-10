@@ -168,12 +168,8 @@ fn parse_element(
   if int_length % 2 != 0 {
     raise @model.MedSealError::InvalidLength(tag, length, reader.position())
   }
-  match vr {
-    US | SS if int_length % 2 != 0 =>
-      raise @model.MedSealError::InvalidLength(tag, length, reader.position())
-    UL | SL if int_length % 4 != 0 =>
-      raise @model.MedSealError::InvalidLength(tag, length, reader.position())
-    _ => ()
+  if int_length % vr.value_unit_size() != 0 {
+    raise @model.MedSealError::InvalidLength(tag, length, reader.position())
   }
   let bytes = reader.read_bytes(int_length)
   @model.DataElement::new(

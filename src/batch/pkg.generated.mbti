@@ -4,6 +4,7 @@ package "001-Elsa/medseal/src/batch"
 import {
   "001-Elsa/medseal/src/model",
   "001-Elsa/medseal/src/policy",
+  "001-Elsa/medseal/src/storage",
   "001-Elsa/medseal/src/verification",
 }
 
@@ -21,7 +22,7 @@ pub struct Job {
   report : @verification.CollectionReport
   // private fields
 }
-pub async fn Job::execute(Self, String) -> String raise @model.MedSealError
+pub async fn Job::execute(Self, String, faults? : @storage.Faults?, checkpoint? : (async (String, Int) -> Unit raise @model.MedSealError)?) -> String raise @model.MedSealError
 pub fn Job::preview(Self) -> String
 
 // Type aliases

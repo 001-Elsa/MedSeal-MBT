@@ -141,6 +141,7 @@ pub fn Vr::not_equal(Self, Self) -> Bool
 pub fn Vr::to_repr(Self) -> @debug.Repr
 pub fn Vr::to_string(Self) -> String
 pub fn Vr::uses_u32_length(Self) -> Bool
+pub fn Vr::value_unit_size(Self) -> Int
 
 // Type aliases
 

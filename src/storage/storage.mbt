@@ -3,6 +3,31 @@
 extern "C" fn entropy(buffer : Bytes, length : Int) -> Int = "medseal_entropy"
 
 ///|
+#borrow(path)
+extern "C" fn source_guard(fd : Int, path : Bytes) -> Int = "medseal_source_guard"
+
+///|
+fn check_source(
+  file : @async_fs.File,
+  path : String,
+) -> Unit raise @model.MedSealError {
+  if path.contains("\u{0000}") {
+    raise @model.MedSealError::InvalidArgument("NUL in file path")
+  }
+  match source_guard(file.fd(), @utf8.encode(path + "\u{0000}")) {
+    0 => ()
+    -2 =>
+      raise @model.MedSealError::InvalidArgument(
+        "linked or non-regular source is rejected",
+      )
+    _ =>
+      raise @model.MedSealError::IoError(
+        "source identity changed or could not be checked",
+      )
+  }
+}
+
+///|
 pub fn token(size? : Int = 16) -> String raise @model.MedSealError {
   if size < 1 || size > 16 {
     raise @model.MedSealError::InvalidArgument("invalid entropy size")
@@ -85,7 +110,11 @@ pub async fn publish(
   source : String,
   target : String,
   replace? : Bool = false,
+  faults? : Faults? = None,
 ) -> Unit raise @model.MedSealError {
+  if faults is Some(faults) {
+    faults.hit("publish")
+  }
   @async_fs.rename(source, target, replace~) catch {
     _ => raise @model.MedSealError::IoError("could not publish staged result")
   }
@@ -96,6 +125,9 @@ pub async fn read(
   path : String,
   limit? : Int = 256 * 1024 * 1024,
 ) -> Bytes raise @model.MedSealError {
+  if limit < 0 || limit > 256 * 1024 * 1024 {
+    raise @model.MedSealError::InvalidArgument("invalid read limit")
+  }
   let kind = @async_fs.kind(path, follow_symlink=false) catch {
     _ => raise @model.MedSealError::IoError("could not inspect input")
   }
@@ -108,6 +140,7 @@ pub async fn read(
     _ => raise @model.MedSealError::IoError("could not open input")
   }
   defer file.close()
+  check_source(file, path)
   if file.kind() != @async_fs.FileKind::Regular {
     raise @model.MedSealError::InvalidArgument("input is not a regular file")
   }
@@ -126,6 +159,7 @@ pub async fn read(
   if current_size != size {
     raise @model.MedSealError::IoError("input changed during reading")
   }
+  check_source(file, path)
   data
 }
 
@@ -133,19 +167,67 @@ pub async fn read(
 pub async fn write_new(
   path : String,
   bytes : Bytes,
+  faults? : Faults? = None,
 ) -> Unit raise @model.MedSealError {
-  @async_fs.write_file(
+  if faults is Some(faults) {
+    faults.hit("create")
+  }
+  let file = @async_fs.open(
     path,
-    bytes,
+    mode=@async_fs.Mode::WriteOnly,
     create_mode=@async_fs.CreateMode::CreateNew,
     permission=0o600,
-    sync=@async_fs.SyncMode::Full,
   ) catch {
     _ =>
       raise @model.MedSealError::IoError(
         "could not create staged file exclusively",
       )
   }
+  defer file.close()
+  let middle = bytes.length() / 2
+  file.write_at(bytes[:middle], position=0L) catch {
+    _ => raise @model.MedSealError::IoError("could not write staged file")
+  }
+  if faults is Some(faults) {
+    faults.hit("after-partial-write")
+  }
+  file.write_at(bytes[middle:], position=middle.to_int64()) catch {
+    _ => raise @model.MedSealError::IoError("could not finish staged file")
+  }
+  if faults is Some(faults) {
+    faults.hit("before-sync")
+  }
+  file.sync() catch {
+    _ => raise @model.MedSealError::IoError("could not synchronize staged file")
+  }
+}
+
+///|
+/// Bounded Part 10 discovery; extensionless files are not omitted.
+pub async fn part10_candidate(path : String) -> Bool raise @model.MedSealError {
+  if kind(path) != @async_fs.FileKind::Regular {
+    raise @model.MedSealError::InvalidArgument(
+      "discovery requires a regular file",
+    )
+  }
+  let file = @async_fs.open(path, mode=@async_fs.Mode::ReadOnly) catch {
+    _ => raise @model.MedSealError::IoError("could not probe candidate")
+  }
+  defer file.close()
+  check_source(file, path)
+  if file.kind() != @async_fs.FileKind::Regular {
+    raise @model.MedSealError::InvalidArgument("candidate is not regular")
+  }
+  let size = file.size() catch {
+    _ => raise @model.MedSealError::IoError("could not inspect candidate")
+  }
+  if size < 132L {
+    return false
+  }
+  let prefix = file.read_exactly_at(132, position=0L) catch {
+    _ => raise @model.MedSealError::IoError("could not probe Part 10 header")
+  }
+  prefix[128:132] == b"DICM"[:]
 }
 
 ///|

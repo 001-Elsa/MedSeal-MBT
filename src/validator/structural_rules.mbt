@@ -76,9 +76,9 @@ fn validate_elements(
             .split("\\")
             .any(fn(part) {
               if element.vr == @model.Vr::PN {
-                part.split("=").any(fn(group) { group.length() > limit })
+                part.split("=").any(fn(group) { group.char_length() > limit })
               } else {
-                part.length() > limit
+                part.char_length() > limit
               }
             }) =>
             issues.push(

@@ -75,7 +75,7 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     ElementTooLarge(length, offset) =>
       "element length \{length} exceeds 128 MiB limit at offset \{offset}"
     FileTooLarge(length) => "file size \{length} exceeds 256 MiB limit"
-    OutputAlreadyExists(path) => "output file already exists: \{path}"
+    OutputAlreadyExists(_) => "output destination already exists"
     IoError(message) => "file I/O failed: \{message}"
     OutputVerificationFailed(message) =>
       "write-back verification failed: \{message}"

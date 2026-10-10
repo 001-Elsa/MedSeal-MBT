@@ -164,7 +164,7 @@ pub fn help_text(command : String?) -> String {
     Some("inspect") => "Usage: medseal inspect <input> [--json]"
     Some("validate") => "Usage: medseal validate <input> [--json]"
     Some("anonymize") =>
-      "Usage: medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]"
+      "Compatibility basic mode: fixed aliases, retained UIDs, no collection or release authorization.\nUsage: medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]"
     _ =>
       "MedSeal-MBT \{@model.medseal_version}\nA DICOM metadata validation and collection de-identification tool.\n\nUsage:\n  medseal inspect <input> [--json]\n  medseal validate <input> [--json]\n  medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]\n  medseal plan <input-dir> [--policy <policy.json>]\n  medseal batch <input-dir> --output <new-job-dir> [--policy <policy.json>]\n  medseal verify <job-dir>\n  medseal --version"
   }

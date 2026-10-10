@@ -26,6 +26,9 @@ This is a tested metadata subset, not a full DICOM conformance statement.
 - 10,000 objects per job, 100,000 distinct mapped UIDs.
 - 2 MiB estimated indexed metadata per source; 64 MiB per collection.
 - 16 directory levels; recursive scans reject symbolic links and special files.
+- Discovery probes all regular files (132-byte header); extensionless Part 10
+  files are included, non-Part-10 files are counted, and discovery is capped at
+  20,000 entries. Hardlinked inputs are rejected.
 - 1 MiB policy JSON, 4 MiB manifest, 16 MiB per audit report.
 
 Files are opened and their sizes checked before bounded reads. Source SHA-256,

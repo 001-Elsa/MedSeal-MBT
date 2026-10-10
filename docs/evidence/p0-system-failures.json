@@ -1,0 +1,37 @@
+{
+  "scope": "actual process/path/permission failures on this POSIX host; not power-loss or real disk-full certification",
+  "scenarios": [
+    {
+      "scenario": "same-target-two-processes",
+      "result": "pass",
+      "exit_codes": [
+        0,
+        4
+      ]
+    },
+    {
+      "scenario": "sigkill-after-staging",
+      "result": "pass",
+      "private_leftover": true,
+      "recovery": "not available in P0; do not publish leftover"
+    },
+    {
+      "scenario": "kernel-file-size-write-failure",
+      "result": "pass",
+      "kind": "EFBIG; not ENOSPC"
+    },
+    {
+      "scenario": "parent-symlink-nested-output",
+      "result": "pass"
+    },
+    {
+      "scenario": "hardlinked-input",
+      "result": "pass"
+    },
+    {
+      "scenario": "unreadable-input",
+      "result": "pass"
+    }
+  ],
+  "real_enospc": "not exercised; instance-local storage failure tests cover cleanup"
+}
