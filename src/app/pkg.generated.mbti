@@ -29,6 +29,7 @@ pub(all) enum Command {
   Plan(String, String?)
   Batch(String, String, String?)
   Verify(String)
+  Explain(String)
   Help(String?)
   Version
 } derive(Eq, @debug.Debug)

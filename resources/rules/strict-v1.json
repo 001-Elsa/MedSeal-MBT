@@ -1,0 +1,960 @@
+{
+  "schema": 1,
+  "dictionary": "pydicom-3.0.1",
+  "standard_rules": "DICOM-2025e-reviewed-subset",
+  "scope": "Reviewed attributes only; not complete IOD or Annex E conformance",
+  "attributes": [
+    {
+      "tag": "00080005",
+      "vr": "CS",
+      "vm": "1-n",
+      "name": "SpecificCharacterSet",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00080008",
+      "vr": "CS",
+      "vm": "2-n",
+      "name": "ImageType",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00080012",
+      "vr": "DA",
+      "vm": "1",
+      "name": "InstanceCreationDate",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00080013",
+      "vr": "TM",
+      "vm": "1",
+      "name": "InstanceCreationTime",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00080015",
+      "vr": "DT",
+      "vm": "1",
+      "name": "InstanceCoercionDateTime",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00080016",
+      "vr": "UI",
+      "vm": "1",
+      "name": "SOPClassUID",
+      "role": "standard-uid",
+      "retired": false
+    },
+    {
+      "tag": "00080018",
+      "vr": "UI",
+      "vm": "1",
+      "name": "SOPInstanceUID",
+      "role": "instance-uid",
+      "retired": false
+    },
+    {
+      "tag": "00080020",
+      "vr": "DA",
+      "vm": "1",
+      "name": "StudyDate",
+      "role": "shift-da",
+      "retired": false
+    },
+    {
+      "tag": "00080021",
+      "vr": "DA",
+      "vm": "1",
+      "name": "SeriesDate",
+      "role": "shift-da",
+      "retired": false
+    },
+    {
+      "tag": "00080022",
+      "vr": "DA",
+      "vm": "1",
+      "name": "AcquisitionDate",
+      "role": "shift-da",
+      "retired": false
+    },
+    {
+      "tag": "00080023",
+      "vr": "DA",
+      "vm": "1",
+      "name": "ContentDate",
+      "role": "shift-da",
+      "retired": false
+    },
+    {
+      "tag": "0008002A",
+      "vr": "DT",
+      "vm": "1",
+      "name": "AcquisitionDateTime",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080030",
+      "vr": "TM",
+      "vm": "1",
+      "name": "StudyTime",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080031",
+      "vr": "TM",
+      "vm": "1",
+      "name": "SeriesTime",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080032",
+      "vr": "TM",
+      "vm": "1",
+      "name": "AcquisitionTime",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080033",
+      "vr": "TM",
+      "vm": "1",
+      "name": "ContentTime",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080050",
+      "vr": "SH",
+      "vm": "1",
+      "name": "AccessionNumber",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080060",
+      "vr": "CS",
+      "vm": "1",
+      "name": "Modality",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00080064",
+      "vr": "CS",
+      "vm": "1",
+      "name": "ConversionType",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00080070",
+      "vr": "LO",
+      "vm": "1",
+      "name": "Manufacturer",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080080",
+      "vr": "LO",
+      "vm": "1",
+      "name": "InstitutionName",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080081",
+      "vr": "ST",
+      "vm": "1",
+      "name": "InstitutionAddress",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080090",
+      "vr": "PN",
+      "vm": "1",
+      "name": "ReferringPhysicianName",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00080201",
+      "vr": "SH",
+      "vm": "1",
+      "name": "TimezoneOffsetFromUTC",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00081010",
+      "vr": "SH",
+      "vm": "1",
+      "name": "StationName",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00081030",
+      "vr": "LO",
+      "vm": "1",
+      "name": "StudyDescription",
+      "role": "descriptive",
+      "retired": false
+    },
+    {
+      "tag": "0008103E",
+      "vr": "LO",
+      "vm": "1",
+      "name": "SeriesDescription",
+      "role": "descriptive",
+      "retired": false
+    },
+    {
+      "tag": "00081040",
+      "vr": "LO",
+      "vm": "1",
+      "name": "InstitutionalDepartmentName",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00081048",
+      "vr": "PN",
+      "vm": "1-n",
+      "name": "PhysiciansOfRecord",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00081050",
+      "vr": "PN",
+      "vm": "1-n",
+      "name": "PerformingPhysicianName",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00081070",
+      "vr": "PN",
+      "vm": "1-n",
+      "name": "OperatorsName",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00081140",
+      "vr": "SQ",
+      "vm": "1",
+      "name": "ReferencedImageSequence",
+      "role": "sequence",
+      "retired": false
+    },
+    {
+      "tag": "00081150",
+      "vr": "UI",
+      "vm": "1",
+      "name": "ReferencedSOPClassUID",
+      "role": "standard-uid",
+      "retired": false
+    },
+    {
+      "tag": "00081155",
+      "vr": "UI",
+      "vm": "1",
+      "name": "ReferencedSOPInstanceUID",
+      "role": "instance-uid",
+      "retired": false
+    },
+    {
+      "tag": "00100010",
+      "vr": "PN",
+      "vm": "1",
+      "name": "PatientName",
+      "role": "identity",
+      "retired": false
+    },
+    {
+      "tag": "00100020",
+      "vr": "LO",
+      "vm": "1",
+      "name": "PatientID",
+      "role": "identity",
+      "retired": false
+    },
+    {
+      "tag": "00100021",
+      "vr": "LO",
+      "vm": "1",
+      "name": "IssuerOfPatientID",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00100030",
+      "vr": "DA",
+      "vm": "1",
+      "name": "PatientBirthDate",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00100040",
+      "vr": "CS",
+      "vm": "1",
+      "name": "PatientSex",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00101000",
+      "vr": "LO",
+      "vm": "1-n",
+      "name": "OtherPatientIDs",
+      "role": "empty",
+      "retired": true
+    },
+    {
+      "tag": "00101001",
+      "vr": "PN",
+      "vm": "1-n",
+      "name": "OtherPatientNames",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00101010",
+      "vr": "AS",
+      "vm": "1",
+      "name": "PatientAge",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00101020",
+      "vr": "DS",
+      "vm": "1",
+      "name": "PatientSize",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00101030",
+      "vr": "DS",
+      "vm": "1",
+      "name": "PatientWeight",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00102160",
+      "vr": "SH",
+      "vm": "1",
+      "name": "EthnicGroup",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "001021B0",
+      "vr": "LT",
+      "vm": "1",
+      "name": "AdditionalPatientHistory",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00104000",
+      "vr": "LT",
+      "vm": "1",
+      "name": "PatientComments",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00180015",
+      "vr": "CS",
+      "vm": "1",
+      "name": "BodyPartExamined",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00180020",
+      "vr": "CS",
+      "vm": "1-n",
+      "name": "ScanningSequence",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180021",
+      "vr": "CS",
+      "vm": "1-n",
+      "name": "SequenceVariant",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180022",
+      "vr": "CS",
+      "vm": "1-n",
+      "name": "ScanOptions",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180023",
+      "vr": "CS",
+      "vm": "1",
+      "name": "MRAcquisitionType",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180050",
+      "vr": "DS",
+      "vm": "1",
+      "name": "SliceThickness",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180060",
+      "vr": "DS",
+      "vm": "1",
+      "name": "KVP",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180080",
+      "vr": "DS",
+      "vm": "1",
+      "name": "RepetitionTime",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180081",
+      "vr": "DS",
+      "vm": "1",
+      "name": "EchoTime",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180082",
+      "vr": "DS",
+      "vm": "1",
+      "name": "InversionTime",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180083",
+      "vr": "DS",
+      "vm": "1",
+      "name": "NumberOfAverages",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180084",
+      "vr": "DS",
+      "vm": "1",
+      "name": "ImagingFrequency",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180085",
+      "vr": "SH",
+      "vm": "1",
+      "name": "ImagedNucleus",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180086",
+      "vr": "IS",
+      "vm": "1-n",
+      "name": "EchoNumbers",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180087",
+      "vr": "DS",
+      "vm": "1",
+      "name": "MagneticFieldStrength",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180088",
+      "vr": "DS",
+      "vm": "1",
+      "name": "SpacingBetweenSlices",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180089",
+      "vr": "IS",
+      "vm": "1",
+      "name": "NumberOfPhaseEncodingSteps",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180090",
+      "vr": "DS",
+      "vm": "1",
+      "name": "DataCollectionDiameter",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180091",
+      "vr": "IS",
+      "vm": "1",
+      "name": "EchoTrainLength",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180093",
+      "vr": "DS",
+      "vm": "1",
+      "name": "PercentSampling",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00180094",
+      "vr": "DS",
+      "vm": "1",
+      "name": "PercentPhaseFieldOfView",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00181000",
+      "vr": "LO",
+      "vm": "1",
+      "name": "DeviceSerialNumber",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00181002",
+      "vr": "UI",
+      "vm": "1",
+      "name": "DeviceUID",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00181004",
+      "vr": "LO",
+      "vm": "1",
+      "name": "PlateID",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00181030",
+      "vr": "LO",
+      "vm": "1",
+      "name": "ProtocolName",
+      "role": "descriptive",
+      "retired": false
+    },
+    {
+      "tag": "00181310",
+      "vr": "US",
+      "vm": "4",
+      "name": "AcquisitionMatrix",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00181312",
+      "vr": "CS",
+      "vm": "1",
+      "name": "InPlanePhaseEncodingDirection",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00181314",
+      "vr": "DS",
+      "vm": "1",
+      "name": "FlipAngle",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00181315",
+      "vr": "CS",
+      "vm": "1",
+      "name": "VariableFlipAngleFlag",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00185100",
+      "vr": "CS",
+      "vm": "1",
+      "name": "PatientPosition",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "0020000D",
+      "vr": "UI",
+      "vm": "1",
+      "name": "StudyInstanceUID",
+      "role": "instance-uid",
+      "retired": false
+    },
+    {
+      "tag": "0020000E",
+      "vr": "UI",
+      "vm": "1",
+      "name": "SeriesInstanceUID",
+      "role": "instance-uid",
+      "retired": false
+    },
+    {
+      "tag": "00200010",
+      "vr": "SH",
+      "vm": "1",
+      "name": "StudyID",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00200011",
+      "vr": "IS",
+      "vm": "1",
+      "name": "SeriesNumber",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00200012",
+      "vr": "IS",
+      "vm": "1",
+      "name": "AcquisitionNumber",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00200013",
+      "vr": "IS",
+      "vm": "1",
+      "name": "InstanceNumber",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00200020",
+      "vr": "CS",
+      "vm": "2",
+      "name": "PatientOrientation",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00200032",
+      "vr": "DS",
+      "vm": "3",
+      "name": "ImagePositionPatient",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00200037",
+      "vr": "DS",
+      "vm": "6",
+      "name": "ImageOrientationPatient",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00200052",
+      "vr": "UI",
+      "vm": "1",
+      "name": "FrameOfReferenceUID",
+      "role": "instance-uid",
+      "retired": false
+    },
+    {
+      "tag": "00200060",
+      "vr": "CS",
+      "vm": "1",
+      "name": "Laterality",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00201040",
+      "vr": "LO",
+      "vm": "1",
+      "name": "PositionReferenceIndicator",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00201041",
+      "vr": "DS",
+      "vm": "1",
+      "name": "SliceLocation",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00204000",
+      "vr": "LT",
+      "vm": "1",
+      "name": "ImageComments",
+      "role": "descriptive",
+      "retired": false
+    },
+    {
+      "tag": "00280002",
+      "vr": "US",
+      "vm": "1",
+      "name": "SamplesPerPixel",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280004",
+      "vr": "CS",
+      "vm": "1",
+      "name": "PhotometricInterpretation",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280006",
+      "vr": "US",
+      "vm": "1",
+      "name": "PlanarConfiguration",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280008",
+      "vr": "IS",
+      "vm": "1",
+      "name": "NumberOfFrames",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280009",
+      "vr": "AT",
+      "vm": "1-n",
+      "name": "FrameIncrementPointer",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280010",
+      "vr": "US",
+      "vm": "1",
+      "name": "Rows",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280011",
+      "vr": "US",
+      "vm": "1",
+      "name": "Columns",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280030",
+      "vr": "DS",
+      "vm": "2",
+      "name": "PixelSpacing",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280100",
+      "vr": "US",
+      "vm": "1",
+      "name": "BitsAllocated",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280101",
+      "vr": "US",
+      "vm": "1",
+      "name": "BitsStored",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280102",
+      "vr": "US",
+      "vm": "1",
+      "name": "HighBit",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280103",
+      "vr": "US",
+      "vm": "1",
+      "name": "PixelRepresentation",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00280301",
+      "vr": "CS",
+      "vm": "1",
+      "name": "BurnedInAnnotation",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00281050",
+      "vr": "DS",
+      "vm": "1-n",
+      "name": "WindowCenter",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00281051",
+      "vr": "DS",
+      "vm": "1-n",
+      "name": "WindowWidth",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00281052",
+      "vr": "DS",
+      "vm": "1",
+      "name": "RescaleIntercept",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00281053",
+      "vr": "DS",
+      "vm": "1",
+      "name": "RescaleSlope",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00281054",
+      "vr": "LO",
+      "vm": "1",
+      "name": "RescaleType",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00282110",
+      "vr": "CS",
+      "vm": "1",
+      "name": "LossyImageCompression",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00282112",
+      "vr": "DS",
+      "vm": "1-n",
+      "name": "LossyImageCompressionRatio",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00282114",
+      "vr": "CS",
+      "vm": "1-n",
+      "name": "LossyImageCompressionMethod",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "00321032",
+      "vr": "PN",
+      "vm": "1",
+      "name": "RequestingPhysician",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00400241",
+      "vr": "AE",
+      "vm": "1",
+      "name": "PerformedStationAETitle",
+      "role": "empty",
+      "retired": false
+    },
+    {
+      "tag": "00400275",
+      "vr": "SQ",
+      "vm": "1",
+      "name": "RequestAttributesSequence",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "00400555",
+      "vr": "SQ",
+      "vm": "1",
+      "name": "AcquisitionContextSequence",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "04000561",
+      "vr": "SQ",
+      "vm": "1",
+      "name": "OriginalAttributesSequence",
+      "role": "remove",
+      "retired": false
+    },
+    {
+      "tag": "7FE00010",
+      "vr": "OB or OW",
+      "vm": "1",
+      "name": "PixelData",
+      "role": "keep",
+      "retired": false
+    },
+    {
+      "tag": "FFFCFFFC",
+      "vr": "OB",
+      "vm": "1",
+      "name": "DataSetTrailingPadding",
+      "role": "remove",
+      "retired": false
+    }
+  ]
+}

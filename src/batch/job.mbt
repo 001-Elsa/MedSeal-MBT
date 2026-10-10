@@ -75,6 +75,9 @@ pub async fn plan(
     let before = @storage.snapshot(path)
     let bytes = @storage.read(path)
     let parsed = @parser.parse(bytes)
+    if policy.strict_metadata {
+      @conformance.check(parsed.dataset, full_pixels=true)
+    }
     check_meta(parsed)
     let after = @storage.snapshot(path)
     if before != after {
@@ -155,11 +158,16 @@ fn event_json(event : @identity.Event) -> Json {
 }
 
 ///|
-fn audit(id : String, result : @identity.Result) -> String {
+fn audit(
+  id : String,
+  result : @identity.Result,
+  policy : @policy.Policy,
+) -> String {
   Json::object(
     Map::from_array([
       ("object", Json::string(id)),
-      ("policy", Json::string("research-v1")),
+      ("policy", Json::string(policy.name())),
+      ("policy_sha256", Json::string(policy.digest())),
       ("conversion", Json::string("verified")),
       ("pixel_bytes_preserved", Json::boolean(true)),
       ("pixels_inspected", Json::boolean(false)),
@@ -247,7 +255,13 @@ pub async fn Job::execute(
       )
     }
     outputs.push(@verification.metadata_only(reparsed.dataset))
-    let audit_bytes = @utf8.encode(audit(id, result))
+    if self.policy.strict_metadata {
+      @conformance.check(
+        reparsed.dataset.remove(@model.Tag::new(0x0012U, 0x0063U)),
+        full_pixels=true,
+      )
+    }
+    let audit_bytes = @utf8.encode(audit(id, result, self.policy))
     if audit_bytes.length() > 16 * 1024 * 1024 {
       raise @model.MedSealError::OutputVerificationFailed(
         "audit report exceeds 16 MiB limit",
@@ -283,7 +297,9 @@ pub async fn Job::execute(
       ("integrity_status", Json::string("verified")),
       ("release_authorized", Json::boolean(false)),
       ("inventory", self.inventory.summary()),
-      ("policy", Json::string("research-v1")),
+      ("policy", Json::string(self.policy.name())),
+      ("policy_sha256", Json::string(self.policy.digest())),
+      ("dictionary_sha256", Json::string(@dictionary.strict_dictionary_digest)),
       (
         "allow_external_references",
         Json::boolean(self.policy.allow_external_references),

@@ -74,7 +74,7 @@ pub fn write_deidentified(
     ..parsed,
     preamble: Bytes::make(128, b'\x00'),
     file_meta,
-    dataset,
+    dataset: dataset.canonical(),
   }
   write_bytes(clean)
 }

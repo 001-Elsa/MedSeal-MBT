@@ -1,5 +1,7 @@
 import {
   "001-Elsa/medseal/src/inventory",
+  "001-Elsa/medseal/src/conformance",
+  "001-Elsa/medseal/src/dictionary",
   "001-Elsa/medseal/src/checksum",
   "001-Elsa/medseal/src/model",
   "001-Elsa/medseal/src/parser",

@@ -33,6 +33,7 @@ fn transform(
   patient : String,
   path : String,
   events : Array[Event],
+  sop : String,
 ) -> @model.DataSet raise @model.MedSealError {
   let result : Array[@model.DataElement] = []
   let basic = @deid.basic_policy()
@@ -50,12 +51,37 @@ fn transform(
       })
       continue
     }
+    let strict_attribute = @dictionary.strict_attribute(element.tag)
+    if context.policy.strict_metadata {
+      if element.tag.group == 0x0400U ||
+        element.tag.group == 0xFFFAU ||
+        element.tag.group == 0xFFFCU ||
+        (element.tag.group >= 0x6000U && element.tag.group <= 0x60FFU) ||
+        strict_attribute.map(fn(a) { a.role }) == Some("remove") {
+        events.push({
+          path: location,
+          rule: "strict-remove-sensitive-structure",
+          action: "remove",
+        })
+        continue
+      }
+      if strict_attribute is None {
+        raise @model.MedSealError::PolicyError("unclassified public field")
+      }
+    }
     let output = match element.value {
       @model.ElementValue::Sequence(items) => {
         let nested : Array[@model.DataSet] = []
         for index, item in items {
           nested.push(
-            transform(context, item, patient, "\{location}[\{index}]", events),
+            transform(
+              context,
+              item,
+              patient,
+              "\{location}[\{index}]",
+              events,
+              sop,
+            ),
           )
         }
         @model.DataElement::new(
@@ -106,22 +132,41 @@ fn transform(
         }
         action = "replace"
         rule = "patient-pseudonym"
-        replace(element, patient)
+        replace(
+          element,
+          if context.policy.strict_metadata && element.vr == @model.Vr::PN {
+            patient + "^"
+          } else {
+            patient
+          },
+        )
       }
       _ => {
-        let configured = context.policy.action(element.tag)
+        let selected = context.policy.path_action(location, sop, dataset)
+        let configured = match selected {
+          Some((_, action)) => Some(action)
+          None if context.policy.strict_metadata &&
+            strict_attribute.map(fn(a) { a.role }) == Some("empty") =>
+            Some(@policy.Action::Empty)
+          None if context.policy.strict_metadata &&
+            strict_attribute.map(fn(a) { a.role }) == Some("descriptive") =>
+            Some(@policy.Action::Empty)
+          None => context.policy.action(element.tag)
+        }
         match configured {
           Some(@policy.Action::Remove) => {
             events.push({
               path: location,
-              rule: "custom-descriptive",
+              rule: selected.map(fn(s) { s.0 }).unwrap_or("custom-descriptive"),
               action: "remove",
             })
             continue
           }
           Some(@policy.Action::Empty) => {
             action = "empty"
-            rule = "descriptive"
+            rule = selected
+              .map(fn(s) { s.0 })
+              .unwrap_or("strict-empty-or-descriptive")
             replace(element, "")
           }
           Some(@policy.Action::Replace(value)) => {
@@ -131,7 +176,7 @@ fn transform(
               )
             }
             action = "replace"
-            rule = "custom-descriptive"
+            rule = selected.map(fn(s) { s.0 }).unwrap_or("custom-descriptive")
             replace(element, value)
           }
           Some(@policy.Action::Keep) => element
@@ -163,7 +208,7 @@ fn transform(
         }
       }
     }
-    if action != "keep" {
+    if action != "keep" || context.policy.strict_metadata {
       events.push({ path: location, rule, action, })
     }
     result.push(output)
@@ -183,8 +228,18 @@ pub fn Context::apply(
     )
   }
   let patient = self.patient(dataset)
+  if self.policy.strict_metadata {
+    @conformance.check(dataset)
+  }
   let events : Array[Event] = []
-  let output = transform(self, dataset, patient, "dataset", events)
+  let output = transform(
+    self,
+    dataset,
+    patient,
+    "dataset",
+    events,
+    required_text(dataset, @model.Tag::new(0x0008U, 0x0016U)),
+  )
   // A method marker supports double-processing detection. A YES declaration of
   // complete identity removal is deliberately omitted for this limited profile.
   let marker = @model.DataElement::new(
@@ -192,7 +247,7 @@ pub fn Context::apply(
     @model.Vr::LO,
     0U,
     @model.ElementValue::Text(
-      "MedSeal research-v1; metadata subset; pixels unchecked",
+      "MedSeal \{self.policy.name()}; metadata subset; pixels unchecked",
     ),
     output.elements.length(),
   )

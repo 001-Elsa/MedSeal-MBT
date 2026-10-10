@@ -14,6 +14,25 @@ pub fn DataSet::empty() -> DataSet {
 }
 
 ///|
+pub fn DataSet::canonical(self : DataSet) -> DataSet {
+  let elements = self.elements.map(fn(element) {
+    match element.value {
+      Sequence(items) =>
+        { ..element, value: Sequence(items.map(DataSet::canonical)), }
+      _ => element
+    }
+  })
+  elements.sort_by(fn(a, b) {
+    if a.tag.group != b.tag.group {
+      a.tag.group.compare(b.tag.group)
+    } else {
+      a.tag.element.compare(b.tag.element)
+    }
+  })
+  DataSet::new(elements)
+}
+
+///|
 pub fn DataSet::find(self : DataSet, tag : Tag) -> DataElement? {
   match self.elements.search_by(fn(element) { element.tag == tag }) {
     Some(index) => Some(self.elements[index])

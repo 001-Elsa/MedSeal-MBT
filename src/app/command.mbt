@@ -6,6 +6,7 @@ pub(all) enum Command {
   Plan(String, String?)
   Batch(String, String, String?)
   Verify(String)
+  Explain(String)
   Help(String?)
   Version
 } derive(Eq, Debug)
@@ -84,6 +85,14 @@ pub fn parse_command(args : Array[String]) -> Command raise @model.MedSealError 
       }
       Verify(args[1])
     }
+    "explain" => {
+      if args.length() != 2 {
+        raise @model.MedSealError::InvalidArgument(
+          "explain requires one policy file",
+        )
+      }
+      Explain(args[1])
+    }
     "inspect" | "validate" => {
       if args.length() < 2 {
         raise @model.MedSealError::InvalidArgument(
@@ -161,6 +170,7 @@ pub fn help_text(command : String?) -> String {
     Some("batch") =>
       "Usage: medseal batch <input-dir> --output <new-job-dir> [--policy <policy.json>]"
     Some("verify") => "Usage: medseal verify <job-dir>"
+    Some("explain") => "Usage: medseal explain <policy.json>"
     Some("inspect") => "Usage: medseal inspect <input> [--json]"
     Some("validate") => "Usage: medseal validate <input> [--json]"
     Some("anonymize") =>

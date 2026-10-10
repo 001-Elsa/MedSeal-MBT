@@ -60,6 +60,7 @@ pub fn DataElement::to_repr(Self) -> @debug.Repr
 pub struct DataSet {
   elements : Array[DataElement]
 } derive(Eq, @debug.Debug)
+pub fn DataSet::canonical(Self) -> Self
 pub fn DataSet::count_recursive(Self) -> Int
 pub fn DataSet::empty() -> Self
 pub fn DataSet::equal(Self, Self) -> Bool

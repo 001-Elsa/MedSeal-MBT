@@ -13,11 +13,22 @@ pub fn patient_name_tag() -> @model.Tag
 
 pub fn sensitive_rule(@model.Tag) -> SensitiveRule?
 
+pub fn strict_attribute(@model.Tag) -> Attribute?
+
+pub let strict_dictionary_digest : String
+
 pub fn tag_name(@model.Tag) -> String
 
 // Errors
 
 // Types and methods
+pub(all) struct Attribute {
+  vr : String
+  vm : String
+  role : String
+  name : String
+}
+
 pub(all) enum SensitiveRule {
   Replace(String)
   Empty

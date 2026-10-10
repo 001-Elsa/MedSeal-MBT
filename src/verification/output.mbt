@@ -3,8 +3,16 @@ pub fn same_values(left : @model.DataSet, right : @model.DataSet) -> Bool {
   if left.elements.length() != right.elements.length() {
     return false
   }
-  for index, a in left.elements {
-    let b = right.elements[index]
+  let seen : Map[@model.Tag, Bool] = Map([])
+  for a in left.elements {
+    if seen.contains(a.tag) {
+      return false
+    }
+    seen.set(a.tag, true)
+    let b = match right.find(a.tag) {
+      Some(b) => b
+      None => return false
+    }
     if a.tag != b.tag || a.vr != b.vr {
       return false
     }

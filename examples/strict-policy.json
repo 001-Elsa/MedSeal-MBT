@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "mode": "strict",
+  "namespace": "synthetic-study",
+  "date_shift_days": 30,
+  "path_rules": [
+    {
+      "id": "empty-study-description",
+      "path": "dataset/00081030",
+      "action": "empty",
+      "priority": 10
+    }
+  ]
+}

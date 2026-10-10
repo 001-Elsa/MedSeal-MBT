@@ -46,6 +46,10 @@ pub async fn run(args : Array[String]) -> Int {
         println(@batch.verify(path))
         0
       }
+      Explain(path) => {
+        println(load_policy(Some(path)).explain())
+        0
+      }
       Inspect(path, json) => {
         inspect_file(path, json)
         0

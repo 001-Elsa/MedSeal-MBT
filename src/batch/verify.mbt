@@ -40,12 +40,20 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
   let manifest = json_object(
     @storage.read(join(root, "manifest.json"), limit=4 * 1024 * 1024),
   )
+  let profile = json_string(manifest.get("policy"))
   if manifest.get("version") != Some(Json::number(1.0)) ||
     manifest.get("status") != Some(Json::string("complete")) ||
-    manifest.get("policy") != Some(Json::string("research-v1")) ||
+    !["research-v1", "strict-v1"].contains(profile) ||
     manifest.get("pixels_inspected") != Some(Json::boolean(false)) {
     raise @model.MedSealError::OutputVerificationFailed(
       "unsupported or incomplete job manifest",
+    )
+  }
+  if profile == "strict-v1" &&
+    manifest.get("dictionary_sha256") !=
+    Some(Json::string(@dictionary.strict_dictionary_digest)) {
+    raise @model.MedSealError::OutputVerificationFailed(
+      "strict dictionary version mismatch",
     )
   }
   let external = match manifest.get("allow_external_references") {
@@ -103,14 +111,26 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
         "audit identity or verification status mismatch",
       )
     }
+    if report.get("policy") != manifest.get("policy") ||
+      report.get("policy_sha256") != manifest.get("policy_sha256") {
+      raise @model.MedSealError::OutputVerificationFailed(
+        "audit and manifest policy differ",
+      )
+    }
     let parsed = @parser.parse(bytes)
     check_meta(parsed)
     if parsed.preamble != Bytes::make(128, b'\x00') ||
       !@verification.clean_private(parsed.dataset) ||
       @identity.text(parsed.dataset, @model.Tag::new(0x0012U, 0x0063U)) !=
-      Some("MedSeal research-v1; metadata subset; pixels unchecked") {
+      Some("MedSeal \{profile}; metadata subset; pixels unchecked") {
       raise @model.MedSealError::OutputVerificationFailed(
         "output header, method marker or private tag check failed",
+      )
+    }
+    if profile == "strict-v1" {
+      @conformance.check(
+        parsed.dataset.remove(@model.Tag::new(0x0012U, 0x0063U)),
+        full_pixels=true,
       )
     }
     for element in parsed.file_meta.elements {

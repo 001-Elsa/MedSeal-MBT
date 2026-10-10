@@ -11,7 +11,11 @@ pub fn customizable(@model.Tag) -> Bool
 
 pub fn from_json(String) -> Policy raise @model.MedSealError
 
+pub fn parse_tag(String) -> @model.Tag raise @model.MedSealError
+
 pub fn research(scope_name? : String, date_shift_days? : Int, allow_external_references? : Bool, rules? : Array[Rule]) -> Policy raise @model.MedSealError
+
+pub fn strict(scope_name? : String, date_shift_days? : Int, path_rules? : Array[PathRule]) -> Policy raise @model.MedSealError
 
 // Errors
 
@@ -26,13 +30,28 @@ pub fn Action::equal(Self, Self) -> Bool
 pub fn Action::not_equal(Self, Self) -> Bool
 pub fn Action::to_repr(Self) -> @debug.Repr
 
+pub(all) struct PathRule {
+  id : String
+  path : String
+  action : Action
+  priority : Int
+  sop : String?
+  present : @model.Tag?
+}
+
 pub struct Policy {
   scope_name : String
   date_shift_days : Int
   allow_external_references : Bool
+  strict_metadata : Bool
   // private fields
 }
 pub fn Policy::action(Self, @model.Tag) -> Action?
+pub fn Policy::canonical_json(Self) -> String
+pub fn Policy::digest(Self) -> String
+pub fn Policy::explain(Self) -> String
+pub fn Policy::name(Self) -> String
+pub fn Policy::path_action(Self, String, String, @model.DataSet) -> (String, Action)?
 
 pub(all) struct Rule {
   tag : @model.Tag

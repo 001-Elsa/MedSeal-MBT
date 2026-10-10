@@ -1,0 +1,50 @@
+{
+  "profile": "strict-v1",
+  "fixture": "synthetic monochrome Secondary Capture; no CT/MR full-IOD claim",
+  "validator_sha256": "3ccd1edd205688e971e39a2055716ecda0063928bc17cae191cbad5b29c6edc7",
+  "manifest_sha256": "78f8cb9e56aeeb8196b29f92b11692b27160b3ac26cf5b55f9f678b9e2faa1ef",
+  "objects": [
+    {
+      "object": "object-1.dcm",
+      "exit_code": 0,
+      "errors": [],
+      "warnings": [
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study Time",
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID",
+        "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>"
+      ]
+    },
+    {
+      "object": "object-2.dcm",
+      "exit_code": 0,
+      "errors": [],
+      "warnings": [
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study Time",
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID",
+        "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>"
+      ]
+    },
+    {
+      "object": "object-3.dcm",
+      "exit_code": 0,
+      "errors": [],
+      "warnings": [
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study Time",
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID",
+        "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>"
+      ]
+    },
+    {
+      "object": "object-4.dcm",
+      "exit_code": 0,
+      "errors": [],
+      "warnings": [
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study Time",
+        "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID",
+        "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>"
+      ]
+    }
+  ],
+  "release_authorized": false,
+  "note": "Passing declared synthetic IOD fixtures does not certify all inputs or pixel privacy"
+}

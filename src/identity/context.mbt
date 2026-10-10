@@ -118,15 +118,27 @@ pub fn shifted_date(tag : @model.Tag) -> Bool {
 fn collect_uids(
   dataset : @model.DataSet,
   values : Map[String, Bool],
+  strict : Bool,
 ) -> Unit raise @model.MedSealError {
   for element in dataset.elements {
     if element.tag.is_private() {
       continue
     }
+    if strict &&
+      (
+        element.tag.group == 0x0400U ||
+        element.tag.group == 0xFFFAU ||
+        element.tag.group == 0xFFFCU ||
+        (element.tag.group >= 0x6000U && element.tag.group <= 0x60FFU) ||
+        @dictionary.strict_attribute(element.tag).map(fn(a) { a.role }) ==
+        Some("remove")
+      ) {
+      continue
+    }
     match element.value {
       @model.ElementValue::Sequence(items) =>
         for item in items {
-          collect_uids(item, values)
+          collect_uids(item, values, strict)
         }
       @model.ElementValue::Text(value) if element.vr == @model.Vr::UI =>
         if instance_uid(element.tag) {
@@ -161,6 +173,9 @@ pub fn Context::prepare(
   let uids : Map[String, Bool] = Map([])
   let signatures : Map[String, (String, String)] = Map([])
   for dataset in datasets {
+    if self.policy.strict_metadata {
+      @conformance.check(dataset)
+    }
     if text(dataset, @model.Tag::new(0x0012U, 0x0062U)) == Some("YES") ||
       text(dataset, @model.Tag::new(0x0012U, 0x0063U)) is Some(_) {
       raise @model.MedSealError::IdentityError(
@@ -186,7 +201,7 @@ pub fn Context::prepare(
         "SOP Class is outside CT, MR and Secondary Capture support",
       )
     }
-    collect_uids(dataset, uids)
+    collect_uids(dataset, uids, self.policy.strict_metadata)
   }
   let keys = patients.keys().to_array()
   keys.sort()

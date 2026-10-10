@@ -43,3 +43,11 @@ integrity hashes and is checked against standard vectors.
 
 Research-v1 rules reference DICOM PS3.15 Annex E. No DICOM implementation is
 copied, and complete confidentiality-profile conformance is not claimed.
+
+Strict-v1 dictionary data is generated from the MIT-licensed pydicom 3.0.1
+dictionary. The subset source and generator are committed under resources/rules
+and tools/generate_strict_dictionary.py; generated data membership does not
+imply complete IOD/Profile validation. The upstream MIT license is retained in
+resources/licenses/pydicom-LICENSE. The independent official dicom3tools binary
+is a development tool installed outside this repository, not a runtime or
+redistributed package dependency.

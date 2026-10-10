@@ -18,6 +18,8 @@ pub struct Policy {
   date_shift_days : Int
   allow_external_references : Bool
   priv rules : Array[Rule]
+  strict_metadata : Bool
+  priv path_rules : Array[PathRule]
 }
 
 ///|
@@ -64,6 +66,8 @@ pub fn research(
     date_shift_days,
     allow_external_references,
     rules: rules.copy(),
+    strict_metadata: false,
+    path_rules: [],
   }
 }
 
@@ -107,7 +111,7 @@ fn string(json : Json?) -> String raise @model.MedSealError {
 }
 
 ///|
-fn parse_tag(value : String) -> @model.Tag raise @model.MedSealError {
+pub fn parse_tag(value : String) -> @model.Tag raise @model.MedSealError {
   if value.length() != 8 {
     raise @model.MedSealError::PolicyError(
       "tag must have eight hexadecimal characters",
@@ -134,10 +138,14 @@ fn parse_tag(value : String) -> @model.Tag raise @model.MedSealError {
 
 ///|
 pub fn from_json(text : String) -> Policy raise @model.MedSealError {
+  reject_duplicate_keys(text)
   let json = @json.parse(text) catch {
     _ => raise @model.MedSealError::PolicyError("invalid JSON")
   }
   let values = object(json)
+  if values.get("version") == Some(Json::number(2.0)) {
+    return strict_json(values)
+  }
   for key in values.keys() {
     if ![
         "version", "mode", "namespace", "date_shift_days", "allow_external_references",
