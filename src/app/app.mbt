@@ -8,7 +8,7 @@ fn exit_code_for(command : Command, error : @model.MedSealError) -> Int {
     _ =>
       match command {
         Validate(_, _) => 1
-        Anonymize(_, _, _, _, _) => 5
+        Anonymize(_, _, _, _, _) | Plan(_, _) | Batch(_, _, _) | Verify(_) => 5
         _ => 3
       }
   }
@@ -31,6 +31,19 @@ pub async fn run(args : Array[String]) -> Int {
       }
       Version => {
         println("medseal \{@model.medseal_version}")
+        0
+      }
+      Plan(path, policy_path) => {
+        let job = @batch.plan(path, load_policy(policy_path))
+        println(job.preview())
+        0
+      }
+      Batch(input, output, policy_path) => {
+        println(@batch.run(input, output, load_policy(policy_path)))
+        0
+      }
+      Verify(path) => {
+        println(@batch.verify(path))
         0
       }
       Inspect(path, json) => {

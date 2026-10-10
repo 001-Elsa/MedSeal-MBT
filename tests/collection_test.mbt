@@ -160,6 +160,97 @@ test "closed graph rejects missing, cross patient and duplicate object reference
 }
 
 ///|
+async test "batch publishes a verified job with safe names and detects tampering" {
+  let root = @async_fs.tmpdir(prefix="medseal-test")
+  defer @async_fs.rmdir(root, recursive=true)
+  let input = "\{root}/input"
+  @storage.mkdir(input)
+  @storage.write_new(
+    "\{input}/SECRET-A.dcm",
+    object_bytes(
+      "SECRET-A",
+      "1.2.3",
+      "1.2.10",
+      "1.2.20",
+      "20240228",
+      reference=Some("1.2.4"),
+    ),
+  )
+  @storage.write_new(
+    "\{input}/SECRET-B.dcm",
+    object_bytes("SECRET-A", "1.2.4", "1.2.10", "1.2.21", "20240313"),
+  )
+  let job = @batch.plan(input, @policy.research())
+  assert_false(job.preview().contains("SECRET"))
+  let manifest = job.execute("\{root}/output")
+  assert_false(manifest.contains("SECRET"))
+  assert_true(
+    @batch.verify("\{root}/output").contains("integrity-and-structure-verified"),
+  )
+  let first = @parser.parse(@storage.read("\{root}/output/object-1.dcm"))
+  assert_true(
+    @identity.required_text(first.dataset, @model.Tag::new(0x0008U, 0x0018U)).has_prefix(
+      "2.25.",
+    ),
+  )
+  assert_false(
+    @fs.read_file_to_string("\{root}/output/object-1.audit.json").contains(
+      "SECRET",
+    ),
+  )
+  let again = try {
+    ignore(job.execute("\{root}/second"))
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(again)
+  @async_fs.write_file(
+    "\{root}/output/object-1.dcm",
+    b"tampered",
+    create_mode=@async_fs.CreateMode::TruncateExisting,
+  )
+  let tampered = try {
+    ignore(@batch.verify("\{root}/output"))
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(tampered)
+}
+
+///|
+async test "input changes after planning prevent publication and staging is cleaned" {
+  let root = @async_fs.tmpdir(prefix="medseal-change")
+  defer @async_fs.rmdir(root, recursive=true)
+  let input = "\{root}/input"
+  @storage.mkdir(input)
+  @storage.write_new(
+    "\{input}/a.dcm",
+    object_bytes("A", "1.2.3", "1.2.10", "1.2.20", "20240228"),
+  )
+  @storage.write_new(
+    "\{input}/b.dcm",
+    object_bytes("A", "1.2.4", "1.2.10", "1.2.21", "20240313"),
+  )
+  let job = @batch.plan(input, @policy.research())
+  @async_fs.write_file(
+    "\{input}/b.dcm",
+    object_bytes("A", "1.2.4", "1.2.10", "1.2.21", "20240312"),
+    create_mode=@async_fs.CreateMode::TruncateExisting,
+  )
+  let rejected = try {
+    ignore(job.execute("\{root}/output"))
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(rejected)
+  assert_false(@storage.exists("\{root}/output"))
+  assert_eq(@storage.list(root), ["input"])
+}
+
+///|
 test "conflicting patient identities and unclassified UID roles are rejected" {
   let a = @parser.parse(
       object_bytes("A", "1.2.3", "1.2.10", "1.2.20", "20240228"),
@@ -211,6 +302,119 @@ test "processed marker prevents a second shift even when original patient ID is 
     false
   } catch {
     _ => true
+  }
+  assert_true(rejected)
+}
+
+///|
+async test "new input files invalidate a prepared job" {
+  let root = @async_fs.tmpdir(prefix="medseal-add")
+  defer @async_fs.rmdir(root, recursive=true)
+  let input = "\{root}/input"
+  @storage.mkdir(input)
+  @storage.write_new(
+    "\{input}/a.dcm",
+    object_bytes("A", "1.2.3", "1.2.10", "1.2.20", "20240228"),
+  )
+  let job = @batch.plan(input, @policy.research())
+  @storage.write_new(
+    "\{input}/b.dcm",
+    object_bytes("A", "1.2.4", "1.2.10", "1.2.21", "20240313"),
+  )
+  let rejected = try {
+    ignore(job.execute("\{root}/output"))
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(rejected)
+  assert_false(@storage.exists("\{root}/output"))
+}
+
+///|
+async test "single file report failures do not publish the DICOM" {
+  let root = @async_fs.tmpdir(prefix="medseal-report")
+  defer @async_fs.rmdir(root, recursive=true)
+  @storage.write_new(
+    "\{root}/input.dcm",
+    object_bytes("A", "1.2.3", "1.2.10", "1.2.20", "20240228"),
+  )
+  @storage.write_new("\{root}/report.json", b"existing")
+  let rejected = try {
+    @app.anonymize_file(
+      "\{root}/input.dcm",
+      "\{root}/output.dcm",
+      Some("\{root}/report.json"),
+      true,
+      false,
+    )
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(rejected)
+  assert_false(@storage.exists("\{root}/output.dcm"))
+  assert_eq(@storage.read("\{root}/report.json"), b"existing")
+}
+
+///|
+#cfg(not(platform="windows"))
+async test "input symlinks are rejected rather than followed" {
+  let root = @async_fs.tmpdir(prefix="medseal-link")
+  defer @async_fs.rmdir(root, recursive=true)
+  let input = "\{root}/input"
+  @storage.mkdir(input)
+  @storage.write_new(
+    "\{root}/source.dcm",
+    object_bytes("A", "1.2.3", "1.2.10", "1.2.20", "20240228"),
+  )
+  @async_fs.symlink(target="\{root}/source.dcm", "\{input}/link.dcm")
+  let rejected = try {
+    ignore(@batch.plan(input, @policy.research()))
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(rejected)
+}
+
+///|
+async test "batch rejects nested output and existing directories" {
+  let root = @async_fs.tmpdir(prefix="medseal-path")
+  defer @async_fs.rmdir(root, recursive=true)
+  let input = "\{root}/input"
+  @storage.mkdir(input)
+  @storage.write_new(
+    "\{input}/a.dcm",
+    object_bytes("A", "1.2.3", "1.2.10", "1.2.20", "20240228"),
+  )
+  let nested = try {
+    ignore(@batch.run(input, "\{input}/nested", @policy.research()))
+    false
+  } catch {
+    _ => true
+  }
+  let existing = try {
+    ignore(@batch.run(input, root, @policy.research()))
+    false
+  } catch {
+    _ => true
+  }
+  assert_true(nested && existing)
+  assert_eq(@storage.list(input), ["a.dcm"])
+}
+
+///|
+async test "bounded reads reject before loading a file larger than the limit" {
+  let root = @async_fs.tmpdir(prefix="medseal-bound")
+  defer @async_fs.rmdir(root, recursive=true)
+  @storage.write_new("\{root}/file", b"12345678")
+  let rejected = try {
+    ignore(@storage.read("\{root}/file", limit=4))
+    false
+  } catch {
+    @model.MedSealError::FileTooLarge(_) => true
+    _ => false
   }
   assert_true(rejected)
 }

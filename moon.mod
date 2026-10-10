@@ -11,7 +11,7 @@
 
 name = "001-Elsa/medseal"
 
-version = "0.1.1"
+version = "0.2.0"
 
 readme = "README.mbt.md"
 
@@ -23,7 +23,7 @@ keywords = [ "dicom", "de-identification", "medical-imaging", "moonbit" ]
 
 preferred_target = "native"
 
-description = "A small DICOM metadata validator and basic de-identification tool written in MoonBit."
+description = "DICOM metadata validation, collection-consistent pseudonymization, UID remapping and verified binary rewriting in MoonBit."
 
 import {
   "moonbitlang/async@0.22.4",

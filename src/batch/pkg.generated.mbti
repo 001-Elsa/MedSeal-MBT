@@ -1,0 +1,29 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/batch"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/policy",
+  "001-Elsa/medseal/src/verification",
+}
+
+// Values
+pub async fn plan(String, @policy.Policy) -> Job raise @model.MedSealError
+
+pub async fn run(String, String, @policy.Policy) -> String raise @model.MedSealError
+
+pub async fn verify(String) -> String raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub struct Job {
+  report : @verification.CollectionReport
+  // private fields
+}
+pub async fn Job::execute(Self, String) -> String raise @model.MedSealError
+pub fn Job::preview(Self) -> String
+
+// Type aliases
+
+// Traits

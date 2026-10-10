@@ -120,3 +120,26 @@ test "help text documents all stable entry points" {
   assert_true(anonymize.contains("--remove-private"))
   assert_true(anonymize.contains("--force"))
 }
+
+///|
+test "collection commands have explicit inputs and options" {
+  assert_true(
+    @app.parse_command(["plan", "input", "--policy", "policy.json"])
+    is Plan("input", Some("policy.json")),
+  )
+  assert_true(
+    @app.parse_command(["batch", "input", "--output", "job"])
+    is Batch("input", "job", None),
+  )
+  assert_true(@app.parse_command(["verify", "job"]) is Verify("job"))
+  assert_true(rejects_arguments(["batch", "input"]))
+  assert_true(
+    rejects_arguments(["batch", "input", "--output", "--policy", "p.json"]),
+  )
+  assert_true(
+    rejects_arguments([
+      "plan", "input", "--policy", "a.json", "--policy", "b.json",
+    ]),
+  )
+  assert_true(rejects_arguments(["verify", "job", "extra"]))
+}

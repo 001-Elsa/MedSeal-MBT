@@ -3,6 +3,9 @@ pub(all) enum Command {
   Inspect(String, Bool)
   Validate(String, Bool)
   Anonymize(String, String, String?, Bool, Bool)
+  Plan(String, String?)
+  Batch(String, String, String?)
+  Verify(String)
   Help(String?)
   Version
 } derive(Eq, Debug)
@@ -15,6 +18,9 @@ fn option_value(
 ) -> String raise @model.MedSealError {
   if index + 1 >= args.length() {
     raise @model.MedSealError::InvalidArgument("missing value for \{name}")
+  }
+  if args[index + 1].has_prefix("--") {
+    raise @model.MedSealError::InvalidArgument("missing option value")
   }
   args[index + 1]
 }
@@ -35,6 +41,49 @@ pub fn parse_command(args : Array[String]) -> Command raise @model.MedSealError 
     return Help(Some(name))
   }
   match name {
+    "plan" | "batch" => {
+      if args.length() < 2 {
+        raise @model.MedSealError::InvalidArgument("missing input directory")
+      }
+      let mut output : String? = None
+      let mut policy : String? = None
+      let mut index = 2
+      while index < args.length() {
+        match args[index] {
+          "--output" if name == "batch" && output is None => {
+            output = Some(option_value(args, index, "--output"))
+            index = index + 2
+          }
+          "--policy" if policy is None => {
+            policy = Some(option_value(args, index, "--policy"))
+            index = index + 2
+          }
+          _ =>
+            raise @model.MedSealError::InvalidArgument(
+              "unknown or duplicate batch option",
+            )
+        }
+      }
+      if name == "plan" {
+        Plan(args[1], policy)
+      } else {
+        match output {
+          Some(output) => Batch(args[1], output, policy)
+          None =>
+            raise @model.MedSealError::InvalidArgument(
+              "batch requires --output",
+            )
+        }
+      }
+    }
+    "verify" => {
+      if args.length() != 2 {
+        raise @model.MedSealError::InvalidArgument(
+          "verify requires one job directory",
+        )
+      }
+      Verify(args[1])
+    }
     "inspect" | "validate" => {
       if args.length() < 2 {
         raise @model.MedSealError::InvalidArgument(
@@ -108,12 +157,16 @@ pub fn parse_command(args : Array[String]) -> Command raise @model.MedSealError 
 ///|
 pub fn help_text(command : String?) -> String {
   match command {
+    Some("plan") => "Usage: medseal plan <input-dir> [--policy <policy.json>]"
+    Some("batch") =>
+      "Usage: medseal batch <input-dir> --output <new-job-dir> [--policy <policy.json>]"
+    Some("verify") => "Usage: medseal verify <job-dir>"
     Some("inspect") => "Usage: medseal inspect <input> [--json]"
     Some("validate") => "Usage: medseal validate <input> [--json]"
     Some("anonymize") =>
       "Usage: medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]"
     _ =>
-      "MedSeal-MBT \{@model.medseal_version}\nA DICOM metadata validator and basic de-identification tool.\n\nUsage:\n  medseal inspect <input> [--json]\n  medseal validate <input> [--json]\n  medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]\n  medseal --version"
+      "MedSeal-MBT \{@model.medseal_version}\nA DICOM metadata validation and collection de-identification tool.\n\nUsage:\n  medseal inspect <input> [--json]\n  medseal validate <input> [--json]\n  medseal anonymize <input> --output <output> [--report <report.json>] [--remove-private] [--force]\n  medseal plan <input-dir> [--policy <policy.json>]\n  medseal batch <input-dir> --output <new-job-dir> [--policy <policy.json>]\n  medseal verify <job-dir>\n  medseal --version"
   }
 }
 

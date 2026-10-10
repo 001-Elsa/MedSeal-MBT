@@ -26,6 +26,9 @@ pub(all) enum Command {
   Inspect(String, Bool)
   Validate(String, Bool)
   Anonymize(String, String, String?, Bool, Bool)
+  Plan(String, String?)
+  Batch(String, String, String?)
+  Verify(String)
   Help(String?)
   Version
 } derive(Eq, @debug.Debug)
