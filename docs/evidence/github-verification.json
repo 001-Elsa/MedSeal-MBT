@@ -1,0 +1,297 @@
+{
+  "verified_at": "2026-10-10T17:55:28+08:00",
+  "repository": "https://github.com/001-Elsa/MedSeal-MBT",
+  "branch": "master",
+  "candidate_version": "0.2.0",
+  "verified_source_head": "9cbd29208a1c90e3363f40cbb2b811e7db710dd5",
+  "scope_note": "Four functional source/test commits were each pushed and passed CI. The documentation commit follows this snapshot; this file does not claim its own commit CI result.",
+  "commits": [
+    {
+      "stage": 1,
+      "commit": "173b4163fdab824aa42a908d48787ec45f940a03",
+      "title": "fix: harden DICOM parsing, rewriting and staged file I/O",
+      "ci_run_id": 38042656014,
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "ci_url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042656014"
+    },
+    {
+      "stage": 2,
+      "commit": "2e79b7bd032aa8c6d37774ca964d9a6375edf1b0",
+      "title": "feat: add patient identity, date and reference consistency APIs",
+      "ci_run_id": 38042722324,
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "ci_url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042722324"
+    },
+    {
+      "stage": 3,
+      "commit": "e19999da2aac9c66be5eb4f3a42ff55b6909b596",
+      "title": "feat: add verified two-pass collection CLI workflows",
+      "ci_run_id": 38042773780,
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "ci_url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042773780"
+    },
+    {
+      "stage": 4,
+      "commit": "9cbd29208a1c90e3363f40cbb2b811e7db710dd5",
+      "title": "test: add collection examples and independent DICOM verification",
+      "ci_run_id": 38042835292,
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "ci_url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042835292"
+    }
+  ],
+  "latest_source_ci_jobs": [
+    {
+      "name": "Verify (windows-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042835292/job/114186351419",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install MoonBit",
+          "conclusion": "success"
+        },
+        {
+          "name": "Toolchain",
+          "conclusion": "success"
+        },
+        {
+          "name": "Update dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Format",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Interfaces",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Collection example",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Independent DICOM verification",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Verify (ubuntu-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042835292/job/114186351613",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install MoonBit",
+          "conclusion": "success"
+        },
+        {
+          "name": "Toolchain",
+          "conclusion": "success"
+        },
+        {
+          "name": "Update dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Format",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Interfaces",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Collection example",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Independent DICOM verification",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Verify (macos-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38042835292/job/114186351701",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install MoonBit",
+          "conclusion": "success"
+        },
+        {
+          "name": "Toolchain",
+          "conclusion": "success"
+        },
+        {
+          "name": "Update dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Format",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Interfaces",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Collection example",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Independent DICOM verification",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "local_standalone_commit_tests": {
+    "stage_1": {
+      "native": 76,
+      "wasm": 50,
+      "wasm_gc": 50,
+      "js": 50
+    },
+    "stage_2": {
+      "native": 83,
+      "wasm": 53,
+      "wasm_gc": 53,
+      "js": 53
+    },
+    "stage_3": {
+      "native": 91,
+      "wasm": 53,
+      "wasm_gc": 53,
+      "js": 53
+    },
+    "stage_4": "All-target check, runnable collection example and independent pydicom verification passed in a standalone source snapshot."
+  },
+  "gitlink_candidate_synced": false,
+  "mooncakes_0_2_0_published": false,
+  "original_plan_fully_complete": false
+}

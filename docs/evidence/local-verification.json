@@ -1,0 +1,147 @@
+{
+  "candidate_version": "0.2.0",
+  "status": "locally-verified-unpublished-candidate",
+  "verified_at": "2026-10-10T17:28:34+08:00",
+  "baseline": {
+    "commit": "bb7e895900dbaf55e13651460906044df50b12fe",
+    "version": "0.1.1",
+    "native_tests_passed": 68,
+    "note": "Original source reproduced separately with compiler-compatible dependency versions before iteration."
+  },
+  "platform": {
+    "system": "Darwin",
+    "version": "26.6",
+    "architecture": "arm64"
+  },
+  "toolchain": {
+    "moon": "0.1.20260920 (914d7da)",
+    "moonc": "0.10.14+7d59c7ec9",
+    "moonrun": "0.1.20260920",
+    "workspace_local": true
+  },
+  "checks": [
+    {
+      "command": "tools/moon-local info",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local fmt",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local fmt --check",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local check --target all --deny-warn",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local test --target all --deny-warn",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local build --target native",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local package",
+      "exit_code": 0
+    },
+    {
+      "command": "tools/moon-local run --target native examples/collection",
+      "exit_code": 0
+    }
+  ],
+  "tests": {
+    "native": {
+      "total": 91,
+      "passed": 91,
+      "failed": 0
+    },
+    "wasm": {
+      "total": 53,
+      "passed": 53,
+      "failed": 0
+    },
+    "wasm-gc": {
+      "total": 53,
+      "passed": 53,
+      "failed": 0
+    },
+    "js": {
+      "total": 53,
+      "passed": 53,
+      "failed": 0
+    }
+  },
+  "backend_test_executions": 250,
+  "example": {
+    "objects": 4,
+    "patients": 2,
+    "references": 2,
+    "verified": true
+  },
+  "independent_verification": {
+    "tool": "pydicom",
+    "version": "3.0.1",
+    "records": [
+      "docs/evidence/pydicom-16.json",
+      "docs/evidence/pydicom-100.json",
+      "docs/evidence/pydicom-1000.json"
+    ],
+    "checks": [
+      "patient-groups",
+      "per-patient-date-intervals",
+      "classified-UID-mapping",
+      "same-patient-references",
+      "File-Meta-and-preamble-cleaning",
+      "private-tag-removal",
+      "UTF-8-retained-text",
+      "unchanged-pixels",
+      "unchanged-inputs",
+      "DICOM-and-audit-hashes",
+      "overwrite-refusal",
+      "tamper-failure"
+    ]
+  },
+  "source_size": {
+    "implementation": {
+      "files": 49,
+      "total_lines": 4840,
+      "nonblank_non_full_line_comment_lines": 4329
+    },
+    "tests": {
+      "files": 14,
+      "total_lines": 2125,
+      "nonblank_non_full_line_comment_lines": 1931
+    }
+  },
+  "source_size_note": "Implementation count includes examples and sample generator; excludes interfaces/dependencies/C/Python. Not an official effective-code metric.",
+  "package": {
+    "path": "_build/publish/001-Elsa-medseal-0.2.0.zip",
+    "archive_checked": true,
+    "new_packages_examples_docs_and_native_stub_present": true,
+    "dependency_cache_toolchain_build_temp_and_git_excluded": true
+  },
+  "proposal_pdf": {
+    "path": "output/pdf/MedSeal-MBT-project-proposal.pdf",
+    "pages": 1,
+    "rendered_and_visually_checked": true
+  },
+  "remote": {
+    "pushed": false,
+    "gitlink_synced": false,
+    "ci_executed": false,
+    "mooncakes_0_2_0_published": false
+  },
+  "limitations": [
+    "synthetic-small-pixel-measurements-only",
+    "no-complete-IOD-or-confidentiality-profile-certification",
+    "no-pixel-redaction",
+    "unsigned-integrity-manifest",
+    "no-persisted-cross-job-mapping-or-resume",
+    "no-network-filesystem-or-power-loss-certification"
+  ],
+  "remote_snapshot_note": "The remote flags preserve the earlier state at verified_at. Subsequent GitHub push and CI evidence is recorded separately in github-verification.json."
+}

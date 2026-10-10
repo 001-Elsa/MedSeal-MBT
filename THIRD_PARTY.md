@@ -7,10 +7,12 @@ DICOM library and contains no copied DICOM parser or de-identification code.
 
 | Dependency | Version | Purpose | Repository | License |
 | --- | --- | --- | --- | --- |
-| `moonbitlang/async` | 0.20.4 | Atomic asynchronous file rename | https://github.com/moonbitlang/async | Apache-2.0 |
-| `moonbitlang/x` | 0.4.48 | Filesystem, path, UTF-8, and JSON support | https://github.com/moonbitlang/x | Apache-2.0 |
+| `moonbitlang/async` | 0.22.4 | Asynchronous file I/O, exclusive creation and rename | https://github.com/moonbitlang/async | Apache-2.0 |
+| `moonbitlang/x` | 0.5.5 | Filesystem, path, UTF-8, and JSON support | https://github.com/moonbitlang/x | Apache-2.0 |
+| `gmlewis/sha256` | 0.18.0 | SHA-256 integrity checks | https://github.com/gmlewis/moonbit-sha256 | Apache-2.0 |
+| `gmlewis/base64` | 0.16.13 | Transitive SHA dependency | https://github.com/gmlewis/moonbit-base64 | Apache-2.0 |
 
-Both licenses are compatible with this project's Apache-2.0 license. Exact
+These licenses are compatible with this project's Apache-2.0 license. Exact
 versions are declared in `moon.mod` and resolved by `moon update`.
 
 ## Test and sample data
@@ -28,3 +30,16 @@ of every fixture are documented in `samples/README.md`.
 `moon info` and are committed so public interfaces can be reviewed. AI tools
 assisted implementation, review, tests, and documentation; the repository
 owner remains responsible for behavior, scope, licensing, and submitted data.
+
+## New verification and standard references
+
+pydicom 3.0.1 (MIT, https://github.com/pydicom/pydicom) is a development-only
+independent parser and synthetic fixture generator. It is not used by the
+MoonBit runtime. Generated data contains no clinical records.
+
+`src/storage/entropy.c` is original project code that only calls OS random
+facilities. It implements no cryptographic algorithm. gmlewis/sha256 provides
+integrity hashes and is checked against standard vectors.
+
+Research-v1 rules reference DICOM PS3.15 Annex E. No DICOM implementation is
+copied, and complete confidentiality-profile conformance is not claimed.

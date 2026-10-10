@@ -1,75 +1,61 @@
-# MedSeal-MBT 0.1.1 Acceptance
+# MedSeal-MBT 0.2.0 local candidate acceptance
 
-This document records the reproducible release and competition-submission
-checks for MedSeal-MBT.
+This accepts the documented research-v1 subset. It does not mark every item of
+the original iteration plan complete; see [PLAN_AUDIT](docs/PLAN_AUDIT.md).
 
-## Functional acceptance
+Baseline: bb7e895 / 0.1.1. The original 68 Native tests were reproduced on the
+new toolchain after updating incompatible dependency versions; original source
+behavior was tested separately before the iteration's new checks.
 
-- [x] Parses DICOM Part 10 files with Explicit VR Little Endian.
-- [x] Rejects unsupported Transfer Syntax UIDs without guessing.
-- [x] Parses common VRs and defined/undefined-length nested Sequences.
-- [x] Detects malformed VRs, truncated values, invalid lengths, damaged
-      Sequences, excessive nesting, oversized files/elements, and excessive
-      element counts.
-- [x] Provides `inspect`, `validate`, and `anonymize` commands plus JSON output.
-- [x] Replaces Patient Name and Patient ID and empties configured identifiers.
-- [x] Recursively handles sensitive fields inside Sequences.
-- [x] Optionally removes odd-group Private Tags.
-- [x] Preserves Pixel Data bytes and retained UIDs.
-- [x] Stages output, reparses it, validates it, and atomically replaces the
-      destination.
-- [x] Rejects direct and normalized-path attempts to overwrite the input.
-- [x] Produces a JSON report without original sensitive values.
+## Implemented and exercised
 
-## Test data acceptance
+- Part 10 Explicit VR Little Endian parsing, supported Sequences and VRs.
+- Explicit ASCII/ISO_IR 192 boundary and unchanged-text byte preservation.
+- Rebuilt de-identifying File Meta, zero preamble and retained pixel bytes.
+- Private-element removal and value/path-free public action audits.
+- Versioned limited policies, patient-key conflicts and shared patient aliases.
+- Classified UID mapping, File Meta consistency and cross-file reference checks.
+- Independent per-patient full-DA offsets; leap years, overflow and repeat guards.
+- Bounded reads, unique/exclusive staging files and new-directory publication.
+- Source modification/file-set checks and DICOM/audit SHA-256 manifest checks.
+- Failure checks for changed input, existing/nested output, report preflight
+  failure, source symlinks, conflicting identities and unclassified public UIDs.
+- Runnable Native collection example and pydicom-generated collections.
 
-- [x] All committed DICOM files are generated synthetic fixtures.
-- [x] Valid, unsupported-syntax, truncated, invalid-VR, invalid-Sequence,
-      nested-Sequence, Private Tag, and Pixel Data cases are present.
-- [x] Sample origin and regeneration instructions are documented.
+## Verification commands
 
-## Release commands
-
-Run from the repository root:
-
-```bash
-moon update
-moon fmt --check
-moon check --target all --deny-warn
-moon test --target all --deny-warn
-moon info
-moon package
+```sh
+tools/moon-local fmt --check
+tools/moon-local check --target all --deny-warn
+tools/moon-local test --target all --deny-warn
+tools/moon-local build --target native
+tools/moon-local info
+tools/moon-local package
+tools/moon-local run --target native examples/collection
+python tools/verify_with_pydicom.py
 ```
 
-Verified test totals with the 2026-07-24 MoonBit toolchain or newer:
+Toolchain: moon 0.1.20260920 / moonc 0.10.14+7d59c7ec9, Apple Silicon macOS.
+The final local run passed 91 Native tests and 53 tests on each of wasm,
+wasm-gc and js (250 backend test executions, with shared cases repeated across
+backends). Exact commands and totals are in docs/evidence/local-verification.json.
+Non-Native tests exercise the portable core; Native additionally exercises the
+filesystem, CLI and collection workflow. The symlink test is Unix-specific.
 
-```text
-wasm:    47 passed
-wasm-gc: 47 passed
-js:      47 passed
-native:  68 passed
-```
+Independent pydicom 3.0.1 checks verify patient groups, DA intervals, standard
+UID retention, transformed references, header/private-tag removal, Unicode text,
+unchanged Pixel Data, manifest hashes, overwrite rejection and tamper failure.
+The synthetic 1,000-file collection has two patients and 998 references.
 
-The Native-only CLI and filesystem integration tests are intentionally skipped
-on non-Native backends; portable parser/model/de-identification tests run on
-all backends.
+## Remote delivery and remaining boundaries
 
-## Submission artifacts
+0.2.0 candidate source has been pushed to GitHub in functional commits. Remote
+CI results are recorded separately in docs/ITERATION_STATUS.md; the original
+local-verification JSON preserves the state at that earlier local run. GitLink
+synchronization and Mooncakes 0.2.0 publication remain pending. Public 0.1.1
+package publication does not prove that the new package has been published.
 
-- `README.mbt.md` and `README.md`
-- Apache-2.0 `LICENSE`
-- `.github/workflows/ci.yml`
-- source packages and generated `.mbti` interfaces
-- complete synthetic samples and audit-report example
-- `PROJECT_APPLICATION.md`
-- one-page `output/pdf/MedSeal-MBT-project-proposal.pdf`
-- `ARCHITECTURE.md` and `THIRD_PARTY.md`
-- reproducible Mooncakes package archive from `moon package`
-
-## Competition acceptance evidence
-
-- GitHub default branch is public and contains more than 10 meaningful commits.
-- GitLink mirror: `https://gitlink.org.cn/Hzhhhh/MedSeal-MBT`.
-- GitHub Actions runs the full workflow on Ubuntu, macOS, and Windows.
-- `001-Elsa/medseal@0.1.1` is published on Mooncakes with build status
-  `success`.
+This version has no complete IOD/profile certification, pixel inspection,
+persisted identity secrets, automatic resume, signed manifests, measured large
+clinical-image performance, or certified network-filesystem/power-loss behavior.
+See docs/SUPPORT_MATRIX.md for precise support and failure semantics.
