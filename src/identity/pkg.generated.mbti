@@ -1,0 +1,48 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/identity"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/policy",
+}
+
+// Values
+pub fn instance_uid(@model.Tag) -> Bool
+
+pub fn required_text(@model.DataSet, @model.Tag) -> String raise @model.MedSealError
+
+pub fn shifted_date(@model.Tag) -> Bool
+
+pub fn standard_uid(@model.Tag) -> Bool
+
+pub fn supported_sop_class(String) -> Bool
+
+pub fn text(@model.DataSet, @model.Tag) -> String?
+
+// Errors
+
+// Types and methods
+pub struct Context {
+  // private fields
+}
+pub fn Context::apply(Self, @model.DataSet) -> Result raise @model.MedSealError
+pub fn Context::date_offset(Self, String) -> Int raise @model.MedSealError
+pub fn Context::mapped_uid(Self, String) -> String raise @model.MedSealError
+pub fn Context::new(String, @policy.Policy, Array[Int]) -> Self raise @model.MedSealError
+pub fn Context::patient(Self, @model.DataSet) -> String raise @model.MedSealError
+pub fn Context::prepare(Self, Array[@model.DataSet]) -> Unit raise @model.MedSealError
+
+pub struct Event {
+  path : String
+  rule : String
+  action : String
+}
+
+pub struct Result {
+  dataset : @model.DataSet
+  events : Array[Event]
+}
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,44 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/policy"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn customizable(@model.Tag) -> Bool
+
+pub fn from_json(String) -> Policy raise @model.MedSealError
+
+pub fn research(scope_name? : String, date_shift_days? : Int, allow_external_references? : Bool, rules? : Array[Rule]) -> Policy raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub(all) enum Action {
+  Keep
+  Empty
+  Remove
+  Replace(String)
+} derive(Eq, @debug.Debug)
+pub fn Action::equal(Self, Self) -> Bool
+pub fn Action::not_equal(Self, Self) -> Bool
+pub fn Action::to_repr(Self) -> @debug.Repr
+
+pub struct Policy {
+  scope_name : String
+  date_shift_days : Int
+  allow_external_references : Bool
+  // private fields
+}
+pub fn Policy::action(Self, @model.Tag) -> Action?
+
+pub(all) struct Rule {
+  tag : @model.Tag
+  action : Action
+}
+
+// Type aliases
+
+// Traits

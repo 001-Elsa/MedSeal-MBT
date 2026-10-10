@@ -1,0 +1,30 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/verification"
+
+import {
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+pub fn check(Array[@model.DataSet], allow_external? : Bool) -> CollectionReport raise @model.MedSealError
+
+pub fn check_unique_tags(@model.DataSet) -> Unit raise @model.MedSealError
+
+pub fn clean_private(@model.DataSet) -> Bool
+
+pub fn metadata_only(@model.DataSet) -> @model.DataSet
+
+pub fn same_values(@model.DataSet, @model.DataSet) -> Bool
+
+// Errors
+
+// Types and methods
+pub struct CollectionReport {
+  objects : Int
+  references : Int
+  external_references : Int
+}
+
+// Type aliases
+
+// Traits

@@ -28,4 +28,5 @@ description = "A small DICOM metadata validator and basic de-identification tool
 import {
   "moonbitlang/async@0.22.4",
   "moonbitlang/x@0.5.5",
+  "gmlewis/sha256@0.18.0",
 }
