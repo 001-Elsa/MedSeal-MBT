@@ -44,3 +44,9 @@ pub fn sensitive_rule(tag : @model.Tag) -> SensitiveRule? {
     _ => None
   }
 }
+
+///|
+pub extend SensitiveRule with Eq::{equal, not_equal}
+
+///|
+pub extend SensitiveRule with Debug::{to_repr}

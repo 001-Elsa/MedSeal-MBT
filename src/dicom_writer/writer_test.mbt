@@ -71,7 +71,7 @@ test "write then parse preserves order, sequence and pixel bytes" {
     transfer_syntax: @parser.explicit_vr_little_endian_uid,
     element_count: 3,
   }
-  let reparsed = @parser.parse(write_bytes(parsed))
+  let reparsed = @parser.parse(@dicom_writer.write_bytes(parsed))
   assert_eq(reparsed.dataset.elements.length(), 2)
   assert_eq(reparsed.dataset.elements[0].tag, sequence.tag)
   assert_eq(reparsed.dataset.elements[1].tag, @model.pixel_data_tag)
@@ -101,7 +101,7 @@ fn ordinary_element(
 ///|
 test "odd length UI is padded with a null byte" {
   let writer = @byteio.ByteWriter::new()
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x0008U,
@@ -116,7 +116,7 @@ test "odd length UI is padded with a null byte" {
 ///|
 test "odd length ordinary text is padded with a space" {
   let writer = @byteio.ByteWriter::new()
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x0010U,
@@ -131,7 +131,7 @@ test "odd length ordinary text is padded with a space" {
 ///|
 test "long VR header contains reserved bytes and a u32 length" {
   let writer = @byteio.ByteWriter::new()
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x7FE0U,
@@ -149,7 +149,7 @@ test "long VR header contains reserved bytes and a u32 length" {
 ///|
 test "numeric arrays are encoded little endian and reparse exactly" {
   let writer = @byteio.ByteWriter::new()
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x0028U,
@@ -158,7 +158,7 @@ test "numeric arrays are encoded little endian and reparse exactly" {
       @model.ElementValue::UnsignedShort([1U, 0xFFFFU]),
     ),
   )
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x7776U,
@@ -167,7 +167,7 @@ test "numeric arrays are encoded little endian and reparse exactly" {
       @model.ElementValue::SignedShort([-32768, -1, 32767]),
     ),
   )
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x7776U,
@@ -176,7 +176,7 @@ test "numeric arrays are encoded little endian and reparse exactly" {
       @model.ElementValue::UnsignedLong([0U, 0xFFFFFFFFU]),
     ),
   )
-  write_element(
+  @dicom_writer.write_element(
     writer,
     ordinary_element(
       0x7776U,
@@ -207,7 +207,7 @@ test "numeric arrays are encoded little endian and reparse exactly" {
 ///|
 test "writer recomputes empty and sequence lengths" {
   let empty_writer = @byteio.ByteWriter::new()
-  write_element(
+  @dicom_writer.write_element(
     empty_writer,
     ordinary_element(
       0x0010U,
@@ -226,7 +226,7 @@ test "writer recomputes empty and sequence lengths" {
     ),
   ])
   let sequence_writer = @byteio.ByteWriter::new()
-  write_element(
+  @dicom_writer.write_element(
     sequence_writer,
     ordinary_element(
       0x0040U,

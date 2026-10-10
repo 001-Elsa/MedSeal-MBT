@@ -6,7 +6,7 @@ pub struct ByteReader {
 
 ///|
 pub fn ByteReader::new(data : Bytes) -> ByteReader {
-  { data, position_: 0 }
+  { data, position_: 0, }
 }
 
 ///|

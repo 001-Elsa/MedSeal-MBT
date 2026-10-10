@@ -22,7 +22,7 @@ test "direct identifiers are replaced without audit leakage" {
     text_element(0x0010U, 0x0020U, @model.Vr::LO, "SECRET-ID", 1),
     text_element(0x0010U, 0x0030U, @model.Vr::DA, "19700101", 2),
   ])
-  let result = anonymize(source)
+  let result = @deid.anonymize(source)
   assert_true(
     result.dataset.elements[0].value is @model.ElementValue::Text("ANONYMOUS"),
   )
@@ -30,7 +30,9 @@ test "direct identifiers are replaced without audit leakage" {
     result.dataset.elements[1].value is @model.ElementValue::Text("MEDSEAL-ID"),
   )
   assert_true(result.dataset.elements[2].value is @model.ElementValue::Empty)
-  let report = audit_json(result, "in.dcm", "out.dcm", "1.2.840.10008.1.2.1", 3)
+  let report = @deid.audit_json(
+    result, "in.dcm", "out.dcm", "1.2.840.10008.1.2.1", 3,
+  )
   assert_false(report.contains("SECRET"))
 }
 
@@ -47,7 +49,7 @@ test "private removal and nested sequence processing" {
     0,
   )
   let private = text_element(0x0011U, 0x0010U, @model.Vr::LO, "PRIVATE", 1)
-  let result = anonymize(
+  let result = @deid.anonymize(
     @model.DataSet::new([sequence, private]),
     remove_private=true,
   )
@@ -69,8 +71,8 @@ test "basic de-identification is idempotent" {
     text_element(0x0010U, 0x0020U, @model.Vr::LO, "SECRET-ID", 1),
     text_element(0x0010U, 0x0030U, @model.Vr::DA, "19700101", 2),
   ])
-  let first = anonymize(source)
-  let second = anonymize(first.dataset)
+  let first = @deid.anonymize(source)
+  let second = @deid.anonymize(first.dataset)
   assert_eq(first.elements_changed, 3)
   assert_eq(second.elements_changed, 0)
   assert_eq(second.elements_removed, 0)
@@ -80,7 +82,7 @@ test "basic de-identification is idempotent" {
 ///|
 test "private elements are retained by default with a risk warning" {
   let private = text_element(0x0011U, 0x1010U, @model.Vr::LO, "PRIVATE", 0)
-  let result = anonymize(@model.DataSet::new([private]))
+  let result = @deid.anonymize(@model.DataSet::new([private]))
   assert_eq(result.dataset.elements.length(), 1)
   assert_eq(result.private_elements_removed, 0)
   assert_true(
@@ -98,7 +100,10 @@ test "pixel data bytes are preserved exactly" {
     @model.ElementValue::Raw(pixels),
     0,
   )
-  let result = anonymize(@model.DataSet::new([pixel]), remove_private=true)
+  let result = @deid.anonymize(
+    @model.DataSet::new([pixel]),
+    remove_private=true,
+  )
   assert_eq(result.elements_changed, 0)
   assert_eq(result.elements_removed, 0)
   assert_true(
@@ -109,12 +114,14 @@ test "pixel data bytes are preserved exactly" {
 
 ///|
 test "audit report never exposes value fields" {
-  let result = anonymize(
+  let result = @deid.anonymize(
     @model.DataSet::new([
       text_element(0x0010U, 0x0010U, @model.Vr::PN, "LEAK-CHECK", 0),
     ]),
   )
-  let report = audit_json(result, "in.dcm", "out.dcm", "1.2.840.10008.1.2.1", 1)
+  let report = @deid.audit_json(
+    result, "in.dcm", "out.dcm", "1.2.840.10008.1.2.1", 1,
+  )
   assert_false(report.contains("LEAK-CHECK"))
   assert_false(report.contains("old_value"))
   assert_false(report.contains("new_value"))

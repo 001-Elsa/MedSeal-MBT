@@ -25,7 +25,7 @@ fn issue_json(issue : @validator.ValidationIssue) -> Json {
 }
 
 ///|
-pub fn validate_file(
+pub async fn validate_file(
   path : String,
   json : Bool,
 ) -> Bool raise @model.MedSealError {

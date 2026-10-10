@@ -53,7 +53,7 @@ pub fn validate_dataset(dataset : @model.DataSet) -> ValidationReport {
     }
   }
   validate_image_metadata(dataset, issues)
-  { issues, elements_checked: dataset.count_recursive() }
+  { issues, elements_checked: dataset.count_recursive(), }
 }
 
 ///|

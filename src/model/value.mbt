@@ -9,3 +9,9 @@ pub(all) enum ElementValue {
   Raw(Bytes)
   Empty
 } derive(Eq, Debug)
+
+///|
+pub extend ElementValue with Eq::{equal, not_equal}
+
+///|
+pub extend ElementValue with Debug::{to_repr}

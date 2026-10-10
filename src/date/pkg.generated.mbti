@@ -1,0 +1,19 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/date"
+
+import {
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+pub fn shift(String, Int) -> String raise @model.MedSealError
+
+pub fn valid(String) -> Bool
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

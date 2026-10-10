@@ -45,8 +45,8 @@ fn warning_json(warning : AuditWarning) -> Json {
 ///|
 pub fn audit_json(
   result : AnonymizeResult,
-  input_file : String,
-  output_file : String,
+  _input_file : String,
+  _output_file : String,
   transfer_syntax : String,
   elements_read : Int,
 ) -> String {
@@ -54,9 +54,9 @@ pub fn audit_json(
     Map::from_array([
       ("tool", Json::string("medseal")),
       ("version", Json::string(@model.medseal_version)),
-      ("status", Json::string("success")),
-      ("input_file", Json::string(input_file)),
-      ("output_file", Json::string(output_file)),
+      ("status", Json::string("verified")),
+      ("input_file", Json::string("source-0001")),
+      ("output_file", Json::string("object-0001")),
       ("transfer_syntax", Json::string(transfer_syntax)),
       ("elements_read", Json::number(elements_read.to_double())),
       ("elements_changed", Json::number(result.elements_changed.to_double())),
@@ -72,3 +72,21 @@ pub fn audit_json(
     ]),
   ).stringify(indent=2)
 }
+
+///|
+pub extend AuditEvent with Eq::{equal, not_equal}
+
+///|
+pub extend AuditEvent with Debug::{to_repr}
+
+///|
+pub extend AuditWarning with Eq::{equal, not_equal}
+
+///|
+pub extend AuditWarning with Debug::{to_repr}
+
+///|
+pub extend AnonymizeResult with Eq::{equal, not_equal}
+
+///|
+pub extend AnonymizeResult with Debug::{to_repr}

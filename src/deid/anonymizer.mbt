@@ -15,7 +15,7 @@ fn push_warning_once(
   message : String,
 ) -> Unit {
   if !audit.warnings.any(fn(warning) { warning.code == code }) {
-    audit.warnings.push({ code, message })
+    audit.warnings.push({ code, message, })
   }
 }
 

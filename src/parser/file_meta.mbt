@@ -9,3 +9,9 @@ pub(all) struct ParsedFile {
   transfer_syntax : String
   element_count : Int
 } derive(Eq, Debug)
+
+///|
+pub extend ParsedFile with Eq::{equal, not_equal}
+
+///|
+pub extend ParsedFile with Debug::{to_repr}

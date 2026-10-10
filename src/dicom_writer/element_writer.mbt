@@ -45,6 +45,10 @@ fn encode_sl(values : Array[Int]) -> Bytes {
 
 ///|
 fn encode_ordinary_value(element : @model.DataElement) -> Bytes {
+  match element.original_bytes {
+    Some(bytes) => return bytes
+    None => ()
+  }
   match element.value {
     @model.ElementValue::Text(value) => encode_text(element.vr, value)
     @model.ElementValue::UnsignedShort(values) => encode_us(values)
@@ -63,7 +67,12 @@ fn write_header(
   tag : @model.Tag,
   vr : @model.Vr,
   length : UInt,
-) -> Unit {
+) -> Unit raise @model.MedSealError {
+  if !vr.uses_u32_length() && length > 65534U {
+    raise @model.MedSealError::InvalidModel(
+      "short VR value exceeds 65534 bytes",
+    )
+  }
   writer.write_u16_le(tag.group)
   writer.write_u16_le(tag.element)
   writer.write_ascii(vr.to_string())
@@ -79,7 +88,8 @@ fn write_header(
 pub fn write_element(
   writer : @byteio.ByteWriter,
   element : @model.DataElement,
-) -> Unit {
+) -> Unit raise @model.MedSealError {
+  check_model(element)
   match element.value {
     @model.ElementValue::Sequence(items) => {
       let value = encode_sequence(items)

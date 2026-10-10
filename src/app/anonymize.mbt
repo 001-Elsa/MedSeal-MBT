@@ -1,82 +1,56 @@
 ///|
 fn same_path(left : String, right : String) -> Bool {
-  let left_resolved = @path.Path(left).resolve().0
-  let right_resolved = @path.Path(right).resolve().0
   if @path.sep == '\\' {
-    left_resolved.to_lower() == right_resolved.to_lower()
+    left.to_lower() == right.to_lower()
   } else {
-    left_resolved == right_resolved
+    left == right
   }
 }
 
 ///|
-fn ensure_output_paths(
+async fn ensure_output_paths(
   input : String,
   output : String,
   report : String?,
   force : Bool,
 ) -> Unit raise @model.MedSealError {
-  if same_path(input, output) {
+  let source = @storage.canonical(input)
+  let target = @storage.output_path(output)
+  if same_path(source, target) {
     raise @model.MedSealError::InvalidArgument(
       "output path must differ from input path",
     )
   }
-  if @fs.path_exists(output) && !force {
-    raise @model.MedSealError::OutputAlreadyExists(output)
+  if @storage.exists(target) {
+    if !force {
+      raise @model.MedSealError::OutputAlreadyExists("object-0001")
+    }
+    if @storage.kind(target) != @async_fs.FileKind::Regular {
+      raise @model.MedSealError::InvalidArgument(
+        "existing output must be a regular file",
+      )
+    }
   }
   match report {
     Some(path) => {
-      if same_path(path, input) || same_path(path, output) {
+      let report = @storage.output_path(path)
+      if same_path(source, report) || same_path(target, report) {
         raise @model.MedSealError::InvalidArgument(
           "report path must differ from input and output paths",
         )
       }
-      if @fs.path_exists(path) && !force {
-        raise @model.MedSealError::OutputAlreadyExists(path)
+      if @storage.exists(report) {
+        if !force {
+          raise @model.MedSealError::OutputAlreadyExists("audit-report")
+        }
+        if @storage.kind(report) != @async_fs.FileKind::Regular {
+          raise @model.MedSealError::InvalidArgument(
+            "existing report must be a regular file",
+          )
+        }
       }
     }
     None => ()
-  }
-}
-
-///|
-fn write_temp(path : String, bytes : Bytes) -> Unit raise @model.MedSealError {
-  if @fs.path_exists(path) {
-    raise @model.MedSealError::OutputAlreadyExists(path)
-  }
-  @fs.write_bytes_to_file(path, bytes) catch {
-    @fs.IOError(message) => raise @model.MedSealError::IoError(message)
-  }
-}
-
-///|
-fn write_temp_text(
-  path : String,
-  value : String,
-) -> Unit raise @model.MedSealError {
-  if @fs.path_exists(path) {
-    raise @model.MedSealError::OutputAlreadyExists(path)
-  }
-  @fs.write_string_to_file(path, value) catch {
-    @fs.IOError(message) => raise @model.MedSealError::IoError(message)
-  }
-}
-
-///|
-async fn atomic_replace(
-  temp : String,
-  target : String,
-  force : Bool,
-) -> Unit raise @model.MedSealError {
-  @async_fs.rename(temp, target, replace=force) catch {
-    _ => {
-      @fs.remove_file(temp) catch {
-        _ => ()
-      }
-      raise @model.MedSealError::IoError(
-        "could not atomically replace \{target}",
-      )
-    }
   }
 }
 
@@ -90,63 +64,51 @@ pub async fn anonymize_file(
 ) -> Unit raise @model.MedSealError {
   ensure_output_paths(input, output, report_path, force)
   let parsed = @parser.parse(read_input(input))
-  let initial_validation = @validator.validate(parsed)
-  if !initial_validation.is_valid() {
+  let initial = @validator.validate(parsed)
+  if !initial.is_valid() {
     raise @model.MedSealError::OutputVerificationFailed(
-      "input contains \{initial_validation.errors()} semantic error(s)",
+      "input contains semantic errors",
     )
   }
   let result = @deid.anonymize(parsed.dataset, remove_private~)
-  let output_bytes = @dicom_writer.write_bytes(parsed, dataset=result.dataset)
-  let temp = "\{output}.medseal.tmp"
-  write_temp(temp, output_bytes)
-  let verified = @parser.parse(read_input(temp)) catch {
-    error => {
-      @fs.remove_file(temp) catch {
-        _ => ()
-      }
-      raise error
-    }
-  }
-  let verification = @validator.validate(verified)
-  if !verification.is_valid() {
-    @fs.remove_file(temp) catch {
-      _ => ()
-    }
+  let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
+  let output = @storage.output_path(output)
+  let temp = "\{output}.medseal-\{@storage.token()}.tmp"
+  @storage.write_new(temp, bytes)
+  defer (@async_fs.remove(temp) catch { _ => () })
+  let verified = @parser.parse(read_input(temp))
+  if !@validator.validate(verified).is_valid() {
     raise @model.MedSealError::OutputVerificationFailed(
-      "output contains \{verification.errors()} semantic error(s)",
+      "output contains semantic errors",
     )
   }
-  atomic_replace(temp, output, force)
+  // Separate file destinations cannot be committed atomically. A report says
+  // verified, not job-complete; batch uses a single directory publication.
   match report_path {
     Some(path) => {
+      let path = @storage.output_path(path)
       let report = @deid.audit_json(
         result,
-        input,
-        output,
+        "source-0001",
+        "object-0001",
         parsed.transfer_syntax,
         parsed.element_count,
       )
-      let report_temp = "\{path}.medseal.tmp"
-      write_temp_text(report_temp, report)
-      atomic_replace(report_temp, path, force)
+      let staged = "\{path}.medseal-\{@storage.token()}.tmp"
+      @storage.write_new(staged, @utf8.encode(report))
+      defer (@async_fs.remove(staged) catch { _ => () })
+      @storage.publish(staged, path, replace=force)
     }
     None => ()
   }
+  @storage.publish(temp, output, replace=force)
   println("Anonymization completed")
-  println("Input: \{input}")
-  println("Output: \{output}")
+  println("Source: source-0001")
+  println("Output: object-0001")
   println("Elements changed: \{result.elements_changed}")
   println("Private elements removed: \{result.private_elements_removed}")
   println("Warnings: \{result.warnings.length()}")
-  match report_path {
-    Some(path) => println("Report: \{path}")
-    None => ()
-  }
-  println("")
-  println("The output file has received basic metadata de-identification.")
   println(
-    "Pixel data has not been inspected for burned-in personal information.",
+    "Basic metadata de-identification only; pixel content was not inspected.",
   )
-  println("This tool does not guarantee complete anonymization.")
 }

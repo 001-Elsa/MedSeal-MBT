@@ -24,22 +24,30 @@ pub struct ValidationIssue {
   tag : @model.Tag?
   offset : Int?
 } derive(Eq, @debug.Debug)
+pub fn ValidationIssue::equal(Self, Self) -> Bool
 pub fn ValidationIssue::new(ValidationSeverity, String, String, tag? : @model.Tag?, offset? : Int?) -> Self
+pub fn ValidationIssue::not_equal(Self, Self) -> Bool
+pub fn ValidationIssue::to_repr(Self) -> @debug.Repr
 
 pub struct ValidationReport {
   issues : Array[ValidationIssue]
   elements_checked : Int
 } derive(Eq, @debug.Debug)
+pub fn ValidationReport::equal(Self, Self) -> Bool
 pub fn ValidationReport::errors(Self) -> Int
 pub fn ValidationReport::is_valid(Self) -> Bool
+pub fn ValidationReport::not_equal(Self, Self) -> Bool
+pub fn ValidationReport::to_repr(Self) -> @debug.Repr
 pub fn ValidationReport::warnings(Self) -> Int
 
 pub(all) enum ValidationSeverity {
   Error
   Warning
 } derive(Eq, @debug.Debug)
+pub fn ValidationSeverity::equal(Self, Self) -> Bool
+pub fn ValidationSeverity::not_equal(Self, Self) -> Bool
+pub fn ValidationSeverity::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
 // Traits
-

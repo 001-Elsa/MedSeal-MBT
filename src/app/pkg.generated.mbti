@@ -11,13 +11,13 @@ pub async fn anonymize_file(String, String, String?, Bool, Bool) -> Unit raise @
 
 pub fn help_text(String?) -> String
 
-pub fn inspect_file(String, Bool) -> Unit raise @model.MedSealError
+pub async fn inspect_file(String, Bool) -> Unit raise @model.MedSealError
 
 pub fn parse_command(Array[String]) -> Command raise @model.MedSealError
 
 pub async fn run(Array[String]) -> Int
 
-pub fn validate_file(String, Bool) -> Bool raise @model.MedSealError
+pub async fn validate_file(String, Bool) -> Bool raise @model.MedSealError
 
 // Errors
 
@@ -29,8 +29,10 @@ pub(all) enum Command {
   Help(String?)
   Version
 } derive(Eq, @debug.Debug)
+pub fn Command::equal(Self, Self) -> Bool
+pub fn Command::not_equal(Self, Self) -> Bool
+pub fn Command::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
 // Traits
-

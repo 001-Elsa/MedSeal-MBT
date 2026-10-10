@@ -15,3 +15,9 @@ pub fn DeIdAction::name(self : DeIdAction) -> String {
     Remove => "remove"
   }
 }
+
+///|
+pub extend DeIdAction with Eq::{equal, not_equal}
+
+///|
+pub extend DeIdAction with Debug::{to_repr}

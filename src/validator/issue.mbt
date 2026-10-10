@@ -21,7 +21,7 @@ pub fn ValidationIssue::new(
   tag? : @model.Tag? = None,
   offset? : Int? = None,
 ) -> ValidationIssue {
-  { severity, code, message, tag, offset }
+  { severity, code, message, tag, offset, }
 }
 
 ///|
@@ -44,3 +44,21 @@ pub fn ValidationReport::warnings(self : ValidationReport) -> Int {
 pub fn ValidationReport::is_valid(self : ValidationReport) -> Bool {
   self.errors() == 0
 }
+
+///|
+pub extend ValidationSeverity with Eq::{equal, not_equal}
+
+///|
+pub extend ValidationSeverity with Debug::{to_repr}
+
+///|
+pub extend ValidationIssue with Eq::{equal, not_equal}
+
+///|
+pub extend ValidationIssue with Debug::{to_repr}
+
+///|
+pub extend ValidationReport with Eq::{equal, not_equal}
+
+///|
+pub extend ValidationReport with Debug::{to_repr}

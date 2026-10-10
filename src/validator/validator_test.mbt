@@ -24,7 +24,7 @@ test "Bits Stored larger than Bits Allocated is invalid" {
     us_element(0x0028U, 0x0101U, 12U, 4),
     us_element(0x0028U, 0x0103U, 0U, 5),
   ])
-  let report = validate_dataset(dataset)
+  let report = @validator.validate_dataset(dataset)
   assert_false(report.is_valid())
   assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E221" }))
 }
@@ -38,7 +38,7 @@ test "invalid UID creates a stable error" {
     @model.ElementValue::Text("abc"),
     0,
   )
-  let report = validate_dataset(@model.DataSet::new([uid]))
+  let report = @validator.validate_dataset(@model.DataSet::new([uid]))
   assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E210" }))
 }
 
@@ -60,7 +60,7 @@ fn text_value(
 ///|
 test "UI rejects empty components and edge dots" {
   for value in [".1.2", "1.2.", "1..2"] {
-    let report = validate_dataset(
+    let report = @validator.validate_dataset(
       @model.DataSet::new([text_value(@model.Vr::UI, value, 0)]),
     )
     assert_true(report.issues.any(fn(issue) { issue.code == "MEDSEAL-E210" }))
@@ -69,7 +69,7 @@ test "UI rejects empty components and edge dots" {
 
 ///|
 test "bounded text VRs enforce their character limits" {
-  let report = validate_dataset(
+  let report = @validator.validate_dataset(
     @model.DataSet::new([
       text_value(@model.Vr::AE, "12345678901234567", 0),
       text_value(@model.Vr::SH, "12345678901234567", 1),
@@ -88,7 +88,7 @@ test "bounded text VRs enforce their character limits" {
 
 ///|
 test "CS AS and DA syntax checks have stable error codes" {
-  let report = validate_dataset(
+  let report = @validator.validate_dataset(
     @model.DataSet::new([
       text_value(@model.Vr::CS, "lower-case", 0),
       text_value(@model.Vr::AS, "12Y", 1),
@@ -102,7 +102,7 @@ test "CS AS and DA syntax checks have stable error codes" {
 
 ///|
 test "valid constrained text values pass their syntax rules" {
-  let report = validate_dataset(
+  let report = @validator.validate_dataset(
     @model.DataSet::new([
       text_value(@model.Vr::UI, "1.2.840.10008.1.2.1", 0),
       text_value(@model.Vr::CS, "ORIGINAL_PRIMARY", 1),

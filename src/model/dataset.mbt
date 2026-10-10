@@ -10,7 +10,7 @@ pub fn DataSet::new(elements : Array[DataElement]) -> DataSet {
 
 ///|
 pub fn DataSet::empty() -> DataSet {
-  { elements: [] }
+  { elements: [], }
 }
 
 ///|
@@ -64,3 +64,9 @@ pub fn DataSet::count_recursive(self : DataSet) -> Int {
   }
   count
 }
+
+///|
+pub extend DataSet with Eq::{equal, not_equal}
+
+///|
+pub extend DataSet with Debug::{to_repr}

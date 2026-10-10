@@ -18,6 +18,11 @@ pub(all) suberror MedSealError {
   IoError(String)
   OutputVerificationFailed(String)
   InvalidArgument(String)
+  UnsupportedCharacterSet
+  InvalidTextEncoding
+  InvalidModel(String)
+  PolicyError(String)
+  IdentityError(String)
 } derive(Debug)
 
 ///|
@@ -39,6 +44,11 @@ pub fn MedSealError::code(self : MedSealError) -> String {
     IoError(_) => "MEDSEAL-E302"
     OutputVerificationFailed(_) => "MEDSEAL-E401"
     InvalidArgument(_) => "MEDSEAL-E501"
+    UnsupportedCharacterSet => "MEDSEAL-E108"
+    InvalidTextEncoding => "MEDSEAL-E109"
+    InvalidModel(_) => "MEDSEAL-E402"
+    PolicyError(_) => "MEDSEAL-E510"
+    IdentityError(_) => "MEDSEAL-E520"
   }
 }
 
@@ -70,6 +80,13 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     OutputVerificationFailed(message) =>
       "write-back verification failed: \{message}"
     InvalidArgument(message) => message
+    UnsupportedCharacterSet =>
+      "only default ASCII and ISO_IR 192 character sets are supported"
+    InvalidTextEncoding =>
+      "text bytes are invalid for the declared character set"
+    InvalidModel(message) => "cannot serialize data model: \{message}"
+    PolicyError(message) => "invalid de-identification policy: \{message}"
+    IdentityError(message) => "identity consistency check failed: \{message}"
   }
 }
 
@@ -77,3 +94,6 @@ pub fn MedSealError::message(self : MedSealError) -> String {
 pub fn MedSealError::display(self : MedSealError) -> String {
   "\{self.code()}: \{self.message()}"
 }
+
+///|
+pub extend MedSealError with Debug::{to_repr}

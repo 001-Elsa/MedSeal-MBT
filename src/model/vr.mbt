@@ -148,3 +148,9 @@ pub fn Vr::is_text(self : Vr) -> Bool {
     _ => false
   }
 }
+
+///|
+pub extend Vr with Eq::{equal, not_equal}
+
+///|
+pub extend Vr with Debug::{to_repr}

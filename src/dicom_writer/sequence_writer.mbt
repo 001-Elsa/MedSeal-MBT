@@ -1,5 +1,5 @@
 ///|
-fn encode_dataset(dataset : @model.DataSet) -> Bytes {
+fn encode_dataset(dataset : @model.DataSet) -> Bytes raise @model.MedSealError {
   let writer = @byteio.ByteWriter::new()
   for element in dataset.elements {
     write_element(writer, element)
@@ -8,7 +8,9 @@ fn encode_dataset(dataset : @model.DataSet) -> Bytes {
 }
 
 ///|
-fn encode_sequence(items : Array[@model.DataSet]) -> Bytes {
+fn encode_sequence(
+  items : Array[@model.DataSet],
+) -> Bytes raise @model.MedSealError {
   let writer = @byteio.ByteWriter::new()
   for item in items {
     let bytes = encode_dataset(item)

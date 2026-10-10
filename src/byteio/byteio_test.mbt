@@ -1,6 +1,6 @@
 ///|
 test "read u8, u16 and u32 little endian" {
-  let reader = ByteReader::new(b"\x01\x02\x03\x04\x05\x06\x07")
+  let reader = @byteio.ByteReader::new(b"\x01\x02\x03\x04\x05\x06\x07")
   assert_eq(reader.read_u8(), 1U)
   assert_eq(reader.read_u16_le(), 0x0302U)
   assert_eq(reader.read_u32_le(), 0x07060504U)
@@ -9,14 +9,14 @@ test "read u8, u16 and u32 little endian" {
 
 ///|
 test "zero length read does not move cursor" {
-  let reader = ByteReader::new(b"abc")
+  let reader = @byteio.ByteReader::new(b"abc")
   assert_eq(reader.read_bytes(0), b"")
   assert_eq(reader.position(), 0)
 }
 
 ///|
 test "out of bounds read is structured" {
-  let reader = ByteReader::new(b"\x01")
+  let reader = @byteio.ByteReader::new(b"\x01")
   let structured = try {
     ignore(reader.read_u16_le())
     false
@@ -29,7 +29,7 @@ test "out of bounds read is structured" {
 
 ///|
 test "failed reads leave the cursor unchanged" {
-  let reader = ByteReader::new(b"\x01\x02\x03")
+  let reader = @byteio.ByteReader::new(b"\x01\x02\x03")
   assert_eq(reader.read_u8(), 1U)
   let rejected = try {
     ignore(reader.read_u32_le())
@@ -45,7 +45,7 @@ test "failed reads leave the cursor unchanged" {
 
 ///|
 test "read_bytes can consume exactly to end of input" {
-  let reader = ByteReader::new(b"abcdef")
+  let reader = @byteio.ByteReader::new(b"abcdef")
   assert_eq(reader.read_bytes(6), b"abcdef")
   assert_eq(reader.position(), 6)
   assert_eq(reader.remaining(), 0)
@@ -53,7 +53,7 @@ test "read_bytes can consume exactly to end of input" {
 
 ///|
 test "negative read and skip lengths are rejected" {
-  let reader = ByteReader::new(b"abc")
+  let reader = @byteio.ByteReader::new(b"abc")
   let read_rejected = try {
     ignore(reader.read_bytes(-1))
     false
@@ -75,7 +75,7 @@ test "negative read and skip lengths are rejected" {
 
 ///|
 test "seek accepts boundaries and rejects positions outside the buffer" {
-  let reader = ByteReader::new(b"abcd")
+  let reader = @byteio.ByteReader::new(b"abcd")
   reader.seek(4)
   assert_eq(reader.remaining(), 0)
   reader.seek(0)
@@ -101,7 +101,7 @@ test "seek accepts boundaries and rejects positions outside the buffer" {
 
 ///|
 test "peek reads without moving and reports end of input" {
-  let reader = ByteReader::new(b"\x34\x12\xff")
+  let reader = @byteio.ByteReader::new(b"\x34\x12\xff")
   assert_eq(reader.peek_u16_le(), 0x1234U)
   assert_eq(reader.position(), 0)
   reader.skip(2)
@@ -118,7 +118,7 @@ test "peek reads without moving and reports end of input" {
 
 ///|
 test "little endian reads preserve unsigned high bits" {
-  let reader = ByteReader::new(b"\xff\xff\xff\xff\xff\xff")
+  let reader = @byteio.ByteReader::new(b"\xff\xff\xff\xff\xff\xff")
   assert_eq(reader.read_u16_le(), 0xFFFFU)
   assert_eq(reader.read_u32_le(), 0xFFFFFFFFU)
 }

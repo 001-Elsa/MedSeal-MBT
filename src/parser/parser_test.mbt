@@ -6,6 +6,11 @@ fn write_element(
   vr : String,
   value : Bytes,
 ) -> Unit {
+  let value = if vr != "UI" || value.length() % 2 == 0 {
+    value
+  } else {
+    value + b"\x00"
+  }
   writer.write_u16_le(group)
   writer.write_u16_le(element)
   writer.write_ascii(vr)
@@ -59,8 +64,10 @@ fn minimal_file(ts : String) -> Bytes {
 
 ///|
 test "parse valid explicit VR little endian file" {
-  let parsed = parse(minimal_file(explicit_vr_little_endian_uid))
-  assert_eq(parsed.transfer_syntax, explicit_vr_little_endian_uid)
+  let parsed = @parser.parse(
+    minimal_file(@parser.explicit_vr_little_endian_uid),
+  )
+  assert_eq(parsed.transfer_syntax, @parser.explicit_vr_little_endian_uid)
   assert_eq(parsed.dataset.elements.length(), 1)
   assert_true(
     parsed.dataset.elements[0].value is @model.ElementValue::Text("ALPHA^TEST"),
@@ -70,7 +77,7 @@ test "parse valid explicit VR little endian file" {
 ///|
 test "reject missing DICM marker" {
   let rejected = try {
-    ignore(parse(Bytes::make(132, b'\x00')))
+    ignore(@parser.parse(Bytes::make(132, b'\x00')))
     false
   } catch {
     @model.MedSealError::MissingDicmMarker => true
@@ -82,7 +89,7 @@ test "reject missing DICM marker" {
 ///|
 test "reject unsupported transfer syntax" {
   let rejected = try {
-    ignore(parse(minimal_file("1.2.840.10008.1.2")))
+    ignore(@parser.parse(minimal_file("1.2.840.10008.1.2")))
     false
   } catch {
     @model.MedSealError::UnsupportedTransferSyntax("1.2.840.10008.1.2") => true
@@ -97,7 +104,7 @@ test "reject missing required File Meta Information" {
   writer.write_bytes(Bytes::make(128, b'\x00'))
   writer.write_ascii("DICM")
   let rejected = try {
-    ignore(parse(writer.to_bytes()))
+    ignore(@parser.parse(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::MissingRequiredFileMeta(tag) =>
@@ -109,10 +116,10 @@ test "reject missing required File Meta Information" {
 
 ///|
 test "reject incorrect File Meta Information Group Length" {
-  let bytes = minimal_file(explicit_vr_little_endian_uid).to_array()
+  let bytes = minimal_file(@parser.explicit_vr_little_endian_uid).to_array()
   bytes[140] = b'\x01'
   let rejected = try {
-    ignore(parse(Bytes::from_array(bytes)))
+    ignore(@parser.parse(Bytes::from_array(bytes)))
     false
   } catch {
     @model.MedSealError::InvalidFileMetaGroupLength(_, _) => true
@@ -125,7 +132,7 @@ test "reject incorrect File Meta Information Group Length" {
 test "parse unsigned short dataset value" {
   let writer = @byteio.ByteWriter::new()
   write_element(writer, 0x0028U, 0x0010U, "US", b"\x00\x02")
-  let dataset = parse_dataset_bytes(writer.to_bytes())
+  let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
   assert_true(
     dataset.elements[0].value is @model.ElementValue::UnsignedShort([512U]),
   )
@@ -149,7 +156,7 @@ test "parse undefined length sequence and item" {
   writer.write_u16_le(0xFFFEU)
   writer.write_u16_le(0xE0DDU)
   writer.write_u32_le(0U)
-  let dataset = parse_dataset_bytes(writer.to_bytes())
+  let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
   match dataset.elements[0].value {
     @model.ElementValue::Sequence(items) => {
       assert_eq(items.length(), 1)
@@ -175,7 +182,7 @@ test "reject sequence nesting deeper than 32" {
     writer.write_u32_le(0xFFFFFFFFU)
   }
   let rejected = try {
-    ignore(parse_dataset_bytes(writer.to_bytes()))
+    ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::ExcessiveNesting(33) => true
@@ -211,7 +218,7 @@ fn write_item(
 test "parse empty defined length sequence" {
   let writer = @byteio.ByteWriter::new()
   write_element(writer, 0x0040U, 0x0275U, "SQ", b"")
-  let dataset = parse_dataset_bytes(writer.to_bytes())
+  let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
   assert_true(dataset.elements[0].value is @model.ElementValue::Sequence([]))
 }
 
@@ -226,7 +233,7 @@ test "parse defined length sequence with two items" {
   write_item(sequence_value, second.to_bytes())
   let writer = @byteio.ByteWriter::new()
   write_element(writer, 0x0040U, 0x0275U, "SQ", sequence_value.to_bytes())
-  let dataset = parse_dataset_bytes(writer.to_bytes())
+  let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
   match dataset.elements[0].value {
     @model.ElementValue::Sequence(items) => {
       assert_eq(items.length(), 2)
@@ -257,7 +264,7 @@ test "parse multiple undefined length sequence items" {
   writer.write_u16_le(0xFFFEU)
   writer.write_u16_le(0xE0DDU)
   writer.write_u32_le(0U)
-  let dataset = parse_dataset_bytes(writer.to_bytes())
+  let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
   match dataset.elements[0].value {
     @model.ElementValue::Sequence(items) => assert_eq(items.length(), 2)
     _ => fail("expected sequence")
@@ -273,7 +280,7 @@ test "reject undefined sequence without sequence delimiter" {
   writer.write_u16_le(0U)
   writer.write_u32_le(0xFFFFFFFFU)
   let rejected = try {
-    ignore(parse_dataset_bytes(writer.to_bytes()))
+    ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::InvalidSequence(_) => true
@@ -295,7 +302,7 @@ test "reject undefined item without item delimiter" {
   writer.write_u32_le(0xFFFFFFFFU)
   write_element(writer, 0x0010U, 0x0010U, "PN", b"TEST")
   let rejected = try {
-    ignore(parse_dataset_bytes(writer.to_bytes()))
+    ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::InvalidSequence(_) => true
@@ -313,7 +320,7 @@ test "reject non-zero reserved field for long VR" {
   writer.write_u16_le(1U)
   writer.write_u32_le(0U)
   let rejected = try {
-    ignore(parse_dataset_bytes(writer.to_bytes()))
+    ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::InvalidLength(_, 1U, _) => true
@@ -335,7 +342,7 @@ test "reject numeric value lengths that are not element aligned" {
     let writer = @byteio.ByteWriter::new()
     write_element(writer, 0x0028U, 0x0010U, vr, bytes)
     let rejected = try {
-      ignore(parse_dataset_bytes(writer.to_bytes()))
+      ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
       false
     } catch {
       @model.MedSealError::InvalidLength(_, _, _) => true
@@ -351,7 +358,7 @@ test "OB OW and UN values remain raw bytes" {
     let (vr, bytes) = value
     let writer = @byteio.ByteWriter::new()
     write_element(writer, 0x7776U, 0x0010U, vr, bytes)
-    let dataset = parse_dataset_bytes(writer.to_bytes())
+    let dataset = @parser.parse_dataset_bytes(writer.to_bytes())
     match dataset.elements[0].value {
       @model.ElementValue::Raw(actual) => assert_eq(actual, bytes)
       _ => fail("expected raw bytes")
@@ -367,7 +374,7 @@ test "invalid VR reports the VR byte offset" {
   writer.write_ascii("ZZ")
   writer.write_u16_le(0U)
   let rejected = try {
-    ignore(parse_dataset_bytes(writer.to_bytes()))
+    ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::InvalidVr("ZZ", 4) => true
@@ -385,7 +392,7 @@ test "truncated ordinary element reports its tag and value offset" {
   writer.write_u16_le(4U)
   writer.write_ascii("AB")
   let rejected = try {
-    ignore(parse_dataset_bytes(writer.to_bytes()))
+    ignore(@parser.parse_dataset_bytes(writer.to_bytes()))
     false
   } catch {
     @model.MedSealError::InvalidLength(tag, 4U, 8) =>

@@ -157,12 +157,12 @@ fn parsed(
 }
 
 ///|
-fn write_sample(path : String, value : Bytes) -> Unit raise @fs.IOError {
+fn write_sample(path : String, value : Bytes) -> Unit raise {
   @fs.write_bytes_to_file(path, value)
 }
 
 ///|
-fn generate() -> Unit raise @fs.IOError {
+fn generate() -> Unit raise {
   let image = image_metadata()
   let minimal = @model.DataSet::new(image)
   write_sample(
@@ -172,10 +172,10 @@ fn generate() -> Unit raise @fs.IOError {
   let patient_data = @model.DataSet::new(image + patient_elements())
   let patient_file = @dicom_writer.write_bytes(parsed(patient_data))
   write_sample("samples/valid/patient-fields.dcm", patient_file)
-  let private = raw(
+  let private = text(
     @model.Tag::new(0x0011U, 0x1010U),
     @model.Vr::LO,
-    @utf8.encode("SYNTHETIC PRIVATE VALUE"),
+    "SYNTHETIC PRIVATE VALUE",
     19,
   )
   write_sample(

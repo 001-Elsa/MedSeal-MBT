@@ -43,4 +43,3 @@ pub fn ByteWriter::write_view(Self, BytesView) -> Unit
 // Type aliases
 
 // Traits
-

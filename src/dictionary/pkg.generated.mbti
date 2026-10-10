@@ -23,8 +23,10 @@ pub(all) enum SensitiveRule {
   Empty
   KeepWithWarning(String, String)
 } derive(Eq, @debug.Debug)
+pub fn SensitiveRule::equal(Self, Self) -> Bool
+pub fn SensitiveRule::not_equal(Self, Self) -> Bool
+pub fn SensitiveRule::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
 // Traits
-

@@ -6,7 +6,7 @@ pub struct Tag {
 
 ///|
 pub fn Tag::new(group : UInt, element : UInt) -> Tag {
-  { group, element }
+  { group, element, }
 }
 
 ///|
@@ -48,3 +48,12 @@ pub let transfer_syntax_uid_tag : Tag = Tag::new(0x0002U, 0x0010U)
 
 ///|
 pub let pixel_data_tag : Tag = Tag::new(0x7FE0U, 0x0010U)
+
+///|
+pub extend Tag with Eq::{equal, not_equal}
+
+///|
+pub extend Tag with Debug::{to_repr}
+
+///|
+pub extend Tag with Hash::{hash, hash_combine}

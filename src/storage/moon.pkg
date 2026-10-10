@@ -1,0 +1,12 @@
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/async/fs" @async_fs,
+  "moonbitlang/core/bigint",
+  "moonbitlang/x/path",
+}
+
+supported_targets = "+native"
+
+options(
+  "native-stub": [ "entropy.c" ],
+)

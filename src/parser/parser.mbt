@@ -84,7 +84,7 @@ pub fn parse(data : Bytes) -> ParsedFile raise @model.MedSealError {
   let preamble = data[0:128].to_owned()
   let reader = @byteio.ByteReader::new(data)
   reader.skip(132)
-  let state : ParseState = { count: 0 }
+  let state : ParseState = { count: 0, }
   let file_meta = parse_file_meta(reader, state)
   validate_file_meta(file_meta)
   let transfer_syntax = transfer_syntax_of(file_meta)
@@ -92,7 +92,9 @@ pub fn parse(data : Bytes) -> ParsedFile raise @model.MedSealError {
     raise @model.MedSealError::UnsupportedTransferSyntax(transfer_syntax)
   }
   let dataset = parse_dataset_to_end(reader, state, 0, reader.length())
-  { preamble, file_meta, dataset, transfer_syntax, element_count: state.count }
+  check_character_set(file_meta, "")
+  check_character_set(dataset, "")
+  { preamble, file_meta, dataset, transfer_syntax, element_count: state.count, }
 }
 
 ///|
@@ -100,6 +102,8 @@ pub fn parse_dataset_bytes(
   data : Bytes,
 ) -> @model.DataSet raise @model.MedSealError {
   let reader = @byteio.ByteReader::new(data)
-  let state : ParseState = { count: 0 }
-  parse_dataset_to_end(reader, state, 0, reader.length())
+  let state : ParseState = { count: 0, }
+  let dataset = parse_dataset_to_end(reader, state, 0, reader.length())
+  check_character_set(dataset, "")
+  dataset
 }

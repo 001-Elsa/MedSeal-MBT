@@ -32,10 +32,16 @@ pub(all) suberror MedSealError {
   IoError(String)
   OutputVerificationFailed(String)
   InvalidArgument(String)
+  UnsupportedCharacterSet
+  InvalidTextEncoding
+  InvalidModel(String)
+  PolicyError(String)
+  IdentityError(String)
 } derive(@debug.Debug)
 pub fn MedSealError::code(Self) -> String
 pub fn MedSealError::display(Self) -> String
 pub fn MedSealError::message(Self) -> String
+pub fn MedSealError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
 pub struct DataElement {
@@ -44,18 +50,25 @@ pub struct DataElement {
   value_length : UInt
   value : ElementValue
   original_order : Int
+  original_bytes : Bytes?
 } derive(Eq, @debug.Debug)
-pub fn DataElement::new(Tag, Vr, UInt, ElementValue, Int) -> Self
+pub fn DataElement::equal(Self, Self) -> Bool
+pub fn DataElement::new(Tag, Vr, UInt, ElementValue, Int, original_bytes? : Bytes?) -> Self
+pub fn DataElement::not_equal(Self, Self) -> Bool
+pub fn DataElement::to_repr(Self) -> @debug.Repr
 
 pub struct DataSet {
   elements : Array[DataElement]
 } derive(Eq, @debug.Debug)
 pub fn DataSet::count_recursive(Self) -> Int
 pub fn DataSet::empty() -> Self
+pub fn DataSet::equal(Self, Self) -> Bool
 pub fn DataSet::find(Self, Tag) -> DataElement?
 pub fn DataSet::new(Array[DataElement]) -> Self
+pub fn DataSet::not_equal(Self, Self) -> Bool
 pub fn DataSet::remove(Self, Tag) -> Self
 pub fn DataSet::replace_text(Self, Tag, String) -> Self
+pub fn DataSet::to_repr(Self) -> @debug.Repr
 
 pub(all) enum ElementValue {
   Text(String)
@@ -67,14 +80,22 @@ pub(all) enum ElementValue {
   Raw(Bytes)
   Empty
 } derive(Eq, @debug.Debug)
+pub fn ElementValue::equal(Self, Self) -> Bool
+pub fn ElementValue::not_equal(Self, Self) -> Bool
+pub fn ElementValue::to_repr(Self) -> @debug.Repr
 
 pub struct Tag {
   group : UInt
   element : UInt
 } derive(Eq, Hash, @debug.Debug)
 pub fn Tag::compact(Self) -> String
+pub fn Tag::equal(Self, Self) -> Bool
+pub fn Tag::hash(Self) -> Int
+pub fn Tag::hash_combine(Self, Hasher) -> Unit
 pub fn Tag::is_private(Self) -> Bool
 pub fn Tag::new(UInt, UInt) -> Self
+pub fn Tag::not_equal(Self, Self) -> Bool
+pub fn Tag::to_repr(Self) -> @debug.Repr
 pub fn Tag::to_string(Self) -> String
 
 pub(all) enum Vr {
@@ -113,12 +134,14 @@ pub(all) enum Vr {
   UT
   UV
 } derive(Eq, @debug.Debug)
+pub fn Vr::equal(Self, Self) -> Bool
 pub fn Vr::from_string(String) -> Self?
 pub fn Vr::is_text(Self) -> Bool
+pub fn Vr::not_equal(Self, Self) -> Bool
+pub fn Vr::to_repr(Self) -> @debug.Repr
 pub fn Vr::to_string(Self) -> String
 pub fn Vr::uses_u32_length(Self) -> Bool
 
 // Type aliases
 
 // Traits
-

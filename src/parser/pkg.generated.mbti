@@ -27,8 +27,10 @@ pub(all) struct ParsedFile {
   transfer_syntax : String
   element_count : Int
 } derive(Eq, @debug.Debug)
+pub fn ParsedFile::equal(Self, Self) -> Bool
+pub fn ParsedFile::not_equal(Self, Self) -> Bool
+pub fn ParsedFile::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
 // Traits
-

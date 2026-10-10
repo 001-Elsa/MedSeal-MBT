@@ -1,8 +1,6 @@
 ///|
-fn read_input(path : String) -> Bytes raise @model.MedSealError {
-  @fs.read_file_to_bytes(path) catch {
-    @fs.IOError(message) => raise @model.MedSealError::IoError(message)
-  }
+async fn read_input(path : String) -> Bytes raise @model.MedSealError {
+  @storage.read(path)
 }
 
 ///|
@@ -30,13 +28,13 @@ fn has_pixel_data(dataset : @model.DataSet) -> Bool {
 
 ///|
 fn inspect_json(
-  path : String,
+  _path : String,
   parsed : @parser.ParsedFile,
   report : @validator.ValidationReport,
 ) -> String {
   Json::object(
     Map::from_array([
-      ("file", Json::string(path)),
+      ("file", Json::string("source-0001")),
       ("format", Json::string("DICOM Part 10")),
       ("transfer_syntax", Json::string(parsed.transfer_syntax)),
       ("elements", Json::number(parsed.element_count.to_double())),
@@ -63,7 +61,7 @@ fn inspect_json(
 }
 
 ///|
-pub fn inspect_file(
+pub async fn inspect_file(
   path : String,
   json : Bool,
 ) -> Unit raise @model.MedSealError {
@@ -73,7 +71,7 @@ pub fn inspect_file(
     println(inspect_json(path, parsed, report))
     return
   }
-  println("File: \{path}")
+  println("File: source-0001")
   println("Format: DICOM Part 10")
   println("Transfer Syntax: Explicit VR Little Endian")
   println("Elements: \{parsed.element_count}")

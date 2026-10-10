@@ -51,11 +51,11 @@ fn read_length(
 }
 
 ///|
-fn trim_text(bytes : Bytes) -> String {
+fn trim_text(bytes : Bytes) -> String raise @model.MedSealError {
   let decoded = @utf8.decode(bytes) catch {
-    _ => String::from_array(bytes.to_array().map(fn(byte) { byte.to_char() }))
+    _ => raise @model.MedSealError::InvalidTextEncoding
   }
-  decoded.trim(chars=" \u{0000}").to_owned()
+  decoded.trim_end(chars=" \u{0000}").to_owned()
 }
 
 ///|
@@ -97,7 +97,10 @@ fn decode_ul(bytes : Bytes) -> Array[UInt] {
 }
 
 ///|
-fn decode_value(vr : @model.Vr, bytes : Bytes) -> @model.ElementValue {
+fn decode_value(
+  vr : @model.Vr,
+  bytes : Bytes,
+) -> @model.ElementValue raise @model.MedSealError {
   if bytes.is_empty() {
     return @model.ElementValue::Empty
   }
@@ -162,6 +165,9 @@ fn parse_element(
     raise @model.MedSealError::InvalidLength(tag, length, reader.position())
   }
   let int_length = check_value_length(reader, tag, length, reader.position())
+  if int_length % 2 != 0 {
+    raise @model.MedSealError::InvalidLength(tag, length, reader.position())
+  }
   match vr {
     US | SS if int_length % 2 != 0 =>
       raise @model.MedSealError::InvalidLength(tag, length, reader.position())
@@ -170,7 +176,14 @@ fn parse_element(
     _ => ()
   }
   let bytes = reader.read_bytes(int_length)
-  @model.DataElement::new(tag, vr, length, decode_value(vr, bytes), order)
+  @model.DataElement::new(
+    tag,
+    vr,
+    length,
+    decode_value(vr, bytes),
+    order,
+    original_bytes=if vr.is_text() { Some(bytes) } else { None },
+  )
 }
 
 ///|

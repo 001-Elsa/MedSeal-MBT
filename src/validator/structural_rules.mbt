@@ -1,11 +1,18 @@
 ///|
 fn valid_uid(value : String) -> Bool {
-  !value.is_empty() &&
-  value.length() <= 64 &&
-  value.all(fn(char) { char == '.' || char.is_digit(10U) }) &&
-  !value.has_prefix(".") &&
-  !value.has_suffix(".") &&
-  !value.contains("..")
+  value
+  .split("\\")
+  .all(fn(uid) {
+    !uid.is_empty() &&
+    uid.length() <= 64 &&
+    uid
+    .split(".")
+    .all(fn(part) {
+      !part.is_empty() &&
+      part.all(fn(c) { c >= '0' && c <= '9' }) &&
+      (part.length() == 1 || !part.has_prefix("0"))
+    })
+  })
 }
 
 ///|
@@ -43,8 +50,7 @@ fn valid_age_string(value : String) -> Bool {
 
 ///|
 fn valid_date(value : String) -> Bool {
-  value.is_empty() ||
-  (value.length() == 8 && value.all(fn(char) { char.is_digit(10U) }))
+  value.split("\\").all(fn(part) { @date.valid(part.to_owned()) })
 }
 
 ///|
@@ -66,7 +72,15 @@ fn validate_elements(
           )
         }
         match text_vr_limit(element.vr) {
-          Some(limit) if value.length() > limit =>
+          Some(limit) if value
+            .split("\\")
+            .any(fn(part) {
+              if element.vr == @model.Vr::PN {
+                part.split("=").any(fn(group) { group.length() > limit })
+              } else {
+                part.length() > limit
+              }
+            }) =>
             issues.push(
               ValidationIssue::new(
                 Error,
@@ -77,7 +91,10 @@ fn validate_elements(
             )
           _ => ()
         }
-        if element.vr == @model.Vr::CS && !valid_code_string(value) {
+        if element.vr == @model.Vr::CS &&
+          !value
+          .split("\\")
+          .all(fn(part) { valid_code_string(part.to_owned()) }) {
           issues.push(
             ValidationIssue::new(
               Error,

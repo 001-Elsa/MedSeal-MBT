@@ -8,7 +8,9 @@ fn write_meta_group_length(writer : @byteio.ByteWriter, length : Int) -> Unit {
 }
 
 ///|
-fn encode_file_meta(file_meta : @model.DataSet) -> Bytes {
+fn encode_file_meta(
+  file_meta : @model.DataSet,
+) -> Bytes raise @model.MedSealError {
   let rest = @byteio.ByteWriter::new()
   for element in file_meta.elements {
     if element.tag != @model.Tag::new(0x0002U, 0x0000U) {
@@ -26,7 +28,14 @@ fn encode_file_meta(file_meta : @model.DataSet) -> Bytes {
 pub fn write_bytes(
   parsed : @parser.ParsedFile,
   dataset? : @model.DataSet = parsed.dataset,
-) -> Bytes {
+) -> Bytes raise @model.MedSealError {
+  let count = [0]
+  let size = 132 +
+    encoded_size(parsed.file_meta, 0, count) +
+    encoded_size(dataset, 0, count)
+  if size > 256 * 1024 * 1024 {
+    raise @model.MedSealError::InvalidModel("file exceeds 256 MiB")
+  }
   let writer = @byteio.ByteWriter::new()
   if parsed.preamble.length() == 128 {
     writer.write_bytes(parsed.preamble)

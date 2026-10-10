@@ -5,7 +5,7 @@ pub struct ByteWriter {
 
 ///|
 pub fn ByteWriter::new() -> ByteWriter {
-  { buffer: Buffer::Buffer() }
+  { buffer: Buffer::Buffer(), }
 }
 
 ///|

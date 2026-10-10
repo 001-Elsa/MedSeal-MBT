@@ -26,6 +26,6 @@ preferred_target = "native"
 description = "A small DICOM metadata validator and basic de-identification tool written in MoonBit."
 
 import {
-  "moonbitlang/async@0.20.4",
-  "moonbitlang/x@0.4.48",
+  "moonbitlang/async@0.22.4",
+  "moonbitlang/x@0.5.5",
 }

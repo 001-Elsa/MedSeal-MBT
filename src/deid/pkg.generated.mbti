@@ -24,17 +24,26 @@ pub struct AnonymizeResult {
   changes : Array[AuditEvent]
   warnings : Array[AuditWarning]
 } derive(Eq, @debug.Debug)
+pub fn AnonymizeResult::equal(Self, Self) -> Bool
+pub fn AnonymizeResult::not_equal(Self, Self) -> Bool
+pub fn AnonymizeResult::to_repr(Self) -> @debug.Repr
 
 pub struct AuditEvent {
   tag : String
   name : String
   action : String
 } derive(Eq, @debug.Debug)
+pub fn AuditEvent::equal(Self, Self) -> Bool
+pub fn AuditEvent::not_equal(Self, Self) -> Bool
+pub fn AuditEvent::to_repr(Self) -> @debug.Repr
 
 pub struct AuditWarning {
   code : String
   message : String
 } derive(Eq, @debug.Debug)
+pub fn AuditWarning::equal(Self, Self) -> Bool
+pub fn AuditWarning::not_equal(Self, Self) -> Bool
+pub fn AuditWarning::to_repr(Self) -> @debug.Repr
 
 pub(all) enum DeIdAction {
   Keep
@@ -42,9 +51,11 @@ pub(all) enum DeIdAction {
   Replace(String)
   Remove
 } derive(Eq, @debug.Debug)
+pub fn DeIdAction::equal(Self, Self) -> Bool
 pub fn DeIdAction::name(Self) -> String
+pub fn DeIdAction::not_equal(Self, Self) -> Bool
+pub fn DeIdAction::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
 // Traits
-
