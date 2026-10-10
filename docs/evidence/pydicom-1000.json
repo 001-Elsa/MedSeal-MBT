@@ -1,0 +1,9 @@
+{
+  "objects": 1000,
+  "patients": 2,
+  "references": 998,
+  "pydicom": "3.0.1",
+  "cli_batch_seconds": 1.4334,
+  "synthetic_input_bytes": 1133546,
+  "note": "CLI duration includes cached MoonBit runner overhead; small synthetic pixels"
+}

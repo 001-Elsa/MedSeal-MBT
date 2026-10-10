@@ -1,0 +1,14 @@
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "001-Elsa/medseal/src/dicom_writer",
+  "001-Elsa/medseal/src/batch",
+  "001-Elsa/medseal/src/policy",
+  "001-Elsa/medseal/src/storage",
+  "moonbitlang/async",
+  "moonbitlang/async/fs" @async_fs,
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "+native"

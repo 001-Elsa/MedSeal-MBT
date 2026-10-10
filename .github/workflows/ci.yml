@@ -40,5 +40,14 @@ jobs:
           git diff --exit-code
       - name: Build
         run: moon build --target native
+      - name: Collection example
+        run: moon run --target native examples/collection
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Independent DICOM verification
+        run: |
+          python -m pip install pydicom==3.0.1
+          python tools/verify_with_pydicom.py
       - name: Package
         run: moon package

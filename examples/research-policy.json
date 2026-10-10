@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "mode": "research",
+  "namespace": "synthetic-lab",
+  "date_shift_days": 30,
+  "allow_external_references": false,
+  "rules": [
+    { "tag": "00081030", "action": "empty" },
+    { "tag": "0008103E", "action": "empty" },
+    { "tag": "00181030", "action": "empty" }
+  ]
+}
