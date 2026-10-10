@@ -7,6 +7,18 @@ extern "C" fn entropy(buffer : Bytes, length : Int) -> Int = "medseal_entropy"
 extern "C" fn source_guard(fd : Int, path : Bytes) -> Int = "medseal_source_guard"
 
 ///|
+#cfg(not(platform="windows"))
+fn guard_descriptor(file : @async_fs.File) -> Int {
+  file.fd()
+}
+
+///|
+#cfg(platform="windows")
+fn guard_descriptor(_file : @async_fs.File) -> Int {
+  0
+}
+
+///|
 fn check_source(
   file : @async_fs.File,
   path : String,
@@ -14,7 +26,7 @@ fn check_source(
   if path.contains("\u{0000}") {
     raise @model.MedSealError::InvalidArgument("NUL in file path")
   }
-  match source_guard(file.fd(), @utf8.encode(path + "\u{0000}")) {
+  match source_guard(guard_descriptor(file), @utf8.encode(path + "\u{0000}")) {
     0 => ()
     -2 =>
       raise @model.MedSealError::InvalidArgument(
