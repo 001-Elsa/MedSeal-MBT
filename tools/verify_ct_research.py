@@ -201,9 +201,10 @@ def negative_cases(root):
     try:
         if read_series(missing)["count"] == 50:
             raise AssertionError("missing slice accepted")
-        raise AssertionError("missing slice accepted")
     except AssertionError as error:
         cases.append({"id": "missing-slice", "status": "blocked", "reason": str(error)})
+    else:
+        raise AssertionError("negative accepted: missing-slice")
     duplicate = root / "negative-duplicate"
     shutil.copytree(root / "series-1", duplicate)
     ds = pydicom.dcmread(duplicate / "slice-026.dcm")
@@ -212,9 +213,10 @@ def negative_cases(root):
     ds.save_as(duplicate / "slice-026.dcm", enforce_file_format=True)
     try:
         read_series(duplicate)
-        raise AssertionError("duplicate position accepted")
     except AssertionError as error:
         cases.append({"id": "duplicate-position", "status": "blocked", "reason": str(error)})
+    else:
+        raise AssertionError("negative accepted: duplicate-position")
     mixed = root / "negative-orientation"
     shutil.copytree(root / "series-1", mixed)
     ds = pydicom.dcmread(mixed / "slice-026.dcm")
@@ -222,9 +224,10 @@ def negative_cases(root):
     ds.save_as(mixed / "slice-026.dcm", enforce_file_format=True)
     try:
         read_series(mixed)
-        raise AssertionError("mixed orientation accepted")
     except AssertionError as error:
         cases.append({"id": "mixed-orientation", "status": "blocked", "reason": str(error)})
+    else:
+        raise AssertionError("negative accepted: mixed-orientation")
     non_hu = root / "negative-unit"
     shutil.copytree(root / "series-1", non_hu)
     ds = pydicom.dcmread(non_hu / "slice-001.dcm")
@@ -232,9 +235,10 @@ def negative_cases(root):
     ds.save_as(non_hu / "slice-001.dcm", enforce_file_format=True)
     try:
         read_series(non_hu)
-        raise AssertionError("non-HU series accepted")
     except AssertionError as error:
         cases.append({"id": "non-hu-unit", "status": "blocked", "reason": str(error)})
+    else:
+        raise AssertionError("negative accepted: non-hu-unit")
     compressed = root / "negative-transfer-syntax"
     shutil.copytree(root / "series-1", compressed)
     ds = pydicom.dcmread(compressed / "slice-001.dcm")
@@ -242,9 +246,10 @@ def negative_cases(root):
     try:
         if str(ds.file_meta.TransferSyntaxUID) != str(ExplicitVRLittleEndian):
             raise AssertionError("compressed transfer syntax")
-        raise AssertionError("compressed transfer syntax accepted")
     except AssertionError as error:
         cases.append({"id": "compressed-transfer-syntax", "status": "blocked", "reason": str(error)})
+    else:
+        raise AssertionError("negative accepted: compressed-transfer-syntax")
     return cases
 
 
@@ -277,6 +282,7 @@ def main():
             "binary_sha256": hashlib.sha256((REPO / "_build/native/debug/build/cmd/main/main.exe").read_bytes()).hexdigest(),
             "series": series_results,
             "negative_cases": negatives,
+            "negative_enforcement": "independent series receiver contract; per-object CT fields are also enforced by the MoonBit batch path",
             "series_count": len(series_results),
             "minimum_slices_per_series": min(item["slices"] for item in series_results),
             "independent_reader": {"pydicom": pydicom.__version__, "transfer_syntax": str(ExplicitVRLittleEndian)},

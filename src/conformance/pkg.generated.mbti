@@ -14,6 +14,8 @@ pub fn check_classic_ct(@model.DataSet, full_pixels? : Bool) -> Unit raise @mode
 
 pub fn check_pixel_length(@model.DataSet, Int) -> Unit raise @model.MedSealError
 
+pub fn check_research(@model.DataSet, full_pixels? : Bool) -> Unit raise @model.MedSealError
+
 // Errors
 
 // Types and methods

@@ -3,7 +3,7 @@
   "stage": "W3",
   "profile": "ct-classic-research-v1",
   "status": "passed",
-  "source_base_commit": "aa3b13d7da3e3f46e0d2e2ab5d5300eb6b56b486",
+  "source_base_commit": "c9b00f814e0599a146f0efeb8298bfcec0b16512",
   "source_tree_scopes": [
     "src",
     "api",
@@ -19,11 +19,11 @@
     "requirements-enterprise.txt",
     "requirements-qa.txt"
   ],
-  "source_tree_files": 706,
-  "source_tree_sha256": "ab78e7870753a26492a63efc3982e2b9821183f452d4b7dc32af0af86d83a33d",
+  "source_tree_files": 708,
+  "source_tree_sha256": "578af6af28648335e45fb3c4ef5d5d09baab98feb48eed7085234f1da1ecf001",
   "profile_sha256": "77c6ac29776710329d74408b2ea84e2e56c77449264ef9f4bcd42511cd8cb2ce",
-  "tool_sha256": "cab5df71727e18a16a47ead89d8470dd3cf6984725426cdad8288d7c47d3e5ef",
-  "binary_sha256": "5e89fe924e4f985db436ea98b07fc36807f8022624e8cfccaf46e8ddb9d699ce",
+  "tool_sha256": "bca08c243ec43c85a86e34d6f6c9c110f63ee02f2bc0e3d780541de4d75df9bf",
+  "binary_sha256": "e02e1b869d11b06dfd518dc16b1ae0c91403f28b6d93058702217091e88785be",
   "series": [
     {
       "source": "series-1",
@@ -74,6 +74,7 @@
       "reason": "compressed transfer syntax"
     }
   ],
+  "negative_enforcement": "independent series receiver contract; per-object CT fields are also enforced by the MoonBit batch path",
   "series_count": 3,
   "minimum_slices_per_series": 50,
   "independent_reader": {

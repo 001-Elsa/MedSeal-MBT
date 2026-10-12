@@ -142,7 +142,7 @@ pub async fn verify(
       )
     }
     if profile == "strict-v1" {
-      @conformance.check(
+      @conformance.check_research(
         parsed.dataset.remove(@model.Tag::new(0x0012U, 0x0063U)),
         full_pixels=!streamed,
       )

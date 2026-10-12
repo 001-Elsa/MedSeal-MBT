@@ -7,8 +7,8 @@
 | W0 | 实现、本机验收与三平台远端 CI 通过 | 141 项规则索引、固定官方事实、三值条件、公开解释／Schema／四案例、公共门面与受控状态；Native 115，JS/wasm/wasm-gc 各 62；恢复／审核／签名回归；不扩张为完整 IOD 认证 |
 | W1 | 实现、本机 M1/M2 合成验收与三平台 CI 通过 | 473 实际案例，六类，零失败/跳过；四后端一致；pydicom 实际写回，选定 SC 的 dciodvfy 原始诊断，闭集合正反例；完整 CT Profile 留 W3 |
 | W2 | 实现、本机阶段验收通过；待提交与远端 CI | 私有缓存／迁移、已交付历史引用、时间精度、outbox 与计数守恒；证据见 `evidence/w2-incremental.json`、`evidence/w2-destination.json`、`evidence/w2-conformance.json`、`evidence/w2-rulebook.json` |
-| W3 | 实现、本机合成验收通过；待提交与远端 CI | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json` |
-| W4 | 待实施 | 作业模型／提交窗口、100,000 次 fuzz、模型 seed、1/8/32 GiB 资源档 |
+| W3 | 修正实现、本机验收通过；待修正提交远端 CI | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json` |
+| W4 | 草案；原验收不足，待真实核心/窗口/资源验收 | 独立状态模型、100 个 seed×200 事件、100,000 次有界契约 fuzz、POSIX 故障窗口矩阵；证据见 `evidence/w4-state-model.json` |
 | W5 | 待实施 | 受控本地工作台、权限／跨站防护、分页与操作者闭环 |
 | W6 | 待实施 | 仓库外归档和 registry 消费者、候选发行、镜像一致与隔离安装 |
 | W7 | 软件演练待实施；实际主体项 requires_field | 新操作者、真实授权来源与研究接收、独立审查；这些材料不能由实现者或合成测试代填 |
@@ -43,5 +43,11 @@
 
 - [`ct-classic-research-v1` 矩阵](../resources/rules/ct-classic-research-v1.json) 固定经典 CT、单帧、Explicit VR Little Endian、未压缩 16 位 `MONOCHROME2` 范围；MoonBit 入口 [`check_classic_ct`](../src/conformance/ct_profile.mbt) 逐层检查模块字段、CT 条件、像素位语义、HU 单位和几何向量。
 - [`tools/verify_ct_research.py`](../tools/verify_ct_research.py) 实际生成三组各 50 个切片，运行真实批处理后由独立 pydicom 接收器检查排序、解码体素、HU 重算和空间坐标；体素差异为 0，HU 最大绝对误差为 0，几何误差为 0。
-- 缺片、重复位置、方向混合、非 HU 单位和压缩传输语法五类负例均明确阻断。证据绑定提交前源码树、Profile、工具和原生二进制指纹；全部数据为合成非临床数据。
+- 缺片、重复位置、方向混合、非 HU 单位和压缩传输语法五类负例由独立系列接收器明确阻断；每个对象的 CT 字段也由 MoonBit 批处理路径阻断。证据绑定提交前源码树、Profile、工具和原生二进制指纹；全部数据为合成非临床数据。
 - 真实扫描设备、真实来源授权、烧录文字/识别性像素审查、独立研究接收方和临床用途仍保留为 `requires_field`；增强 CT、多帧、压缩像素和任意厂商扩展不在该 Profile 内。
+
+## W4 验收记录
+
+- [`tools/state_model.py`](../tools/state_model.py) 固定作业状态合法转移和发布/签名/审核不变量；[`tools/verify_w4.py`](../tools/verify_w4.py) 执行 100 个 seed、每个 200 个事件，保存接受与拒绝计数及前五个可复现 seed 摘要。
+- 同一脚本运行 100,000 次有界 UTF-8/JSON 变异，未解释崩溃和超时均为 0；并运行实际 POSIX 双进程竞争、SIGKILL、写入限制、路径别名、硬链接和权限故障矩阵。
+- 状态模型与 100,000 次原生策略解析器 fuzz 已通过；故障矩阵仍只覆盖现有 POSIX 注入场景，登记的全部窗口尚未逐项纳入独立注入报告。证据限制为合成输入和本机进程终止，不升级为断电、真实磁盘耗尽或 Windows 认证。

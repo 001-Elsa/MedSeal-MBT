@@ -131,7 +131,7 @@ pub async fn plan(
       let bytes = @storage.read(path)
       let parsed = @parser.parse(bytes)
       if policy.strict_metadata {
-        @conformance.check(parsed.dataset, full_pixels=true)
+        @conformance.check_research(parsed.dataset, full_pixels=true)
       }
       (parsed, @checksum.sha256(bytes))
     }
@@ -407,7 +407,7 @@ pub async fn Job::execute(
     }
     outputs.push(@verification.metadata_only(reparsed.dataset))
     if self.policy.strict_metadata {
-      @conformance.check(
+      @conformance.check_research(
         reparsed.dataset.remove(@model.Tag::new(0x0012U, 0x0063U)),
         full_pixels=!self.streamed,
       )

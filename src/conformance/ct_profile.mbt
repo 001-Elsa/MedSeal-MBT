@@ -173,3 +173,16 @@ pub fn check_classic_ct(
   ct_decimal_vector(dataset, "00200032", 3)
   ct_decimal_vector(dataset, "00200037", 6)
 }
+
+///|
+/// Apply the declared research profile whenever a strict job contains classic CT.
+pub fn check_research(
+  dataset : @model.DataSet,
+  full_pixels? : Bool = true,
+) -> Unit raise @model.MedSealError {
+  check(dataset, full_pixels~)
+  match ct_text(dataset, "00080016") {
+    Some("1.2.840.10008.5.1.4.1.1.2") => check_classic_ct(dataset, full_pixels~)
+    _ => ()
+  }
+}

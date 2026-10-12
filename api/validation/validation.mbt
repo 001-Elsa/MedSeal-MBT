@@ -14,7 +14,7 @@ pub struct ConvertedObject {
 pub fn validate(bytes : Bytes) -> ValidatedObject raise @model.MedSealError {
   let source = bytes
   let file = @parser.parse(source)
-  @conformance.check(file.dataset, full_pixels=true)
+  @conformance.check_research(file.dataset, full_pixels=true)
   @verification.check_file_meta(file)
   { source, }
 }
@@ -39,10 +39,10 @@ pub fn convert(
   }
   let source = @parser.parse(input.source)
   let result = context.apply(source.dataset)
-  @conformance.check(result.dataset, full_pixels=true)
+  @conformance.check_research(result.dataset, full_pixels=true)
   let output = @dicom_writer.write_deidentified(source, result.dataset)
   let reread = @parser.parse(output)
-  @conformance.check(reread.dataset, full_pixels=true)
+  @conformance.check_research(reread.dataset, full_pixels=true)
   if !@verification.same_values(result.dataset, reread.dataset) {
     raise @model.MedSealError::OutputVerificationFailed(
       "typed conversion round trip",
