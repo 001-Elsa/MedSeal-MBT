@@ -2,7 +2,7 @@
   "schema": 1,
   "stage": "W0",
   "scope": "declared strict attribute and existing constraint subset; synthetic data only",
-  "source_base_commit": "4ec37cf67ddd1132bed403f1b51b780fa8a5cb55",
+  "source_base_commit": "874caaa3735406ac39dbaf51cd4928c0f3cd14da",
   "source_tree_scopes": [
     "src",
     "api",
@@ -19,7 +19,7 @@
     "requirements-qa.txt"
   ],
   "source_tree_files": 692,
-  "source_tree_sha256": "fa44af5cf65add3cb52343ac0843293c6254e6553c98d260e911eb8e580cc7aa",
+  "source_tree_sha256": "7c05e5c92f722f51bdc3a9571f681fcee19a1d32bd5338d0b5a1901285338c87",
   "platform": "macOS-26.6-arm64-arm-64bit",
   "python": "3.12.14",
   "pydicom": "3.0.1",

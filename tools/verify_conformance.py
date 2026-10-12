@@ -59,7 +59,7 @@ def check_integrity_negatives(root, manifest):
         first = isolated / manifest['entries'][0]['file']
         original = first.read_bytes()
         mutations = [lambda: first.unlink(), lambda: first.write_bytes(original + b'X'),
-                     lambda: (isolated / 'expectations.json').write_text('{}')]
+                     lambda: (isolated / 'expectations.json').write_text('{}', encoding='utf-8', newline='\n')]
         checked = []
         for label, mutate in zip(['required-missing', 'required-tampered', 'expectation-tampered'], mutations):
             first.write_bytes(original)
@@ -78,7 +78,7 @@ def check_integrity_negatives(root, manifest):
 
 def dependency_records():
     result = []
-    for line in (REPO / 'requirements-qa.txt').read_text().splitlines():
+    for line in (REPO / 'requirements-qa.txt').read_text(encoding='utf-8').splitlines():
         name, expected = line.split('==')
         dist = importlib.metadata.distribution(name)
         assert dist.version == expected, (name, expected, dist.version)
@@ -101,7 +101,7 @@ def independently_read(path):
 
 
 def iod_diagnostics(tool, path):
-    proc = subprocess.run([str(tool), str(path)], capture_output=True, text=True, timeout=20)
+    proc = subprocess.run([str(tool), str(path)], capture_output=True, text=True, encoding='utf-8', timeout=20)
     raw = proc.stdout + proc.stderr
     errors = [line for line in raw.splitlines() if line.startswith('Error')]
     warning_lines = [line for line in raw.splitlines() if line.startswith('Warning')]
@@ -135,7 +135,7 @@ def reference_difference(entry, path):
 
 def run(args):
     root = REPO / 'conformance'
-    manifest = json.loads((root / 'manifest.json').read_text())
+    manifest = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
     (REPO / 'tmp').mkdir(exist_ok=True)
     integrity(root, manifest)
     negatives = check_integrity_negatives(root, manifest)
@@ -143,10 +143,10 @@ def run(args):
     catalog = catalog_check()
     dependencies = dependency_records()
     moon = REPO / 'tools/moon-local' if (REPO / 'tools/moon-local').exists() and os.name != 'nt' else Path('moon')
-    toolchain = subprocess.check_output([str(moon), 'version', '--all'], cwd=REPO, text=True)
+    toolchain = subprocess.check_output([str(moon), 'version', '--all'], cwd=REPO, text=True, encoding='utf-8')
     backends = []
     for target in args.backends.split(','):
-        proc = subprocess.run([str(moon), 'test', '--target', target, '--deny-warn'], cwd=REPO, capture_output=True, text=True, timeout=600)
+        proc = subprocess.run([str(moon), 'test', '--target', target, '--deny-warn'], cwd=REPO, capture_output=True, text=True, encoding='utf-8', timeout=600)
         assert proc.returncode == 0, proc.stdout + proc.stderr
         summary = re.search(r'Total tests: (\d+), passed: (\d+), failed: (\d+)', proc.stdout + proc.stderr)
         assert summary and int(summary[1]) > 0 and summary[1] == summary[2] and summary[3] == '0'
@@ -161,10 +161,10 @@ def run(args):
             source = root / entry['file']
             output, config = temporary / 'output.dcm', temporary / 'policy.json'
             output.unlink(missing_ok=True)
-            config.write_text(entry['configuration'])
+            config.write_text(entry['configuration'], encoding='utf-8', newline='\n')
             accepted = entry['expected']['status'] == 'passed'
             command = [str(binary), entry['purpose'], str(source), entry['tag'], str(config), str(output) if accepted else '-']
-            proc = subprocess.run(command, capture_output=True, text=True, timeout=20)
+            proc = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', timeout=20)
             assert proc.returncode == 0, (entry['id'], proc.stdout, proc.stderr)
             actual = json.loads(proc.stdout)
             assert actual == entry['expected'], entry['id']
@@ -185,8 +185,9 @@ def run(args):
             results.append(item)
         for collection in manifest['collections']:
             inputs = temporary / 'members.txt'
-            inputs.write_text('\n'.join(str(root / member['file']) for member in collection['members']))
-            proc = subprocess.run([str(binary), 'collection', str(inputs), '-', '-', '-'], capture_output=True, text=True, timeout=20)
+            inputs.write_text('\n'.join(str(root / member['file']) for member in collection['members']), encoding='utf-8', newline='\n')
+            assert b'\r' not in inputs.read_bytes()
+            proc = subprocess.run([str(binary), 'collection', str(inputs), '-', '-', '-'], capture_output=True, text=True, encoding='utf-8', timeout=20)
             assert proc.returncode == 0 and json.loads(proc.stdout) == collection['expected'], (collection['id'], proc.stdout, proc.stderr)
             collections.append({'id': collection['id'], 'status': 'passed', 'expected': collection['expected']})
     # Every rule gets executable positive/negative evidence; existing W0 model
@@ -206,7 +207,7 @@ def run(args):
             'dependencies': dependencies, 'executed': executed, 'passed': executed, 'failed': 0, 'skipped': 0,
             'categories': dict(Counter(e['category'] for e in manifest['entries'])), 'backends': backends,
             'integrity_negatives': negatives, 'results': results, 'collections': collections, 'rule_coverage': matrix,
-            'iod_tool': {'status': 'executed', 'sha256': digest(args.dciodvfy), 'version_raw': subprocess.run([str(args.dciodvfy), '-version'], capture_output=True, text=True).stderr,
+            'iod_tool': {'status': 'executed', 'sha256': digest(args.dciodvfy), 'version_raw': subprocess.run([str(args.dciodvfy), '-version'], capture_output=True, text=True, encoding='utf-8').stderr,
                          'executed': 2 * sum(e['iod_validator'] for e in manifest['entries'])} if args.dciodvfy else {'status': 'not-in-this-platform-scope'},
             'limitations': ['Synthetic data only; field acceptance pending', 'Attribute units and selected SC IOD diagnostics do not establish complete SC/CT/MR IOD or Annex E', 'Process adapters and independent IOD tool run only in the recorded platform scope'],
             'release_authorized': False}
@@ -220,7 +221,7 @@ def main():
     args = parser.parse_args()
     record = run(args)
     args.record.parent.mkdir(parents=True, exist_ok=True)
-    args.record.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
+    args.record.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps({k: record[k] for k in ['status', 'executed', 'passed', 'failed', 'skipped', 'categories']}))
 
 

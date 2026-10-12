@@ -21,18 +21,18 @@ from moon_tokens import semantic_tokens
 
 
 def catalog_check():
-    catalog = json.loads((REPO / 'resources/rules/rulebook-v1.json').read_text())
-    schema = json.loads((REPO / 'resources/rules/rulebook-v1.schema.json').read_text())
+    catalog = json.loads((REPO / 'resources/rules/rulebook-v1.json').read_text(encoding='utf-8'))
+    schema = json.loads((REPO / 'resources/rules/rulebook-v1.schema.json').read_text(encoding='utf-8'))
     Draft202012Validator(schema).validate(catalog)
     assert len({rule['id'] for rule in catalog['rules']}) == len(catalog['rules'])
     for rule in catalog['rules']:
         assert all((REPO / path).is_file() for path in rule['implementation'])
-        text = (REPO / rule['test']).read_text()
+        text = (REPO / rule['test']).read_text(encoding='utf-8')
         assert rule['positive_case'] in text and rule['negative_case'] in text, rule['id']
     # Format is owned by moon fmt; semantic tokens are owned by the generator.
     normalize = semantic_tokens
     for path, expected in products().items():
-        actual = path.read_text()
+        actual = path.read_text(encoding='utf-8')
         assert actual == expected if path.suffix == '.json' else normalize(actual) == normalize(expected), path
     return catalog
 
@@ -52,7 +52,7 @@ def main():
     from attestation import initialize_signer, publish_job
     binary = REPO / '_build/native/debug/build/cmd/main/main.exe'
     probe = REPO / '_build/native/debug/build/examples/authorization/authorization.exe'
-    schema = json.loads((REPO / 'resources/rules/explanation-v1.schema.json').read_text())
+    schema = json.loads((REPO / 'resources/rules/explanation-v1.schema.json').read_text(encoding='utf-8'))
     validator = Draft202012Validator(schema)
     checks, examples = [], []
     canaries = ['CANARY-NAME', 'CANARY-ID', 'CANARY-DESCRIPTION', 'CANARY-REPLACE',
@@ -79,7 +79,7 @@ def main():
             config_path = root / 'policy.json'
             config_path.write_text(json.dumps(config))
             data.save_as(path, enforce_file_format=True)
-            proc = subprocess.run([str(binary), 'explain-object', str(path), '--policy', str(config_path)], capture_output=True, text=True)
+            proc = subprocess.run([str(binary), 'explain-object', str(path), '--policy', str(config_path)], capture_output=True, text=True, encoding='utf-8')
             report = json.loads(proc.stdout)
             assert (proc.returncode == 0) == accepted, (case, proc.stdout, proc.stderr)
             assert report['status'] == ('converted-explanation' if accepted else 'blocked')
@@ -120,14 +120,14 @@ def main():
         except ValueError:
             pass
         # Force a read error before parsing. CLI must not expose its local path.
-        proc = subprocess.run([str(binary), 'explain-object', str(root / 'CANARY-SOURCE/missing.dcm')], capture_output=True, text=True)
+        proc = subprocess.run([str(binary), 'explain-object', str(root / 'CANARY-SOURCE/missing.dcm')], capture_output=True, text=True, encoding='utf-8')
         assert proc.returncode != 0 and 'CANARY-SOURCE' not in proc.stdout + proc.stderr
         validator.validate(json.loads(proc.stdout))
         checks.append('public-json-html-svg-errors-logs-zero-canaries')
         (root / 'evidence-api').mkdir()
         workspace, _, _, job, registry, record = setup(root / 'evidence-api', 1)
         def evidence(mode, selected_root, identity, trust, expected):
-            run = subprocess.run([str(probe), sys.executable, str(REPO / 'tools'), mode, str(selected_root), identity, str(trust)], capture_output=True, text=True)
+            run = subprocess.run([str(probe), sys.executable, str(REPO / 'tools'), mode, str(selected_root), identity, str(trust)], capture_output=True, text=True, encoding='utf-8')
             assert (run.returncode == 0) == expected, (mode, run.stdout, run.stderr)
             assert not any(value in run.stdout + run.stderr for value in canaries)
         evidence('review', workspace, job, registry, False)
@@ -147,7 +147,7 @@ def main():
     examples_root.mkdir(parents=True, exist_ok=True)
     for case in examples:
         for extension, contents in [('json', json.dumps(case['report'], ensure_ascii=False, indent=2) + '\n'), ('html', case['html']), ('svg', case['svg'])]:
-            (examples_root / (case['id'] + '.' + extension)).write_text(contents)
+            (examples_root / (case['id'] + '.' + extension)).write_text(contents, encoding='utf-8', newline='\n')
     record = {'schema': 1, 'stage': 'W0', 'scope': 'declared strict attribute and existing constraint subset; synthetic data only',
               **code_identity(REPO),
               'platform': platform.platform(), 'python': platform.python_version(), 'pydicom': pydicom.__version__,
@@ -157,7 +157,7 @@ def main():
               'limitations': ['not complete SC/CT/MR IOD or Annex E', 'native evidence provider is trusted administrator configuration', 'no real source, pixel clearance or field acceptance'],
               'release_authorized': False}
     args.record.parent.mkdir(parents=True, exist_ok=True)
-    args.record.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n')
+    args.record.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps({'status': 'passed', 'rules': record['rules'], 'examples': len(examples), 'checks': len(checks)}))
 
 

@@ -2,7 +2,7 @@
   "schema": 1,
   "stage": "W1",
   "status": "passed",
-  "source_base_commit": "4ec37cf67ddd1132bed403f1b51b780fa8a5cb55",
+  "source_base_commit": "874caaa3735406ac39dbaf51cd4928c0f3cd14da",
   "source_tree_scopes": [
     "src",
     "api",
@@ -19,7 +19,7 @@
     "requirements-qa.txt"
   ],
   "source_tree_files": 692,
-  "source_tree_sha256": "fa44af5cf65add3cb52343ac0843293c6254e6553c98d260e911eb8e580cc7aa",
+  "source_tree_sha256": "7c05e5c92f722f51bdc3a9571f681fcee19a1d32bd5338d0b5a1901285338c87",
   "scope": "attribute VR/VM units plus synthetic strict pipeline; complete CT/MR profile not claimed",
   "manifest_sha256": "0057e31d8ad41f471f47014865f27e8eb47ee9051cceee1028d9e55848922ab7",
   "binary_sha256": "40a6cd9ff8ca295862f9f3a01a40059d887a655d77e77c44ea0b4387e0f17458",
