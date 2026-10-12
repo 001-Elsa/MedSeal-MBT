@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "scope": "host-specific isolated offline engineering preview",
+  "distribution": {
+    "schema": 1,
+    "status": "preview-built",
+    "archive_sha256": "520cf709d26fd4a527f2dececa5b9342aefd49011ee306ca4cde8bd3c487416c",
+    "manifest_sha256": "8536f7f4b005a85c75c3d3585533124458a6bd62fdf0ae42e74e88d1b0848419",
+    "platform": "Darwin",
+    "machine": "arm64"
+  },
+  "installation": {
+    "schema": 1,
+    "status": "offline-installed",
+    "manifest_sha256": "8536f7f4b005a85c75c3d3585533124458a6bd62fdf0ae42e74e88d1b0848419",
+    "platform": "Darwin",
+    "machine": "arm64"
+  },
+  "checks": [
+    "wrong-trusted-manifest-refused-before-install",
+    "tampered-payload-refused-before-install",
+    "unexpected-content-refused-before-install",
+    "new-isolated-offline-install",
+    "installed-full-two-increments-and-recovery-pilot"
+  ],
+  "pilot": {
+    "schema": 1,
+    "context": "synthetic",
+    "field_acceptance_complete": false,
+    "runtime": "isolated-offline-install",
+    "distribution_manifest_sha256": "8536f7f4b005a85c75c3d3585533124458a6bd62fdf0ae42e74e88d1b0848419",
+    "checks": [
+      "installed-runtime-SIGKILL-and-resume",
+      "wrapping-rotation-and-backup-restore-before-new-followup",
+      "full-and-two-new-object-incremental-cohorts-stable-patients-study-and-dates",
+      "six-unique-instance-uids-and-idempotent-package-receipts",
+      "historical-SOP-content-conflict-blocks-without-publication"
+    ],
+    "batches": [
+      {
+        "batch": 1,
+        "new_objects": 2,
+        "delivered_objects": 2,
+        "receipt_complete": true
+      },
+      {
+        "batch": 2,
+        "new_objects": 2,
+        "delivered_objects": 2,
+        "receipt_complete": true
+      },
+      {
+        "batch": 3,
+        "new_objects": 2,
+        "delivered_objects": 2,
+        "receipt_complete": true
+      }
+    ],
+    "limitations": [
+      "synthetic monochrome SC only",
+      "new cohorts have no outside-batch instance references",
+      "exact reimport still reconverts",
+      "no real user/PACS/CT-MR usability or independent security signoff"
+    ]
+  },
+  "field_acceptance_complete": false,
+  "tested_source_revision": "d08d9ad3317501dfe3c642b6aac36289a89e0eae",
+  "retained_artifact": false
+}

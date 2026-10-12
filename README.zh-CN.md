@@ -71,10 +71,10 @@ tools/moon-local package
 
 像素数据不被解码、识别或涂抹；未知公共描述字段可能含身份信息，报告始终保留剩余风险。此版本不提供完整 DICOM 脱敏 Profile 的合规声明，不自动设置完全身份移除标记，不保证完全匿名化。
 
-不实现跨作业映射、密钥持久化、自动断点续跑、压缩传输语法、PACS/DICOMweb 或医疗诊断。失败后重新预检；进程硬中断可能遗留私有暂存目录，但不会把它自动发布为目标作业。
+上述兼容库/CLI 的映射仅限本次作业，失败后重新预检；进程硬中断可能遗留私有暂存目录。企业入口另提供跨批身份、密钥持久化和显式 resume 恢复，具体操作见企业手册。当前两种入口都未支持压缩传输语法、PACS/DICOMweb 或医疗诊断。
 
 详情：[支持矩阵](docs/SUPPORT_MATRIX.md)、[策略与库 API](docs/POLICY.md)、[验收证据](ACCEPTANCE.md)、[性能记录](BENCHMARKS.md)、[同类对照](docs/RELATED_WORK.md)、[迭代进度](docs/ITERATION_STATUS.md)。
 
-后续升级见[企业级深化升级方案](docs/ENTERPRISE_ROADMAP.zh-CN.md)：基于当前代码评估成熟度，规划跨批身份、恢复、严格规则、容量、风险审核和真实接入的交付门槛。该文档中的新增能力属于后续计划。
+升级目标与完整验收门槛见[企业级深化升级方案](docs/ENTERPRISE_ROADMAP.zh-CN.md)；已落实能力和未完成条件以[企业实施记录](docs/ENTERPRISE_STATUS.md)为准，方案中的拟议版本号不表示已经发布。
 
 Apache-2.0。第三方依赖和合成数据来源见 [THIRD_PARTY.md](THIRD_PARTY.md)。

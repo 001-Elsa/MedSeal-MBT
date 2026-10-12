@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "tested_revision": "d08d9ad3317501dfe3c642b6aac36289a89e0eae",
+  "workflow": "CI",
+  "run_id": 38199221817,
+  "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38199221817",
+  "status": "completed",
+  "conclusion": "success",
+  "core_platforms": [
+    "ubuntu-latest",
+    "macos-latest",
+    "windows-latest"
+  ],
+  "isolated_offline_install_and_synthetic_pilot": [
+    "ubuntu-latest",
+    "macos-latest"
+  ],
+  "windows_enterprise_install": "unsupported",
+  "field_acceptance_complete": false
+}

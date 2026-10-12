@@ -12,6 +12,19 @@ The candidate source is available on GitHub. GitLink synchronization and
 Mooncakes 0.2.0 publication remain pending. The original iteration plan is not
 fully completed; see [the item-by-item audit](docs/PLAN_AUDIT.md).
 
+The enterprise engineering preview now adds persistent project/source identities,
+sealed resumable jobs, bounded native-pixel streaming, per-object review gates,
+Ed25519 releases, independent offline verification and controlled-directory receipts.
+It retains the original MoonBit core and history. Python 3.12 adapters provide
+private transactions, established cryptography and local system integration.
+An isolated macOS ARM64 offline installation has passed a synthetic full batch,
+two incremental batches, process recovery and backup/rotation exercise.
+Linux/macOS CI also tests the actual offline distribution before release.
+See [enterprise implementation and remaining gates](docs/ENTERPRISE_STATUS.md),
+[operations](docs/OPERATIONS.zh-CN.md) and [streaming scope](docs/STREAMING.md).
+This is an engineering preview: full CT/MR IOD validation, historical references,
+exact-repeat conversion/delivery deduplication and real field acceptance remain open.
+
 The core parses Part 10 Explicit VR Little Endian, supported Sequence structures,
 common text/integer VRs and raw pixel bytes. Research-v1 supports a documented
 CT/MR/Secondary Capture metadata subset, ASCII and ISO_IR 192. It checks patient,
@@ -49,7 +62,7 @@ exist. All outputs and reports are staged before directory publication. Source
 file-set, size/mtime and byte hashes are checked against the plan. Handled errors
 clean staging; a hard-killed process can leave a private staging directory.
 
-Patient aliases, UID mappings and random per-patient date offsets are shared
+In the compatible collection CLI, patient aliases, UID mappings and random per-patient date offsets are shared
 inside one job only. Reports do not expose reverse maps, source names or actual
 offsets. `verify` checks integrity and structure relative to the manifest;
 it is not a complete privacy check or a signature-authentication mechanism.

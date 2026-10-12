@@ -180,9 +180,11 @@
       "status": "requires_field",
       "evidence": [
         "p6-offline-install.json",
-        "p7-synthetic-pilot.json"
+        "p7-synthetic-pilot.json",
+        "final-offline-distribution.json",
+        "enterprise-ci.json"
       ],
-      "assessment": "Fresh isolated macOS ARM64 install and synthetic CLI pilot; real operators/receiver usability signoff absent."
+      "assessment": "Fresh isolated macOS ARM64 local install and Ubuntu/macOS CI installed synthetic pilots; real operators/receiver usability signoff absent."
     }
   ]
 }

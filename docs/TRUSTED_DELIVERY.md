@@ -51,15 +51,24 @@ SBOM. `tools/install_enterprise.py` checks a separately obtained expected distri
 manifest SHA256, platform, exact files/hashes before installing into a NEW directory
 and creating an isolated Python3.12 environment. Pip uses --no-index and
 --require-hashes; no author machine site packages are imported. The preview currently
-tested is macOS ARM64. Python3.12 must already be installed; the interpreter is not
+tested locally is macOS ARM64; CI also verifies isolated installs on its Ubuntu and
+macOS runners. These runs do not certify arbitrary host filesystems or power loss.
+Python3.12 must already be installed; the interpreter is not
 redistributed. Validate the archive checksum from a trusted channel before extraction
 and executing its installer. A checksum shipped only alongside an untrusted archive
 is not independent trust. An archive/build is not a published1.0 release.
 
 Evidence: `evidence/p6-attestation.json` and offline installation record. Remaining
 full gates: real receiver acceptance, independent crypto/role review, code-release
-signing/trust distribution, Linux installation package, Windows enterprise provider,
+signing/trust distribution, maintained platform release assets, Windows enterprise provider,
 physical power-loss and remote-protocol failure certification.
+
+`tools/verify_distribution.py` now validates a freshly built distribution: wrong
+trusted digest, changed payload and unexpected files fail before installation;
+a new isolated offline install then runs the full/two-increment synthetic pilot.
+CI runs this path on Linux/macOS. Actual execution records, rather than the
+workflow configuration alone, determine certified platforms. The installer uses
+the supported `--version` native probe; its earlier `version` probe was incorrect.
 
 Public conversion manifests have an8MiB read/write budget, sized for10,000 objects
 including per-object risk IDs. Signed release inventories retain a4MiB budget;
