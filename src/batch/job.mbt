@@ -209,6 +209,7 @@ fn audit(
   id : String,
   result : @identity.Result,
   policy : @policy.Policy,
+  risks : Array[String],
 ) -> String {
   Json::object(
     Map::from_array([
@@ -219,6 +220,7 @@ fn audit(
       ("pixel_bytes_preserved", Json::boolean(true)),
       ("pixels_inspected", Json::boolean(false)),
       ("events", Json::array(result.events.map(event_json))),
+      ("risks", Json::array(risks.map(Json::string))),
     ]),
   ).stringify(indent=2)
 }
@@ -361,7 +363,8 @@ pub async fn Job::execute(
         full_pixels=!self.streamed,
       )
     }
-    let audit_bytes = @utf8.encode(audit(id, result, self.policy))
+    let risks = @pixel_review.classify(parsed.dataset)
+    let audit_bytes = @utf8.encode(audit(id, result, self.policy, risks))
     if audit_bytes.length() > 16 * 1024 * 1024 {
       raise @model.MedSealError::OutputVerificationFailed(
         "audit report exceeds 16 MiB limit",
@@ -394,6 +397,7 @@ pub async fn Job::execute(
           ("file", Json::string("\{id}.dcm")),
           ("sha256", Json::string(output_hash)),
           ("audit_sha256", Json::string(@checksum.sha256(audit_bytes))),
+          ("risks", Json::array(risks.map(Json::string))),
         ]),
       ),
     )

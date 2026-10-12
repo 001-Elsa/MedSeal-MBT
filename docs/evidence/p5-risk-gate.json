@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "fixture": "synthetic test records; no real patient visual review performed",
+  "checks": [
+    "unreviewed-output-blocked",
+    "coverage-authority-OCR-negative-and-output-binding-rejected",
+    "complete-synthetic-record-only-enables-ready-state",
+    "review-authority-change-invalidates-gate"
+  ],
+  "limitations": [
+    "local single-owner reviewer registry, not multi-user identity authentication",
+    "external human evidence authenticity and image usability require field responsibility",
+    "no pixel rewriting or automatic OCR clearance"
+  ]
+}

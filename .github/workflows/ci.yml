@@ -54,5 +54,6 @@ jobs:
         run: |
           python tools/verify_persistent_identity.py
           python tools/verify_recovery.py
+          python tools/verify_risk_gate.py
       - name: Package
         run: moon package

@@ -118,6 +118,11 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
         "audit identity or verification status mismatch",
       )
     }
+    if fields.get("risks") is Some(risks) && report.get("risks") != Some(risks) {
+      raise @model.MedSealError::OutputVerificationFailed(
+        "audit/manifest risk records differ",
+      )
+    }
     if report.get("policy") != manifest.get("policy") ||
       report.get("policy_sha256") != manifest.get("policy_sha256") {
       raise @model.MedSealError::OutputVerificationFailed(

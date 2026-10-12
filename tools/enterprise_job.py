@@ -290,9 +290,11 @@ def cleanup_job(workspace, job_id):
 def main():
     os.umask(0o077)
     parser = argparse.ArgumentParser()
-    parser.add_argument('operation', choices=['create', 'run', 'resume', 'status', 'cancel', 'cleanup'])
+    parser.add_argument('operation', choices=['create', 'run', 'resume', 'status', 'cancel', 'cleanup', 'review', 'risks'])
     parser.add_argument('--workspace', type=Path, required=True)
     parser.add_argument('--job')
+    parser.add_argument('--record', type=Path)
+    parser.add_argument('--reviewers', type=Path)
     parser.add_argument('--input', type=Path)
     parser.add_argument('--policy', type=Path)
     parser.add_argument('--store', type=Path)
@@ -305,6 +307,13 @@ def main():
             result = {'schema': 1, 'job_id': create_job(args.workspace, args.input, args.policy, args.store, args.source_domain, args.binary, args.verifier), 'state': 'INGESTED'}
         elif args.operation in {'run', 'resume'}:
             result = run_job(args.workspace, args.job)
+        elif args.operation == 'review':
+            from risk_gate import review_job
+            result = review_job(args.workspace, args.job, args.record, args.reviewers)
+        elif args.operation == 'risks':
+            from risk_gate import risk_inventory
+            with locked_job(args.workspace, args.job) as job:
+                result = {'schema': 1, 'job_id': args.job, 'release_authorized': False, 'objects': risk_inventory(job)[1]}
         else:
             result = {'status': status_job, 'cancel': cancel_job, 'cleanup': cleanup_job}[args.operation](args.workspace, args.job)
         print(json.dumps(result))
