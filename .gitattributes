@@ -1,9 +1,7 @@
-*.pdf binary
+# Reproducible rule/program fingerprints must not depend on checkout platform.
+* text=auto eol=lf
 *.dcm binary
-
-*.mbt text eol=lf
-*.mbti text eol=lf
-*.md text eol=lf
-*.py text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
+*.zip binary

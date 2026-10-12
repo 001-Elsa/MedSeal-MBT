@@ -2,7 +2,7 @@
   "schema": 1,
   "stage": "W0",
   "scope": "declared strict attribute and existing constraint subset; synthetic data only",
-  "source_base_commit": "6800741e184169c3535568a9e758b1dddc98e39e",
+  "source_base_commit": "17f3ac470a1a23deb7ac166e72eb5e5027154314",
   "source_tree_scopes": [
     "src",
     "api",
@@ -13,11 +13,12 @@
     ".github",
     "examples/authorization",
     "moon.mod",
+    ".gitattributes",
     "requirements-enterprise.txt",
     "requirements-qa.txt"
   ],
-  "source_tree_files": 198,
-  "source_tree_sha256": "96d73f123682c53eb735e0aeabbb785c4c9214bb48da65c49a3d6da383f8cd5f",
+  "source_tree_files": 199,
+  "source_tree_sha256": "1328111c663b4f8a7ab2a74e2ffc2cf09ac7f66c382077fa4ba3985a317fb1fd",
   "platform": "macOS-26.6-arm64-arm-64bit",
   "python": "3.12.14",
   "pydicom": "3.0.1",
