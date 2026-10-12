@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "stage": "W0",
+  "scope": "declared strict attribute and existing constraint subset; synthetic data only",
+  "source_base_commit": "4ec37cf67ddd1132bed403f1b51b780fa8a5cb55",
+  "source_tree_scopes": [
+    "src",
+    "api",
+    "cmd",
+    "tools",
+    "tests",
+    "resources",
+    "conformance",
+    ".github",
+    "examples/authorization",
+    "moon.mod",
+    ".gitattributes",
+    "requirements-enterprise.txt",
+    "requirements-qa.txt"
+  ],
+  "source_tree_files": 692,
+  "source_tree_sha256": "fa44af5cf65add3cb52343ac0843293c6254e6553c98d260e911eb8e580cc7aa",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "python": "3.12.14",
+  "pydicom": "3.0.1",
+  "binary_sha256": "7ce3eb3c5002c00dc4c5357f29fb2107221f024f4fbf92077d0cda683676f967",
+  "rulebook_sha256": "c729febaa4e0448af6b3afd6c4431494b35e3d6c7a025a1d6064e77650220284",
+  "rules": 140,
+  "checks": [
+    "four-schema-validated-examples",
+    "structure-remove-valid",
+    "structure-remove-invalid",
+    "policy-priority-valid",
+    "policy-priority-invalid",
+    "public-error-boundary-valid",
+    "public-error-boundary-invalid",
+    "public-json-html-svg-errors-logs-zero-canaries",
+    "native-types-revalidate-review-authority-synthetic-context-signature-and-payload"
+  ],
+  "examples_executed": 4,
+  "canary_occurrences": 0,
+  "limitations": [
+    "not complete SC/CT/MR IOD or Annex E",
+    "native evidence provider is trusted administrator configuration",
+    "no real source, pixel clearance or field acceptance"
+  ],
+  "release_authorized": false
+}

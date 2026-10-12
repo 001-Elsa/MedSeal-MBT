@@ -17,6 +17,7 @@ from verify_with_pydicom import REPO
 from verify_strict_profile import generate_strict
 from explanation_report import render
 from evidence import code_identity
+from moon_tokens import semantic_tokens
 
 
 def catalog_check():
@@ -29,8 +30,7 @@ def catalog_check():
         text = (REPO / rule['test']).read_text()
         assert rule['positive_case'] in text and rule['negative_case'] in text, rule['id']
     # Format is owned by moon fmt; semantic tokens are owned by the generator.
-    import re
-    normalize = lambda s: re.sub(r',([})\]])', r'\1', re.sub(r'\s+', '', s).replace(';', ''))
+    normalize = semantic_tokens
     for path, expected in products().items():
         actual = path.read_text()
         assert actual == expected if path.suffix == '.json' else normalize(actual) == normalize(expected), path

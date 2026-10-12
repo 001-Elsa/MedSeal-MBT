@@ -593,6 +593,35 @@
       "negative_case": "required-sop-conditional-invalid",
       "test": "src/conformance/contracts_test.mbt",
       "type": "declared SOP module subset, not a complete Type 1C/2C matrix"
+    },
+    {
+      "id": "file-meta-identity",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "Part 10 source and dataset SOP identities",
+      "condition": {
+        "kind": "complete-part10"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.10",
+          "edition": "2025e",
+          "section": "7.1; Table 7.1-1",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part10/chapter_7.html#table_7.1-1",
+          "purpose": "Media Storage SOP Class/Instance identifies the dataset",
+          "source_sha256": "07c0afe925166e687506492d0849701fcd5af6adbb8f915eb72dae8cd00cbfb7"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/verification/file_meta.mbt",
+        "api/validation/validation.mbt"
+      ],
+      "positive_case": "sc-baseline",
+      "negative_case": "file-meta-identity-mismatch",
+      "test": "tools/generate_conformance_corpus.py"
     }
   ]
 }

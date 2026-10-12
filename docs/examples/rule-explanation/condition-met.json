@@ -2,11 +2,11 @@
   "schema": 1,
   "status": "converted-explanation",
   "release_authorized": false,
-  "rulebook_sha256": "e2da95d6cbb3b6ae6064423afa2f244127b4273638d8ab733f0b4e30ee876b3a",
+  "rulebook_sha256": "c729febaa4e0448af6b3afd6c4431494b35e3d6c7a025a1d6064e77650220284",
   "policy": {
     "profile": "strict-v1",
     "policy_sha256": "ddb47007d26400b3fb33e763a338cbc573d66106748c5b6b97847f26b254d6e6",
-    "rulebook_sha256": "e2da95d6cbb3b6ae6064423afa2f244127b4273638d8ab733f0b4e30ee876b3a",
+    "rulebook_sha256": "c729febaa4e0448af6b3afd6c4431494b35e3d6c7a025a1d6064e77650220284",
     "unknown_public_fields": "reject",
     "custom_rules": [
       {

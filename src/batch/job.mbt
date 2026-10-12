@@ -65,18 +65,7 @@ fn metadata_size(dataset : @model.DataSet) -> Int {
 
 ///|
 fn check_meta(parsed : @parser.ParsedFile) -> Unit raise @model.MedSealError {
-  for
-    (tag, meta_tag) in [
-      (@model.Tag::new(0x0008U, 0x0016U), @model.Tag::new(0x0002U, 0x0002U)),
-      (@model.Tag::new(0x0008U, 0x0018U), @model.Tag::new(0x0002U, 0x0003U)),
-    ] {
-    if @identity.required_text(parsed.dataset, tag) !=
-      @identity.required_text(parsed.file_meta, meta_tag) {
-      raise @model.MedSealError::IdentityError(
-        "File Meta SOP identity differs from dataset",
-      )
-    }
-  }
+  @verification.check_file_meta(parsed)
   @verification.check_unique_tags(parsed.dataset)
   @verification.check_unique_tags(parsed.file_meta)
 }

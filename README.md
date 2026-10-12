@@ -113,3 +113,5 @@ Sources: [GitHub](https://github.com/001-Elsa/MedSeal-MBT),
 
 Apache-2.0. See [THIRD_PARTY](THIRD_PARTY.md), [SECURITY](SECURITY.md),
 [RELATED_WORK](docs/RELATED_WORK.md) and [iteration status](docs/ITERATION_STATUS.md).
+
+独立质量实验室：见 [固定语料、差分与诊断](docs/CONFORMANCE_LAB.zh-CN.md)。按阶段升级的当前证据见 [W0–W7 实施账本](docs/WINNER_UPGRADE_STATUS.zh-CN.md)。

@@ -15,6 +15,7 @@ pub fn validate(bytes : Bytes) -> ValidatedObject raise @model.MedSealError {
   let source = bytes
   let file = @parser.parse(source)
   @conformance.check(file.dataset, full_pixels=true)
+  @verification.check_file_meta(file)
   { source, }
 }
 

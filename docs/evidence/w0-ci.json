@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "stage": "W0",
+  "head_sha": "4ec37cf67ddd1132bed403f1b51b780fa8a5cb55",
+  "conclusion": "success",
+  "run_id": 38221826399,
+  "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38221826399",
+  "jobs": {
+    "ubuntu-latest": "success",
+    "macos-latest": "success",
+    "windows-latest": "success"
+  },
+  "scope": "portable core on all three; POSIX native system provider only on Linux/macOS"
+}

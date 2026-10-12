@@ -142,6 +142,7 @@ pub fn known_contract(id : String) -> Bool {
     "public-error-boundary" => true
     "policy-priority" => true
     "required-sop-conditional" => true
+    "file-meta-identity" => true
     _ => false
   }
 }
@@ -288,6 +289,7 @@ pub fn contract_source(id : String) -> String {
     "public-error-boundary" => "MedSeal public explanation allowlist v1"
     "policy-priority" => "MedSeal strict-v1 descriptive rule compiler"
     "required-sop-conditional" => "PS3.3 C.8.6; C.8.2; C.8.3 (declared subset)"
+    "file-meta-identity" => "PS3.10 7.1; Table 7.1-1"
     _ => "MedSeal public error contract v1"
   }
 }
@@ -434,6 +436,7 @@ pub fn contract_evidence(id : String) -> String {
     "public-error-boundary" => "public-error-boundary-invalid"
     "policy-priority" => "policy-priority-invalid"
     "required-sop-conditional" => "required-sop-conditional-invalid"
+    "file-meta-identity" => "file-meta-identity-mismatch"
     _ => "public-error-canary"
   }
 }

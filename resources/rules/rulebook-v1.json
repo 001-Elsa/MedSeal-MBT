@@ -5934,6 +5934,35 @@
       "support": "implemented-contract",
       "test": "src/conformance/contracts_test.mbt",
       "type": "declared SOP module subset, not a complete Type 1C/2C matrix"
+    },
+    {
+      "action": "validate",
+      "condition": {
+        "kind": "complete-part10"
+      },
+      "context": "Part 10 source and dataset SOP identities",
+      "id": "file-meta-identity",
+      "implementation": [
+        "src/verification/file_meta.mbt",
+        "api/validation/validation.mbt"
+      ],
+      "negative_case": "file-meta-identity-mismatch",
+      "positive_case": "sc-baseline",
+      "profiles": [
+        "strict-v1"
+      ],
+      "references": [
+        {
+          "document": "PS3.10",
+          "edition": "2025e",
+          "purpose": "Media Storage SOP Class/Instance identifies the dataset",
+          "section": "7.1; Table 7.1-1",
+          "source_sha256": "07c0afe925166e687506492d0849701fcd5af6adbb8f915eb72dae8cd00cbfb7",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part10/chapter_7.html#table_7.1-1"
+        }
+      ],
+      "support": "implemented-contract",
+      "test": "tools/generate_conformance_corpus.py"
     }
   ],
   "schema": 1,

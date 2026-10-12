@@ -688,7 +688,8 @@
                 "public-error-boundary",
                 "policy-priority",
                 "required-sop-conditional",
-                "attr-00120063"
+                "attr-00120063",
+                "file-meta-identity"
               ]
             },
             "path": {
@@ -843,7 +844,8 @@
                 "PS3.15 E.1 (MedSeal removal policy)",
                 "MedSeal public explanation allowlist v1",
                 "MedSeal strict-v1 descriptive rule compiler",
-                "PS3.3 C.8.6; C.8.2; C.8.3 (declared subset)"
+                "PS3.3 C.8.6; C.8.2; C.8.3 (declared subset)",
+                "PS3.10 7.1; Table 7.1-1"
               ]
             },
             "evidence_id": {
@@ -987,7 +989,8 @@
                 "public-error-boundary-invalid",
                 "policy-priority-invalid",
                 "required-sop-conditional-invalid",
-                "rule-00120063-wrong-vr"
+                "rule-00120063-wrong-vr",
+                "file-meta-identity-mismatch"
               ]
             }
           }

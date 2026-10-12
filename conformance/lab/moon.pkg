@@ -1,0 +1,16 @@
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "001-Elsa/medseal/src/dicom_writer",
+  "001-Elsa/medseal/src/conformance",
+  "001-Elsa/medseal/src/identity",
+  "001-Elsa/medseal/src/policy",
+  "001-Elsa/medseal/src/checksum",
+  "001-Elsa/medseal/api/validation",
+  "001-Elsa/medseal/src/verification",
+}
+
+import {
+  "moonbitlang/core/json",
+  "001-Elsa/medseal/src/byteio",
+} for "test"

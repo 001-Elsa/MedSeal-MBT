@@ -17,13 +17,17 @@ pub fn Tag::is_private(self : Tag) -> Bool {
 ///|
 fn hex4(value : UInt) -> String {
   let raw = value.to_string(radix=16)
-  let upper = raw
-    .replace(old="a", new="A")
-    .replace(old="b", new="B")
-    .replace(old="c", new="C")
-    .replace(old="d", new="D")
-    .replace(old="e", new="E")
-    .replace(old="f", new="F")
+  let upper = String::from_array(
+    raw
+    .to_array()
+    .map(fn(c) {
+      if c >= 'a' && c <= 'f' {
+        (c.to_int() - 32).to_char().unwrap()
+      } else {
+        c
+      }
+    }),
+  )
   match upper.length() {
     0 => "0000"
     1 => "000\{upper}"

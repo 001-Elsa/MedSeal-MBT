@@ -3,10 +3,13 @@ package "001-Elsa/medseal/src/verification"
 
 import {
   "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
 }
 
 // Values
 pub fn check(Array[@model.DataSet], allow_external? : Bool) -> CollectionReport raise @model.MedSealError
+
+pub fn check_file_meta(@parser.ParsedFile) -> Unit raise @model.MedSealError
 
 pub fn check_unique_tags(@model.DataSet) -> Unit raise @model.MedSealError
 

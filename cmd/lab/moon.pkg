@@ -1,0 +1,12 @@
+import {
+  "001-Elsa/medseal/conformance/lab" @qa,
+  "001-Elsa/medseal/src/storage",
+  "moonbitlang/async",
+  "moonbitlang/core/env",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/x/sys",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "+native"

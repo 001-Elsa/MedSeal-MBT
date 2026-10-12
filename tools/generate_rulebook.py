@@ -10,6 +10,7 @@ import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
+from moon_tokens import semantic_tokens
 
 REPO = Path(__file__).resolve().parents[1]
 FOLDER = REPO / 'resources/rules'
@@ -142,7 +143,7 @@ def main():
     for path, data in products().items():
         if args.check:
             # Whitespace alone is owned by moon fmt; tokens must still match.
-            normalize = lambda text: re.sub(r',([})\]])', r'\1', re.sub(r'\s+', '', text).replace(';', ''))
+            normalize = semantic_tokens
             if not path.exists() or (path.read_text() != data if path.suffix == '.json' else normalize(path.read_text()) != normalize(data)):
                 raise ValueError('rulebook drift: ' + str(path.relative_to(REPO)))
         else:

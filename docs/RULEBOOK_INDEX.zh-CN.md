@@ -144,4 +144,6 @@
 | policy-priority | implemented-contract / validate | [代码](../src/policy/compiler.mbt) | [policy-priority-valid](../tools/verify_rulebook.py) | [policy-priority-invalid](../tools/verify_rulebook.py) |
 | required-sop-conditional | implemented-contract / validate | [代码](../src/conformance/profile.mbt) | [required-sop-conditional-valid](../src/conformance/contracts_test.mbt) | [required-sop-conditional-invalid](../src/conformance/contracts_test.mbt) |
 
+| file-meta-identity | Part 10 SOP Class/Instance 与 dataset 一致 | [代码](../src/verification/file_meta.mbt), [公共验证](../api/validation/validation.mbt) | [sc-baseline](../conformance/manifest.json) | [file-meta-identity-mismatch](../tools/generate_conformance_corpus.py) |
+
 VR/VM 正反例直接调用生产检查器；生成条目不替代 W1 的独立预期语料。条件和结构约束使用手写反例，公开边界与受控状态另外执行完整路径。规则来源及条款逐行见机器账本。
