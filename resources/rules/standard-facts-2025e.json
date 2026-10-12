@@ -1,0 +1,3163 @@
+{
+  "attribute_actions": {
+    "00001000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00001001": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00020003": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00041511": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00080012": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "00080013": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": "C"
+    },
+    "00080014": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00080015": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00080017": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00080018": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00080019": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00080020": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "00080021": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "00080022": {
+      "basic_action": "X/Z",
+      "modified_dates_option": "C"
+    },
+    "00080023": {
+      "basic_action": "Z/D",
+      "modified_dates_option": "C"
+    },
+    "00080024": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00080025": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0008002A": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": "C"
+    },
+    "00080030": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "00080031": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "00080032": {
+      "basic_action": "X/Z",
+      "modified_dates_option": "C"
+    },
+    "00080033": {
+      "basic_action": "Z/D",
+      "modified_dates_option": "C"
+    },
+    "00080034": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00080035": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00080050": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00080054": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00080055": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00080058": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00080080": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": ""
+    },
+    "00080081": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00080082": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": ""
+    },
+    "00080090": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00080092": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00080094": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00080096": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0008009C": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "0008009D": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00080106": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00080107": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00080201": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00081000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081010": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": ""
+    },
+    "00081030": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0008103E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081040": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081041": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081048": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081049": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081050": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081052": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081060": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081062": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081070": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": ""
+    },
+    "00081072": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "00081080": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081084": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081088": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081110": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "00081111": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": ""
+    },
+    "00081120": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081140": {
+      "basic_action": "X/Z/U*",
+      "modified_dates_option": ""
+    },
+    "00081155": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00081195": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00081301": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081302": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081303": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00081304": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00082111": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00082112": {
+      "basic_action": "X/Z/U*",
+      "modified_dates_option": ""
+    },
+    "00083010": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00084000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100010": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00100011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100012": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100013": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100014": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100015": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100016": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100020": {
+      "basic_action": "Z/D",
+      "modified_dates_option": ""
+    },
+    "00100021": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100030": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00100032": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100040": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00100041": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100042": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100043": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100044": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100045": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100046": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100047": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100050": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100101": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00100102": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101001": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101002": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101005": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101020": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101030": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101040": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101050": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101060": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101080": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101081": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101090": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00101100": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102110": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102150": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102152": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102154": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102155": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102160": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102161": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102162": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102180": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "001021A0": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "001021B0": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "001021C0": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "001021D0": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "001021F0": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102203": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "00102297": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00102299": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00104000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120010": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00120020": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00120021": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00120022": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120023": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120030": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00120031": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00120032": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120040": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00120041": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120042": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00120043": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120050": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00120051": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120055": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120060": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00120071": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120072": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120073": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120081": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00120082": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00120086": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00120087": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0014407C": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0014407E": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0016002B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016004B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016004D": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016004E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016004F": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160050": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160051": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160070": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160071": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160072": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160073": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160074": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160075": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160076": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160077": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160078": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160079": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016007A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016007B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016007C": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016007D": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016007E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016007F": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160080": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160081": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160082": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160083": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160084": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160085": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160086": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160087": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160088": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00160089": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016008A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016008B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016008C": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0016008D": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0016008E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00180010": {
+      "basic_action": "Z/D",
+      "modified_dates_option": ""
+    },
+    "00180027": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00180035": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181000": {
+      "basic_action": "X/Z/D",
+      "modified_dates_option": ""
+    },
+    "00181002": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00181004": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00181005": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00181007": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00181008": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00181009": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0018100A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0018100B": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00181010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00181011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00181012": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181014": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181030": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "00181042": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181043": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181072": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181073": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181078": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181079": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "001811BB": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00181200": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181201": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181202": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181203": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "00181204": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181205": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00181400": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "00182042": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00184000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00185011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0018700A": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "0018700C": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "0018700E": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "00189074": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00189151": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00189185": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00189367": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00189369": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0018936A": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00189371": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00189373": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0018937B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0018937F": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00189424": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00189516": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "00189517": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "00189623": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00189701": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00189804": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00189919": {
+      "basic_action": "Z/D",
+      "modified_dates_option": "C"
+    },
+    "00189937": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0018A002": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0018A003": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0020000D": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0020000E": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00200010": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00200027": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00200052": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00200200": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00203401": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00203403": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00203405": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00203406": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00204000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00209158": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00209161": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00209164": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00281199": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00281214": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00284000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00320012": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00320032": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00320033": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00320034": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00320035": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321000": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321001": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321010": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321011": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321020": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321021": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321030": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321032": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321033": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321040": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321041": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321050": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321051": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00321060": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "00321066": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321067": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00321070": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00324000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00340001": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00340002": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00340005": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00340007": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00380004": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380014": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0038001A": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0038001B": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0038001C": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0038001D": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0038001E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380020": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00380021": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00380030": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00380032": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00380040": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380050": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380060": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380061": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380062": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380064": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380300": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380400": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00380500": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00384000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "003A0020": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "003A0203": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "003A020C": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "003A0310": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "003A0314": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "003A0329": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "003A032B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400001": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400002": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400003": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400004": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400005": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400006": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400007": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400009": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040000B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400012": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400241": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400242": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400243": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400244": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400245": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400250": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400251": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00400253": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400254": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400275": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400280": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400310": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040050A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400512": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00400513": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "0040051A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400551": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00400554": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00400555": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "00400556": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400562": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00400600": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400602": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00400610": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "004006FA": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401001": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401002": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401004": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401005": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040100A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401101": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00401102": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401103": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401104": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00401400": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00402001": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00402004": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00402005": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00402008": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00402009": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00402010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00402011": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00402016": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00402017": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "00402400": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00403001": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404005": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00404008": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00404010": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00404011": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00404023": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00404025": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404027": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404028": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404030": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404034": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404035": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404036": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404037": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00404050": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00404051": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00404052": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A023": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A024": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A027": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0040A030": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0040A032": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "0040A033": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A034": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A035": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A073": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0040A075": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0040A078": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A07A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A07C": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A082": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "0040A088": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "0040A110": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A112": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A120": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0040A121": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0040A122": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0040A123": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0040A124": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0040A13A": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0040A171": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0040A172": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0040A192": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A193": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040A307": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A352": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A353": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A354": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A358": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040A402": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0040A730": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0040B020": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "0040B034": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040B036": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040B03B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040B03F": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0040DB06": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040DB07": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0040DB0C": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0040DB0D": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0040E004": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00420011": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00440004": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0044000B": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00440010": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00440104": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00440105": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "0050001B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00500020": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00500021": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00620021": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00640003": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00686226": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00686270": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "006A0003": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "006A0005": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "006A0006": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00700001": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00700006": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00700082": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00700083": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "00700084": {
+      "basic_action": "Z/D",
+      "modified_dates_option": ""
+    },
+    "00700086": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "0070031A": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00701101": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00701102": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "0072000A": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0072005E": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0072005F": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00720061": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00720063": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "00720065": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00720066": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00720068": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0072006A": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0072006B": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "0072006C": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0072006D": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "0072006E": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00720070": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00720071": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "00741234": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00741236": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00880140": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "00880200": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00880904": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00880906": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00880910": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "00880912": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "01000420": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "04000100": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "04000105": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "04000115": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "04000310": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "04000402": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000403": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000404": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000550": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000551": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000552": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000561": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "04000562": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "04000563": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "04000564": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "04000565": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "04000600": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "20300020": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "21000040": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "21000050": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "21000070": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "21000140": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "22000002": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "22000005": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "30020121": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30020123": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30060002": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "30060004": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30060006": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30060008": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "30060009": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "30060024": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30060026": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "30060028": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "3006002D": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "3006002E": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "30060038": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "3006004D": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "3006004E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30060085": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30060088": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300600A6": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "300600C2": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30080024": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "30080025": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "30080054": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "30080056": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "30080105": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "30080162": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "30080164": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "30080166": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "30080168": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "30080250": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "30080251": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "300A0002": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0003": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0004": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0006": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "300A0007": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "300A000B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A000E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0013": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A0016": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0054": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A0072": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0083": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A00B2": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "300A00C3": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A00DD": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0196": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A01A6": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A01B2": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0216": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A022C": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300A022E": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300A02EB": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0608": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0609": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A0611": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "300A0615": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "300A0619": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0623": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A062A": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0650": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A0676": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A067C": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A067D": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "300A0700": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A0734": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0736": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300A073A": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300A0741": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300A0742": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0760": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300A0783": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "300A0785": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "300A078E": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0792": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A0794": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300A079A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300C0113": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "300C0127": {
+      "basic_action": "D",
+      "modified_dates_option": "C"
+    },
+    "300E0004": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "300E0005": {
+      "basic_action": "Z",
+      "modified_dates_option": "C"
+    },
+    "300E0008": {
+      "basic_action": "X/Z",
+      "modified_dates_option": ""
+    },
+    "30100006": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "3010000B": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "3010000F": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "30100013": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30100015": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30100017": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "3010001B": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "3010002D": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "30100031": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30100033": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "30100034": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "30100035": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "30100036": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30100037": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "30100038": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "3010003B": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30100043": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "3010004C": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "3010004D": {
+      "basic_action": "X/D",
+      "modified_dates_option": "C"
+    },
+    "30100054": {
+      "basic_action": "D",
+      "modified_dates_option": ""
+    },
+    "30100056": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "3010005A": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "3010005C": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "30100061": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "3010006E": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "3010006F": {
+      "basic_action": "U",
+      "modified_dates_option": ""
+    },
+    "30100077": {
+      "basic_action": "X/D",
+      "modified_dates_option": ""
+    },
+    "3010007A": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "3010007B": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "3010007F": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "30100081": {
+      "basic_action": "Z",
+      "modified_dates_option": ""
+    },
+    "30100085": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "40000010": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40004000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080040": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080042": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080100": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "40080101": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "40080102": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080108": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "40080109": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "4008010A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "4008010B": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "4008010C": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080111": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080112": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "40080113": {
+      "basic_action": "X",
+      "modified_dates_option": "C"
+    },
+    "40080114": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080115": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080118": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080119": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "4008011A": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080200": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080202": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40080300": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "40084000": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "FFFAFFFA": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    },
+    "FFFCFFFC": {
+      "basic_action": "X",
+      "modified_dates_option": ""
+    }
+  },
+  "dictionary_source_sha256": "02c91f018001b9b781d4c02c25150d29c7a23fada9129a6e987f106bc1490195",
+  "edition": "2025e",
+  "notice": "Short factual action codes, not copied narrative or a certification claim.",
+  "reviewed_dictionary_facts": {
+    "00080005": {
+      "vm": "1-n",
+      "vr": "CS"
+    },
+    "00080008": {
+      "vm": "2-n",
+      "vr": "CS"
+    },
+    "00080012": {
+      "vm": "1",
+      "vr": "DA"
+    },
+    "00080013": {
+      "vm": "1",
+      "vr": "TM"
+    },
+    "00080015": {
+      "vm": "1",
+      "vr": "DT"
+    },
+    "00080016": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00080018": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00080020": {
+      "vm": "1",
+      "vr": "DA"
+    },
+    "00080021": {
+      "vm": "1",
+      "vr": "DA"
+    },
+    "00080022": {
+      "vm": "1",
+      "vr": "DA"
+    },
+    "00080023": {
+      "vm": "1",
+      "vr": "DA"
+    },
+    "0008002A": {
+      "vm": "1",
+      "vr": "DT"
+    },
+    "00080030": {
+      "vm": "1",
+      "vr": "TM"
+    },
+    "00080031": {
+      "vm": "1",
+      "vr": "TM"
+    },
+    "00080032": {
+      "vm": "1",
+      "vr": "TM"
+    },
+    "00080033": {
+      "vm": "1",
+      "vr": "TM"
+    },
+    "00080050": {
+      "vm": "1",
+      "vr": "SH"
+    },
+    "00080060": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00080064": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00080070": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00080080": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00080081": {
+      "vm": "1",
+      "vr": "ST"
+    },
+    "00080090": {
+      "vm": "1",
+      "vr": "PN"
+    },
+    "00080201": {
+      "vm": "1",
+      "vr": "SH"
+    },
+    "00081010": {
+      "vm": "1",
+      "vr": "SH"
+    },
+    "00081030": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "0008103E": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00081040": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00081048": {
+      "vm": "1-n",
+      "vr": "PN"
+    },
+    "00081050": {
+      "vm": "1-n",
+      "vr": "PN"
+    },
+    "00081070": {
+      "vm": "1-n",
+      "vr": "PN"
+    },
+    "00081140": {
+      "vm": "1",
+      "vr": "SQ"
+    },
+    "00081150": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00081155": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00100010": {
+      "vm": "1",
+      "vr": "PN"
+    },
+    "00100020": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00100021": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00100030": {
+      "vm": "1",
+      "vr": "DA"
+    },
+    "00100040": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00101000": {
+      "vm": "1-n",
+      "vr": "LO"
+    },
+    "00101001": {
+      "vm": "1-n",
+      "vr": "PN"
+    },
+    "00101010": {
+      "vm": "1",
+      "vr": "AS"
+    },
+    "00101020": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00101030": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00102160": {
+      "vm": "1",
+      "vr": "SH"
+    },
+    "001021B0": {
+      "vm": "1",
+      "vr": "LT"
+    },
+    "00104000": {
+      "vm": "1",
+      "vr": "LT"
+    },
+    "00120063": {
+      "vm": "1-n",
+      "vr": "LO"
+    },
+    "00180015": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00180020": {
+      "vm": "1-n",
+      "vr": "CS"
+    },
+    "00180021": {
+      "vm": "1-n",
+      "vr": "CS"
+    },
+    "00180022": {
+      "vm": "1-n",
+      "vr": "CS"
+    },
+    "00180023": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00180050": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180060": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180080": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180081": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180082": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180083": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180084": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180085": {
+      "vm": "1",
+      "vr": "SH"
+    },
+    "00180086": {
+      "vm": "1-n",
+      "vr": "IS"
+    },
+    "00180087": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180088": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180089": {
+      "vm": "1",
+      "vr": "IS"
+    },
+    "00180090": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180091": {
+      "vm": "1",
+      "vr": "IS"
+    },
+    "00180093": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00180094": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00181000": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00181002": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00181004": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00181030": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00181310": {
+      "vm": "4",
+      "vr": "US"
+    },
+    "00181312": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00181314": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00181315": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00185100": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "0020000D": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "0020000E": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00200010": {
+      "vm": "1",
+      "vr": "SH"
+    },
+    "00200011": {
+      "vm": "1",
+      "vr": "IS"
+    },
+    "00200012": {
+      "vm": "1",
+      "vr": "IS"
+    },
+    "00200013": {
+      "vm": "1",
+      "vr": "IS"
+    },
+    "00200020": {
+      "vm": "2",
+      "vr": "CS"
+    },
+    "00200032": {
+      "vm": "3",
+      "vr": "DS"
+    },
+    "00200037": {
+      "vm": "6",
+      "vr": "DS"
+    },
+    "00200052": {
+      "vm": "1",
+      "vr": "UI"
+    },
+    "00200060": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00201040": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00201041": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00204000": {
+      "vm": "1",
+      "vr": "LT"
+    },
+    "00280002": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280004": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00280006": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280008": {
+      "vm": "1",
+      "vr": "IS"
+    },
+    "00280009": {
+      "vm": "1-n",
+      "vr": "AT"
+    },
+    "00280010": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280011": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280030": {
+      "vm": "2",
+      "vr": "DS"
+    },
+    "00280100": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280101": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280102": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280103": {
+      "vm": "1",
+      "vr": "US"
+    },
+    "00280301": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00281050": {
+      "vm": "1-n",
+      "vr": "DS"
+    },
+    "00281051": {
+      "vm": "1-n",
+      "vr": "DS"
+    },
+    "00281052": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00281053": {
+      "vm": "1",
+      "vr": "DS"
+    },
+    "00281054": {
+      "vm": "1",
+      "vr": "LO"
+    },
+    "00282110": {
+      "vm": "1",
+      "vr": "CS"
+    },
+    "00282112": {
+      "vm": "1-n",
+      "vr": "DS"
+    },
+    "00282114": {
+      "vm": "1-n",
+      "vr": "CS"
+    },
+    "00321032": {
+      "vm": "1",
+      "vr": "PN"
+    },
+    "00400241": {
+      "vm": "1",
+      "vr": "AE"
+    },
+    "00400275": {
+      "vm": "1",
+      "vr": "SQ"
+    },
+    "00400555": {
+      "vm": "1",
+      "vr": "SQ"
+    },
+    "04000561": {
+      "vm": "1",
+      "vr": "SQ"
+    },
+    "7FE00010": {
+      "vm": "1",
+      "vr": "OB or OW"
+    },
+    "FFFCFFFC": {
+      "vm": "1",
+      "vr": "OB"
+    }
+  },
+  "schema": 1,
+  "source_documents": [
+    {
+      "bytes": 215763,
+      "file": "part03__sect_C.7.html",
+      "sha256": "e1532d2b3d8471154222c233051b58dc2f55faecb88ecfd08bb3c23acd689445",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.7.html"
+    },
+    {
+      "bytes": 45403,
+      "file": "part03__sect_C.7.2.html",
+      "sha256": "afb65b36b8e0db4663e5c68170b1caf6708f2fdbdbe05030fdb7f9633a467466",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.7.2.html"
+    },
+    {
+      "bytes": 113236,
+      "file": "part03__sect_C.7.3.html",
+      "sha256": "c5aaad7088373a6f1e3da8e0f8d254b121992ddb97fe406e4169e9a2d0ac366d",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.7.3.html"
+    },
+    {
+      "bytes": 59119,
+      "file": "part03__sect_C.7.5.html",
+      "sha256": "c83ebc76a1aa45e12fc1ea8fe3e110ef78c9992107c4191266ee9ffa4cd2192c",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.7.5.html"
+    },
+    {
+      "bytes": 85604,
+      "file": "part03__sect_C.7.6.html",
+      "sha256": "dcdd9655089cc19159b5e8aee3f5e4f87bb475dbda444d7f537c82a2b277ac38",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.7.6.html"
+    },
+    {
+      "bytes": 15074,
+      "file": "part03__sect_C.8.6.2.html",
+      "sha256": "6f332d3b8ade66236ffd8b338a87b57dcd08d8c99c4d353410b8093b63f52c6b",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.8.6.2.html"
+    },
+    {
+      "bytes": 78302,
+      "file": "part03__sect_C.7.6.3.html",
+      "sha256": "073681580b7d24cb69fdb12547269c57ece1518072acdf748d17435f9f44c6eb",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.7.6.3.html"
+    },
+    {
+      "bytes": 32622,
+      "file": "part03__sect_C.8.6.html",
+      "sha256": "b7cc0334ff939c58ecb39f6e18951f154dcd8e249fdb1d7403d907f820864b31",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/sect_C.8.6.html"
+    },
+    {
+      "bytes": 1597903,
+      "file": "part15__chapter_E.html",
+      "sha256": "4fae46fada5cc997056f8be284e9722aa5f61b5d2a1fa05786924cb4d453a366",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part15/chapter_E.html"
+    },
+    {
+      "bytes": 8371083,
+      "sha256": "02c91f018001b9b781d4c02c25150d29c7a23fada9129a6e987f106bc1490195",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html"
+    },
+    {
+      "bytes": 106967,
+      "sha256": "be1a5b17dae18892e0779fa3a379a708ebb0bf657da3381479f07de8a5aaf1fc",
+      "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part05/sect_6.2.html"
+    }
+  ],
+  "source_sha256": "4fae46fada5cc997056f8be284e9722aa5f61b5d2a1fa05786924cb4d453a366",
+  "source_url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part15/chapter_E.html#table_E.1-1",
+  "table": "PS3.15 Table E.1-1"
+}

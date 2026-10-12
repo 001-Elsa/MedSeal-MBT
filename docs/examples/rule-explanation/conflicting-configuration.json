@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "status": "blocked",
+  "release_authorized": false,
+  "issue": {
+    "code": "MEDSEAL-E510",
+    "stage": "validation",
+    "rule_id": "public-error-boundary",
+    "path": "dataset",
+    "condition": "unknown",
+    "source": "MedSeal public error contract v1",
+    "evidence_id": "public-error-canary"
+  }
+}

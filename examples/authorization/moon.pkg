@@ -1,0 +1,11 @@
+import {
+  "001-Elsa/medseal/api/authorization" @evidence,
+  "001-Elsa/medseal/src/storage",
+  "moonbitlang/async",
+  "moonbitlang/core/env",
+  "moonbitlang/x/sys",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "+native"

@@ -1,0 +1,33 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/dicom"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+}
+
+// Values
+pub fn parse(Bytes) -> @parser.ParsedFile raise @model.MedSealError
+
+pub fn write(@parser.ParsedFile, dataset? : @model.DataSet) -> Bytes raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+pub using @model {type DataElement}
+
+pub using @model {type DataSet}
+
+pub using @model {type ElementValue}
+
+pub using @model {type MedSealError}
+
+pub using @parser {type ParsedFile}
+
+pub using @model {type Tag}
+
+pub using @model {type Vr}
+
+// Traits

@@ -50,6 +50,21 @@ pub async fn run(args : Array[String]) -> Int {
         println(load_policy(Some(path)).explain())
         0
       }
+      ExplainObject(path, policy_path) => {
+        let report = @public_explain.object(
+          @storage.read(path),
+          match policy_path {
+            None => @policy.strict()
+            Some(_) => load_policy(policy_path)
+          },
+        )
+        println(report.stringify(indent=2))
+        match report {
+          Json::Object(fields) if fields.get("status") ==
+            Some(Json::string("blocked")) => 5
+          _ => 0
+        }
+      }
       Inspect(path, json) => {
         inspect_file(path, json)
         0
@@ -63,6 +78,17 @@ pub async fn run(args : Array[String]) -> Int {
   } catch {
     error => {
       match command {
+        ExplainObject(_, _) =>
+          println(
+            Json::object(
+              Map::from_array([
+                ("schema", Json::number(1.0)),
+                ("status", Json::string("blocked")),
+                ("release_authorized", Json::boolean(false)),
+                ("issue", @public_explain.public_error(error)),
+              ]),
+            ).stringify(indent=2),
+          )
         Validate(_, json) if !json => {
           println("INVALID")
           println(error.display())

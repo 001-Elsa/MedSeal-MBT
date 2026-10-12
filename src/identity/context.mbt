@@ -11,6 +11,11 @@ pub struct Context {
 }
 
 ///|
+pub fn Context::is_strict(self : Context) -> Bool {
+  self.policy.strict_metadata
+}
+
+///|
 pub fn Context::new(
   uid_seed : String,
   policy : @policy.Policy,

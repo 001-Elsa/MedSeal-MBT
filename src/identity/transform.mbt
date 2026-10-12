@@ -71,6 +71,8 @@ fn transform(
     }
     let output = match element.value {
       @model.ElementValue::Sequence(items) => {
+        action = "recurse"
+        rule = "reference-sequence"
         let nested : Array[@model.DataSet] = []
         for index, item in items {
           nested.push(

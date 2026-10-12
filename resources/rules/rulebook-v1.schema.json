@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MedSeal rulebook v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "rulebook_version",
+    "standard",
+    "dictionary_sha256",
+    "scope",
+    "rules"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "rulebook_version": {
+      "type": "string"
+    },
+    "standard": {
+      "const": "DICOM 2025e"
+    },
+    "dictionary_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "profiles",
+          "context",
+          "condition",
+          "action",
+          "references",
+          "support",
+          "implementation",
+          "positive_case",
+          "negative_case",
+          "test"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "profiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "context": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "object"
+          },
+          "action": {
+            "type": "string"
+          },
+          "references": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "document",
+                "edition",
+                "section",
+                "url",
+                "purpose"
+              ],
+              "properties": {
+                "document": {
+                  "type": "string"
+                },
+                "edition": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "support": {
+            "type": "string"
+          },
+          "implementation": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "positive_case": {
+            "type": "string"
+          },
+          "negative_case": {
+            "type": "string"
+          },
+          "test": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

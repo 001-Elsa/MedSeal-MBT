@@ -1,0 +1,24 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/policy"
+
+import {
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+pub fn from_json(String) -> @001-Elsa/medseal/src/policy.Policy raise @model.MedSealError
+
+pub fn strict(scope_name? : String, date_shift_days? : Int, path_rules? : Array[@001-Elsa/medseal/src/policy.PathRule]) -> @001-Elsa/medseal/src/policy.Policy raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+pub using @001-Elsa/medseal/src/policy {type Action}
+
+pub using @001-Elsa/medseal/src/policy {type PathRule}
+
+pub using @001-Elsa/medseal/src/policy {type Policy}
+
+// Traits

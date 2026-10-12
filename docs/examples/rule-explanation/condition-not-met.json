@@ -1,0 +1,552 @@
+{
+  "schema": 1,
+  "status": "converted-explanation",
+  "release_authorized": false,
+  "rulebook_sha256": "e2da95d6cbb3b6ae6064423afa2f244127b4273638d8ab733f0b4e30ee876b3a",
+  "policy": {
+    "profile": "strict-v1",
+    "policy_sha256": "958cd26d67e6551babfef155d40457054329f2c5111415fff9377b7c1b86d3c8",
+    "rulebook_sha256": "e2da95d6cbb3b6ae6064423afa2f244127b4273638d8ab733f0b4e30ee876b3a",
+    "unknown_public_fields": "reject",
+    "custom_rules": [
+      {
+        "path": "dataset/00081030",
+        "priority": 5,
+        "action": "replace",
+        "has_sop_condition": true,
+        "has_presence_condition": true
+      }
+    ]
+  },
+  "conditions": [
+    {
+      "rule_id": "policy-priority",
+      "path": "dataset/00081030",
+      "sop": "not-met",
+      "presence": "met",
+      "result": "not-met"
+    }
+  ],
+  "decisions": [
+    {
+      "path": "dataset/0008,0005",
+      "rule_id": "attr-00080005",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080005-valid-field"
+    },
+    {
+      "path": "dataset/0008,0016",
+      "rule_id": "attr-00080016",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080016-valid-field"
+    },
+    {
+      "path": "dataset/0008,0018",
+      "rule_id": "attr-00080018",
+      "action": "remap",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080018-valid-field"
+    },
+    {
+      "path": "dataset/0008,0020",
+      "rule_id": "attr-00080020",
+      "action": "shift",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080020-valid-field"
+    },
+    {
+      "path": "dataset/0008,0022",
+      "rule_id": "attr-00080022",
+      "action": "shift",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080022-valid-field"
+    },
+    {
+      "path": "dataset/0008,0030",
+      "rule_id": "attr-00080030",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080030-valid-field"
+    },
+    {
+      "path": "dataset/0008,0050",
+      "rule_id": "attr-00080050",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080050-valid-field"
+    },
+    {
+      "path": "dataset/0008,0060",
+      "rule_id": "attr-00080060",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080060-valid-field"
+    },
+    {
+      "path": "dataset/0008,0064",
+      "rule_id": "attr-00080064",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080064-valid-field"
+    },
+    {
+      "path": "dataset/0008,0070",
+      "rule_id": "attr-00080070",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080070-valid-field"
+    },
+    {
+      "path": "dataset/0008,0080",
+      "rule_id": "attr-00080080",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080080-valid-field"
+    },
+    {
+      "path": "dataset/0008,0090",
+      "rule_id": "attr-00080090",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00080090-valid-field"
+    },
+    {
+      "path": "dataset/0008,1030",
+      "rule_id": "attr-00081030",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00081030-valid-field"
+    },
+    {
+      "path": "dataset/0008,103E",
+      "rule_id": "attr-0008103E",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-0008103E-valid-field"
+    },
+    {
+      "path": "dataset/0010,0010",
+      "rule_id": "attr-00100010",
+      "action": "replace",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00100010-valid-field"
+    },
+    {
+      "path": "dataset/0010,0020",
+      "rule_id": "attr-00100020",
+      "action": "replace",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00100020-valid-field"
+    },
+    {
+      "path": "dataset/0010,0021",
+      "rule_id": "attr-00100021",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00100021-valid-field"
+    },
+    {
+      "path": "dataset/0010,0030",
+      "rule_id": "attr-00100030",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00100030-valid-field"
+    },
+    {
+      "path": "dataset/0010,0040",
+      "rule_id": "attr-00100040",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00100040-valid-field"
+    },
+    {
+      "path": "dataset/0011,0010",
+      "rule_id": "structure-remove",
+      "action": "remove",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 E.1",
+      "reason": "removed-sensitive-or-obsolete-structure",
+      "stage": "transform",
+      "evidence_id": "structure-remove-valid"
+    },
+    {
+      "path": "dataset/0011,1010",
+      "rule_id": "structure-remove",
+      "action": "remove",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 E.1",
+      "reason": "removed-sensitive-or-obsolete-structure",
+      "stage": "transform",
+      "evidence_id": "structure-remove-valid"
+    },
+    {
+      "path": "dataset/0020,000D",
+      "rule_id": "attr-0020000D",
+      "action": "remap",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-0020000D-valid-field"
+    },
+    {
+      "path": "dataset/0020,000E",
+      "rule_id": "attr-0020000E",
+      "action": "remap",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-0020000E-valid-field"
+    },
+    {
+      "path": "dataset/0020,0010",
+      "rule_id": "attr-00200010",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00200010-valid-field"
+    },
+    {
+      "path": "dataset/0020,0011",
+      "rule_id": "attr-00200011",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00200011-valid-field"
+    },
+    {
+      "path": "dataset/0020,0013",
+      "rule_id": "attr-00200013",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00200013-valid-field"
+    },
+    {
+      "path": "dataset/0020,0020",
+      "rule_id": "attr-00200020",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00200020-valid-field"
+    },
+    {
+      "path": "dataset/0020,0060",
+      "rule_id": "attr-00200060",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00200060-valid-field"
+    },
+    {
+      "path": "dataset/0020,4000",
+      "rule_id": "attr-00204000",
+      "action": "empty",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00204000-valid-field"
+    },
+    {
+      "path": "dataset/0028,0002",
+      "rule_id": "attr-00280002",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280002-valid-field"
+    },
+    {
+      "path": "dataset/0028,0004",
+      "rule_id": "attr-00280004",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280004-valid-field"
+    },
+    {
+      "path": "dataset/0028,0010",
+      "rule_id": "attr-00280010",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280010-valid-field"
+    },
+    {
+      "path": "dataset/0028,0011",
+      "rule_id": "attr-00280011",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280011-valid-field"
+    },
+    {
+      "path": "dataset/0028,0100",
+      "rule_id": "attr-00280100",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280100-valid-field"
+    },
+    {
+      "path": "dataset/0028,0101",
+      "rule_id": "attr-00280101",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280101-valid-field"
+    },
+    {
+      "path": "dataset/0028,0102",
+      "rule_id": "attr-00280102",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280102-valid-field"
+    },
+    {
+      "path": "dataset/0028,0103",
+      "rule_id": "attr-00280103",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00280103-valid-field"
+    },
+    {
+      "path": "dataset/0028,2110",
+      "rule_id": "attr-00282110",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00282110-valid-field"
+    },
+    {
+      "path": "dataset/0040,0275",
+      "rule_id": "attr-00400275",
+      "action": "remove",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-00400275-valid-field"
+    },
+    {
+      "path": "dataset/7FE0,0010",
+      "rule_id": "attr-7FE00010",
+      "action": "keep",
+      "condition": {
+        "result": "met",
+        "predicate": "validated-strict-context"
+      },
+      "source": "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+      "reason": "reviewed-attribute-classification",
+      "stage": "transform",
+      "evidence_id": "rule-7FE00010-valid-field"
+    }
+  ]
+}

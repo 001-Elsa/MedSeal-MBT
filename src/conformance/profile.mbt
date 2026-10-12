@@ -40,38 +40,18 @@ fn multiplicity(element : @model.DataElement) -> Int {
 }
 
 ///|
-fn valid_vm(vm : String, count : Int) -> Bool {
-  if count == 0 {
-    return true
-  }
-  let parts = vm.split("-").to_array()
-  let first = @string.parse_int(parts[0]) catch { _ => return false }
-  if parts.length() == 1 {
-    return count == first
-  }
-  let last = parts[1]
-  if last == "n" {
-    return count >= first
-  }
-  if last.has_suffix("n") {
-    let step = @string.parse_int(last[0:last.length() - 1]) catch {
-      _ => return false
-    }
-    return count >= first && step > 0 && count % step == 0
-  }
-  let maximum = @string.parse_int(last) catch { _ => return false }
-  count >= first && count <= maximum
-}
-
-///|
 fn fields(
   dataset : @model.DataSet,
   nested : Bool,
+  path : String,
 ) -> Unit raise @model.MedSealError {
   let seen : Map[@model.Tag, Bool] = Map([])
   for element in dataset.elements {
+    let location = "\{path}/\{element.tag.compact()}"
     if seen.contains(element.tag) {
-      raise @model.MedSealError::InvalidModel("duplicate attribute")
+      raise @model.MedSealError::RuleViolation(
+        "unique-tags", location, "met", "structure",
+      )
     }
     seen.set(element.tag, true)
     if element.tag.is_private() || element.tag.element == 0U {
@@ -86,31 +66,23 @@ fn fields(
     let attribute = match @dictionary.strict_attribute(element.tag) {
       Some(attribute) => attribute
       None =>
-        raise @model.MedSealError::PolicyError(
-          "unclassified public attribute \{element.tag.compact()}",
+        raise @model.MedSealError::RuleViolation(
+          "known-public-attribute", location, "met", "classification",
         )
     }
     if nested &&
       !["standard-uid", "instance-uid", "descriptive"].contains(attribute.role) {
-      raise @model.MedSealError::PolicyError(
-        "unsupported reference item context",
+      raise @model.MedSealError::RuleViolation(
+        "reference-context", location, "met", "context",
       )
     }
-    if !attribute.vr.split(" or ").any(fn(vr) { vr == element.vr.to_string() }) {
-      raise @model.MedSealError::InvalidModel(
-        "attribute VR differs from pinned dictionary",
-      )
-    }
-    if !valid_vm(attribute.vm, multiplicity(element)) {
-      raise @model.MedSealError::InvalidModel(
-        "attribute VM differs from pinned dictionary",
-      )
-    }
+    check_attribute(element, path=location)
     match element.value {
       @model.ElementValue::Sequence(items) if attribute.role == "sequence" =>
-        for item in items {
-          fields(item, true)
-          required(item, ["00081150", "00081155"], true)
+        for index, item in items {
+          let item_path = "\{location}[\{index}]"
+          fields(item, true, item_path)
+          required(item, ["00081150", "00081155"], true, path=item_path)
         }
       @model.ElementValue::Text(value) if [@model.Vr::DS, @model.Vr::IS].contains(
           element.vr,
@@ -153,18 +125,29 @@ fn required(
   dataset : @model.DataSet,
   tags : Array[String],
   nonempty : Bool,
+  path? : String = "dataset",
 ) -> Unit raise @model.MedSealError {
   for text in tags {
     let element = match dataset.find(tag(text)) {
       Some(element) => element
       None =>
-        raise @model.MedSealError::InvalidModel(
-          "missing declared Type 1/2 field \{text}",
+        raise @model.MedSealError::RuleViolation(
+          if nonempty {
+            "required-type1"
+          } else {
+            "required-type2"
+          },
+          "\{path}/\{tag(text).compact()}",
+          "met",
+          "requiredness",
         )
     }
     if nonempty && multiplicity(element) == 0 {
-      raise @model.MedSealError::InvalidModel(
-        "empty declared Type 1 field \{text}",
+      raise @model.MedSealError::RuleViolation(
+        "nonempty-type1",
+        "\{path}/\{tag(text).compact()}",
+        "met",
+        "requiredness",
       )
     }
   }
@@ -177,9 +160,11 @@ pub fn check(
   full_pixels? : Bool = false,
 ) -> Unit raise @model.MedSealError {
   if !@validator.validate_dataset(dataset).is_valid() {
-    raise @model.MedSealError::InvalidModel("basic value validation failed")
+    raise @model.MedSealError::RuleViolation(
+      "basic-values", "dataset", "met", "values",
+    )
   }
-  fields(dataset, false)
+  fields(dataset, false, "dataset")
   required(
     dataset,
     [
@@ -200,11 +185,16 @@ pub fn check(
     Some({ value: @model.ElementValue::Text(value), .. }) => value
     _ => raise @model.MedSealError::InvalidModel("invalid SOP Class")
   }
-  if sop == "1.2.840.10008.5.1.4.1.1.7" {
+  if @rulebook.require_condition(
+      @rulebook.sop_condition(dataset, "1.2.840.10008.5.1.4.1.1.7"),
+    ) {
     required(dataset, ["00080064"], true)
     required(dataset, ["00200020"], false)
-  } else if sop == "1.2.840.10008.5.1.4.1.1.2" ||
-    sop == "1.2.840.10008.5.1.4.1.1.4" {
+  } else if @rulebook.require_condition(
+      @rulebook.sop_condition(dataset, "1.2.840.10008.5.1.4.1.1.2").either(
+        @rulebook.sop_condition(dataset, "1.2.840.10008.5.1.4.1.1.4"),
+      ),
+    ) {
     required(
       dataset,
       ["00080008", "00200032", "00200037", "00200052", "00280030"],
@@ -215,7 +205,9 @@ pub fn check(
       required(dataset, ["00281052", "00281053"], true)
     }
   } else {
-    raise @model.MedSealError::InvalidModel("unsupported strict SOP Class")
+    raise @model.MedSealError::RuleViolation(
+      "supported-sop", "dataset/0008,0016", "met", "profile",
+    )
   }
   if full_pixels {
     required(dataset, ["7FE00010"], true)
@@ -228,8 +220,8 @@ pub fn check(
       Some({ value: @model.ElementValue::UnsignedShort([b]), .. }),
     ) if b > 0U && h + 1U == b => ()
     _ =>
-      raise @model.MedSealError::InvalidModel(
-        "High Bit must equal Bits Stored minus one",
+      raise @model.MedSealError::RuleViolation(
+        "pixel-high-bit", "dataset/0028,0102", "met", "pixels",
       )
   }
   let number = fn(text : String) -> UInt raise @model.MedSealError {
@@ -241,8 +233,8 @@ pub fn check(
   }
   let allocated = number("00280100")
   if number("00280002") != 1U || ![8U, 16U].contains(allocated) {
-    raise @model.MedSealError::InvalidModel(
-      "strict profile accepts monochrome 8/16 bit images only",
+    raise @model.MedSealError::RuleViolation(
+      "pixel-sample-bits", "dataset/0028,0100", "met", "pixels",
     )
   }
   let photo = match dataset.find(tag("00280004")) {
@@ -250,31 +242,31 @@ pub fn check(
     _ => ""
   }
   if !["MONOCHROME1", "MONOCHROME2"].contains(photo) {
-    raise @model.MedSealError::InvalidModel(
-      "unsupported photometric interpretation",
+    raise @model.MedSealError::RuleViolation(
+      "pixel-photometric", "dataset/0028,0004", "met", "pixels",
     )
   }
   if dataset.find(tag("00280008"))
     is Some({ value: @model.ElementValue::Text(v), .. }) &&
     v != "1" {
-    raise @model.MedSealError::InvalidModel(
-      "multi-frame objects need a separate reviewed SOP profile",
+    raise @model.MedSealError::RuleViolation(
+      "pixel-single-frame", "dataset/0028,0008", "met", "pixels",
     )
   }
   if full_pixels {
     let length = match dataset.find(tag("7FE00010")) {
       Some({ value: @model.ElementValue::Raw(v), .. }) => v.length().to_int64()
       _ =>
-        raise @model.MedSealError::InvalidModel(
-          "unsupported pixel representation",
+        raise @model.MedSealError::RuleViolation(
+          "pixel-representation", "dataset/7FE0,0010", "met", "pixels",
         )
     }
     let expected = number("00280010").to_int64() *
       number("00280011").to_int64() *
       (allocated / 8U).to_int64()
     if length != expected + expected % 2L {
-      raise @model.MedSealError::InvalidModel(
-        "pixel payload does not match declared dimensions",
+      raise @model.MedSealError::RuleViolation(
+        "pixel-length", "dataset/7FE0,0010", "met", "pixels",
       )
     }
   }
@@ -298,8 +290,23 @@ pub fn check_pixel_length(
     number("00280011") *
     (number("00280100") / 8L)
   if length.to_int64() != expected + expected % 2L {
-    raise @model.MedSealError::InvalidModel(
-      "streamed payload differs from declared image dimensions",
+    raise @model.MedSealError::RuleViolation(
+      "pixel-length", "dataset/7FE0,0010", "met", "pixels",
     )
+  }
+}
+
+///|
+/// The production dictionary check, independent of IOD requiredness.
+pub fn check_attribute(
+  element : @model.DataElement,
+  path? : String = "dataset",
+) -> Unit raise @model.MedSealError {
+  let id = "attr-" + element.tag.compact().replace(old=",", new="")
+  if !@rulebook.accepts_vr(element.tag, element.vr) {
+    raise @model.MedSealError::RuleViolation(id, path, "met", "vr")
+  }
+  if !@rulebook.accepts_vm(element.tag, multiplicity(element)) {
+    raise @model.MedSealError::RuleViolation(id, path, "met", "vm")
   }
 }

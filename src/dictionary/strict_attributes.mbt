@@ -9,7 +9,7 @@ pub(all) struct Attribute {
 }
 
 ///|
-pub let strict_dictionary_digest : String = "ad82badfa7185b9c39f2c10ba43a2f85971bdcaccfd6aa690a0bfae00b28d236"
+pub let strict_dictionary_digest : String = "61926e7e3dc5e5e3b6ce01134c9e8c82b9dede8ed995a896bfa356df0b07f466"
 
 ///|
 pub fn strict_attribute(tag : @model.Tag) -> Attribute? {
@@ -148,6 +148,13 @@ pub fn strict_attribute(tag : @model.Tag) -> Attribute? {
       })
     (0x0010U, 0x4000U) =>
       Some({ vr: "LT", vm: "1", role: "remove", name: "PatientComments", })
+    (0x0012U, 0x0063U) =>
+      Some({
+        vr: "LO",
+        vm: "1-n",
+        role: "keep",
+        name: "DeidentificationMethod",
+      })
     (0x0018U, 0x0015U) =>
       Some({ vr: "CS", vm: "1", role: "remove", name: "BodyPartExamined", })
     (0x0018U, 0x0020U) =>

@@ -381,6 +381,14 @@
       "retired": false
     },
     {
+      "tag": "00120063",
+      "vr": "LO",
+      "vm": "1-n",
+      "name": "DeidentificationMethod",
+      "role": "keep",
+      "retired": false
+    },
+    {
       "tag": "00180015",
       "vr": "CS",
       "vm": "1",

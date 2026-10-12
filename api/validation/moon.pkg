@@ -1,0 +1,9 @@
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+  "001-Elsa/medseal/src/conformance",
+  "001-Elsa/medseal/src/identity",
+  "001-Elsa/medseal/src/dicom_writer",
+  "001-Elsa/medseal/src/rulebook",
+  "001-Elsa/medseal/src/verification",
+}

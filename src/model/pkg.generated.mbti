@@ -37,6 +37,7 @@ pub(all) suberror MedSealError {
   InvalidModel(String)
   PolicyError(String)
   IdentityError(String)
+  RuleViolation(String, String, String, String)
 } derive(@debug.Debug)
 pub fn MedSealError::code(Self) -> String
 pub fn MedSealError::display(Self) -> String

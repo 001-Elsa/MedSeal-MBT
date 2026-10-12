@@ -279,3 +279,88 @@ pub fn Policy::explain(self : Policy) -> String {
     ]),
   ).stringify(indent=2)
 }
+
+///|
+/// Public configuration excludes administrator IDs, namespace and replacement values.
+pub fn Policy::public_explain(self : Policy) -> Json {
+  let paths = self.path_rules.copy()
+  paths.sort_by(fn(a, b) { a.id.compare(b.id) })
+  Json::object(
+    Map::from_array([
+      ("profile", Json::string(self.name())),
+      ("policy_sha256", Json::string(self.digest())),
+      ("rulebook_sha256", Json::string(@rulebook.digest)),
+      (
+        "unknown_public_fields",
+        Json::string(
+          if self.strict_metadata {
+            "reject"
+          } else {
+            "retained-subset-risk"
+          },
+        ),
+      ),
+      (
+        "custom_rules",
+        Json::array(
+          paths.map(fn(rule) {
+            Json::object(
+              Map::from_array([
+                ("path", Json::string(rule.path)),
+                ("priority", Json::number(rule.priority.to_double())),
+                (
+                  "action",
+                  Json::string(
+                    match rule.action {
+                      Keep => "keep"
+                      Empty => "empty"
+                      Remove => "remove"
+                      Replace(_) => "replace"
+                    },
+                  ),
+                ),
+                ("has_sop_condition", Json::boolean(rule.sop is Some(_))),
+                (
+                  "has_presence_condition",
+                  Json::boolean(rule.present is Some(_)),
+                ),
+              ]),
+            )
+          }),
+        ),
+      ),
+    ]),
+  )
+}
+
+///|
+/// A parsed complete object is required to conclude that an absent tag is absent.
+pub fn Policy::public_conditions(
+  self : Policy,
+  dataset : @model.DataSet,
+  complete? : Bool = true,
+) -> Json {
+  let paths = self.path_rules.copy()
+  paths.sort_by(fn(a, b) { a.id.compare(b.id) })
+  Json::array(
+    paths.map(fn(rule) {
+      let sop = match rule.sop {
+        None => @rulebook.Met
+        Some(expected) => @rulebook.sop_condition(dataset, expected)
+      }
+      let present = match rule.present {
+        None => @rulebook.Met
+        Some(tag) => @rulebook.presence(dataset, tag, complete~)
+      }
+      Json::object(
+        Map::from_array([
+          ("rule_id", Json::string("policy-priority")),
+          ("path", Json::string(rule.path)),
+          ("sop", Json::string(sop.name())),
+          ("presence", Json::string(present.name())),
+          ("result", Json::string(sop.both(present).name())),
+        ]),
+      )
+    }),
+  )
+}

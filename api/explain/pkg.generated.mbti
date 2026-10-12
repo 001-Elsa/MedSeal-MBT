@@ -1,0 +1,29 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/explain"
+
+import {
+  "001-Elsa/medseal/api/validation",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/policy",
+}
+
+// Values
+pub fn collection(Array[@validation.ValidatedObject]) -> Json
+
+pub fn issue(@model.MedSealError) -> ValidationIssue
+
+pub fn object(Bytes, @policy.Policy) -> Json
+
+pub fn public_error(@model.MedSealError) -> Json
+
+// Errors
+
+// Types and methods
+pub struct ValidationIssue {
+  // private fields
+}
+pub fn ValidationIssue::to_json(Self) -> Json
+
+// Type aliases
+
+// Traits

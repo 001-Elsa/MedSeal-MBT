@@ -1,0 +1,592 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-10-12",
+  "official_url": "https://moonbitlang.github.io/OSC2026/#winners",
+  "historical_scope": "Latest reachable commit on current default branch before acceptance cutoff; not official submitted revision.",
+  "third_party_test_runs": 0,
+  "medseal_baseline": "6800741e184169c3535568a9e758b1dddc98e39e",
+  "findings": [
+    {
+      "name": "MoUI",
+      "theme": "多平台声明式 GUI 与显式渲染管线",
+      "finding": "把代码路径可用、真实平台运行证据、产品完整承诺分开；外部消费者脚本把样例复制到仓库外，检查解析出的依赖不来自 monorepo，再编译和测试。源码证明该检查机制存在，本轮没有验证其远端 CI 运行。",
+      "lesson": "成熟度应当由能力与证据矩阵表达；库必须能被仓库外的新项目使用。",
+      "action": "MedSeal 增加按 Profile、平台、安装、接收用途划分的能力声明；从真实发行归档和 Mooncakes 各建立独立消费者，检查不能偷偷引用本地 src。",
+      "avoid": "不照搬六端平台承诺，也不为了一个审核工作台引入整个原生 GUI/渲染栈。",
+      "stages": [
+        "W0",
+        "W6"
+      ],
+      "repository": "wzzc-dev/MoUI",
+      "official_status": "finalist",
+      "historical_sha": "5bb64bbdb43e7e58ee8f4518741d82720da9762e",
+      "current_sha": "8985940dd209fb91e6c5fff1f665a00fdaf18933",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "README.mbt.md",
+          "line_start": 1,
+          "line_end": 45,
+          "sha256": "db2fb683565db5f0085b6bcc3b49e8e94aab28a7b593ec8657e2e8beb30790e2",
+          "url": "https://github.com/wzzc-dev/MoUI/blob/5bb64bbdb43e7e58ee8f4518741d82720da9762e/README.mbt.md#L1-L45"
+        },
+        {
+          "path": "docs/platform-readiness-declaration.md",
+          "line_start": 8,
+          "line_end": 47,
+          "sha256": "f3bb13899b64b980c909cfd3b57d6f3ff08161359115287ed97631855ffb8d50",
+          "url": "https://github.com/wzzc-dev/MoUI/blob/5bb64bbdb43e7e58ee8f4518741d82720da9762e/docs/platform-readiness-declaration.md#L8-L47"
+        },
+        {
+          "path": "scripts/external-consumer-ci.mjs",
+          "line_start": 135,
+          "line_end": 173,
+          "sha256": "69e1c13ba2652b978bb9d5b99fc299a8276d859a42bdd39cf2a7b9fd048ea404",
+          "url": "https://github.com/wzzc-dev/MoUI/blob/5bb64bbdb43e7e58ee8f4518741d82720da9762e/scripts/external-consumer-ci.mjs#L135-L173"
+        },
+        {
+          "path": ".github/workflows/external-consumer.yml",
+          "line_start": 10,
+          "line_end": 35,
+          "sha256": "43fa29324a2821a5cf41e21cd50a6f3cfab53e34a8fa26d1a86997a3187cf988",
+          "url": "https://github.com/wzzc-dev/MoUI/blob/5bb64bbdb43e7e58ee8f4518741d82720da9762e/.github/workflows/external-consumer.yml#L10-L35"
+        }
+      ]
+    },
+    {
+      "name": "aitne",
+      "theme": "MoonBit 响应式 Web 组件、Router 与开发 CLI",
+      "finding": "Memo 保存上下游订阅、失效状态及清理 owner；测试覆盖菱形依赖和动态分支切换。README 明确 WIP，历史 CLI 支持面与 CI 主要为 Linux/macOS。",
+      "lesson": "交互应用需要明确的数据依赖和失效机制；状态变化不能靠界面猜测。",
+      "action": "工作台订阅同一个作业状态和规则报告，策略、输出或授权变化立即使旧审核失效。先用小型 MoonBit Web 视图完成体验，再评估是否引入 aitne。",
+      "avoid": "不把框架成熟度当成 MedSeal 安全保证；不在浏览器另外实现脱敏算法。",
+      "stages": [
+        "W5"
+      ],
+      "repository": "Arcelyth/aitne",
+      "official_status": "finalist",
+      "historical_sha": "b1ab95444fcbedccb3ab2ca382d8c7ec01ad4399",
+      "current_sha": "56699d8a1f83eafb427231a591c1e948eec2403b",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "README.mbt.md",
+          "line_start": 1,
+          "line_end": 100,
+          "sha256": "44f674633fb2d2c8cab681d4dca3abd75c480ba045d06e1fce50771ad6a80dfd",
+          "url": "https://github.com/Arcelyth/aitne/blob/b1ab95444fcbedccb3ab2ca382d8c7ec01ad4399/README.mbt.md#L1-L100"
+        },
+        {
+          "path": "src/reactive/memo.mbt",
+          "line_start": 12,
+          "line_end": 91,
+          "sha256": "f2e021174afb8a6668dbf8d0f963dd2130700d89ef27acda29fc56b18e9e129f",
+          "url": "https://github.com/Arcelyth/aitne/blob/b1ab95444fcbedccb3ab2ca382d8c7ec01ad4399/src/reactive/memo.mbt#L12-L91"
+        },
+        {
+          "path": "src/reactive/memo_test.mbt",
+          "line_start": 34,
+          "line_end": 111,
+          "sha256": "b0beb37b4d50315b64c17e8de03ba1cb05a19e34c0a2ac521ca9205227af80d9",
+          "url": "https://github.com/Arcelyth/aitne/blob/b1ab95444fcbedccb3ab2ca382d8c7ec01ad4399/src/reactive/memo_test.mbt#L34-L111"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "line_start": 13,
+          "line_end": 73,
+          "sha256": "ea1e6ea1c52c25c26a57119c3ef9735fc0a790a3e1f84fa60fb4fc5d71877fc5",
+          "url": "https://github.com/Arcelyth/aitne/blob/b1ab95444fcbedccb3ab2ca382d8c7ec01ad4399/.github/workflows/ci.yml#L13-L73"
+        }
+      ]
+    },
+    {
+      "name": "MoonFrame",
+      "theme": "DataFrame、表达式与延迟查询的数据处理库",
+      "finding": "列投影采用显式工作栈；优化器的差分性质测试把 lazy 与 eager 比较，域包含 null、NaN、正负零，并收缩反例；join 测试明确未匹配行和 null 的语义。README 说明 collect 仍物化，不能等同流式引擎。",
+      "lesson": "结果可比性、缺失值语义和非空洞性质验证比增加统计函数更有价值。",
+      "action": "建立导入/复用/拒绝/待审核/交付计数账本及一致性检查，输出匿名质量统计；采用生成式测试检查有界流式与既有内存路径的语义一致。",
+      "avoid": "不把 MoonFrame 接到像素主链路，也不为简单计数强制引入 DataFrame。",
+      "stages": [
+        "W1",
+        "W4",
+        "W5"
+      ],
+      "repository": "ihb2032/MoonFrame",
+      "official_status": "finalist",
+      "historical_sha": "0285e6041cc9d216e5297e7de3189bb862fe43d9",
+      "current_sha": "a24ad60c0908f53b5ab914ae273efb9d845f0451",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "README.md",
+          "line_start": 115,
+          "line_end": 150,
+          "sha256": "878cb83de5a25c7f1ded76f5001cdc387b2dd88511c68f9769b509ba12410dfb",
+          "url": "https://github.com/ihb2032/MoonFrame/blob/0285e6041cc9d216e5297e7de3189bb862fe43d9/README.md#L115-L150"
+        },
+        {
+          "path": "lazy/optimize_projection.mbt",
+          "line_start": 1,
+          "line_end": 75,
+          "sha256": "de49fea4899703d2b10ef44cec3f2462727ab17ce90fd361a95640f29c19709c",
+          "url": "https://github.com/ihb2032/MoonFrame/blob/0285e6041cc9d216e5297e7de3189bb862fe43d9/lazy/optimize_projection.mbt#L1-L75"
+        },
+        {
+          "path": "lazy/optimize_fuzz_test.mbt",
+          "line_start": 1,
+          "line_end": 82,
+          "sha256": "0d8ce8dd7ef3b3f67742f3733aa892a413718ed5dfd8f0a2a107b41e44e6ddce",
+          "url": "https://github.com/ihb2032/MoonFrame/blob/0285e6041cc9d216e5297e7de3189bb862fe43d9/lazy/optimize_fuzz_test.mbt#L1-L82"
+        },
+        {
+          "path": "frame/join_test.mbt",
+          "line_start": 39,
+          "line_end": 84,
+          "sha256": "643dcc4f5384b12b0a53066b4191bd30004203e4d2a6c64c24dc838139d4220f",
+          "url": "https://github.com/ihb2032/MoonFrame/blob/0285e6041cc9d216e5297e7de3189bb862fe43d9/frame/join_test.mbt#L39-L84"
+        }
+      ]
+    },
+    {
+      "name": "Frontier Lab",
+      "theme": "语义轨迹、契约检查与时间回溯调试",
+      "finding": "TraceViolation 带契约、代码、步骤、目标和证据；ContractReport 带首次错误与截取窗口；测试给出 compare 非法改变顺序的具体反例。当前在线演示也能比较 expected/actual 并定位 step 10，但这是后续部署，不能当作历史版本验收。",
+      "lesson": "把“检查失败”变成能够定位、复现和理解的因果证据。",
+      "action": "规则执行轨迹记录字段路径、规则 ID、标准出处、条件判定、动作与验证结果；一键定位首个阻断，生成不含原始患者值的解释报告。",
+      "avoid": "不把病例原值、原始 UID、日期偏移、输入摘要或本机路径塞进公开 trace；局部窗口不冒称最小反例。",
+      "stages": [
+        "W0",
+        "W5"
+      ],
+      "repository": "shop1111/FrontierLab",
+      "official_status": "finalist",
+      "historical_sha": "26814a6abed16bee040cdd8b0c097708a1b58988",
+      "current_sha": "5c1ca1d9c066d71cd90c21f5451651a9f52a3fa4",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "trace_contracts.mbt",
+          "line_start": 1,
+          "line_end": 121,
+          "sha256": "05e512f71513cd2b4f17cbe615de8c20b028c93b0dd1d18c81a9f7286069ce0a",
+          "url": "https://github.com/shop1111/FrontierLab/blob/26814a6abed16bee040cdd8b0c097708a1b58988/trace_contracts.mbt#L1-L121"
+        },
+        {
+          "path": "trace_debugger_test.mbt",
+          "line_start": 104,
+          "line_end": 159,
+          "sha256": "a9bff8b5ac4aac6b542f4215819a0294fdc49e5e174ba8ffb3b343eca95d2079",
+          "url": "https://github.com/shop1111/FrontierLab/blob/26814a6abed16bee040cdd8b0c097708a1b58988/trace_debugger_test.mbt#L104-L159"
+        },
+        {
+          "path": "ACCEPTANCE.md",
+          "line_start": 5,
+          "line_end": 44,
+          "sha256": "6d97dc94c2d40d38ca3baa8194805d7f687ea40f42cf7d6e0ff63a00e0a574f0",
+          "url": "https://github.com/shop1111/FrontierLab/blob/26814a6abed16bee040cdd8b0c097708a1b58988/ACCEPTANCE.md#L5-L44"
+        }
+      ]
+    },
+    {
+      "name": "tokenizers-moonbit",
+      "theme": "兼容 Hugging Face 配置的 MoonBit tokenizer",
+      "finding": "差分测试由 Python tokenizers 生成期望，MoonBit 逐 token 对比；源码列表有 39 个模型，但夹具缺失会返回 ran=false，普通测试可跳过。CI 另抓取 gpt2/bert/t5 做 smoke。本轮没有重跑全模型，也没有把 README 的兼容声明当作验证结果。",
+      "lesson": "兼容性需要独立参考实现和固定语料；必需夹具缺失不得形成绿色假象。",
+      "action": "DICOM 实验室分开 parser/writer 差分、标准符合性、脱敏策略预期和像素/几何不变量；发布门禁核对必需夹具清单，缺失即失败。",
+      "avoid": "不用 pydicom 可读取代替脱敏合规；不把“39 模型”类比成 MedSeal 支持 39 种影像。",
+      "stages": [
+        "W1"
+      ],
+      "repository": "howtomakeaname/tokenizers-moonbit",
+      "official_status": "third",
+      "historical_sha": "2046a45ef93ac769b4dc9e7482b6091afbf08fbd",
+      "current_sha": "1068e6cfd50c20cc7f620e7fe51828088fb87b5d",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "README.md",
+          "line_start": 1,
+          "line_end": 95,
+          "sha256": "d99a14fec274fecffc838652f628b67fb250df8f26f2e0007ded0f6ba49d6fb2",
+          "url": "https://github.com/howtomakeaname/tokenizers-moonbit/blob/2046a45ef93ac769b4dc9e7482b6091afbf08fbd/README.md#L1-L95"
+        },
+        {
+          "path": "src/integration/parity_test.mbt",
+          "line_start": 1,
+          "line_end": 58,
+          "sha256": "ad275d8d9f057c5ff62136dac80ea80518fedb20811c38efe4fd7339c00f26e0",
+          "url": "https://github.com/howtomakeaname/tokenizers-moonbit/blob/2046a45ef93ac769b4dc9e7482b6091afbf08fbd/src/integration/parity_test.mbt#L1-L58"
+        },
+        {
+          "path": "scripts/gen_parity.py",
+          "line_start": 53,
+          "line_end": 79,
+          "sha256": "bae3ce81f0efee29df1d803e51288ebfa97135e96b6c628d58c86a6984b4f02c",
+          "url": "https://github.com/howtomakeaname/tokenizers-moonbit/blob/2046a45ef93ac769b4dc9e7482b6091afbf08fbd/scripts/gen_parity.py#L53-L79"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "line_start": 109,
+          "line_end": 145,
+          "sha256": "d0964bc5017628c5a2b71a46b426dd7d0f638ed1873099c56605d1eaf9de6a8c",
+          "url": "https://github.com/howtomakeaname/tokenizers-moonbit/blob/2046a45ef93ac769b4dc9e7482b6091afbf08fbd/.github/workflows/ci.yml#L109-L145"
+        }
+      ]
+    },
+    {
+      "name": "markitdown",
+      "theme": "多文档格式到 Markdown 的原创转换与质量实验室",
+      "finding": "路由测试明确拒绝不支持的 accurate/stream 组合；基准选择器统计被 limit 排除的项；报告分别表达 trust/gate、comparable、fidelity mismatch、CLI/engine geomean。大规模语料与速度数字仍是仓库报告，本轮未复测。",
+      "lesson": "转换器必须同时证明语义质量、资源使用和测试覆盖范围，不能只讲速度。",
+      "action": "每次 MedSeal 质量运行固定语料、依赖、策略、二进制和来源级别；分别报告像素/几何/时间/引用质量，以及 RSS、吞吐、临时空间和失败恢复。",
+      "avoid": "不从合成小对象基准推出真实 CT 容量；不为了格式数量扩张到所有 DICOM SOP。",
+      "stages": [
+        "W1",
+        "W3",
+        "W4"
+      ],
+      "repository": "ZSeanYves/markitdown",
+      "official_status": "third",
+      "historical_sha": "7e6e1c89fdbcdd87ed7dcb508f051b16e5c4e3d4",
+      "current_sha": "035d47a036e7541429113421e67256427c6b3bd7",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "README.md",
+          "line_start": 1,
+          "line_end": 115,
+          "sha256": "0221e9da6e789427f21447f26f31f47bc763a2c8810a502cf328dc18a126de67",
+          "url": "https://github.com/ZSeanYves/markitdown/blob/7e6e1c89fdbcdd87ed7dcb508f051b16e5c4e3d4/README.md#L1-L115"
+        },
+        {
+          "path": "convert/route_probe_wbtest.mbt",
+          "line_start": 46,
+          "line_end": 117,
+          "sha256": "e18cccaf35d992eb1823bc1604e167d8a04f23f756b4c188a96bdce62dfafbd5",
+          "url": "https://github.com/ZSeanYves/markitdown/blob/7e6e1c89fdbcdd87ed7dcb508f051b16e5c4e3d4/convert/route_probe_wbtest.mbt#L46-L117"
+        },
+        {
+          "path": "bench/runner/manifest/selector_gate_wbtest.mbt",
+          "line_start": 13,
+          "line_end": 44,
+          "sha256": "d49ce2854ba644c8ac2ecec5eb781bdee6e6d51d1337bd025beb71b1d384ca0d",
+          "url": "https://github.com/ZSeanYves/markitdown/blob/7e6e1c89fdbcdd87ed7dcb508f051b16e5c4e3d4/bench/runner/manifest/selector_gate_wbtest.mbt#L13-L44"
+        },
+        {
+          "path": "bench/runner/report.mbt",
+          "line_start": 69,
+          "line_end": 172,
+          "sha256": "6a8dab413e0e42168f472cba4798cf1c54e9b98e7628576f65851c9c0b0058c0",
+          "url": "https://github.com/ZSeanYves/markitdown/blob/7e6e1c89fdbcdd87ed7dcb508f051b16e5c4e3d4/bench/runner/report.mbt#L69-L172"
+        }
+      ]
+    },
+    {
+      "name": "moon_graphql",
+      "theme": "基于固定规范的 parse/validate/print 语言工具库",
+      "finding": "把语法、语义和 runtime 范围分开，列 Supported/Partial/Not implemented，并提供按规则组织的正反例。ValidationError 当前是 message+ty，不能说它已实现丰富的字段位置证据。",
+      "lesson": "固定标准版本、公开部分支持范围、按条款组织测试，是可信标准库的基础。",
+      "action": "生成 DICOM Rulebook：标准章节/表行→条件→实现→正反例→运行证据；SC 与 CT 分开认证，针对 Type 1/2/1C/2C、VR/VM 与 Sequence 上下文检查。",
+      "avoid": "不把固定字典里的属性条数写成完整 IOD/Annex E 认证；不照搬 GraphQL 的规则来判断医学字段。",
+      "stages": [
+        "W0",
+        "W1",
+        "W3"
+      ],
+      "repository": "Eisem/moon_graphql",
+      "official_status": "third",
+      "historical_sha": "0923ce52c28af4022f17485496b6af1a4653d2d6",
+      "current_sha": "0923ce52c28af4022f17485496b6af1a4653d2d6",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "CONFORMANCE.md",
+          "line_start": 1,
+          "line_end": 54,
+          "sha256": "58c397ead73f1c2a7c3d39bccf8cfd6166afa72381cf6aab34bb26ddc5ff05b2",
+          "url": "https://github.com/Eisem/moon_graphql/blob/0923ce52c28af4022f17485496b6af1a4653d2d6/CONFORMANCE.md#L1-L54"
+        },
+        {
+          "path": "validation/validation.mbt",
+          "line_start": 1,
+          "line_end": 36,
+          "sha256": "5a38ebd5f88677dc16c48ab00dfb138bff476813277062f1bed16c777dd8ed0a",
+          "url": "https://github.com/Eisem/moon_graphql/blob/0923ce52c28af4022f17485496b6af1a4653d2d6/validation/validation.mbt#L1-L36"
+        },
+        {
+          "path": "validation/conformance_test.mbt",
+          "line_start": 6,
+          "line_end": 64,
+          "sha256": "4dc5899be0c647195af5666e23a0e03d18f245ad27495223b83e78261056f40e",
+          "url": "https://github.com/Eisem/moon_graphql/blob/0923ce52c28af4022f17485496b6af1a4653d2d6/validation/conformance_test.mbt#L6-L64"
+        },
+        {
+          "path": "lexer/conformance_test.mbt",
+          "line_start": 10,
+          "line_end": 32,
+          "sha256": "4b8437552a30ac6fedefc6c383539f65c6ffb376d0f11a50bfffa9c2788a5b2f",
+          "url": "https://github.com/Eisem/moon_graphql/blob/0923ce52c28af4022f17485496b6af1a4653d2d6/lexer/conformance_test.mbt#L10-L32"
+        }
+      ]
+    },
+    {
+      "name": "MoonBit Hex Editor",
+      "theme": "字节编辑、结构解析与 Native TUI",
+      "finding": "结构节点携带 offset、size、name、value、children，并按文件 magic 路由；测试检查修改、插入、删除、复合粘贴的 undo/redo。Native TUI 和库的能力边界明确。",
+      "lesson": "结构树与字节位置联动能让二进制工具可解释、可排错。",
+      "action": "为只读 DICOM 检查器提供 Sequence 路径、VR/VM、长度、受限字节位置及错误定位；大像素显示跨度信息，避免整文件加载。",
+      "avoid": "不提供直接修改原始封存影像的入口；私有 hex 视图不可出现在公开 demo 或离线公开报告。",
+      "stages": [
+        "W5"
+      ],
+      "repository": "R00TK17/moonbit-HexEditor",
+      "official_status": "third",
+      "historical_sha": "7a3e9d5d38c1a16f45b30b6dbea72aee869b23b2",
+      "current_sha": "08e4bdc1301a7e2badab063d4ea9b7528c1b797a",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "README.md",
+          "line_start": 1,
+          "line_end": 100,
+          "sha256": "e12759170e4ca7bbf52ed999143504036d0bbb2fc53bb05d56bb061513f5afae",
+          "url": "https://github.com/R00TK17/moonbit-HexEditor/blob/7a3e9d5d38c1a16f45b30b6dbea72aee869b23b2/README.md#L1-L100"
+        },
+        {
+          "path": "hex_struct.mbt",
+          "line_start": 1,
+          "line_end": 46,
+          "sha256": "957e933c0674ef06ecab78eb1616bc31989c0de82f7352a83c4007d87cf80a3e",
+          "url": "https://github.com/R00TK17/moonbit-HexEditor/blob/7a3e9d5d38c1a16f45b30b6dbea72aee869b23b2/hex_struct.mbt#L1-L46"
+        },
+        {
+          "path": "cmd/main/tui_edit_wbtest.mbt",
+          "line_start": 73,
+          "line_end": 147,
+          "sha256": "82be3bb008405fdfe6482dd1cc73f4caac5df2c955a49f88d5830b82d2799222",
+          "url": "https://github.com/R00TK17/moonbit-HexEditor/blob/7a3e9d5d38c1a16f45b30b6dbea72aee869b23b2/cmd/main/tui_edit_wbtest.mbt#L73-L147"
+        }
+      ]
+    },
+    {
+      "name": "moonsic",
+      "theme": "领域类型、音乐 IR、校验与多资产导出",
+      "finding": "ValidationIssue 以 severity/code/path/message 表达领域错误，不同 profile 使用明确选项；流水线可把某个导出失败记为 warning，同时保留其他可用资产。",
+      "lesson": "域模型和结果状态应当进入类型；失败不能被一个布尔“成功”抹平。",
+      "action": "MedSeal 公共 API 引入 ValidatedObject、ConvertedObject、ReviewEvidence、AuthorizedPackage 等受控类型；报告区分可查看、可转换、可审核和可交付。",
+      "avoid": "不照搬音乐流水线“有任一可用资产就成功”的放宽原则；医学交付缺必需对象/审核时仍整体阻断。",
+      "stages": [
+        "W0",
+        "W6"
+      ],
+      "repository": "hyl-star/moonsic",
+      "official_status": "third",
+      "historical_sha": "ae98a436f85e9c7c0b878c18bc5bd26c401f368d",
+      "current_sha": "ae98a436f85e9c7c0b878c18bc5bd26c401f368d",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "packages/validation/validation_types.mbt",
+          "line_start": 5,
+          "line_end": 50,
+          "sha256": "133bef50f8151b1f6ab9d35e46b80dc4a67dd9077d58e99d0fb4c72eebbc935c",
+          "url": "https://github.com/hyl-star/moonsic/blob/ae98a436f85e9c7c0b878c18bc5bd26c401f368d/packages/validation/validation_types.mbt#L5-L50"
+        },
+        {
+          "path": "packages/validation/validation_options.mbt",
+          "line_start": 5,
+          "line_end": 63,
+          "sha256": "3a22e81af580b2c253b6f5dccd74ef658f52e30b4636c4a344d76427cd51dcee",
+          "url": "https://github.com/hyl-star/moonsic/blob/ae98a436f85e9c7c0b878c18bc5bd26c401f368d/packages/validation/validation_options.mbt#L5-L63"
+        },
+        {
+          "path": "packages/demo/demo_pipeline.mbt",
+          "line_start": 6,
+          "line_end": 94,
+          "sha256": "8602ee15fd063be8c7ebddcd5768a60e3da1ca4aa86d3d75d503405f5ed8c960",
+          "url": "https://github.com/hyl-star/moonsic/blob/ae98a436f85e9c7c0b878c18bc5bd26c401f368d/packages/demo/demo_pipeline.mbt#L6-L94"
+        },
+        {
+          "path": "packages/demo/demo_test.mbt",
+          "line_start": 6,
+          "line_end": 40,
+          "sha256": "d943a6247b13fd68f708f845e5fbfd7e44f4c25727f40d6d78df68546810ef00",
+          "url": "https://github.com/hyl-star/moonsic/blob/ae98a436f85e9c7c0b878c18bc5bd26c401f368d/packages/demo/demo_test.mbt#L6-L40"
+        }
+      ]
+    },
+    {
+      "name": "linear-algebra",
+      "theme": "代数能力接口、可变/不可变容器与后端分离",
+      "finding": "可变与不可变实现有跨包一致性测试，检查空矩阵、维度和操作语义；checked 运算返回 Result，unchecked 为显式入口；通用算法通过读/构建能力参数适配容器。",
+      "lesson": "用不变量和显式能力边界验证算法，不依赖几个漂亮样例。",
+      "action": "性质测试涵盖同域身份稳定、跨域隔离、合法时间间隔、像素不变、引用完整和几何一致；密码/数据库/文件系统保留 provider 边界。",
+      "avoid": "不为 CT 的少量向量计算引入 OpenBLAS；不重写 AES/Ed25519 以追求纯语言占比。",
+      "stages": [
+        "W3",
+        "W4"
+      ],
+      "repository": "Luna-Flow/linear-algebra",
+      "official_status": "third",
+      "historical_sha": "a85b6ba32bee07f8b942ef1bc26b4fc3d8f15f64",
+      "current_sha": "e0cfa95c2c544c9d8d4b070a47e7f5bfa0ff3926",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "src/consistency/core_wbtest.mbt",
+          "line_start": 1,
+          "line_end": 117,
+          "sha256": "a05fe715bd9e5657368f8aa92b6a4f265c1a378d4f2a0b56ef80eef25eb2b087",
+          "url": "https://github.com/Luna-Flow/linear-algebra/blob/a85b6ba32bee07f8b942ef1bc26b4fc3d8f15f64/src/consistency/core_wbtest.mbt#L1-L117"
+        },
+        {
+          "path": "src/immut/matrix.mbt",
+          "line_start": 402,
+          "line_end": 434,
+          "sha256": "216901ed004dec4b5fe5c5c66d9cc658e17f9614d270842fa6056cb754c080af",
+          "url": "https://github.com/Luna-Flow/linear-algebra/blob/a85b6ba32bee07f8b942ef1bc26b4fc3d8f15f64/src/immut/matrix.mbt#L402-L434"
+        },
+        {
+          "path": "src/container/generic_algorithms_wbtest.mbt",
+          "line_start": 15,
+          "line_end": 67,
+          "sha256": "5ee89151bc6e1b4eca475e852827df70b6a4ae168eff3b155fa760021e9d5cb4",
+          "url": "https://github.com/Luna-Flow/linear-algebra/blob/a85b6ba32bee07f8b942ef1bc26b4fc3d8f15f64/src/container/generic_algorithms_wbtest.mbt#L15-L67"
+        }
+      ]
+    },
+    {
+      "name": "MoonCharts",
+      "theme": "纯 MoonBit 数据到 SVG 图表",
+      "finding": "刻度代码处理退化范围并按索引生成刻度，避免连续浮点累积；边界测试覆盖空、单点、同值和不等长系列。不过 valid_svg 只检查首尾标签，不能把它当作完整 XML/渲染验证。当前在线 SVG 首屏可见。",
+      "lesson": "可移植输出和边界处理有价值，但图表正确性仍需要独立校验。",
+      "action": "质量报告优先采用无需外网的 SVG：批次处置计数、阻断类别、资源趋势；文本计数与图表共用同一个账本。",
+      "avoid": "不公开小群体病人统计；不增加与脱敏决策无关的图表。包名以实际 registry 为准，当前网页已使用 Xpeng/mooncharts。",
+      "stages": [
+        "W5"
+      ],
+      "repository": "pxgt/mooncharts",
+      "official_status": "third",
+      "historical_sha": "b11795eea77bf5f5d2293103f1b54f0f4edc322b",
+      "current_sha": "b11795eea77bf5f5d2293103f1b54f0f4edc322b",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "ticks.mbt",
+          "line_start": 1,
+          "line_end": 58,
+          "sha256": "922af2f8113d7bc3f420d2def73ce3e19981b523dbe991807f398c3b96aff5df",
+          "url": "https://github.com/pxgt/mooncharts/blob/b11795eea77bf5f5d2293103f1b54f0f4edc322b/ticks.mbt#L1-L58"
+        },
+        {
+          "path": "edge_cases_test.mbt",
+          "line_start": 1,
+          "line_end": 106,
+          "sha256": "97cd4648898c2656a4beaa3c71a55fe78c24bc0f4560aaa2f4fcf77ac587c75a",
+          "url": "https://github.com/pxgt/mooncharts/blob/b11795eea77bf5f5d2293103f1b54f0f4edc322b/edge_cases_test.mbt#L1-L106"
+        },
+        {
+          "path": "docs/api.md",
+          "line_start": 1,
+          "line_end": 70,
+          "sha256": "183139cc1205f597cdd63ee346e4735b255af1349f70695c0517f01f1b44e5d3",
+          "url": "https://github.com/pxgt/mooncharts/blob/b11795eea77bf5f5d2293103f1b54f0f4edc322b/docs/api.md#L1-L70"
+        }
+      ]
+    },
+    {
+      "name": "raft-moonbit",
+      "theme": "etcd Raft 移植、确定性模拟与故障不变量",
+      "finding": "移植台账说明测试来源与 N/A；非测试入口明确 persist→apply→advance 顺序；seeded chaos 在崩溃、重启、分区后逐步检查安全谓词。README 的测试数、覆盖率和差分缺陷数没有在本轮复测；当前在线 demo 链接为 404。",
+      "lesson": "持久化协议要用可复现事件序列和逐步不变量验证，覆盖率不能代替正确性。",
+      "action": "为 MedSeal 作业/发布/回执建立 MoonBit 状态机与参考模型，枚举提交前后窗口；保存失败 seed 和事件序列，辅以真实进程终止及空间不足验证。",
+      "avoid": "不引入 Raft 集群；不把内存模拟、SIGKILL 成功说成 APFS 断电持久性认证。",
+      "stages": [
+        "W4"
+      ],
+      "repository": "Lfan-ke/raft-moonbit",
+      "official_status": "third",
+      "historical_sha": "31221c15d61b7c1910d0633271e4e5c17559152e",
+      "current_sha": "6fcd6f9bf85d816120390f66d4c0e397ce407d06",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "PORTING.md",
+          "line_start": 1,
+          "line_end": 25,
+          "sha256": "733f409689ff20882053c434822f5f3e60f58cab8a271ba0974d6c037a0d94ca",
+          "url": "https://github.com/Lfan-ke/raft-moonbit/blob/31221c15d61b7c1910d0633271e4e5c17559152e/PORTING.md#L1-L25"
+        },
+        {
+          "path": "core/rawnode_driver.mbt",
+          "line_start": 17,
+          "line_end": 45,
+          "sha256": "adb0243e6876db255247b6f9f0e39933254af24c33951034ad79d822457bdc7d",
+          "url": "https://github.com/Lfan-ke/raft-moonbit/blob/31221c15d61b7c1910d0633271e4e5c17559152e/core/rawnode_driver.mbt#L17-L45"
+        },
+        {
+          "path": "core/chaos_wbtest.mbt",
+          "line_start": 1,
+          "line_end": 87,
+          "sha256": "7975b793243b699f97c85eca3c467ba14005cf700092ba3dc8c5b7a890dcc923",
+          "url": "https://github.com/Lfan-ke/raft-moonbit/blob/31221c15d61b7c1910d0633271e4e5c17559152e/core/chaos_wbtest.mbt#L1-L87"
+        },
+        {
+          "path": "core/sim_check.mbt",
+          "line_start": 1,
+          "line_end": 84,
+          "sha256": "a12a9f2476d585ed008c049b25874c3333c13fe2f200b961f8ce44b305d4d981",
+          "url": "https://github.com/Lfan-ke/raft-moonbit/blob/31221c15d61b7c1910d0633271e4e5c17559152e/core/sim_check.mbt#L1-L84"
+        }
+      ]
+    },
+    {
+      "name": "MoonMarkMind",
+      "theme": "Markdown 模型、可复用渲染包与浏览器应用",
+      "finding": "模型/渲染/应用/CLI 共用规则；验收列出用户能照做的完整路径。导出 HTML 使用 SafeHtml/转义及链接检查，测试包含 script/onerror/javascript 输入。当前网页编辑区和脑图首屏可见，未测试导出。",
+      "lesson": "库和面向实际用户的应用可以同时交付；离线导出也属于安全边界。",
+      "action": "同一 MoonBit 核心驱动 CLI、本地工作台和自包含审核报告；新操作者根据手册完成转换、复核、签名、独立接收。",
+      "avoid": "不照搬脑图外观；不为了 PNG 导出把浏览器依赖带进服务端发布链路；不允许报告加载远程图片。",
+      "stages": [
+        "W5",
+        "W6",
+        "W7"
+      ],
+      "repository": "Xiao-li-He/MoonMarkMind",
+      "official_status": "third",
+      "historical_sha": "fe2568132baf76bab7a3cdfc9d9f0740e0d29044",
+      "current_sha": "fe2568132baf76bab7a3cdfc9d9f0740e0d29044",
+      "evidence_level": "selected-source-reviewed; third-party-tests-not-executed",
+      "evidence": [
+        {
+          "path": "docs/SPEC.md",
+          "line_start": 5,
+          "line_end": 18,
+          "sha256": "5510bdb72a540e8ca678be300c7b9fd321bdce4997dfd554e8320c9895a7deac",
+          "url": "https://github.com/Xiao-li-He/MoonMarkMind/blob/fe2568132baf76bab7a3cdfc9d9f0740e0d29044/docs/SPEC.md#L5-L18"
+        },
+        {
+          "path": "docs/ACCEPTANCE.md",
+          "line_start": 24,
+          "line_end": 41,
+          "sha256": "bc3e86686f0eb263206f7c75100948ad304c8f91fffe5b6dae7e5a95a38cb256",
+          "url": "https://github.com/Xiao-li-He/MoonMarkMind/blob/fe2568132baf76bab7a3cdfc9d9f0740e0d29044/docs/ACCEPTANCE.md#L24-L41"
+        },
+        {
+          "path": "lib/markdown_render/markdown_render.mbt",
+          "line_start": 124,
+          "line_end": 184,
+          "sha256": "d7fa7767950899df7dbf987688abebdcb01d309ac918c001d2820cb4cd205bc8",
+          "url": "https://github.com/Xiao-li-He/MoonMarkMind/blob/fe2568132baf76bab7a3cdfc9d9f0740e0d29044/lib/markdown_render/markdown_render.mbt#L124-L184"
+        },
+        {
+          "path": "packages/markdown_to_html/markdown_to_html_test.mbt",
+          "line_start": 55,
+          "line_end": 65,
+          "sha256": "fc23fd483895052ea0a84f494bec388c35a7773dafae1e7b3777d3fac62900ce",
+          "url": "https://github.com/Xiao-li-He/MoonMarkMind/blob/fe2568132baf76bab7a3cdfc9d9f0740e0d29044/packages/markdown_to_html/markdown_to_html_test.mbt#L55-L65"
+        }
+      ]
+    }
+  ]
+}

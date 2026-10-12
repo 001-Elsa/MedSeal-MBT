@@ -1,0 +1,598 @@
+{
+  "schema": 1,
+  "rules": [
+    {
+      "id": "basic-values",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "basic-values"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.5",
+          "edition": "2025e",
+          "section": "6.2",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part05/sect_6.2.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "basic-values-valid",
+      "negative_case": "basic-values-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "unique-tags",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "unique-tags"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.5",
+          "edition": "2025e",
+          "section": "7.1",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part05/chapter_7.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "unique-tags-valid",
+      "negative_case": "unique-tags-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "known-public-attribute",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "known-public-attribute"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 fail-closed classification",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "known-public-attribute-valid",
+      "negative_case": "known-public-attribute-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "reference-context",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "reference-context"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 referenced SOP item subset",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "reference-context-valid",
+      "negative_case": "reference-context-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "required-type1",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "required-type1"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.3",
+          "edition": "2025e",
+          "section": "C.7; C.8.6 (declared subset)",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/chapter_C.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "required-type1-valid",
+      "negative_case": "required-type1-invalid",
+      "test": "src/conformance/contracts_test.mbt",
+      "type": "1",
+      "tags": [
+        "00080016",
+        "00080018",
+        "00080060",
+        "0020000D",
+        "0020000E",
+        "00280002",
+        "00280004",
+        "00280010",
+        "00280011",
+        "00280100",
+        "00280101",
+        "00280102",
+        "00280103"
+      ]
+    },
+    {
+      "id": "required-type2",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "required-type2"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.3",
+          "edition": "2025e",
+          "section": "C.7; C.8.6 (declared subset)",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/chapter_C.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "required-type2-valid",
+      "negative_case": "required-type2-invalid",
+      "test": "src/conformance/contracts_test.mbt",
+      "type": "2",
+      "tags": [
+        "00100010",
+        "00100020",
+        "00100030",
+        "00100040",
+        "00080020",
+        "00080030",
+        "00080070",
+        "00080090",
+        "00200010",
+        "00080050",
+        "00200011",
+        "00200013"
+      ]
+    },
+    {
+      "id": "nonempty-type1",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "nonempty-type1"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.5",
+          "edition": "2025e",
+          "section": "7.4.1",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part05/chapter_7.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "nonempty-type1-valid",
+      "negative_case": "nonempty-type1-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "supported-sop",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "supported-sop"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 SOP subset",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "supported-sop-valid",
+      "negative_case": "supported-sop-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "pixel-high-bit",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "pixel-high-bit"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.3",
+          "edition": "2025e",
+          "section": "C.7.6.3.1.3",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/chapter_C.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "pixel-high-bit-valid",
+      "negative_case": "pixel-high-bit-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "pixel-sample-bits",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "pixel-sample-bits"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 monochrome 8/16 bit restriction",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "pixel-sample-bits-valid",
+      "negative_case": "pixel-sample-bits-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "pixel-photometric",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "pixel-photometric"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 MONOCHROME1/2 restriction",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "pixel-photometric-valid",
+      "negative_case": "pixel-photometric-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "pixel-single-frame",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "pixel-single-frame"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 single-frame restriction",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "pixel-single-frame-valid",
+      "negative_case": "pixel-single-frame-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "pixel-length",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "pixel-length"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.5",
+          "edition": "2025e",
+          "section": "8.1.1",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part05/chapter_7.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "pixel-length-valid",
+      "negative_case": "pixel-length-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "pixel-representation",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "pixel-representation"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 native raw pixel restriction",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "pixel-representation-valid",
+      "negative_case": "pixel-representation-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "condition-resolved",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "condition-resolved"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "three-valued condition contract",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/rulebook/rulebook.mbt"
+      ],
+      "positive_case": "condition-resolved-valid",
+      "negative_case": "condition-resolved-invalid",
+      "test": "src/conformance/contracts_test.mbt"
+    },
+    {
+      "id": "structure-remove",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "structure-remove"
+      },
+      "action": "remove",
+      "references": [
+        {
+          "document": "PS3.15",
+          "edition": "2025e",
+          "section": "E.1 (MedSeal removal policy)",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part15/chapter_E.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/identity/transform.mbt"
+      ],
+      "positive_case": "structure-remove-valid",
+      "negative_case": "structure-remove-invalid",
+      "test": "tools/verify_rulebook.py"
+    },
+    {
+      "id": "public-error-boundary",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "public-error-boundary"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "public explanation allowlist v1",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "api/explain/explain.mbt"
+      ],
+      "positive_case": "public-error-boundary-valid",
+      "negative_case": "public-error-boundary-invalid",
+      "test": "tools/verify_rulebook.py"
+    },
+    {
+      "id": "policy-priority",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "fixed-contract",
+        "predicate": "policy-priority"
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "MedSeal",
+          "edition": "v1",
+          "section": "strict-v1 descriptive rule compiler",
+          "url": "docs/PUBLIC_API.zh-CN.md",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/policy/compiler.mbt"
+      ],
+      "positive_case": "policy-priority-valid",
+      "negative_case": "policy-priority-invalid",
+      "test": "tools/verify_rulebook.py"
+    },
+    {
+      "id": "required-sop-conditional",
+      "profiles": [
+        "strict-v1"
+      ],
+      "context": "declared subset only; see docs/STRICT_PROFILE.md",
+      "condition": {
+        "kind": "three-valued-sop",
+        "unknown": "block",
+        "sc": {
+          "type1": [
+            "00080064"
+          ],
+          "type2": [
+            "00200020"
+          ]
+        },
+        "ct-mr": {
+          "type1": [
+            "00080008",
+            "00200032",
+            "00200037",
+            "00200052",
+            "00280030"
+          ],
+          "type2": [
+            "00080070",
+            "00180050",
+            "00200012",
+            "00201040"
+          ]
+        },
+        "ct": {
+          "type1": [
+            "00281052",
+            "00281053"
+          ]
+        }
+      },
+      "action": "validate",
+      "references": [
+        {
+          "document": "PS3.3",
+          "edition": "2025e",
+          "section": "C.8.6; C.8.2; C.8.3 (declared subset)",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part03/chapter_C.html",
+          "purpose": "existing declared constraint, not full IOD"
+        }
+      ],
+      "support": "implemented-contract",
+      "implementation": [
+        "src/conformance/profile.mbt"
+      ],
+      "positive_case": "required-sop-conditional-valid",
+      "negative_case": "required-sop-conditional-invalid",
+      "test": "src/conformance/contracts_test.mbt",
+      "type": "declared SOP module subset, not a complete Type 1C/2C matrix"
+    }
+  ]
+}

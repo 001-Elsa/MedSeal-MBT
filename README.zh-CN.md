@@ -1,5 +1,7 @@
 # MedSeal-MBT
 
+获奖项目对标后的 W0 新增[规则账本与公共 API](docs/PUBLIC_API.zh-CN.md)、安全对象解释和合成报告；[W0–W7 升级状态](docs/WINNER_UPGRADE_STATUS.zh-CN.md)逐阶段记录实际完成情况。
+
 MedSeal-MBT 使用 MoonBit 处理 DICOM 元数据。0.2.0 在原有单文件解析、校验、脱敏和二进制写回基础上，新增**多文件患者假名、身份 UID 一致映射、日期间隔保留、引用校验和作业验证**。
 
 目前为验证过的 0.2.0 候选版本，源码已按功能更新到 GitHub。Mooncakes 公共版本仍是 0.1.1，GitLink 同步与新版包发布尚未执行。原深化方案尚未逐项全部完成，已完成范围和差距见[逐项核对表](docs/PLAN_AUDIT.md)。

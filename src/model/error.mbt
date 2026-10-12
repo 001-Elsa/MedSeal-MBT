@@ -23,6 +23,7 @@ pub(all) suberror MedSealError {
   InvalidModel(String)
   PolicyError(String)
   IdentityError(String)
+  RuleViolation(String, String, String, String)
 } derive(Debug)
 
 ///|
@@ -49,6 +50,7 @@ pub fn MedSealError::code(self : MedSealError) -> String {
     InvalidModel(_) => "MEDSEAL-E402"
     PolicyError(_) => "MEDSEAL-E510"
     IdentityError(_) => "MEDSEAL-E520"
+    RuleViolation(_, _, _, _) => "MEDSEAL-E530"
   }
 }
 
@@ -87,6 +89,8 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     InvalidModel(message) => "cannot serialize data model: \{message}"
     PolicyError(message) => "invalid de-identification policy: \{message}"
     IdentityError(message) => "identity consistency check failed: \{message}"
+    RuleViolation(_, _, _, _) =>
+      "declared rule validation failed; use the public explanation API for a safe field location"
   }
 }
 

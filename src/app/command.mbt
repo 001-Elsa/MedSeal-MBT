@@ -7,6 +7,7 @@ pub(all) enum Command {
   Batch(String, String, String?)
   Verify(String)
   Explain(String)
+  ExplainObject(String, String?)
   Help(String?)
   Version
 } derive(Eq, Debug)
@@ -93,6 +94,16 @@ pub fn parse_command(args : Array[String]) -> Command raise @model.MedSealError 
       }
       Explain(args[1])
     }
+    "explain-object" =>
+      if args.length() == 2 {
+        ExplainObject(args[1], None)
+      } else if args.length() == 4 && args[2] == "--policy" {
+        ExplainObject(args[1], Some(args[3]))
+      } else {
+        raise @model.MedSealError::InvalidArgument(
+          "explain-object requires input and optional --policy",
+        )
+      }
     "inspect" | "validate" => {
       if args.length() < 2 {
         raise @model.MedSealError::InvalidArgument(
@@ -171,6 +182,8 @@ pub fn help_text(command : String?) -> String {
       "Usage: medseal batch <input-dir> --output <new-job-dir> [--policy <policy.json>]"
     Some("verify") => "Usage: medseal verify <job-dir>"
     Some("explain") => "Usage: medseal explain <policy.json>"
+    Some("explain-object") =>
+      "Usage: medseal explain-object <input> [--policy <policy.json>] (public allowlisted decisions; no release authorization)"
     Some("inspect") => "Usage: medseal inspect <input> [--json]"
     Some("validate") => "Usage: medseal validate <input> [--json]"
     Some("anonymize") =>

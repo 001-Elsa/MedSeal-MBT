@@ -30,6 +30,7 @@ pub(all) enum Command {
   Batch(String, String, String?)
   Verify(String)
   Explain(String)
+  ExplainObject(String, String?)
   Help(String?)
   Version
 } derive(Eq, @debug.Debug)

@@ -1,0 +1,39 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/authorization"
+
+import {
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub(all) enum AcceptanceContext {
+  Controlled
+  SyntheticTest
+}
+
+pub struct AuthorizedPackage {
+  sha256 : String
+  objects : Int
+  context : String
+}
+
+pub struct ReviewEvidence {
+  sha256 : String
+  objects : Int
+  context : String
+}
+
+pub struct Verifier {
+  // private fields
+}
+pub async fn Verifier::authorized_package(Self, String, String, acceptance? : AcceptanceContext) -> AuthorizedPackage raise @model.MedSealError
+pub async fn Verifier::new(String, String, Array[(String, String)]) -> Self raise @model.MedSealError
+pub async fn Verifier::review(Self, String, String, String) -> ReviewEvidence raise @model.MedSealError
+
+// Type aliases
+
+// Traits

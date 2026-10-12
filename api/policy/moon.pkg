@@ -1,0 +1,3 @@
+import {
+  "001-Elsa/medseal/src/policy" @legacy,
+}

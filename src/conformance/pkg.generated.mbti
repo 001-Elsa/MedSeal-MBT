@@ -8,6 +8,8 @@ import {
 // Values
 pub fn check(@model.DataSet, full_pixels? : Bool) -> Unit raise @model.MedSealError
 
+pub fn check_attribute(@model.DataElement, path? : String) -> Unit raise @model.MedSealError
+
 pub fn check_pixel_length(@model.DataSet, Int) -> Unit raise @model.MedSealError
 
 // Errors

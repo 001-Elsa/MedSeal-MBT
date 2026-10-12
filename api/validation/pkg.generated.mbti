@@ -1,0 +1,30 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/validation"
+
+import {
+  "001-Elsa/medseal/src/identity",
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+pub fn convert(ValidatedObject, @identity.Context) -> ConvertedObject raise @model.MedSealError
+
+pub fn validate(Bytes) -> ValidatedObject raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub struct ConvertedObject {
+  // private fields
+}
+pub fn ConvertedObject::private_bytes(Self) -> Bytes
+pub fn ConvertedObject::public_decisions(Self) -> Json
+
+pub struct ValidatedObject {
+  // private fields
+}
+pub fn ValidatedObject::private_dataset(Self) -> @model.DataSet raise @model.MedSealError
+
+// Type aliases
+
+// Traits

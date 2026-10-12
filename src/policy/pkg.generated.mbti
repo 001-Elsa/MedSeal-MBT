@@ -52,6 +52,8 @@ pub fn Policy::digest(Self) -> String
 pub fn Policy::explain(Self) -> String
 pub fn Policy::name(Self) -> String
 pub fn Policy::path_action(Self, String, String, @model.DataSet) -> (String, Action)?
+pub fn Policy::public_conditions(Self, @model.DataSet, complete? : Bool) -> Json
+pub fn Policy::public_explain(Self) -> Json
 
 pub(all) struct Rule {
   tag : @model.Tag

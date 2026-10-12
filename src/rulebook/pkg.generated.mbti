@@ -1,0 +1,71 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/rulebook"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn accepts_vm(@model.Tag, Int) -> Bool
+
+pub fn accepts_vr(@model.Tag, @model.Vr) -> Bool
+
+pub fn contract_evidence(String) -> String
+
+pub fn contract_source(String) -> String
+
+pub fn decision(@model.Tag, String, String, custom? : Bool) -> RuleDecision raise @model.MedSealError
+
+pub let digest : String
+
+pub fn known_contract(String) -> Bool
+
+pub fn lookup(@model.Tag) -> Entry?
+
+pub fn presence(@model.DataSet, @model.Tag, complete? : Bool) -> ConditionOutcome
+
+pub fn require_condition(ConditionOutcome) -> Bool raise @model.MedSealError
+
+pub fn safe_path(String) -> Bool
+
+pub fn sop_condition(@model.DataSet, String) -> ConditionOutcome
+
+// Errors
+
+// Types and methods
+pub(all) enum ConditionOutcome {
+  Met
+  NotMet
+  Unknown
+} derive(Eq, @debug.Debug)
+pub fn ConditionOutcome::both(Self, Self) -> Self
+pub fn ConditionOutcome::either(Self, Self) -> Self
+pub fn ConditionOutcome::equal(Self, Self) -> Bool
+pub fn ConditionOutcome::name(Self) -> String
+pub fn ConditionOutcome::not_equal(Self, Self) -> Bool
+pub fn ConditionOutcome::to_repr(Self) -> @debug.Repr
+
+pub struct Entry {
+  id : String
+  tag : @model.Tag
+  vr : String
+  vm : String
+  role : String
+  action : String
+  confidentiality_table : Bool
+}
+
+pub struct RuleDecision {
+  path : String
+  rule_id : String
+  action : String
+  condition : ConditionOutcome
+  source : String
+  reason : String
+}
+pub fn RuleDecision::to_json(Self) -> Json
+
+// Type aliases
+
+// Traits

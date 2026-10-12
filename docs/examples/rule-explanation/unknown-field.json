@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "status": "blocked",
+  "release_authorized": false,
+  "issue": {
+    "code": "MEDSEAL-E530",
+    "stage": "classification",
+    "rule_id": "known-public-attribute",
+    "path": "dataset/7776,0001",
+    "condition": "met",
+    "source": "MedSeal strict-v1 fail-closed classification",
+    "evidence_id": "known-public-attribute-invalid"
+  }
+}

@@ -1,4 +1,7 @@
 import {
+  "001-Elsa/medseal/api/validation" @typed,
+  "001-Elsa/medseal/api/explain",
+  "001-Elsa/medseal/api/authorization",
   "001-Elsa/medseal/src/pixel_review",
   "moonbitlang/async",
   "001-Elsa/medseal/src/batch",

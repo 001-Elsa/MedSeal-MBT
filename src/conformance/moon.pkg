@@ -1,5 +1,6 @@
 import {
   "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/rulebook",
   "001-Elsa/medseal/src/dictionary",
   "001-Elsa/medseal/src/validator",
   "moonbitlang/core/string",
