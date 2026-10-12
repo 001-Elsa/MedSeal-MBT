@@ -34,9 +34,16 @@ def build(destination, wheels):
     shutil.copytree(REPO / 'examples', destination / 'examples', ignore=shutil.ignore_patterns('*.mbt', '*.mbti', 'moon.pkg'))
     shutil.copytree(REPO / 'resources/licenses', destination / 'licenses')
     shutil.copytree(REPO / 'resources/rules', destination / 'rules')
-    shutil.copyfile(REPO.parent / 'moonbit工具链/lib/core/LICENSE', destination / 'licenses/moonbit-core-runtime-LICENSE')
+    core_licenses = [REPO.parent / 'moonbit工具链/lib/core/LICENSE', Path(os.environ.get('MOON_HOME', str(Path.home() / '.moon'))) / 'lib/core/LICENSE']
+    core_license = next((path for path in core_licenses if path.is_file()), None)
+    if core_license is None:
+        raise ValueError('installed-MoonBit-core-license-required')
+    shutil.copyfile(core_license, destination / 'licenses/moonbit-core-runtime-LICENSE')
     for source, name in [(REPO / '.mooncakes/moonbitlang/async/LICENSE', 'moonbit-async-LICENSE'), (REPO / '.mooncakes/gmlewis/sha256/LICENSE', 'gmlewis-sha256-LICENSE'), (REPO / '.mooncakes/gmlewis/base64/LICENSE', 'gmlewis-base64-LICENSE')]:
         shutil.copyfile(source, destination / 'licenses' / name)
+    # x 0.5.5 ships license headers rather than a root LICENSE. Retain the complete
+    # Apache-2.0 terms shared by these dependencies and an explicit attribution.
+    (destination / 'licenses/NOTICE.dependencies.md').write_text('moonbitlang/x 0.5.5: Copyright International Digital Economy Academy. Apache-2.0; full terms in moonbit-async-LICENSE. Source: https://github.com/moonbitlang/x\n')
     shutil.copytree(wheels, destination / 'wheels')
     versions = {'cryptography': '50.0.2', 'cffi': '2.1.1', 'pycparser': '3.0'}
     requirement_lines, components = [], []

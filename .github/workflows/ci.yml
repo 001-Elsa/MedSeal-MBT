@@ -49,6 +49,11 @@ jobs:
         run: |
           python -m pip install pydicom==3.0.1 -r requirements-enterprise.txt
           python tools/verify_with_pydicom.py
+      - name: Offline distribution regression
+        if: runner.os != 'Windows'
+        run: |
+          python -m pip download --only-binary=:all: --dest tmp/enterprise-wheels -r requirements-enterprise.txt
+          python tools/verify_distribution.py --wheels tmp/enterprise-wheels --record tmp/offline-distribution.json
       - name: Persistent identity regression
         if: runner.os != 'Windows'
         run: |
