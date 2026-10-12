@@ -10,7 +10,7 @@ import {
 }
 
 // Values
-pub async fn plan(String, @policy.Policy, provider? : @identity_store.Provider?) -> Job raise @model.MedSealError
+pub async fn plan(String, @policy.Policy, provider? : @identity_store.Provider?, streamed? : Bool) -> Job raise @model.MedSealError
 
 pub async fn run(String, String, @policy.Policy, provider? : @identity_store.Provider?) -> String raise @model.MedSealError
 

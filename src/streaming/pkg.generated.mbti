@@ -1,0 +1,20 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/streaming"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/parser",
+}
+
+// Values
+pub async fn inspect(String) -> @parser.PixelSpan raise @model.MedSealError
+
+pub async fn produce(String, String, @parser.PixelSpan, @model.DataSet, reuse? : Bool) -> String raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

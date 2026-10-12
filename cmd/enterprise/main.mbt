@@ -19,7 +19,12 @@ async fn run() -> Unit {
       store: args[6],
       source_domain: args[7],
     }
-    let job = @batch.plan(args[1], policy, provider=Some(provider))
+    let job = @batch.plan(
+      args[1],
+      policy,
+      provider=Some(provider),
+      streamed=true,
+    )
     let resume_stage = if args.length() == 10 {
       Some(@batch.ResumeStage::{ path: args[8], token: args[9], })
     } else {

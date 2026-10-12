@@ -7,6 +7,12 @@ pub fn sha256(Bytes) -> String
 // Errors
 
 // Types and methods
+pub struct StreamDigest {
+  // private fields
+}
+pub fn StreamDigest::finish(Self) -> String
+pub fn StreamDigest::new() -> Self
+pub fn StreamDigest::update(Self, BytesView) -> Unit
 
 // Type aliases
 

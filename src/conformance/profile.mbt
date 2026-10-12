@@ -279,3 +279,27 @@ pub fn check(
     }
   }
 }
+
+///|
+/// Image payload dimension check without claiming pixels were decoded or reviewed.
+pub fn check_pixel_length(
+  dataset : @model.DataSet,
+  length : Int,
+) -> Unit raise @model.MedSealError {
+  check(dataset)
+  let number = fn(value : String) -> Int64 raise @model.MedSealError {
+    match dataset.find(tag(value)) {
+      Some({ value: @model.ElementValue::UnsignedShort([n]), .. }) =>
+        n.to_int64()
+      _ => raise @model.MedSealError::InvalidModel("missing image number")
+    }
+  }
+  let expected = number("00280010") *
+    number("00280011") *
+    (number("00280100") / 8L)
+  if length.to_int64() != expected + expected % 2L {
+    raise @model.MedSealError::InvalidModel(
+      "streamed payload differs from declared image dimensions",
+    )
+  }
+}

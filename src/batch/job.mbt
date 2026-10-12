@@ -8,6 +8,7 @@ pub struct Job {
   priv metadata : Array[@model.DataSet]
   priv context : @identity.Context
   priv policy : @policy.Policy
+  priv streamed : Bool
   priv mut consumed : Bool
   report : @verification.CollectionReport
 }
@@ -85,10 +86,16 @@ pub async fn plan(
   input : String,
   policy : @policy.Policy,
   provider? : @identity_store.Provider? = None,
+  streamed? : Bool = false,
 ) -> Job raise @model.MedSealError {
   if @storage.kind(input) != @async_fs.FileKind::Directory {
     raise @model.MedSealError::InvalidArgument(
       "input must be a directory, not a link",
+    )
+  }
+  if streamed && !policy.strict_metadata {
+    raise @model.MedSealError::InvalidArgument(
+      "streaming requires strict profile",
     )
   }
   let root = @storage.canonical(input)
@@ -101,10 +108,16 @@ pub async fn plan(
   let mut total = 0
   for path in paths {
     let before = @storage.snapshot(path)
-    let bytes = @storage.read(path)
-    let parsed = @parser.parse(bytes)
-    if policy.strict_metadata {
-      @conformance.check(parsed.dataset, full_pixels=true)
+    let (parsed, hash) = if streamed {
+      let span = @streaming.inspect(path)
+      (span.parsed, @storage.file_digest(path))
+    } else {
+      let bytes = @storage.read(path)
+      let parsed = @parser.parse(bytes)
+      if policy.strict_metadata {
+        @conformance.check(parsed.dataset, full_pixels=true)
+      }
+      (parsed, @checksum.sha256(bytes))
     }
     check_meta(parsed)
     let after = @storage.snapshot(path)
@@ -121,7 +134,7 @@ pub async fn plan(
     total = total + size
     metadata.push(stripped)
     snapshots.push(after)
-    hashes.push(@checksum.sha256(bytes))
+    hashes.push(hash)
     offsets.push(@storage.date_offset(policy.date_shift_days))
   }
   let report = @verification.check(
@@ -149,6 +162,7 @@ pub async fn plan(
     metadata,
     context,
     policy,
+    streamed,
     consumed: false,
     report,
   }
@@ -289,11 +303,17 @@ pub async fn Job::execute(
     if @storage.snapshot(path) != self.snapshots[index] {
       raise @model.MedSealError::IoError("input changed after planning")
     }
-    let source = @storage.read(path)
-    if @checksum.sha256(source) != self.hashes[index] {
+    let source_path = path
+    let (parsed, source_hash, span) = if self.streamed {
+      let span = @streaming.inspect(path)
+      (span.parsed, @storage.file_digest(path), Some(span))
+    } else {
+      let source = @storage.read(path)
+      (@parser.parse(source), @checksum.sha256(source), None)
+    }
+    if source_hash != self.hashes[index] {
       raise @model.MedSealError::IoError("input bytes changed after planning")
     }
-    let parsed = @parser.parse(source)
     check_meta(parsed)
     if !@verification.same_values(
         @verification.metadata_only(parsed.dataset),
@@ -304,15 +324,29 @@ pub async fn Job::execute(
       )
     }
     let result = self.context.apply(parsed.dataset)
-    let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
     let id = "object-\{index + 1}"
     let path = join(stage, "\{id}.dcm")
-    if resume_stage is Some(_) {
-      checkpoint_file(path, bytes)
-    } else {
-      @storage.write_new(path, bytes, faults~)
+    let (output_hash, reparsed) = match span {
+      Some(span) => {
+        let hash = @streaming.produce(
+          source_path,
+          path,
+          span,
+          result.dataset,
+          reuse=resume_stage is Some(_),
+        )
+        (hash, @streaming.inspect(path).parsed)
+      }
+      None => {
+        let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
+        if resume_stage is Some(_) {
+          checkpoint_file(path, bytes)
+        } else {
+          @storage.write_new(path, bytes, faults~)
+        }
+        (@checksum.sha256(bytes), @parser.parse(@storage.read(path)))
+      }
     }
-    let reparsed = @parser.parse(@storage.read(path))
     check_meta(reparsed)
     if !@verification.same_values(result.dataset, reparsed.dataset) ||
       !@verification.clean_private(reparsed.dataset) {
@@ -324,7 +358,7 @@ pub async fn Job::execute(
     if self.policy.strict_metadata {
       @conformance.check(
         reparsed.dataset.remove(@model.Tag::new(0x0012U, 0x0063U)),
-        full_pixels=true,
+        full_pixels=!self.streamed,
       )
     }
     let audit_bytes = @utf8.encode(audit(id, result, self.policy))
@@ -341,7 +375,7 @@ pub async fn Job::execute(
           Json::object(
             Map::from_array([
               ("object", Json::string(id)),
-              ("sha256", Json::string(@checksum.sha256(bytes))),
+              ("sha256", Json::string(output_hash)),
               ("audit_sha256", Json::string(@checksum.sha256(audit_bytes))),
               ("policy_sha256", Json::string(self.policy.digest())),
             ]),
@@ -358,7 +392,7 @@ pub async fn Job::execute(
       Json::object(
         Map::from_array([
           ("file", Json::string("\{id}.dcm")),
-          ("sha256", Json::string(@checksum.sha256(bytes))),
+          ("sha256", Json::string(output_hash)),
           ("audit_sha256", Json::string(@checksum.sha256(audit_bytes))),
         ]),
       ),
@@ -375,6 +409,10 @@ pub async fn Job::execute(
     Map::from_array([
       ("version", Json::number(1.0)),
       ("tool_version", Json::string(@model.medseal_version)),
+      (
+        "execution_path",
+        Json::string(if self.streamed { "streaming-v1" } else { "buffered-v1" }),
+      ),
       ("status", Json::string("complete")),
       ("conversion_status", Json::string("metadata-subset-transformed")),
       ("integrity_status", Json::string("verified")),
@@ -424,7 +462,7 @@ pub async fn Job::execute(
   }
   for index, path in self.paths {
     if @storage.snapshot(path) != self.snapshots[index] ||
-      @checksum.sha256(@storage.read(path)) != self.hashes[index] {
+      @storage.file_digest(path) != self.hashes[index] {
       raise @model.MedSealError::IoError("input changed during execution")
     }
   }

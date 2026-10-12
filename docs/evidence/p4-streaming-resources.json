@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "machine": "arm64",
+  "fixture": "synthetic monochrome SC, terminal native Pixel Data",
+  "binary_sha256": "5c3eb82e4af6d9fbfebce5fcc35b04db9c84a42903a2a5a53e190244152e63d3",
+  "execution_path": "streaming-v1",
+  "copy_chunk_bytes": 1048576,
+  "metadata_prefix_bytes": 2097152,
+  "workloads": [
+    {
+      "payload_mib": 1,
+      "objects": 1,
+      "runs": [
+        {
+          "seconds": 0.807864,
+          "peak_rss_bytes": 30457856,
+          "published_bytes": 1055074
+        },
+        {
+          "seconds": 0.4844,
+          "peak_rss_bytes": 30343168,
+          "published_bytes": 1055074
+        },
+        {
+          "seconds": 0.417041,
+          "peak_rss_bytes": 30195712,
+          "published_bytes": 1055074
+        },
+        {
+          "seconds": 0.454274,
+          "peak_rss_bytes": 30375936,
+          "published_bytes": 1055074
+        },
+        {
+          "seconds": 0.371709,
+          "peak_rss_bytes": 30294016,
+          "published_bytes": 1055074
+        }
+      ],
+      "max_rss_bytes": 30457856,
+      "median_seconds": 0.454274
+    },
+    {
+      "payload_mib": 16,
+      "objects": 1,
+      "runs": [
+        {
+          "seconds": 2.288603,
+          "peak_rss_bytes": 30310400,
+          "published_bytes": 16783714
+        },
+        {
+          "seconds": 2.238625,
+          "peak_rss_bytes": 30261248,
+          "published_bytes": 16783714
+        },
+        {
+          "seconds": 2.159169,
+          "peak_rss_bytes": 30261248,
+          "published_bytes": 16783714
+        },
+        {
+          "seconds": 2.172471,
+          "peak_rss_bytes": 30130176,
+          "published_bytes": 16783714
+        },
+        {
+          "seconds": 2.129894,
+          "peak_rss_bytes": 30195712,
+          "published_bytes": 16783714
+        }
+      ],
+      "max_rss_bytes": 30310400,
+      "median_seconds": 2.172471
+    },
+    {
+      "payload_mib": 64,
+      "objects": 1,
+      "runs": [
+        {
+          "seconds": 8.32044,
+          "peak_rss_bytes": 30097408,
+          "published_bytes": 67115360
+        },
+        {
+          "seconds": 8.230067,
+          "peak_rss_bytes": 30244864,
+          "published_bytes": 67115360
+        },
+        {
+          "seconds": 8.233244,
+          "peak_rss_bytes": 29868032,
+          "published_bytes": 67115360
+        },
+        {
+          "seconds": 8.314464,
+          "peak_rss_bytes": 29999104,
+          "published_bytes": 67115360
+        },
+        {
+          "seconds": 8.404732,
+          "peak_rss_bytes": 30146560,
+          "published_bytes": 67115360
+        }
+      ],
+      "max_rss_bytes": 30244864,
+      "median_seconds": 8.314464
+    },
+    {
+      "payload_mib": 120,
+      "objects": 1,
+      "runs": [
+        {
+          "seconds": 15.585337,
+          "peak_rss_bytes": 30113792,
+          "published_bytes": 125835618
+        },
+        {
+          "seconds": 15.786888,
+          "peak_rss_bytes": 30097408,
+          "published_bytes": 125835618
+        },
+        {
+          "seconds": 15.769728,
+          "peak_rss_bytes": 30212096,
+          "published_bytes": 125835618
+        },
+        {
+          "seconds": 15.802495,
+          "peak_rss_bytes": 29949952,
+          "published_bytes": 125835618
+        },
+        {
+          "seconds": 15.7462,
+          "peak_rss_bytes": 30146560,
+          "published_bytes": 125835618
+        }
+      ],
+      "max_rss_bytes": 30212096,
+      "median_seconds": 15.769728
+    },
+    {
+      "objects": 1000,
+      "payload_mib": null,
+      "runs": [
+        {
+          "seconds": 6.455778,
+          "peak_rss_bytes": 36470784,
+          "published_bytes": 6206203
+        }
+      ]
+    },
+    {
+      "objects": 10000,
+      "payload_mib": null,
+      "runs": [
+        {
+          "seconds": 88.914825,
+          "peak_rss_bytes": 172244992,
+          "published_bytes": 62084284
+        }
+      ]
+    }
+  ],
+  "note": "Native child peak RSS (includes adapter child high-water report where OS does); Python generation and independent readback excluded. Count workloads use small pixels, not 32GiB real data; no recipient/power-loss certification."
+}

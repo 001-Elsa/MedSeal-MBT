@@ -11,6 +11,8 @@ pub fn check_preamble(Bytes) -> Unit raise @model.MedSealError
 
 pub let explicit_vr_little_endian_uid : String
 
+pub fn index_pixel_prefix(Bytes, Int64) -> PixelSpan raise @model.MedSealError
+
 pub let max_sequence_depth : Int
 
 pub fn parse(Bytes) -> ParsedFile raise @model.MedSealError
@@ -30,6 +32,13 @@ pub(all) struct ParsedFile {
 pub fn ParsedFile::equal(Self, Self) -> Bool
 pub fn ParsedFile::not_equal(Self, Self) -> Bool
 pub fn ParsedFile::to_repr(Self) -> @debug.Repr
+
+pub(all) struct PixelSpan {
+  parsed : ParsedFile
+  offset : Int
+  length : Int
+  vr : @model.Vr
+}
 
 // Type aliases
 

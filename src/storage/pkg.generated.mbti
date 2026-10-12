@@ -13,6 +13,8 @@ pub fn date_offset(Int) -> Int raise @model.MedSealError
 
 pub async fn exists(String) -> Bool raise @model.MedSealError
 
+pub async fn file_digest(String) -> String raise @model.MedSealError
+
 pub async fn kind(String) -> @fs.FileKind raise @model.MedSealError
 
 pub async fn list(String) -> Array[String] raise @model.MedSealError
@@ -27,7 +29,11 @@ pub async fn publish(String, String, replace? : Bool, faults? : Faults?) -> Unit
 
 pub async fn read(String, limit? : Int) -> Bytes raise @model.MedSealError
 
+pub async fn read_prefix(String, Int) -> Bytes raise @model.MedSealError
+
 pub async fn snapshot(String) -> (Int64, (Int64, Int)) raise @model.MedSealError
+
+pub async fn stream_range(String, Int, Int, prefix? : Bytes, output? : String?) -> String raise @model.MedSealError
 
 pub fn token(size? : Int) -> String raise @model.MedSealError
 

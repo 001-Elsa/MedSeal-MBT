@@ -56,6 +56,8 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
       "strict dictionary version mismatch",
     )
   }
+  let streamed = manifest.get("execution_path") ==
+    Some(Json::string("streaming-v1"))
   let external = match manifest.get("allow_external_references") {
     Some(Json::True) => true
     Some(Json::False) => false
@@ -88,8 +90,13 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
         "object filename is not canonical",
       )
     }
-    let bytes = @storage.read(join(root, filename))
-    if @checksum.sha256(bytes) != json_string(fields.get("sha256")) {
+    let path = join(root, filename)
+    let parsed = if streamed {
+      @streaming.inspect(path).parsed
+    } else {
+      @parser.parse(@storage.read(path))
+    }
+    if @storage.file_digest(path) != json_string(fields.get("sha256")) {
       raise @model.MedSealError::OutputVerificationFailed(
         "DICOM checksum mismatch",
       )
@@ -117,7 +124,6 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
         "audit and manifest policy differ",
       )
     }
-    let parsed = @parser.parse(bytes)
     check_meta(parsed)
     if parsed.preamble != Bytes::make(128, b'\x00') ||
       !@verification.clean_private(parsed.dataset) ||
@@ -130,7 +136,7 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
     if profile == "strict-v1" {
       @conformance.check(
         parsed.dataset.remove(@model.Tag::new(0x0012U, 0x0063U)),
-        full_pixels=true,
+        full_pixels=!streamed,
       )
     }
     for element in parsed.file_meta.elements {

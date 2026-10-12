@@ -1,4 +1,5 @@
 import {
+  "001-Elsa/medseal/src/streaming",
   "001-Elsa/medseal/src/inventory",
   "001-Elsa/medseal/src/conformance",
   "001-Elsa/medseal/src/dictionary",
