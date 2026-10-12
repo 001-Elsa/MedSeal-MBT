@@ -69,6 +69,12 @@ jobs:
           python tools/verify_risk_gate.py
           python tools/verify_attestation.py
           python tools/verify_pilot.py --record tmp/p7-ci.json
+      - name: W4 state, fault and parser fuzz acceptance
+        if: runner.os != 'Windows'
+        run: python tools/verify_w4.py
+      - name: W5 loopback workbench acceptance
+        if: runner.os != 'Windows'
+        run: python tools/verify_workbench.py
       - name: Package
         run: moon package
       - name: Upload acceptance evidence
