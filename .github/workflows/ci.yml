@@ -78,6 +78,9 @@ jobs:
       - name: W6 archive consumer acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_consumer.py tmp/w6-consumer-ci.json
+      - name: W7 operator rehearsal and field-boundary acceptance
+        if: runner.os != 'Windows'
+        run: python tools/verify_w7_rehearsal.py --record tmp/w7-rehearsal-ci.json
       - name: Package
         run: moon package
       - name: Upload acceptance evidence
