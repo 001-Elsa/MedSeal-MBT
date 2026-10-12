@@ -56,5 +56,6 @@ jobs:
           python tools/verify_recovery.py
           python tools/verify_risk_gate.py
           python tools/verify_attestation.py
+          python tools/verify_pilot.py --record tmp/p7-ci.json
       - name: Package
         run: moon package

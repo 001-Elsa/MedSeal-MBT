@@ -38,6 +38,9 @@ def install(source, destination, python, expected_manifest):
     checked = subprocess.run([str(python), '-I', '-c', 'import sys;raise SystemExit(0 if sys.version_info[:2]==(3,12) else 1)'], capture_output=True)
     if checked.returncode or os.name != 'posix':
         raise ValueError('Python-3.12-on-POSIX-required')
+    native = subprocess.run([str(source / 'bin/medseal'), 'version'], capture_output=True)
+    if native.returncode:
+        raise ValueError('native-platform-preflight-failed')
     destination = Path(destination)
     destination.mkdir(mode=0o700)
     try:

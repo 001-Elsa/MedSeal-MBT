@@ -4,6 +4,12 @@ MedSeal-MBT 使用 MoonBit 处理 DICOM 元数据。0.2.0 在原有单文件解�
 
 目前为验证过的 0.2.0 候选版本，源码已按功能更新到 GitHub。Mooncakes 公共版本仍是 0.1.1，GitLink 同步与新版包发布尚未执行。原深化方案尚未逐项全部完成，已完成范围和差距见[逐项核对表](docs/PLAN_AUDIT.md)。
 
+## 企业工程预览
+
+P0–P7 已推进到离线安装和合成闭环演练。企业入口提供持久化身份、封存恢复、原生像素流式处理、逐对象审核、签名及独立接收验证；合成120MiB载荷峰值约29MiB，10,000小对象约164MiB。核心转换仍由 MoonBit 实现，私有事务/密码适配使用 Python3.12。
+
+当前不是生产1.0，完整CT/MR语义、历史外部引用、重复对象去重以及真实来源/接收方验收仍有未完成门槛。[实施与证据](docs/ENTERPRISE_STATUS.md) · [操作恢复手册](docs/OPERATIONS.zh-CN.md) · [现场验收表](docs/FIELD_ACCEPTANCE.zh-CN.md) · [流式支持范围](docs/STREAMING.md)。原库/CLI兼容路径继续保留；企业预览的受控部署目前是POSIX，本机离线安装认证为macOS ARM64。
+
 ## 直接运行
 
 当前工作区已安装独立工具链。在项目目录执行：

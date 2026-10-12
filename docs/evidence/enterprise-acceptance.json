@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "baseline": "9562904",
+  "scope": "controlled POSIX engineering preview, synthetic SC acceptance; core0.2.0",
+  "full_roadmap_complete": false,
+  "phases": [
+    {
+      "phase": "P0",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P1",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P2",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P3",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P4",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P5",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P6",
+      "core_implemented": true,
+      "full_gate_complete": false
+    },
+    {
+      "phase": "P7",
+      "core_implemented": true,
+      "full_gate_complete": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "E01",
+      "status": "passed_declared_scope",
+      "evidence": [
+        "p0-system-failures.json"
+      ],
+      "assessment": "All ordinary files discovered; extensionless Part10 candidates tested."
+    },
+    {
+      "id": "E02",
+      "status": "passed_declared_scope",
+      "evidence": [
+        "p3-recovery.json"
+      ],
+      "assessment": "Sealed inputs used; original changes do not affect resumed job."
+    },
+    {
+      "id": "E03",
+      "status": "partial",
+      "evidence": [
+        "p0-system-failures.json",
+        "p6-attestation.json"
+      ],
+      "assessment": "Local POSIX no-replace races; hostile parent substitution and Windows handle guarantees incomplete."
+    },
+    {
+      "id": "E04",
+      "status": "partial",
+      "evidence": [
+        "p0-real-enospc.json",
+        "p0-system-failures.json"
+      ],
+      "assessment": "Actual ENOSPC/EFBIG and permissions; exhaustive budgets/entropy/power boundaries outstanding."
+    },
+    {
+      "id": "E05",
+      "status": "partial",
+      "evidence": [
+        "p1-strict-iod.json",
+        "p5-risk-gate.json"
+      ],
+      "assessment": "Synthetic markers removed and unsupported public fields blocked; complete rule provenance coverage outstanding."
+    },
+    {
+      "id": "E06",
+      "status": "partial",
+      "evidence": [
+        "p1-strict-iod.json"
+      ],
+      "assessment": "Declared VR/VM/Type subset and policy conflicts; full CT/MR conditions outstanding."
+    },
+    {
+      "id": "E07",
+      "status": "partial",
+      "evidence": [
+        "p2-persistent-identity.json",
+        "p7-synthetic-pilot.json"
+      ],
+      "assessment": "Stable three batches/new followups; exact-repeat conversion dedup and historical references incomplete."
+    },
+    {
+      "id": "E08",
+      "status": "passed_declared_scope",
+      "evidence": [
+        "p2-persistent-identity.json"
+      ],
+      "assessment": "Source/project isolation and original-content/owner/patient conflict rejection tested."
+    },
+    {
+      "id": "E09",
+      "status": "partial",
+      "evidence": [
+        "p2-persistent-identity.json",
+        "p7-synthetic-pilot.json"
+      ],
+      "assessment": "Controlled POSIX local-key rotation/backup restore; institutional KMS and physical disaster procedures not certified."
+    },
+    {
+      "id": "E10",
+      "status": "partial",
+      "evidence": [
+        "p3-recovery.json",
+        "p6-attestation.json"
+      ],
+      "assessment": "Object, conversion rename and signed-publication rename SIGKILL windows; not every system crash window/power loss."
+    },
+    {
+      "id": "E11",
+      "status": "partial",
+      "evidence": [
+        "p4-streaming-resources.json"
+      ],
+      "assessment": "1000/10000 small objects and120MiB native pixels measured; representative32GiB real workload absent."
+    },
+    {
+      "id": "E12",
+      "status": "requires_field",
+      "evidence": [
+        "p4-streaming-resources.json"
+      ],
+      "assessment": "Terminal native ExplicitVR profile only; new formats/recipient source certification not provided."
+    },
+    {
+      "id": "E13",
+      "status": "partial",
+      "evidence": [
+        "p5-risk-gate.json"
+      ],
+      "assessment": "SC/flags/Overlay risks require review; multiframe rejects; actual human quality/privacy evidence absent."
+    },
+    {
+      "id": "E14",
+      "status": "passed_declared_scope",
+      "evidence": [
+        "p5-risk-gate.json",
+        "p6-attestation.json"
+      ],
+      "assessment": "Stale/unauthorized review and simultaneous data+manifest tamper rejected under trusted-key schema."
+    },
+    {
+      "id": "E15",
+      "status": "passed_declared_scope",
+      "evidence": [
+        "p6-attestation.json"
+      ],
+      "assessment": "Controlled-directory partial-copy and receipt retry; no network/PACS acceptance claim."
+    },
+    {
+      "id": "E16",
+      "status": "requires_field",
+      "evidence": [
+        "p6-offline-install.json",
+        "p7-synthetic-pilot.json"
+      ],
+      "assessment": "Fresh isolated macOS ARM64 install and synthetic CLI pilot; real operators/receiver usability signoff absent."
+    }
+  ]
+}

@@ -55,7 +55,8 @@ def build(destination, wheels):
         components.append({'type': 'library', 'name': name, 'version': version, 'scope': 'required'})
     revision = subprocess.run(['git','rev-parse','HEAD'], cwd=REPO, capture_output=True, text=True, check=True).stdout.strip()
     (destination / 'sbom.cdx.json').write_bytes(canonical({'bomFormat': 'CycloneDX', 'specVersion': '1.6', 'version': 1, 'metadata': {'component': {'type': 'application','name': 'MedSeal-MBT enterprise preview','version': '0.2.0+preview.' + revision[:7]}}, 'components': components}))
-    manifest = {'schema': 1, 'platform': platform.system(), 'machine': platform.machine(), 'git_base_revision': revision, 'release_status': 'engineering-preview',
+    (destination / 'README.md').write_text('# MedSeal enterprise engineering preview\n\nVerify the archive and distribution manifest digests from a trusted channel before extraction/execution. Python3.12 is required. Run tools/install_enterprise.py with --source, --destination (new directory), --python and --expected-manifest-sha256. The installer uses pinned wheels offline.\n\nStart with docs/OPERATIONS.zh-CN.md and docs/ENTERPRISE_STATUS.md. Signed data packages are verified independently by tools/verify_delivery.py with an out-of-band trusted key. This preview has synthetic acceptance evidence and is not a clinical production1.0 release.\n')
+    manifest = {'schema': 1, 'platform': platform.system(), 'machine': platform.machine(), 'tested_host': platform.platform(), 'git_base_revision': revision, 'release_status': 'engineering-preview',
                 'python_required': '3.12', 'files': [{'file': str(path.relative_to(destination)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} for path in sorted(destination.rglob('*')) if path.is_file()]}
     encoded = canonical(manifest)
     (destination / 'distribution.json').write_bytes(encoded)

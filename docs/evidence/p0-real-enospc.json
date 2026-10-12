@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "fixture": "disposable32MiB HFS+ disk image and synthetic16MiB SC",
+  "kernel_errno": "ENOSPC",
+  "control_conversion_exit_code": 0,
+  "conversion_exit_code": 5,
+  "final_output_exists": false,
+  "scope": "actual kernel no-space rejection; not power-loss/APFS/Windows certification"
+}
