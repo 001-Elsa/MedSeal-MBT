@@ -136,7 +136,8 @@
       "id": "E11",
       "status": "partial",
       "evidence": [
-        "p4-streaming-resources.json"
+        "p4-streaming-resources.json",
+        "final-streaming-resources.json"
       ],
       "assessment": "1000/10000 small objects and120MiB native pixels measured; representative32GiB real workload absent."
     },
@@ -144,7 +145,8 @@
       "id": "E12",
       "status": "requires_field",
       "evidence": [
-        "p4-streaming-resources.json"
+        "p4-streaming-resources.json",
+        "final-streaming-resources.json"
       ],
       "assessment": "Terminal native ExplicitVR profile only; new formats/recipient source certification not provided."
     },

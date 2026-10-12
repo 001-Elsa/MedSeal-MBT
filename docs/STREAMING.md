@@ -32,3 +32,7 @@ pydicom pixel readback and records binary/platform digests. See
 small synthetic pixels; they do not certify32GiB workloads, recipient usability,
 concurrent disk reservations, filesystem quotas or real-vendor compatibility.
 Physical power-loss and network-filesystem guarantees remain out of scope.
+
+Public conversion manifests have an8MiB read/write budget, sized for10,000 objects
+including per-object risk IDs. Signed release inventories retain a4MiB budget;
+audits retain16MiB. Producers and independent consumers enforce the same bounds.

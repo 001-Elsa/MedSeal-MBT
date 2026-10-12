@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "machine": "arm64",
+  "fixture": "synthetic monochrome SC, terminal native Pixel Data",
+  "binary_sha256": "6889defd7ce1a2b9f778dbe2e85416c37bd86e4a1539d200b17b8b77387795bb",
+  "execution_path": "streaming-v1",
+  "copy_chunk_bytes": 1048576,
+  "metadata_prefix_bytes": 2097152,
+  "workloads": [
+    {
+      "payload_mib": 120,
+      "objects": 1,
+      "runs": [
+        {
+          "seconds": 15.875966,
+          "peak_rss_bytes": 30261248,
+          "published_bytes": 125836046
+        }
+      ],
+      "max_rss_bytes": 30261248,
+      "median_seconds": 15.875966
+    },
+    {
+      "objects": 10000,
+      "payload_mib": null,
+      "runs": [
+        {
+          "seconds": 93.800315,
+          "peak_rss_bytes": 195624960,
+          "published_bytes": 66384624
+        }
+      ]
+    }
+  ],
+  "note": "Native child peak RSS (includes adapter child high-water report where OS does); Python generation and independent readback excluded. Count workloads use small pixels, not 32GiB real data; no recipient/power-loss certification."
+}

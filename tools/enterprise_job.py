@@ -167,7 +167,9 @@ def create_job(workspace, source, policy, store, source_domain, binary=DEFAULT_B
         write_exclusive(job / 'policy.json', policy_bytes)
         os.chmod(job / 'policy.json', 0o400)
         adapter = REPO / 'tools/private_store.py'
-        plan = {'schema': 1, 'job_id': job_id, 'inventory': inventory, 'store': str(store), 'source_domain': source_domain,
+        runtime_names = ['enterprise_job.py','private_store.py','store_admin.py','local_fs.py','risk_gate.py','attestation.py','verify_delivery.py','deliver_local.py']
+        runtime_files = [{'name': name, 'path': str(REPO / 'tools' / name), 'sha256': digest(REPO / 'tools' / name)} for name in runtime_names]
+        plan = {'schema': 2, 'runtime_files': runtime_files, 'job_id': job_id, 'inventory': inventory, 'store': str(store), 'source_domain': source_domain,
                 'policy_sha256': hashlib.sha256(policy_bytes).hexdigest(), 'binary': str(Path(binary).resolve()), 'binary_sha256': digest(binary),
                 'verifier': str(Path(verifier).resolve()), 'verifier_sha256': digest(verifier), 'adapter': str(adapter), 'adapter_sha256': digest(adapter),
                 'python': sys.executable, 'python_sha256': digest(Path(sys.executable).resolve()), 'stage_token': secrets.token_hex(32),
@@ -185,8 +187,11 @@ def create_job(workspace, source, policy, store, source_domain, binary=DEFAULT_B
 
 def load_plan(job):
     plan = json.loads(private_file(job / 'plan.json', 32 * 1024 * 1024))
-    if plan.get('schema') != 1 or plan.get('job_id') != job.name:
+    if plan.get('schema') != 2 or plan.get('job_id') != job.name:
         raise StoreError('invalid-job-plan')
+    for entry in plan['runtime_files']:
+        if digest(entry['path']) != entry['sha256']:
+            raise StoreError('pinned-runtime-adapter-changed')
     for name in ('binary', 'verifier', 'adapter', 'python'):
         if digest(Path(plan[name]).resolve()) != plan[name + '_sha256']:
             raise StoreError('pinned-runtime-changed')
@@ -204,7 +209,22 @@ def verify_converted(job, plan):
     checked = subprocess.run([plan['verifier'], 'verify', str(job / 'converted')], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if checked.returncode:
         raise StoreError('converted-verification-failed')
-    manifest = json.loads(private_file(job / 'converted/manifest.json', 32 * 1024 * 1024))
+    checkpoint_root = validate_directory(job / 'working.checkpoints')
+    if private_file(checkpoint_root / 'owner', 128).decode() != plan['stage_token']:
+        raise StoreError('private-checkpoint-owner-mismatch')
+    collection = json.loads(private_file(checkpoint_root / 'collection.checkpoint.json', 4096))
+    manifest_hash = digest(job / 'converted/manifest.json')
+    if collection.get('manifest_sha256') != manifest_hash or collection.get('objects') != len(plan['inventory']['objects']):
+        raise StoreError('private-collection-checkpoint-mismatch')
+    if (job / 'conversion.json').exists() and json.loads(private_file(job / 'conversion.json', 4096)).get('manifest_sha256') != manifest_hash:
+        raise StoreError('committed-conversion-checkpoint-mismatch')
+    manifest = json.loads(private_file(job / 'converted/manifest.json', 8 * 1024 * 1024))
+    if collection.get('policy_sha256') != manifest.get('policy_sha256'):
+        raise StoreError('private-checkpoint-policy-mismatch')
+    for number, entry in enumerate(manifest['objects'], 1):
+        obj = json.loads(private_file(checkpoint_root / ('object-' + str(number) + '.checkpoint.json'), 4096))
+        if obj.get('sha256') != entry['sha256'] or obj.get('audit_sha256') != entry['audit_sha256'] or obj.get('policy_sha256') != manifest['policy_sha256']:
+            raise StoreError('private-object-checkpoint-mismatch')
     if len(manifest['objects']) != len(plan['inventory']['objects']) or manifest.get('release_authorized') is not False:
         raise StoreError('converted-contract-mismatch')
     return digest(job / 'converted/manifest.json')

@@ -7,12 +7,13 @@
     "completed-filesystem-state-reconciled-with-journal-idempotently",
     "SIGKILL-after-directory-rename-before-journal-recovers",
     "pinned-policy-change-refuses-resume",
-    "cancel-blocks-release-and-owned-cleanup-keeps-result-evidence"
+    "cancel-blocks-release-and-owned-cleanup-keeps-result-evidence",
+    "tampered-result-plus-public-manifest-refuses-private-checkpoint-reconciliation"
   ],
   "limitations": [
     "process termination, not physical power loss",
     "single-owner local POSIX filesystem",
-    "checkpoints recompute expected bytes; not yet streaming",
+    "bounded native-pixel streaming profile only",
     "publication to external delivery area requires P5/P6 gate"
   ]
 }

@@ -84,8 +84,23 @@ def main():
         assert (workspace / second / 'converted').exists()
         checks.append('cancel-blocks-release-and-owned-cleanup-keeps-result-evidence')
         assert status_job(workspace, second)['state'] == 'CANCELLED'
+        third = create_job(workspace, source2, REPO / 'examples/strict-policy.json', store, 'third-domain')
+        run_job(workspace, third)
+        converted = workspace / third / 'converted'
+        pixel_file = converted / 'object-1.dcm'
+        damaged = bytearray(pixel_file.read_bytes()); damaged[-1] ^= 1; pixel_file.write_bytes(damaged)
+        manifest = json.loads((converted / 'manifest.json').read_bytes())
+        manifest['objects'][0]['sha256'] = hashlib.sha256(damaged).hexdigest()
+        (converted / 'manifest.json').write_text(json.dumps(manifest, indent=2))
+        (workspace / third / 'conversion.json').unlink()
+        try:
+            run_job(workspace, third)
+            raise AssertionError('tampered pixels plus public manifest accepted as recovered conversion')
+        except StoreError:
+            pass
+        checks.append('tampered-result-plus-public-manifest-refuses-private-checkpoint-reconciliation')
     record = {'schema': 1, 'fixture': 'synthetic only', 'checks': checks,
-              'limitations': ['process termination, not physical power loss', 'single-owner local POSIX filesystem', 'checkpoints recompute expected bytes; not yet streaming', 'publication to external delivery area requires P5/P6 gate']}
+              'limitations': ['process termination, not physical power loss', 'single-owner local POSIX filesystem', 'bounded native-pixel streaming profile only', 'publication to external delivery area requires P5/P6 gate']}
     (REPO / 'docs/evidence/p3-recovery.json').write_text(json.dumps(record, indent=2) + '\n')
     print(json.dumps({'status': 'passed', 'checks': len(checks)}))
 

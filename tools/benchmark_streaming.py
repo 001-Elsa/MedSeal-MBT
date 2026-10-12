@@ -19,6 +19,7 @@ import pydicom
 def main():
     os.umask(0o077)
     parser = argparse.ArgumentParser()
+    parser.add_argument('--record', type=Path, default=REPO / 'docs/evidence/p4-streaming-resources.json')
     parser.add_argument('--repeats', type=int, default=5)
     parser.add_argument('--counts', type=int, nargs='*', default=[1000, 10000])
     parser.add_argument('--sizes', type=int, nargs='*', default=[1,16,64,120])
@@ -73,7 +74,7 @@ def main():
               'binary_sha256': hashlib.sha256(binary.read_bytes()).hexdigest(), 'execution_path': 'streaming-v1',
               'copy_chunk_bytes': 1024 * 1024, 'metadata_prefix_bytes': 2 * 1024 * 1024, 'workloads': rows,
               'note': 'Native child peak RSS (includes adapter child high-water report where OS does); Python generation and independent readback excluded. Count workloads use small pixels, not 32GiB real data; no recipient/power-loss certification.'}
-    (REPO / 'docs/evidence/p4-streaming-resources.json').write_text(json.dumps(record, indent=2) + '\n')
+    args.record.write_text(json.dumps(record, indent=2) + '\n')
 
 
 if __name__ == '__main__':

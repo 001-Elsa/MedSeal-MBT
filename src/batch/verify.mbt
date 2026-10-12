@@ -38,7 +38,7 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
   }
   let root = @storage.canonical(input)
   let manifest = json_object(
-    @storage.read(join(root, "manifest.json"), limit=4 * 1024 * 1024),
+    @storage.read(join(root, "manifest.json"), limit=8 * 1024 * 1024),
   )
   let profile = json_string(manifest.get("policy"))
   if manifest.get("version") != Some(Json::number(1.0)) ||

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Independent offline recipient. Needs cryptography; no identity store/MoonBit.
 
-Canonical contract: schema1, UTF-8 JSON, sorted keys, compact separators, no NaN,
+Canonical release contract: schema2, UTF-8 JSON, sorted keys, compact separators, no NaN,
 no duplicate keys, integer-only numeric fields. Public keys arrive out of band.
 """
 from pathlib import Path
@@ -85,12 +85,12 @@ def verify_package(root, trust_path, allow_synthetic=False):
     except Exception:
         raise DeliveryError('trusted-signature-verification-failed') from None
     release = parse_json(encoded)
-    fields = {'schema', 'release_authorized', 'context', 'tool_version', 'policy_sha256', 'dictionary_sha256', 'conversion_manifest_sha256', 'review_sha256', 'files', 'risk_summary', 'inventory'}
-    if set(release) != fields or type(release['schema']) is not int or release['schema'] != 1 or release['release_authorized'] is not True or release['context'] not in {'controlled', 'synthetic'} or canonical_bytes(release) != encoded:
+    fields = {'schema', 'producer_runtime_sha256', 'release_authorized', 'context', 'tool_version', 'policy_sha256', 'dictionary_sha256', 'conversion_manifest_sha256', 'review_sha256', 'files', 'risk_summary', 'inventory'}
+    if set(release) != fields or type(release['schema']) is not int or release['schema'] != 2 or release['release_authorized'] is not True or release['context'] not in {'controlled', 'synthetic'} or canonical_bytes(release) != encoded:
         raise DeliveryError('unsupported-or-noncanonical-release')
     if release['context'] == 'synthetic' and not allow_synthetic:
         raise DeliveryError('synthetic-package-not-a-controlled-release')
-    for name in ('policy_sha256', 'dictionary_sha256', 'conversion_manifest_sha256', 'review_sha256'):
+    for name in ('producer_runtime_sha256', 'policy_sha256', 'dictionary_sha256', 'conversion_manifest_sha256', 'review_sha256'):
         if not isinstance(release[name], str) or not re.fullmatch('[0-9a-f]{64}', release[name]):
             raise DeliveryError('invalid-release-binding')
     if not isinstance(release['files'], list) or not 3 <= len(release['files']) <= 20001:
@@ -115,9 +115,9 @@ def verify_package(root, trust_path, allow_synthetic=False):
         expected.add(filename)
     if not dcms or dcms != audits or 'manifest.json' not in expected or dcms != {'object-' + str(i) for i in range(1, len(dcms) + 1)} or {path.name for path in root.iterdir()} != expected:
         raise DeliveryError('signed-collection-inventory-mismatch')
-    if read_file(root / 'manifest.json', 4 * 1024 * 1024) != release['conversion_manifest_sha256']:
+    if read_file(root / 'manifest.json', 8 * 1024 * 1024) != release['conversion_manifest_sha256']:
         raise DeliveryError('conversion-manifest-binding-mismatch')
-    manifest = parse_json(read_file(root / 'manifest.json', 4 * 1024 * 1024, True))
+    manifest = parse_json(read_file(root / 'manifest.json', 8 * 1024 * 1024, True))
     if manifest.get('policy_sha256') != release['policy_sha256'] or manifest.get('dictionary_sha256') != release['dictionary_sha256'] or manifest.get('tool_version') != release['tool_version'] or {entry['file'] for entry in manifest.get('objects', [])} != {entry + '.dcm' for entry in dcms}:
         raise DeliveryError('conversion-semantics-binding-mismatch')
     return {'schema': 1, 'status': 'trusted-package-verified', 'context': release['context'], 'objects': len(dcms), 'key_id': envelope['key_id'], 'release_sha256': hashlib.sha256(encoded).hexdigest()}

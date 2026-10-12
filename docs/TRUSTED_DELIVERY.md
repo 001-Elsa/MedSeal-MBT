@@ -3,9 +3,9 @@
 The public package contains only converted DICOM/audits, conversion manifest,
 release.json and signature.json. Ed25519 (cryptography50.0.2) signs the exact
 canonical UTF-8 release bytes. Sorted keys, compact JSON separators, integer
-schema/counts and no duplicate keys/NaN form schema1; this is a fixed application
-contract, not a claim to implement arbitrary RFC8785 JSON. The release binds every
-file digest, policy/dictionary/tool identity, review digest and anonymous inventory.
+schema/counts and no duplicate keys/NaN form release schema2; this is a fixed application
+contract, not a claim to implement arbitrary RFC8785 JSON. The release binds the producer runtime fingerprint (converter/verifier/Python and
+all eight runtime adapters, excluding paths/private inputs) and every file digest, policy/dictionary/tool identity, review digest and anonymous inventory.
 Patient mappings, keys, source hashes, detailed private evidence and reviewer
 identity are excluded. The old conversion manifest remains release_authorized:false;
 the signed release decision applies only within its explicit context.
@@ -30,7 +30,7 @@ the PUBLISHED journal. Unknown existing targets or changed intents fail.
 
 A recipient uses `python tools/verify_delivery.py PACKAGE --trust TRUST`, requiring
 only cryptography, not MoonBit, the producer's identity database or source files.
-It validates trusted signature, canonical schema, exact file inventory and all
+It validates trusted signature, canonical release schema2, exact file inventory and all
 hashes. Synthetic context is rejected by default; --allow-synthetic is solely for
 explicit exercises. Trusted bytes and attestations do not prove clinical usefulness
 or that human review assertions were truthful. Those remain responsible field gates.
@@ -60,3 +60,11 @@ Evidence: `evidence/p6-attestation.json` and offline installation record. Remain
 full gates: real receiver acceptance, independent crypto/role review, code-release
 signing/trust distribution, Linux installation package, Windows enterprise provider,
 physical power-loss and remote-protocol failure certification.
+
+Public conversion manifests have an8MiB read/write budget, sized for10,000 objects
+including per-object risk IDs. Signed release inventories retain a4MiB budget;
+audits retain16MiB. Producers and independent consumers enforce the same bounds.
+
+Private job plan schema2 pins all runtime adapters as well as binaries. Older
+preview schema1 plans/releases require their original preview runtime; this reader
+fails closed rather than silently migrating them. Identity-store schema is unchanged.

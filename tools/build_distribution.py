@@ -18,6 +18,8 @@ RUNTIME_TOOLS = ['private_store.py', 'store_admin.py', 'local_fs.py', 'enterpris
 
 def build(destination, wheels):
     destination, wheels = Path(destination), Path(wheels)
+    if subprocess.run(['git','diff','--quiet'],cwd=REPO).returncode or subprocess.run(['git','diff','--cached','--quiet'],cwd=REPO).returncode:
+        raise ValueError('clean-tracked-source-required-for-distribution')
     destination.mkdir(mode=0o700)
     (destination / 'bin').mkdir()
     for source, name in [(REPO / '_build/native/debug/build/cmd/main/main.exe', 'medseal'), (REPO / '_build/native/debug/build/cmd/enterprise/enterprise.exe', 'medseal-enterprise')]:
@@ -31,6 +33,7 @@ def build(destination, wheels):
     shutil.copytree(REPO / 'docs', destination / 'docs', ignore=shutil.ignore_patterns('evidence'))
     shutil.copytree(REPO / 'examples', destination / 'examples', ignore=shutil.ignore_patterns('*.mbt', '*.mbti', 'moon.pkg'))
     shutil.copytree(REPO / 'resources/licenses', destination / 'licenses')
+    shutil.copytree(REPO / 'resources/rules', destination / 'rules')
     shutil.copyfile(REPO.parent / 'moonbit工具链/lib/core/LICENSE', destination / 'licenses/moonbit-core-runtime-LICENSE')
     for source, name in [(REPO / '.mooncakes/moonbitlang/async/LICENSE', 'moonbit-async-LICENSE'), (REPO / '.mooncakes/gmlewis/sha256/LICENSE', 'gmlewis-sha256-LICENSE'), (REPO / '.mooncakes/gmlewis/base64/LICENSE', 'gmlewis-base64-LICENSE')]:
         shutil.copyfile(source, destination / 'licenses' / name)

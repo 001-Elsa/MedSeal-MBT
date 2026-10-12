@@ -16,7 +16,8 @@ inputs. Counts/exclusion reasons remain in the private plan. Limits: depth16,
 1MiB sealing chunks; free-space checks reserve input/output plus a margin. These
 are local policy checks, not filesystem quotas or concurrent-space guarantees.
 
-The immutable plan pins policy bytes, sealed hashes, runtime/binary/adapter hashes,
+The immutable schema2 plan pins policy bytes, sealed hashes, converter/verifier/
+Python and all eight runtime adapter hashes,
 resource settings, source domain and store location. The compiled binary binds
 dictionary semantics. Replacing tools/policy/sealed bytes refuses resume. SQLite
 FULL/WAL journal and OS job lock serialize operations. Mapping reservations commit
@@ -27,8 +28,11 @@ expected output from sealed source and stable mapping, re-reads existing bytes a
 compares them; a presence check or a checkpoint JSON digest alone is insufficient.
 Owned incomplete files are rebuilt. Checkpoints live outside conversion output.
 All objects and collection relationships are verified before no-replace rename;
-POSIX directory and parent sync are requested. A renamed conversion whose journal
-was not committed is re-verified and reconciled. Conversion ends at
+POSIX directory and parent sync are requested. A private collection checkpoint binds the manifest digest before rename; private
+object checkpoints bind data/audits/policy. A renamed conversion whose journal
+was not committed is re-verified against these private expected hashes and
+reconciled. Simultaneously changing output bytes and their public manifest cannot
+be accepted as the expected sealed-source conversion. Conversion ends at
 AWAITING_REVIEW with release_authorized=false. P5/P6 supply final publication.
 
 Cancellation is a durable request checked before/after conversion, not immediate

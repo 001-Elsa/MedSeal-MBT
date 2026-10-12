@@ -52,7 +52,8 @@ def publish_job(workspace, job_id, destination, registry, signer, trust, checkpo
             files = [{'file': 'manifest.json', 'sha256': review['manifest_sha256']}]
             for obj in manifest['objects']:
                 files.extend([{'file': obj['file'], 'sha256': obj['sha256']}, {'file': obj['file'][:-4] + '.audit.json', 'sha256': obj['audit_sha256']}])
-            release = {'schema': 1, 'release_authorized': True, 'context': review['record']['context'], 'tool_version': manifest['tool_version'],
+            runtime_fingerprint = hashlib.sha256(canonical({'binary': plan['binary_sha256'], 'verifier': plan['verifier_sha256'], 'python': plan['python_sha256'], 'tools': [{ 'name': item['name'], 'sha256': item['sha256']} for item in plan['runtime_files']]})).hexdigest()
+            release = {'schema': 2, 'producer_runtime_sha256': runtime_fingerprint, 'release_authorized': True, 'context': review['record']['context'], 'tool_version': manifest['tool_version'],
                        'policy_sha256': manifest['policy_sha256'], 'dictionary_sha256': manifest['dictionary_sha256'], 'conversion_manifest_sha256': review['manifest_sha256'],
                        'review_sha256': review_hash, 'files': files,
                        'risk_summary': {'blocking_unresolved': 0, 'pixel_review': 'human-reviewed-clear', 'metadata_scope': 'recipient-accepted-subset'},

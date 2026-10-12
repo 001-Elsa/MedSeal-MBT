@@ -34,7 +34,7 @@ def hex_digest(value):
 
 
 def risk_inventory(job):
-    manifest = json_document(private_file(job / 'converted/manifest.json', 4 * 1024 * 1024))
+    manifest = json_document(private_file(job / 'converted/manifest.json', 8 * 1024 * 1024))
     records = []
     for entry in manifest['objects']:
         risks = entry.get('risks', ['pixel-content-unchecked', METADATA_RISK])

@@ -445,13 +445,29 @@ pub async fn Job::execute(
       ),
     ]),
   ).stringify(indent=2)
+  let manifest_bytes = @utf8.encode(manifest)
+  if manifest_bytes.length() > 8 * 1024 * 1024 {
+    raise @model.MedSealError::OutputVerificationFailed(
+      "manifest exceeds8MiB public inventory budget",
+    )
+  }
   if resume_stage is Some(_) {
-    checkpoint_file(join(stage, "manifest.json"), @utf8.encode(manifest))
+    checkpoint_file(join(stage, "manifest.json"), manifest_bytes)
   } else {
-    @storage.write_new(
-      join(stage, "manifest.json"),
-      @utf8.encode(manifest),
-      faults~,
+    @storage.write_new(join(stage, "manifest.json"), manifest_bytes, faults~)
+  }
+  if resume_stage is Some(_) {
+    checkpoint_file(
+      join(stage + ".checkpoints", "collection.checkpoint.json"),
+      @utf8.encode(
+        Json::object(
+          Map::from_array([
+            ("manifest_sha256", Json::string(@checksum.sha256(manifest_bytes))),
+            ("policy_sha256", Json::string(self.policy.digest())),
+            ("objects", Json::number(self.paths.length().to_double())),
+          ]),
+        ).stringify(),
+      ),
     )
   }
   if checkpoint is Some(callback) {
