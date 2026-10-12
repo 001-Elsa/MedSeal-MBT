@@ -184,6 +184,7 @@ pub fn decision(
   path : String,
   action : String,
   custom? : Bool = false,
+  temporal? : Bool = false,
 ) -> RuleDecision raise @model.MedSealError {
   guard safe_path(path) else {
     raise @model.MedSealError::PolicyError("invalid public field path")
@@ -192,6 +193,23 @@ pub fn decision(
     raise @model.MedSealError::PolicyError("decision tag differs from path")
   }
   let entry = lookup(tag)
+  if temporal &&
+    (
+      (
+        tag == @model.Tag::new(0x0008U, 0x002AU) &&
+        ["shift", "empty"].contains(action)
+      ) ||
+      (tag == @model.Tag::new(0x0008U, 0x0201U) && action == "keep")
+    ) {
+    return {
+      path,
+      rule_id: "temporal-precision",
+      action,
+      condition: Met,
+      source: "DICOM 2025e PS3.5 Table 6.2-1; MedSeal temporal policy",
+      reason: "precision-preserving-temporal-policy",
+    }
+  }
   let privacy_group = tag.is_private() ||
     tag.element == 0U ||
     [0x0400U, 0xFFFAU, 0xFFFCU].contains(tag.group) ||

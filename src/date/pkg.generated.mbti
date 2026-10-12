@@ -6,13 +6,32 @@ import {
 }
 
 // Values
+pub fn parse_dt(String) -> Temporal? raise @model.MedSealError
+
+pub fn parse_tm(String) -> Temporal? raise @model.MedSealError
+
 pub fn shift(String, Int) -> String raise @model.MedSealError
 
+pub fn shift_dt(String, Int) -> String raise @model.MedSealError
+
 pub fn valid(String) -> Bool
+
+pub fn valid_dt(String) -> Bool
+
+pub fn valid_tm(String) -> Bool
+
+pub fn valid_zone(String) -> Bool
 
 // Errors
 
 // Types and methods
+pub struct Temporal {
+  precision : Int
+  fractional_digits : Int
+  zone_minutes : Int?
+  leap_second : Bool
+  // private fields
+}
 
 // Type aliases
 

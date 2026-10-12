@@ -1,8 +1,10 @@
 import {
   "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/checksum",
   "moonbitlang/async",
   "moonbitlang/async/process",
   "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/json",
 }
 
 supported_targets = "+native"

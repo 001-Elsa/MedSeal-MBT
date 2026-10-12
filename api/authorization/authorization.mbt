@@ -42,7 +42,7 @@ pub async fn Verifier::new(
   let root = adapter[0:adapter.length() - suffix.length()].to_owned()
   let names = [
     "api_authorization.py", "enterprise_job.py", "risk_gate.py", "verify_delivery.py",
-    "private_store.py", "local_fs.py",
+    "private_store.py", "ledger_cache.py", "history_outbox.py", "local_fs.py",
   ]
   if files.length() != names.length() ||
     !names.all(fn(name) {

@@ -10,7 +10,7 @@
     "wrong-and-missing-key-fail-closed",
     "no-source-markers-in-database-and-WAL"
   ],
-  "enterprise_binary_sha256": "cfdcad9a31ccef492979de57dd9f489b2257332697f3cd4e0b62536240f2c907",
+  "enterprise_binary_sha256": "baa11f2666ba29681ced07a90ed81e355eb0dd913a3b997219243ab5f90b181a",
   "cryptography": "50.0.2",
   "sqlite": "3.53.1",
   "limitations": [

@@ -30,6 +30,7 @@ Maintenance commands (destination must not exist):
 - `python tools/store_admin.py backup --store PRIVATE --destination BACKUP`
 - `python tools/store_admin.py restore --store BACKUP --destination RESTORED`
 - `python tools/store_admin.py rotate --store PRIVATE`
+- `python tools/store_admin.py migrate --store PRIVATE --destination PRE_MIGRATION_BACKUP`
 
 The SQLite backup API produces a consistent snapshot while the store lock is held.
 Backup includes PRIVATE KEY MATERIAL; keep it in an independently controlled,
@@ -46,9 +47,10 @@ one usable. Prior generations remain for recovery; rotation alone does not revok
 old backups or a previously compromised root. Mapping namespace rotation is a
 separate migration. Physical power-loss durability is not certified.
 
-Current limits: exact duplicates reuse mappings but are still converted; references
-must be closed within the batch; controlled identity merges and DT precision/time
-zone workflows are not supported. These are outstanding full P2 gates, not hidden
-fallbacks. Evidence: `evidence/p2-persistent-identity.json` and
-`tools/verify_persistent_identity.py` (synthetic multi-batch/parallel/conflict/key/
-backup checks). Original identities are not in the database/WAL in plaintext.
+Current limits: cache reuse is accepted only after authenticated object/output
+revalidation; a cache hit is still `Converted` and never review or release
+authority. Historical references require the W2 acknowledged-object witness and
+directory receipt, and remote PACS exactly-once is outside this local contract.
+Evidence: `evidence/p2-persistent-identity.json`, `evidence/w2-incremental.json`,
+and `tools/verify_incremental.py` (synthetic multi-batch/cache/migration/history/
+outbox checks). Original identities are not in the database/WAL in plaintext.

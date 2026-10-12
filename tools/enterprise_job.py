@@ -16,6 +16,7 @@ import sys
 import time
 from private_store import StoreError, canonical, private_file, validate_directory, write_exclusive, sync_directory
 from local_fs import atomic_private, digest, signature
+from ledger_cache import provider_runtime
 
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_BINARY = REPO / ('bin/medseal-enterprise' if (REPO / 'bin/medseal-enterprise').exists() else '_build/native/debug/build/cmd/enterprise/enterprise.exe')
@@ -146,7 +147,7 @@ def transition(db, target, code='ok', precondition=lambda: None):
         raise
 
 
-def create_job(workspace, source, policy, store, source_domain, binary=DEFAULT_BINARY, verifier=DEFAULT_VERIFY, checkpoint=lambda event: None):
+def create_job(workspace, source, policy, store, source_domain, binary=DEFAULT_BINARY, verifier=DEFAULT_VERIFY, checkpoint=lambda event: None, destination_config=None):
     workspace = validate_directory(Path(workspace))
     store = validate_directory(Path(store))
     job_id = secrets.token_hex(16)
@@ -167,13 +168,18 @@ def create_job(workspace, source, policy, store, source_domain, binary=DEFAULT_B
         write_exclusive(job / 'policy.json', policy_bytes)
         os.chmod(job / 'policy.json', 0o400)
         adapter = REPO / 'tools/private_store.py'
-        runtime_names = ['enterprise_job.py','private_store.py','store_admin.py','local_fs.py','risk_gate.py','attestation.py','verify_delivery.py','deliver_local.py']
+        runtime_names = ['enterprise_job.py','private_store.py','store_admin.py','local_fs.py','risk_gate.py','attestation.py','verify_delivery.py','deliver_local.py','ledger_cache.py','history_outbox.py']
         runtime_files = [{'name': name, 'path': str(REPO / 'tools' / name), 'sha256': digest(REPO / 'tools' / name)} for name in runtime_names]
-        plan = {'schema': 2, 'runtime_files': runtime_files, 'job_id': job_id, 'inventory': inventory, 'store': str(store), 'source_domain': source_domain,
+        plan = {'schema': 2, 'provider_runtime_sha256': provider_runtime(), 'runtime_files': runtime_files, 'job_id': job_id, 'inventory': inventory, 'store': str(store), 'source_domain': source_domain,
                 'policy_sha256': hashlib.sha256(policy_bytes).hexdigest(), 'binary': str(Path(binary).resolve()), 'binary_sha256': digest(binary),
                 'verifier': str(Path(verifier).resolve()), 'verifier_sha256': digest(verifier), 'adapter': str(adapter), 'adapter_sha256': digest(adapter),
                 'python': sys.executable, 'python_sha256': digest(Path(sys.executable).resolve()), 'stage_token': secrets.token_hex(32),
                 'resources': {'workers': 1, 'max_objects': 10000, 'copy_chunk_bytes': 1024 * 1024, 'max_input_bytes': 32 * 1024 ** 3}}
+        if destination_config is not None:
+            from history_outbox import destination_binding
+            plan['destination_binding'] = destination_binding(destination_config)
+            write_exclusive(job / 'destination.json', canonical(destination_config))
+            plan['destination_config_sha256'] = digest(job / 'destination.json')
         write_exclusive(job / 'plan.json', canonical(plan))
         transition(db, 'INGESTED')
         checkpoint('ingested')
@@ -189,6 +195,8 @@ def load_plan(job):
     plan = json.loads(private_file(job / 'plan.json', 32 * 1024 * 1024))
     if plan.get('schema') != 2 or plan.get('job_id') != job.name:
         raise StoreError('invalid-job-plan')
+    if plan.get('provider_runtime_sha256') != provider_runtime():
+        raise StoreError('pinned-provider-runtime-changed')
     for entry in plan['runtime_files']:
         if digest(entry['path']) != entry['sha256']:
             raise StoreError('pinned-runtime-adapter-changed')
@@ -202,11 +210,23 @@ def load_plan(job):
     for obj in plan['inventory']['objects']:
         if digest(job / 'sealed' / obj['file']) != obj['sha256']:
             raise StoreError('sealed-input-hash-changed')
+    if 'destination_binding' in plan:
+        from history_outbox import destination_binding
+        if digest(job / 'destination.json') != plan['destination_config_sha256'] or destination_binding(json.loads(private_file(job / 'destination.json', 4096))) != plan['destination_binding']:
+            raise StoreError('pinned-destination-or-trust-changed')
     return plan
 
 
+def runtime_fingerprint(plan):
+    return hashlib.sha256(canonical({'binary': plan['binary_sha256'], 'verifier': plan['verifier_sha256'],
+                                    'python': plan['python_sha256'], 'provider': plan['provider_runtime_sha256'], 'tools': [{'name': item['name'], 'sha256': item['sha256']} for item in plan['runtime_files']]})).hexdigest()
+
+
 def verify_converted(job, plan):
-    checked = subprocess.run([plan['verifier'], 'verify', str(job / 'converted')], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    command = [plan['verifier'], 'verify', str(job / 'converted')]
+    if 'destination_binding' in plan:
+        command = [plan['binary'], '--verify', str(job / 'sealed'), str(job / 'converted'), str(job / 'policy.json'), plan['python'], plan['adapter'], plan['store'], plan['source_domain'], str(job / 'destination.json')]
+    checked = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if checked.returncode:
         raise StoreError('converted-verification-failed')
     checkpoint_root = validate_directory(job / 'working.checkpoints')
@@ -234,7 +254,7 @@ def run_job(workspace, job_id, checkpoint=lambda event: None):
     with locked_job(workspace, job_id) as job:
         db = journal(job)
         try:
-            if state(db) in {'CANCELLED', 'PUBLISHED'}:
+            if state(db) in {'CANCELLED', 'PUBLISHED', 'ACKNOWLEDGED'}:
                 raise StoreError('job-state-does-not-allow-execution')
             plan = load_plan(job)
             if (job / 'cancel-request').exists():
@@ -251,6 +271,8 @@ def run_job(workspace, job_id, checkpoint=lambda event: None):
                     write_exclusive(checkpoints / 'owner', plan['stage_token'].encode())
                 transition(db, 'RUNNING')
                 command = [plan['binary'], str(job / 'sealed'), str(job / 'converted'), str(job / 'policy.json'), plan['python'], plan['adapter'], plan['store'], plan['source_domain'], str(stage), plan['stage_token']]
+                if 'destination_binding' in plan:
+                    command.append(str(job / 'destination.json'))
                 checkpoint('before-conversion')
                 result = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 if result.returncode:
@@ -290,7 +312,7 @@ def cancel_job(workspace, job_id):
     db = journal(job)
     try:
         db.execute('BEGIN IMMEDIATE')
-        if state(db) in {'PUBLISHING', 'PUBLISHED'}:
+        if state(db) in {'PUBLISHING', 'PUBLISHED', 'ACKNOWLEDGED'}:
             raise StoreError('publication-started-cancellation-rejected')
         atomic_private(job / 'cancel-request', b'cancel')
         db.execute('COMMIT')
@@ -322,7 +344,7 @@ def cleanup_job(workspace, job_id):
 def main():
     os.umask(0o077)
     parser = argparse.ArgumentParser()
-    parser.add_argument('operation', choices=['create', 'run', 'resume', 'status', 'cancel', 'cleanup', 'review', 'risks', 'publish', 'signer-init', 'deliver', 'doctor'])
+    parser.add_argument('operation', choices=['create', 'run', 'resume', 'status', 'cancel', 'cleanup', 'review', 'risks', 'publish', 'signer-init', 'deliver', 'deliver-incremental', 'destination-init', 'doctor'])
     parser.add_argument('--workspace', type=Path, required=True)
     parser.add_argument('--job')
     parser.add_argument('--record', type=Path)
@@ -338,12 +360,13 @@ def main():
     parser.add_argument('--policy', type=Path)
     parser.add_argument('--store', type=Path)
     parser.add_argument('--source-domain')
+    parser.add_argument('--destination-config', type=Path)
     parser.add_argument('--binary', type=Path, default=DEFAULT_BINARY)
     parser.add_argument('--verifier', type=Path, default=DEFAULT_VERIFY)
     args = parser.parse_args()
     try:
         if args.operation == 'create':
-            result = {'schema': 1, 'job_id': create_job(args.workspace, args.input, args.policy, args.store, args.source_domain, args.binary, args.verifier), 'state': 'INGESTED'}
+            result = {'schema': 1, 'job_id': create_job(args.workspace, args.input, args.policy, args.store, args.source_domain, args.binary, args.verifier, destination_config=json.loads(args.destination_config.read_bytes()) if args.destination_config else None), 'state': 'INGESTED'}
         elif args.operation in {'run', 'resume'}:
             result = run_job(args.workspace, args.job)
         elif args.operation == 'doctor':
@@ -356,6 +379,12 @@ def main():
         elif args.operation == 'publish':
             from attestation import publish_job
             result = publish_job(args.workspace, args.job, args.output, args.reviewers, args.signer, args.trust)
+        elif args.operation == 'destination-init':
+            from history_outbox import initialize_destination
+            result = initialize_destination(args.inbox, args.receiver_id)
+        elif args.operation == 'deliver-incremental':
+            from history_outbox import deliver_job
+            result = deliver_job(args.workspace, args.job, args.package)
         elif args.operation == 'deliver':
             from deliver_local import deliver
             result = deliver(args.package, args.inbox, args.trust, args.receiver_id, args.allow_synthetic)

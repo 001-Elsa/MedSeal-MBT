@@ -65,7 +65,7 @@ def read_file(path, limit, retain=False):
         os.close(descriptor)
 
 
-def verify_package(root, trust_path, allow_synthetic=False):
+def verify_package(root, trust_path, allow_synthetic=False, object_root=None):
     root = Path(root).absolute()
     if root.is_symlink() or not root.is_dir() or root.resolve() != root:
         raise DeliveryError('invalid-package-root')
@@ -86,7 +86,7 @@ def verify_package(root, trust_path, allow_synthetic=False):
         raise DeliveryError('trusted-signature-verification-failed') from None
     release = parse_json(encoded)
     fields = {'schema', 'producer_runtime_sha256', 'release_authorized', 'context', 'tool_version', 'policy_sha256', 'dictionary_sha256', 'conversion_manifest_sha256', 'review_sha256', 'files', 'risk_summary', 'inventory'}
-    if set(release) != fields or type(release['schema']) is not int or release['schema'] != 2 or release['release_authorized'] is not True or release['context'] not in {'controlled', 'synthetic'} or canonical_bytes(release) != encoded:
+    if set(release) not in [fields, fields | {'destination_binding'}] or type(release['schema']) is not int or release['schema'] != 2 or release['release_authorized'] is not True or release['context'] not in {'controlled', 'synthetic'} or canonical_bytes(release) != encoded:
         raise DeliveryError('unsupported-or-noncanonical-release')
     if release['context'] == 'synthetic' and not allow_synthetic:
         raise DeliveryError('synthetic-package-not-a-controlled-release')
@@ -110,10 +110,17 @@ def verify_package(root, trust_path, allow_synthetic=False):
         elif filename.endswith('.audit.json'):
             audits.add(filename[:-11])
         maximum = 256 * 1024 * 1024 if filename.endswith('.dcm') else 16 * 1024 * 1024
-        if read_file(root / filename, maximum) != entry['sha256']:
+        if object_root is not None and filename.endswith('.dcm'):
+            blob_root = Path(object_root).absolute()
+            if blob_root.is_symlink() or not blob_root.is_dir() or blob_root.resolve() != blob_root:
+                raise DeliveryError('invalid-explicit-object-root')
+            filepath = blob_root / (entry['sha256'] + '.dcm')
+        else:
+            filepath = root / filename
+        if read_file(filepath, maximum) != entry['sha256']:
             raise DeliveryError('signed-file-hash-mismatch')
         expected.add(filename)
-    if not dcms or dcms != audits or 'manifest.json' not in expected or dcms != {'object-' + str(i) for i in range(1, len(dcms) + 1)} or {path.name for path in root.iterdir()} != expected:
+    if not dcms or dcms != audits or 'manifest.json' not in expected or dcms != {'object-' + str(i) for i in range(1, len(dcms) + 1)} or {path.name for path in root.iterdir()} != (expected - {entry + '.dcm' for entry in dcms} if object_root is not None else expected):
         raise DeliveryError('signed-collection-inventory-mismatch')
     if read_file(root / 'manifest.json', 8 * 1024 * 1024) != release['conversion_manifest_sha256']:
         raise DeliveryError('conversion-manifest-binding-mismatch')
@@ -128,9 +135,10 @@ def main():
     parser.add_argument('package', type=Path)
     parser.add_argument('--trust', type=Path, required=True)
     parser.add_argument('--allow-synthetic', action='store_true')
+    parser.add_argument('--object-root', type=Path, help='Explicit trusted content-addressed object directory for the deduplicating receiver')
     args = parser.parse_args()
     try:
-        print(json.dumps(verify_package(args.package, args.trust, args.allow_synthetic)))
+        print(json.dumps(verify_package(args.package, args.trust, args.allow_synthetic, args.object_root)))
         return 0
     except DeliveryError as error:
         print(json.dumps({'schema': 1, 'status': 'rejected', 'code': str(error)}), file=sys.stderr)

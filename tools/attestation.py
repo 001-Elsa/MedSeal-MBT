@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
 from private_store import StoreError, canonical, private_file, validate_directory, write_exclusive, sync_directory
 from local_fs import atomic_private, digest, rename_new, copy_file_new
-from enterprise_job import locked_job, journal, state, transition
+from enterprise_job import locked_job, journal, state, transition, runtime_fingerprint
 from risk_gate import gate, json_document
 from verify_delivery import verify_package
 
@@ -40,7 +40,7 @@ def publish_job(workspace, job_id, destination, registry, signer, trust, checkpo
     with locked_job(workspace, job_id) as job:
         db = journal(job)
         try:
-            if state(db) not in {'READY', 'PUBLISHING', 'PUBLISHED'}:
+            if state(db) not in {'READY', 'PUBLISHING', 'PUBLISHED', 'ACKNOWLEDGED'}:
                 raise StoreError('review-gate-not-ready')
             plan, manifest, inventory, review, review_hash = gate(job, registry)
             destination = Path(destination).absolute()
@@ -52,12 +52,14 @@ def publish_job(workspace, job_id, destination, registry, signer, trust, checkpo
             files = [{'file': 'manifest.json', 'sha256': review['manifest_sha256']}]
             for obj in manifest['objects']:
                 files.extend([{'file': obj['file'], 'sha256': obj['sha256']}, {'file': obj['file'][:-4] + '.audit.json', 'sha256': obj['audit_sha256']}])
-            runtime_fingerprint = hashlib.sha256(canonical({'binary': plan['binary_sha256'], 'verifier': plan['verifier_sha256'], 'python': plan['python_sha256'], 'tools': [{ 'name': item['name'], 'sha256': item['sha256']} for item in plan['runtime_files']]})).hexdigest()
-            release = {'schema': 2, 'producer_runtime_sha256': runtime_fingerprint, 'release_authorized': True, 'context': review['record']['context'], 'tool_version': manifest['tool_version'],
+            producer_fingerprint = runtime_fingerprint(plan)
+            release = {'schema': 2, 'producer_runtime_sha256': producer_fingerprint, 'release_authorized': True, 'context': review['record']['context'], 'tool_version': manifest['tool_version'],
                        'policy_sha256': manifest['policy_sha256'], 'dictionary_sha256': manifest['dictionary_sha256'], 'conversion_manifest_sha256': review['manifest_sha256'],
                        'review_sha256': review_hash, 'files': files,
                        'risk_summary': {'blocking_unresolved': 0, 'pixel_review': 'human-reviewed-clear', 'metadata_scope': 'recipient-accepted-subset'},
                        'inventory': {'candidate_objects': len(inventory), 'discovered_files': plan['inventory']['discovered_files'], 'excluded_non_part10': plan['inventory']['excluded_non_part10']}}
+            if 'destination_binding' in plan:
+                release['destination_binding'] = plan['destination_binding']
             encoded = canonical(release)
             release_hash = hashlib.sha256(encoded).hexdigest()
             private, key_id = signing_key(signer)

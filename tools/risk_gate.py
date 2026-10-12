@@ -5,9 +5,9 @@ import hashlib
 import json
 import re
 from pathlib import Path
-from private_store import StoreError, canonical, private_file
+from private_store import StoreError, PrivateStore, canonical, private_file
 from local_fs import atomic_private, digest
-from enterprise_job import locked_job, journal, load_plan, verify_converted, state, transition
+from enterprise_job import locked_job, journal, load_plan, verify_converted, state, transition, runtime_fingerprint
 
 VISUAL_RISKS = {'pixel-content-unchecked', 'secondary-capture-visual-review', 'burned-in-annotation-unresolved', 'recognizable-features-unresolved', 'overlay-source-unresolved'}
 METADATA_RISK = 'public-metadata-subset-only'
@@ -46,11 +46,25 @@ def risk_inventory(job):
     return manifest, records
 
 
-def validate_review(job, review, registry):
+def review_binding(job, plan=None):
+    plan = load_plan(job) if plan is None else plan
+    store = PrivateStore(plan['store'])
+    try:
+        source = store.lookup('review-input', [job.name, plan['source_domain']], plan['inventory']['objects']).hex()
+    finally:
+        store.close()
+    return {'job_id': job.name, 'producer_runtime_sha256': runtime_fingerprint(plan),
+            'sealed_input_commitment': source, 'policy_file_sha256': plan['policy_sha256'],
+            'destination_domain': plan.get('destination_binding', 'unbound-local-directory')}
+
+
+def validate_review(job, review, registry, plan=None):
     if set(registry) != {'schema', 'reviewers'} or registry['schema'] != 1 or not isinstance(registry['reviewers'], list):
         raise StoreError('invalid-reviewer-registry')
-    if not isinstance(review, dict) or set(review) != {'schema', 'context', 'reviewer', 'reviewed_at', 'recipient_accepts_declared_subset', 'records'} or review['schema'] != 1:
+    if not isinstance(review, dict) or set(review) != {'schema', 'context', 'reviewer', 'reviewed_at', 'recipient_accepts_declared_subset', 'records', 'bindings'} or review['schema'] != 2:
         raise StoreError('invalid-review-record-schema')
+    if review['bindings'] != review_binding(job, plan):
+        raise StoreError('review-source-program-policy-or-destination-stale')
     if review['context'] not in {'synthetic', 'controlled'} or review['recipient_accepts_declared_subset'] is not True:
         raise StoreError('review-scope-not-approved')
     if not isinstance(review['reviewer'], str) or not re.fullmatch('[A-Za-z0-9_-]{1,64}', review['reviewer']):
@@ -97,7 +111,7 @@ def review_job(workspace, job_id, record_path, registry_path):
             manifest_hash = verify_converted(job, plan)
             registry_data = private_file(Path(registry_path), 1024 * 1024)
             review = json_document(private_file(Path(record_path), 16 * 1024 * 1024))
-            _, inventory = validate_review(job, review, json_document(registry_data))
+            _, inventory = validate_review(job, review, json_document(registry_data), plan)
             envelope = {'schema': 1, 'manifest_sha256': manifest_hash, 'registry_sha256': hashlib.sha256(registry_data).hexdigest(), 'record': review}
             atomic_private(job / 'review.json', canonical(envelope))
             transition(db, 'READY')
@@ -115,5 +129,5 @@ def gate(job, registry_path):
     registry_data = private_file(Path(registry_path), 1024 * 1024)
     if review.get('schema') != 1 or review.get('manifest_sha256') != manifest_hash or review.get('registry_sha256') != hashlib.sha256(registry_data).hexdigest():
         raise StoreError('review-stale-or-authority-changed')
-    manifest, inventory = validate_review(job, review['record'], json_document(registry_data))
+    manifest, inventory = validate_review(job, review['record'], json_document(registry_data), plan)
     return plan, manifest, inventory, review, digest(job / 'review.json')

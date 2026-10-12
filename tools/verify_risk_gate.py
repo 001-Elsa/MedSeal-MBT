@@ -11,12 +11,12 @@ from verify_with_pydicom import REPO
 from verify_strict_profile import generate_strict
 from private_store import initialize, canonical, StoreError, write_exclusive
 from enterprise_job import create_job, run_job, status_job
-from risk_gate import risk_inventory, review_job, gate, VISUAL_RISKS
+from risk_gate import risk_inventory, review_job, gate, VISUAL_RISKS, review_binding
 
 
 def synthetic_review(job, reviewer='synthetic-test-reviewer'):
     _, inventory = risk_inventory(job)
-    return {'schema': 1, 'context': 'synthetic', 'reviewer': reviewer, 'reviewed_at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'recipient_accepts_declared_subset': True,
+    return {'schema': 2, 'context': 'synthetic', 'reviewer': reviewer, 'reviewed_at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'recipient_accepts_declared_subset': True, 'bindings': review_binding(job),
             'records': [{'file': entry['file'], 'sha256': entry['sha256'], 'policy_sha256': entry['policy_sha256'], 'decisions': [
                 {'risk': risk, 'action': 'human-reviewed-clear' if risk in VISUAL_RISKS else 'recipient-accepted-subset', 'evidence_sha256': hashlib.sha256(b'SYNTHETIC TEST REVIEW ONLY').hexdigest()} for risk in entry['risks']]} for entry in inventory]}
 

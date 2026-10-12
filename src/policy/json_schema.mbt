@@ -69,9 +69,9 @@ fn reject_duplicate_keys(text : String) -> Unit raise @model.MedSealError {
 ///|
 fn strict_json(values : Map[String, Json]) -> Policy raise @model.MedSealError {
   for key in values.keys() {
-    if !["version", "mode", "namespace", "date_shift_days", "path_rules"].contains(
-        key,
-      ) {
+    if ![
+        "version", "mode", "namespace", "date_shift_days", "path_rules", "temporal_policy",
+      ].contains(key) {
       raise @model.MedSealError::PolicyError("unknown strict policy field")
     }
   }
@@ -143,5 +143,10 @@ fn strict_json(values : Map[String, Json]) -> Policy raise @model.MedSealError {
       present,
     })
   }
-  strict(scope_name~, date_shift_days=days, path_rules=rules)
+  let retain_dt = match values.get("temporal_policy") {
+    None | Some(Json::String("metadata-safe-v1")) => false
+    Some(Json::String("retain-dt-precision-v1")) => true
+    _ => raise @model.MedSealError::PolicyError("unsupported temporal policy")
+  }
+  strict(scope_name~, date_shift_days=days, path_rules=rules, retain_dt~)
 }

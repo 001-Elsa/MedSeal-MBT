@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "stage": "W1",
+  "head_sha": "a7dd6af73b6edf5ad5cc12c1bd7b6393f0a6b480",
+  "conclusion": "success",
+  "run_id": 38228352839,
+  "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38228352839",
+  "jobs": {
+    "ubuntu-latest": "success",
+    "macos-latest": "success",
+    "windows-latest": "success"
+  },
+  "scope": "four-backend core and pydicom writer acceptance on three OS; POSIX adapters on Linux/macOS; independent dciodvfy evidence in local W1 record"
+}

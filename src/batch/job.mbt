@@ -7,6 +7,12 @@ pub struct Job {
   priv hashes : Array[String]
   priv metadata : Array[@model.DataSet]
   priv context : @identity.Context
+  priv destination : Json?
+  priv historical : HistoricalWitnesses
+  priv provider : @identity_store.Provider?
+  priv program_sha256 : String
+  priv descriptors : Array[Json]
+  priv cached : Array[@identity_store.CachedArtifact?]
   priv policy : @policy.Policy
   priv streamed : Bool
   priv mut consumed : Bool
@@ -76,6 +82,8 @@ pub async fn plan(
   policy : @policy.Policy,
   provider? : @identity_store.Provider? = None,
   streamed? : Bool = false,
+  program_sha256? : String = "",
+  destination? : Json? = None,
 ) -> Job raise @model.MedSealError {
   if @storage.kind(input) != @async_fs.FileKind::Directory {
     raise @model.MedSealError::InvalidArgument(
@@ -86,6 +94,25 @@ pub async fn plan(
     raise @model.MedSealError::InvalidArgument(
       "streaming requires strict profile",
     )
+  }
+  if !program_sha256.is_empty() &&
+    (
+      !streamed ||
+      provider is None ||
+      program_sha256.length() != 64 ||
+      !program_sha256.all(fn(c) {
+        (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')
+      })
+    ) {
+    raise @model.MedSealError::InvalidArgument(
+      "cache requires a pinned native streaming producer",
+    )
+  }
+  let program_sha256 = if provider is Some(provider) &&
+    !program_sha256.is_empty() {
+    provider.runtime_digest(program_sha256)
+  } else {
+    program_sha256
   }
   let root = @storage.canonical(input)
   let inventory = @inventory.discover(root)
@@ -126,9 +153,13 @@ pub async fn plan(
     hashes.push(hash)
     offsets.push(@storage.date_offset(policy.date_shift_days))
   }
+  let historical = historical_witnesses(
+    metadata, policy, provider, program_sha256, destination,
+  )
   let report = @verification.check(
     metadata,
     allow_external=policy.allow_external_references,
+    historical=historical.source,
   )
   let context = @identity.Context::new(@storage.token(size=12), policy, offsets)
   context.prepare(metadata)
@@ -137,10 +168,23 @@ pub async fn plan(
       provider.reserve(context.binding_request(metadata, hashes)),
     )
   }
+  let descriptors = context.object_descriptors(metadata, hashes)
+  let cached = if provider is Some(provider) && !program_sha256.is_empty() {
+    provider.cached(
+      cache_request(policy, program_sha256, descriptors).stringify(),
+    )
+  } else {
+    paths.map(fn(_) { None })
+  }
+  if cached.length() != paths.length() {
+    raise @model.MedSealError::IdentityError("cache response count differs")
+  }
   // Run transformations during dry-run as well, so incompatible dates, VRs and
   // rule applications fail before any output directory is created.
-  for dataset in metadata {
-    ignore(context.apply(dataset))
+  for index, dataset in metadata {
+    if cached[index] is None {
+      ignore(context.apply(dataset))
+    }
   }
   {
     root,
@@ -150,6 +194,12 @@ pub async fn plan(
     hashes,
     metadata,
     context,
+    destination,
+    historical,
+    provider,
+    program_sha256,
+    descriptors,
+    cached,
     policy,
     streamed,
     consumed: false,
@@ -314,28 +364,38 @@ pub async fn Job::execute(
         "input metadata changed after planning",
       )
     }
-    let result = self.context.apply(parsed.dataset)
     let id = "object-\{index + 1}"
     let path = join(stage, "\{id}.dcm")
-    let (output_hash, reparsed) = match span {
-      Some(span) => {
-        let hash = @streaming.produce(
-          source_path,
-          path,
-          span,
-          result.dataset,
-          reuse=resume_stage is Some(_),
-        )
-        (hash, @streaming.inspect(path).parsed)
-      }
-      None => {
-        let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
-        if resume_stage is Some(_) {
-          checkpoint_file(path, bytes)
-        } else {
-          @storage.write_new(path, bytes, faults~)
+    let cached = self.cached[index]
+    let result = match cached {
+      Some(artifact) =>
+        cached_result(artifact, self.context, parsed.dataset, source_path, span)
+      None => self.context.apply(parsed.dataset)
+    }
+    let (output_hash, reparsed) = if cached is Some(artifact) {
+      let hash = copy_cached(artifact, path, resume_stage is Some(_))
+      (hash, @streaming.inspect(path).parsed)
+    } else {
+      match span {
+        Some(span) => {
+          let hash = @streaming.produce(
+            source_path,
+            path,
+            span,
+            result.dataset,
+            reuse=resume_stage is Some(_),
+          )
+          (hash, @streaming.inspect(path).parsed)
         }
-        (@checksum.sha256(bytes), @parser.parse(@storage.read(path)))
+        None => {
+          let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
+          if resume_stage is Some(_) {
+            checkpoint_file(path, bytes)
+          } else {
+            @storage.write_new(path, bytes, faults~)
+          }
+          (@checksum.sha256(bytes), @parser.parse(@storage.read(path)))
+        }
       }
     }
     check_meta(reparsed)
@@ -377,6 +437,32 @@ pub async fn Job::execute(
     } else {
       @storage.write_new(join(stage, "\{id}.audit.json"), audit_bytes, faults~)
     }
+    if cached is None &&
+      self.provider is Some(provider) &&
+      !self.program_sha256.is_empty() {
+      let request = Json::object(
+        Map::from_array([
+          (
+            "request",
+            cache_request(self.policy, self.program_sha256, [
+              self.descriptors[index],
+            ]),
+          ),
+          (
+            "output",
+            Json::object(
+              Map::from_array([
+                ("file", Json::string(path)),
+                ("sha256", Json::string(output_hash)),
+                ("audit_file", Json::string(join(stage, "\{id}.audit.json"))),
+                ("audit_sha256", Json::string(@checksum.sha256(audit_bytes))),
+              ]),
+            ),
+          ),
+        ]),
+      )
+      provider.cache_commit(request.stringify())
+    }
     if checkpoint is Some(callback) {
       callback("object-verified", index)
     }
@@ -394,6 +480,7 @@ pub async fn Job::execute(
   let report = @verification.check(
     outputs,
     allow_external=self.policy.allow_external_references,
+    historical=self.recheck_history(),
   )
   if checkpoint is Some(callback) {
     callback("before-manifest", self.paths.length())
@@ -407,6 +494,33 @@ pub async fn Job::execute(
         Json::string(if self.streamed { "streaming-v1" } else { "buffered-v1" }),
       ),
       ("status", Json::string("complete")),
+      (
+        "processing_counts",
+        Json::object(
+          Map::from_array([
+            ("discovered", Json::number(self.paths.length().to_double())),
+            (
+              "newly_converted",
+              Json::number(
+                self.cached
+                .filter(fn(value) { value is None })
+                .length()
+                .to_double(),
+              ),
+            ),
+            (
+              "trusted_reused",
+              Json::number(
+                self.cached
+                .filter(fn(value) { value is Some(_) })
+                .length()
+                .to_double(),
+              ),
+            ),
+            ("rejected", Json::number(0.0)),
+          ]),
+        ),
+      ),
       ("conversion_status", Json::string("metadata-subset-transformed")),
       ("integrity_status", Json::string("verified")),
       ("release_authorized", Json::boolean(false)),
@@ -419,6 +533,10 @@ pub async fn Job::execute(
         Json::boolean(self.policy.allow_external_references),
       ),
       ("references", Json::number(report.references.to_double())),
+      (
+        "historical_references",
+        Json::number(report.historical_references.to_double()),
+      ),
       (
         "external_references",
         Json::number(report.external_references.to_double()),
@@ -441,6 +559,14 @@ pub async fn Job::execute(
     )
   }
   if resume_stage is Some(_) {
+    if !self.program_sha256.is_empty() {
+      checkpoint_file(
+        join(stage + ".checkpoints", "identities.checkpoint.json"),
+        @utf8.encode(
+          cache_request(self.policy, self.program_sha256, self.descriptors).stringify(),
+        ),
+      )
+    }
     checkpoint_file(join(stage, "manifest.json"), manifest_bytes)
   } else {
     @storage.write_new(join(stage, "manifest.json"), manifest_bytes, faults~)

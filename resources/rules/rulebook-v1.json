@@ -5963,6 +5963,43 @@
       ],
       "support": "implemented-contract",
       "test": "tools/generate_conformance_corpus.py"
+    },
+    {
+      "action": "validate",
+      "condition": {
+        "kind": "temporal-profile",
+        "unknown": "block"
+      },
+      "context": "DT/TM precision, fractional seconds, explicit offsets and leap-second boundaries",
+      "id": "temporal-precision",
+      "implementation": [
+        "src/date/temporal.mbt",
+        "src/validator/structural_rules.mbt",
+        "src/identity/transform.mbt"
+      ],
+      "negative_case": "temporal-precision-invalid",
+      "positive_case": "temporal-precision-valid",
+      "profiles": [
+        "strict-v1"
+      ],
+      "references": [
+        {
+          "document": "PS3.5",
+          "edition": "2025e",
+          "purpose": "DA, DT and TM value syntax; implementation preserves stated precision and does not invent missing date context",
+          "section": "6.2; Table 6.2-1",
+          "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part05/sect_6.2.html"
+        },
+        {
+          "document": "MedSeal",
+          "edition": "v2",
+          "purpose": "profile-specific date shifting and explicit unknown leap-second handling",
+          "section": "retain-dt-precision-v1",
+          "url": "docs/TEMPORAL_SEMANTICS.zh-CN.md"
+        }
+      ],
+      "support": "implemented-contract",
+      "test": "src/date/temporal_test.mbt"
     }
   ],
   "schema": 1,

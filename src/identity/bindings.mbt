@@ -89,6 +89,61 @@ pub fn Context::binding_request(
 }
 
 ///|
+/// Private ledger descriptors bind each output to exactly its own mappings.
+pub fn Context::object_descriptors(
+  self : Context,
+  datasets : Array[@model.DataSet],
+  hashes : Array[String],
+) -> Array[Json] raise @model.MedSealError {
+  if hashes.length() != datasets.length() || !self.ready {
+    raise @model.MedSealError::IdentityError("invalid ledger descriptor state")
+  }
+  datasets.mapi((index, dataset) => {
+    let key = patient_key(dataset, self.policy.scope_name)
+    let patient = self.patient(dataset)
+    let issuer = text(dataset, @model.Tag::new(0x0010U, 0x0021U)).unwrap_or("")
+    let id = required_text(dataset, @model.Tag::new(0x0010U, 0x0020U))
+    let instance = required_text(dataset, @model.Tag::new(0x0008U, 0x0018U))
+    let values : Map[String, Bool] = Map([])
+    collect_uids(dataset, values, self.policy.strict_metadata)
+    let keys = values.keys().to_array()
+    keys.sort()
+    let bindings = Json::array([
+      Json::string(patient),
+      Json::number(self.date_offset(patient).to_double()),
+      Json::array(
+        keys.map(uid => {
+          Json::array([Json::string(uid), Json::string(self.mapped_uid(uid))])
+        }),
+      ),
+    ])
+    Json::object(
+      Map::from_array([
+        ("source_uid", Json::string(instance)),
+        ("source_sha256", Json::string(hashes[index])),
+        ("source_patient_key", Json::string(key)),
+        (
+          "owner_key",
+          Json::string("\{issuer.length()}:\{issuer}\{id.length()}:\{id}"),
+        ),
+        (
+          "sop_class",
+          Json::string(
+            required_text(dataset, @model.Tag::new(0x0008U, 0x0016U)),
+          ),
+        ),
+        ("mapped_uid", Json::string(self.mapped_uid(instance))),
+        ("mapped_patient", Json::string(patient)),
+        (
+          "bindings_sha256",
+          Json::string(@checksum.sha256(@utf8.encode(bindings.stringify()))),
+        ),
+      ]),
+    )
+  })
+}
+
+///|
 fn fields(json : Json) -> Map[String, Json] raise @model.MedSealError {
   match json {
     Json::Object(fields) => fields

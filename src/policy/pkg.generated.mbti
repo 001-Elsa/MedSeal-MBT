@@ -15,7 +15,7 @@ pub fn parse_tag(String) -> @model.Tag raise @model.MedSealError
 
 pub fn research(scope_name? : String, date_shift_days? : Int, allow_external_references? : Bool, rules? : Array[Rule]) -> Policy raise @model.MedSealError
 
-pub fn strict(scope_name? : String, date_shift_days? : Int, path_rules? : Array[PathRule]) -> Policy raise @model.MedSealError
+pub fn strict(scope_name? : String, date_shift_days? : Int, path_rules? : Array[PathRule], retain_dt? : Bool) -> Policy raise @model.MedSealError
 
 // Errors
 
@@ -44,6 +44,7 @@ pub struct Policy {
   date_shift_days : Int
   allow_external_references : Bool
   strict_metadata : Bool
+  retain_dt : Bool
   // private fields
 }
 pub fn Policy::action(Self, @model.Tag) -> Action?

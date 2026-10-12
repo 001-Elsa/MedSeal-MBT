@@ -58,6 +58,10 @@ pub fn convert(
       tag,
       event.path,
       event.action,
+      temporal=context.retains_dt() &&
+        ["precision-preserving-dt", "retained-timezone-context"].contains(
+          event.rule,
+        ),
       custom=![
         "retain-supported", "reference-sequence", "identity-uid", "full-date-offset",
         "patient-pseudonym", "strict-empty-or-descriptive", "direct-identifier",

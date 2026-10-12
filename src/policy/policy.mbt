@@ -19,6 +19,7 @@ pub struct Policy {
   allow_external_references : Bool
   priv rules : Array[Rule]
   strict_metadata : Bool
+  retain_dt : Bool
   priv path_rules : Array[PathRule]
 }
 
@@ -67,6 +68,7 @@ pub fn research(
     allow_external_references,
     rules: rules.copy(),
     strict_metadata: false,
+    retain_dt: false,
     path_rules: [],
   }
 }

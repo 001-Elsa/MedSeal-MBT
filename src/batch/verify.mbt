@@ -30,7 +30,10 @@ fn json_string(value : Json?) -> String raise @model.MedSealError {
 }
 
 ///|
-pub async fn verify(input : String) -> String raise @model.MedSealError {
+pub async fn verify(
+  input : String,
+  historical? : Array[(String, String, String)] = [],
+) -> String raise @model.MedSealError {
   if @storage.kind(input) != @async_fs.FileKind::Directory {
     raise @model.MedSealError::InvalidArgument(
       "job must be a directory, not a link",
@@ -171,13 +174,25 @@ pub async fn verify(input : String) -> String raise @model.MedSealError {
       )
     }
   }
-  let report = @verification.check(metadata, allow_external=external)
+  let report = @verification.check(
+    metadata,
+    allow_external=external,
+    historical~,
+  )
   if manifest.get("references") !=
     Some(Json::number(report.references.to_double())) ||
     manifest.get("external_references") !=
     Some(Json::number(report.external_references.to_double())) {
     raise @model.MedSealError::OutputVerificationFailed(
       "reference counts differ from manifest",
+    )
+  }
+  let declared_history = manifest
+    .get("historical_references")
+    .unwrap_or(Json::number(0.0))
+  if declared_history != Json::number(report.historical_references.to_double()) {
+    raise @model.MedSealError::OutputVerificationFailed(
+      "historical witness count differs",
     )
   }
   Json::object(

@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "stage": "W2",
+  "status": "passed",
+  "checks": [
+    "destination-identity-signed-review-bound-and-idempotently-delivered",
+    "historical-reference-resolves-only-after-acknowledged-target-revalidation",
+    "tampered-deduplicated-target-rejected-even-with-acknowledged-ledger-state",
+    "missing-receipt-rebuilt-after-byte-reverification"
+  ],
+  "release_authorized": false,
+  "limitations": [
+    "synthetic source and reviewer only",
+    "controlled local POSIX destination",
+    "remote PACS exactly-once and clinical acceptance remain separate field gates"
+  ]
+}

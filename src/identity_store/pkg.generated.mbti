@@ -10,13 +10,24 @@ import {
 // Errors
 
 // Types and methods
+pub struct CachedArtifact {
+  file : String
+  sha256 : String
+  audit_file : String
+  audit_sha256 : String
+}
+
 pub(all) struct Provider {
   python : String
   adapter : String
   store : String
   source_domain : String
 }
+pub async fn Provider::cache_commit(Self, String) -> Unit raise @model.MedSealError
+pub async fn Provider::cached(Self, String) -> Array[CachedArtifact?] raise @model.MedSealError
+pub async fn Provider::history(Self, String) -> Json raise @model.MedSealError
 pub async fn Provider::reserve(Self, String) -> String raise @model.MedSealError
+pub async fn Provider::runtime_digest(Self, String) -> String raise @model.MedSealError
 
 // Type aliases
 

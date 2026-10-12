@@ -64,6 +64,7 @@ pub fn strict(
   scope_name? : String = "research",
   date_shift_days? : Int = 30,
   path_rules? : Array[PathRule] = [],
+  retain_dt? : Bool = false,
 ) -> Policy raise @model.MedSealError {
   let base = research(scope_name~, date_shift_days~)
   if path_rules.length() > 1000 {
@@ -156,7 +157,7 @@ pub fn strict(
       }
     }
   }
-  { ..base, strict_metadata: true, path_rules: path_rules.copy(), }
+  { ..base, strict_metadata: true, retain_dt, path_rules: path_rules.copy(), }
 }
 
 ///|
@@ -199,7 +200,7 @@ pub fn Policy::canonical_json(self : Policy) -> String {
   rules.sort_by(fn(a, b) { a.tag.compact().compare(b.tag.compact()) })
   let paths = self.path_rules.copy()
   paths.sort_by(fn(a, b) { a.id.compare(b.id) })
-  Json::array([
+  let canonical = [
     Json::string(if self.strict_metadata { "strict-v1" } else { "research-v1" }),
     Json::string(self.scope_name),
     Json::number(self.date_shift_days.to_double()),
@@ -228,7 +229,11 @@ pub fn Policy::canonical_json(self : Policy) -> String {
         ])
       }),
     ),
-  ]).stringify()
+  ]
+  if self.retain_dt {
+    canonical.push(Json::string("retain-dt-precision-v1"))
+  }
+  Json::array(canonical).stringify()
 }
 
 ///|

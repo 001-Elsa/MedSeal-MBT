@@ -16,6 +16,11 @@ pub fn Context::is_strict(self : Context) -> Bool {
 }
 
 ///|
+pub fn Context::retains_dt(self : Context) -> Bool {
+  self.policy.retain_dt
+}
+
+///|
 pub fn Context::new(
   uid_seed : String,
   policy : @policy.Policy,

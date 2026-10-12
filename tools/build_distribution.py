@@ -13,7 +13,7 @@ import zipfile
 from private_store import canonical
 
 REPO = Path(__file__).resolve().parents[1]
-RUNTIME_TOOLS = ['private_store.py', 'store_admin.py', 'local_fs.py', 'enterprise_job.py', 'risk_gate.py', 'attestation.py', 'verify_delivery.py', 'deliver_local.py', 'install_enterprise.py']
+RUNTIME_TOOLS = ['private_store.py', 'store_admin.py', 'ledger_cache.py', 'history_outbox.py', 'local_fs.py', 'enterprise_job.py', 'risk_gate.py', 'attestation.py', 'verify_delivery.py', 'deliver_local.py', 'install_enterprise.py']
 
 
 def build(destination, wheels):

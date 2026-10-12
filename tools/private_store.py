@@ -91,6 +91,15 @@ class PrivateStore:
             os.close(self.lock)
             raise StoreError("unsafe-store-lock")
         fcntl.flock(self.lock, fcntl.LOCK_EX)
+        try:
+            self._open_records()
+        except BaseException:
+            if hasattr(self, 'db'):
+                self.db.close()
+            os.close(self.lock)
+            raise
+
+    def _open_records(self):
         generation = private_file(self.root / "CURRENT", 64).decode()
         if not generation or any(c not in "0123456789abcdef" for c in generation):
             raise StoreError("invalid-key-generation")
@@ -117,6 +126,7 @@ class PrivateStore:
         check = self.db.execute("SELECT value FROM meta WHERE name='key-check'").fetchone()
         if not check or self.decrypt("meta", b"key-check", check[0]) != {"schema": 1}:
             raise StoreError("key-or-schema-mismatch")
+        self.ledger_version()  # Never silently open an unknown future schema.
 
     def close(self):
         self.db.close()
@@ -135,6 +145,31 @@ class PrivateStore:
             return json.loads(self.cipher.decrypt(data[:12], data[12:], canonical([1, kind, lookup.hex()])))
         except Exception:
             raise StoreError("private-record-authentication-failed") from None
+
+    def ledger_version(self):
+        row = self.db.execute("SELECT value FROM meta WHERE name='ledger-version'").fetchone()
+        if row is None:
+            return 1
+        value = self.decrypt('meta', b'ledger-version', row[0])
+        if value != {'schema': 2}:
+            raise StoreError('unsupported-ledger-schema')
+        return 2
+
+    def require_ledger(self):
+        if self.ledger_version() != 2:
+            raise StoreError('ledger-migration-required')
+
+    def ledger_get(self, kind, scope, source):
+        self.require_ledger()
+        key = self.lookup('ledger-' + kind, scope, source)
+        row = self.db.execute('SELECT payload FROM ledger WHERE kind=? AND lookup=?', (kind, key)).fetchone()
+        return None if row is None else self.decrypt('ledger-' + kind, key, row[0])
+
+    def ledger_put(self, kind, scope, source, value):
+        self.require_ledger()
+        key = self.lookup('ledger-' + kind, scope, source)
+        self.db.execute('INSERT INTO ledger VALUES(?,?,?) ON CONFLICT(kind,lookup) DO UPDATE SET payload=excluded.payload',
+                        (kind, key, self.encrypt('ledger-' + kind, key, value)))
 
     def reserve(self, request, source_domain):
         if set(request) != {"schema", "namespace", "date_shift_days", "patients", "uids", "objects", "owners"} or request["schema"] != 2:
@@ -231,11 +266,15 @@ def initialize(root):
             CREATE TABLE patients(lookup BLOB PRIMARY KEY, alias_key BLOB UNIQUE NOT NULL, payload BLOB NOT NULL);
             CREATE TABLE uids(lookup BLOB PRIMARY KEY, mapped_key BLOB UNIQUE NOT NULL, payload BLOB NOT NULL);
             CREATE TABLE registry(kind TEXT NOT NULL, lookup BLOB NOT NULL, payload BLOB NOT NULL, PRIMARY KEY(kind,lookup));
+            CREATE TABLE ledger(kind TEXT NOT NULL, lookup BLOB NOT NULL, payload BLOB NOT NULL, PRIMARY KEY(kind,lookup));
         """)
         key = HKDF(algorithm=hashes.SHA256(), length=32, salt=None, info=b"MedSeal-v1-record-encryption").derive(master)
         nonce = os.urandom(12)
         check = nonce + AESGCM(key).encrypt(nonce, canonical({"schema": 1}), canonical([1, "meta", b"key-check".hex()]))
         db.execute("INSERT INTO meta VALUES (?,?)", ("key-check", check))
+        nonce = os.urandom(12)
+        version = nonce + AESGCM(key).encrypt(nonce, canonical({'schema': 2}), canonical([1, 'meta', b'ledger-version'.hex()]))
+        db.execute('INSERT INTO meta VALUES (?,?)', ('ledger-version', version))
         db.execute("PRAGMA wal_checkpoint(TRUNCATE)")
     finally:
         db.close()
@@ -257,9 +296,12 @@ def write_generation(root, master):
 def main():
     os.umask(0o077)
     parser = argparse.ArgumentParser()
-    parser.add_argument("operation", choices=["init", "reserve"])
+    parser.add_argument("operation", choices=["init", "reserve", "cache-get", "cache-put", "cache-invalidate", "cache-cleanup-orphans", "runtime-fingerprint", "history-get"])
     parser.add_argument("--store", type=Path, required=True)
     parser.add_argument("--source-domain")
+    parser.add_argument("--root", type=Path)
+    parser.add_argument("--destination-domain")
+    parser.add_argument("--outbox-id")
     args = parser.parse_args()
     try:
         if args.operation == "init":
@@ -277,9 +319,35 @@ def main():
                     out[key] = value
                 return out
             request = json.loads(data, object_pairs_hook=no_duplicates)
+            if args.operation == 'runtime-fingerprint':
+                if request != {'schema': 1}:
+                    raise StoreError('invalid-runtime-request')
+                from ledger_cache import provider_runtime
+                print(canonical({'schema': 1, 'fingerprint': provider_runtime()}).decode())
+                return 0
+            if args.operation == 'history-get':
+                from history_outbox import resolve_history
+                print(canonical(resolve_history(args.store, request, args.source_domain)).decode())
+                return 0
             store = PrivateStore(args.store)
             try:
-                print(canonical(store.reserve(request, args.source_domain)).decode())
+                if args.operation == 'reserve':
+                    result = store.reserve(request, args.source_domain)
+                elif args.operation == 'cache-get':
+                    from ledger_cache import lookup
+                    result = lookup(store, request, args.source_domain)
+                elif args.operation == 'cache-put':
+                    from ledger_cache import commit
+                    if not isinstance(request, dict) or set(request) != {'request', 'output'}:
+                        raise StoreError('invalid-cache-commit-envelope')
+                    result = commit(store, request['request'], request['output'], args.source_domain)
+                elif args.operation == 'cache-invalidate':
+                    from ledger_cache import invalidate
+                    result = invalidate(store, request, args.source_domain)
+                elif args.operation == 'cache-cleanup-orphans':
+                    from ledger_cache import cleanup_orphans
+                    result = cleanup_orphans(store)
+                print(canonical(result).decode())
             finally:
                 store.close()
     except StoreError as error:

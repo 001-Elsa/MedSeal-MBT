@@ -7,7 +7,7 @@ import {
 }
 
 // Values
-pub fn check(Array[@model.DataSet], allow_external? : Bool) -> CollectionReport raise @model.MedSealError
+pub fn check(Array[@model.DataSet], allow_external? : Bool, historical? : Array[(String, String, String)]) -> CollectionReport raise @model.MedSealError
 
 pub fn check_file_meta(@parser.ParsedFile) -> Unit raise @model.MedSealError
 
@@ -16,6 +16,8 @@ pub fn check_unique_tags(@model.DataSet) -> Unit raise @model.MedSealError
 pub fn clean_private(@model.DataSet) -> Bool
 
 pub fn metadata_only(@model.DataSet) -> @model.DataSet
+
+pub fn missing_references(Array[@model.DataSet]) -> Array[(String, String, String)] raise @model.MedSealError
 
 pub fn same_values(@model.DataSet, @model.DataSet) -> Bool
 
@@ -26,6 +28,7 @@ pub struct CollectionReport {
   objects : Int
   references : Int
   external_references : Int
+  historical_references : Int
 }
 
 // Type aliases

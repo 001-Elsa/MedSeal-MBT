@@ -124,6 +124,28 @@ fn validate_elements(
             ),
           )
         }
+        if (
+            element.vr == @model.DT &&
+            !value.split("\\").all(fn(part) { @date.valid_dt(part.to_owned()) })
+          ) ||
+          (
+            element.vr == @model.TM &&
+            !value.split("\\").all(fn(part) { @date.valid_tm(part.to_owned()) })
+          ) ||
+          (
+            element.tag == @model.Tag::new(0x0008U, 0x0201U) &&
+            !value.is_empty() &&
+            !@date.valid_zone(value)
+          ) {
+          issues.push(
+            ValidationIssue::new(
+              Error,
+              "MEDSEAL-E216",
+              "invalid temporal precision, offset or value",
+              tag=Some(element.tag),
+            ),
+          )
+        }
         if value.length() > 1024 * 1024 {
           issues.push(
             ValidationIssue::new(

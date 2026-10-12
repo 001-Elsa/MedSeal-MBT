@@ -12,6 +12,47 @@ pub struct Result {
 }
 
 ///|
+/// Private pinned-producer audit replay; this is not a validation or review grant.
+pub fn Context::restore_cached(
+  self : Context,
+  dataset : @model.DataSet,
+  audit : String,
+) -> Result raise @model.MedSealError {
+  if !self.ready || !self.is_strict() {
+    raise @model.MedSealError::IdentityError("invalid cached context")
+  }
+  let root = match (@json.parse(audit) catch { _ => Json::null() }) {
+    Json::Object(fields) => fields
+    _ => raise @model.MedSealError::IdentityError("invalid cached audit")
+  }
+  if root.get("policy_sha256") != Some(Json::string(self.policy.digest())) ||
+    root.get("conversion") != Some(Json::string("verified")) ||
+    root.get("pixel_bytes_preserved") != Some(Json::boolean(true)) ||
+    root.get("pixels_inspected") != Some(Json::boolean(false)) {
+    raise @model.MedSealError::IdentityError("cached audit binding differs")
+  }
+  let rows = match root.get("events") {
+    Some(Json::Array(rows)) if rows.length() <= 100000 => rows
+    _ => raise @model.MedSealError::IdentityError("invalid cached event count")
+  }
+  let events = rows.map(row => {
+    let fields = match row {
+      Json::Object(fields) if fields.length() == 3 => fields
+      _ => raise @model.MedSealError::IdentityError("invalid cached event")
+    }
+    let field = fn(name) -> String raise @model.MedSealError {
+      match fields.get(name) {
+        Some(Json::String(value)) => value
+        _ =>
+          raise @model.MedSealError::IdentityError("invalid cached event field")
+      }
+    }
+    { path: field("path"), rule: field("rule"), action: field("action"), }
+  })
+  { dataset, events, }
+}
+
+///|
 fn replace(element : @model.DataElement, value : String) -> @model.DataElement {
   @model.DataElement::new(
     element.tag,
@@ -37,6 +78,18 @@ fn transform(
 ) -> @model.DataSet raise @model.MedSealError {
   let result : Array[@model.DataElement] = []
   let basic = @deid.basic_policy()
+  let retain_zone = context.policy.retain_dt &&
+    (match text(dataset, @model.Tag::new(0x0008U, 0x002AU)) {
+      Some(value) =>
+        match @date.parse_dt(value) {
+          Some(temporal) =>
+            temporal.precision >= 8 &&
+            temporal.zone_minutes is None &&
+            !temporal.leap_second
+          None => false
+        }
+      None => false
+    })
   for element in dataset.elements {
     let location = "\{path}/\{element.tag.compact()}"
     let mut action = "keep"
@@ -57,7 +110,10 @@ fn transform(
         element.tag.group == 0xFFFAU ||
         element.tag.group == 0xFFFCU ||
         (element.tag.group >= 0x6000U && element.tag.group <= 0x60FFU) ||
-        strict_attribute.map(fn(a) { a.role }) == Some("remove") {
+        (
+          strict_attribute.map(fn(a) { a.role }) == Some("remove") &&
+          !(retain_zone && element.tag == @model.Tag::new(0x0008U, 0x0201U))
+        ) {
         events.push({
           path: location,
           rule: "strict-remove-sensitive-structure",
@@ -70,6 +126,18 @@ fn transform(
       }
     }
     let output = match element.value {
+      @model.Text(value) if context.policy.retain_dt &&
+        element.tag == @model.Tag::new(0x0008U, 0x002AU) => {
+        let shifted = @date.shift_dt(value, context.date_offset(patient))
+        action = if shifted.is_empty() { "empty" } else { "shift" }
+        rule = "precision-preserving-dt"
+        replace(element, shifted)
+      }
+      _ if retain_zone && element.tag == @model.Tag::new(0x0008U, 0x0201U) => {
+        action = "keep"
+        rule = "retained-timezone-context"
+        element
+      }
       @model.ElementValue::Sequence(items) => {
         action = "recurse"
         rule = "reference-sequence"

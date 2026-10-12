@@ -15,7 +15,7 @@ pub fn contract_evidence(String) -> String
 
 pub fn contract_source(String) -> String
 
-pub fn decision(@model.Tag, String, String, custom? : Bool) -> RuleDecision raise @model.MedSealError
+pub fn decision(@model.Tag, String, String, custom? : Bool, temporal? : Bool) -> RuleDecision raise @model.MedSealError
 
 pub let digest : String
 

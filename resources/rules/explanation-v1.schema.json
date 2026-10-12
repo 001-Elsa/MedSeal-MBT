@@ -296,7 +296,8 @@
                   "public-error-boundary",
                   "policy-priority",
                   "required-sop-conditional",
-                  "attr-00120063"
+                  "attr-00120063",
+                  "temporal-precision"
                 ]
               },
               "action": {
@@ -334,14 +335,16 @@
                 "enum": [
                   "DICOM 2025e PS3.15 E.1",
                   "DICOM 2025e PS3.15 Table E.1-1; PS3.6 Table 6-1",
-                  "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy"
+                  "DICOM 2025e PS3.6 Table 6-1; MedSeal reviewed policy",
+                  "DICOM 2025e PS3.5 Table 6.2-1; MedSeal temporal policy"
                 ]
               },
               "reason": {
                 "enum": [
                   "removed-sensitive-or-obsolete-structure",
                   "compiled-descriptive-override",
-                  "reviewed-attribute-classification"
+                  "reviewed-attribute-classification",
+                  "precision-preserving-temporal-policy"
                 ]
               },
               "stage": {
@@ -488,7 +491,8 @@
                   "public-error-boundary-valid",
                   "policy-priority-valid",
                   "required-sop-conditional-valid",
-                  "rule-00120063-valid-field"
+                  "rule-00120063-valid-field",
+                  "temporal-precision-valid"
                 ]
               }
             }
@@ -545,7 +549,8 @@
                 "profile",
                 "pixels",
                 "condition",
-                "numeric"
+                "numeric",
+                "temporal"
               ]
             },
             "rule_id": {
@@ -689,7 +694,8 @@
                 "policy-priority",
                 "required-sop-conditional",
                 "attr-00120063",
-                "file-meta-identity"
+                "file-meta-identity",
+                "temporal-precision"
               ]
             },
             "path": {

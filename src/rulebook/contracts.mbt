@@ -143,6 +143,7 @@ pub fn known_contract(id : String) -> Bool {
     "policy-priority" => true
     "required-sop-conditional" => true
     "file-meta-identity" => true
+    "temporal-precision" => true
     _ => false
   }
 }
@@ -290,6 +291,8 @@ pub fn contract_source(id : String) -> String {
     "policy-priority" => "MedSeal strict-v1 descriptive rule compiler"
     "required-sop-conditional" => "PS3.3 C.8.6; C.8.2; C.8.3 (declared subset)"
     "file-meta-identity" => "PS3.10 7.1; Table 7.1-1"
+    "temporal-precision" =>
+      "PS3.5 6.2; Table 6.2-1; MedSeal retain-dt-precision-v1"
     _ => "MedSeal public error contract v1"
   }
 }
@@ -437,6 +440,7 @@ pub fn contract_evidence(id : String) -> String {
     "policy-priority" => "policy-priority-invalid"
     "required-sop-conditional" => "required-sop-conditional-invalid"
     "file-meta-identity" => "file-meta-identity-mismatch"
+    "temporal-precision" => "temporal-precision-invalid"
     _ => "public-error-canary"
   }
 }

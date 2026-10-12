@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "stage": "W2",
+  "status": "passed",
+  "checks": [
+    "five-followup-style-reservations-keep-identity-and-date-binding",
+    "exact-repeat-cache-hit-program-change-miss-tamper-fails-closed-and-explicit-invalidation",
+    "legacy-ledger-migration-backup-and-new-directory-rollback",
+    "published-history-requires-ack-and-rechecks-output-audit-sop-and-patient-binding",
+    "outbox-idempotent-ack-rebuilds-receipt-but-rejects-tampered-target"
+  ],
+  "executed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "release_authorized": false,
+  "limitations": [
+    "synthetic private fixtures",
+    "single-owner local POSIX adapter",
+    "directory receiver only; remote PACS exactly-once requires a separate protocol",
+    "no real patient, operator, recipient or independent clinical review evidence"
+  ]
+}

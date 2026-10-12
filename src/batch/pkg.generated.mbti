@@ -10,11 +10,11 @@ import {
 }
 
 // Values
-pub async fn plan(String, @policy.Policy, provider? : @identity_store.Provider?, streamed? : Bool) -> Job raise @model.MedSealError
+pub async fn plan(String, @policy.Policy, provider? : @identity_store.Provider?, streamed? : Bool, program_sha256? : String, destination? : Json?) -> Job raise @model.MedSealError
 
 pub async fn run(String, String, @policy.Policy, provider? : @identity_store.Provider?) -> String raise @model.MedSealError
 
-pub async fn verify(String) -> String raise @model.MedSealError
+pub async fn verify(String, historical? : Array[(String, String, String)]) -> String raise @model.MedSealError
 
 // Errors
 
@@ -25,6 +25,7 @@ pub struct Job {
 }
 pub async fn Job::execute(Self, String, faults? : @storage.Faults?, checkpoint? : (async (String, Int) -> Unit raise @model.MedSealError)?, resume_stage? : ResumeStage?) -> String raise @model.MedSealError
 pub fn Job::preview(Self) -> String
+pub async fn Job::verify_output(Self, String) -> String raise @model.MedSealError
 
 pub(all) struct ResumeStage {
   path : String

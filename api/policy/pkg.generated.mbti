@@ -8,7 +8,7 @@ import {
 // Values
 pub fn from_json(String) -> @001-Elsa/medseal/src/policy.Policy raise @model.MedSealError
 
-pub fn strict(scope_name? : String, date_shift_days? : Int, path_rules? : Array[@001-Elsa/medseal/src/policy.PathRule]) -> @001-Elsa/medseal/src/policy.Policy raise @model.MedSealError
+pub fn strict(scope_name? : String, date_shift_days? : Int, path_rules? : Array[@001-Elsa/medseal/src/policy.PathRule], retain_dt? : Bool) -> @001-Elsa/medseal/src/policy.Policy raise @model.MedSealError
 
 // Errors
 

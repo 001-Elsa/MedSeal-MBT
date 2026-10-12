@@ -114,6 +114,14 @@ def after_model(ds, config=None):
             if group % 2 or element == 0 or group in {0x0400, 0xfffa, 0xfffc} or 0x6000 <= group <= 0x60ff:
                 continue
             action = EXPECT['actions'][tag]
+            retain_dt = config and config.get('temporal_policy') == 'retain-dt-precision-v1'
+            if retain_dt and tag == '0008002A':
+                action = 'shift'
+            if retain_dt and tag == '00080201':
+                # An explicit timezone is retained only when the DT has no
+                # offset and supplies a complete calendar date.
+                dt = str(ds.get(0x0008002A).value) if 0x0008002A in ds else ''
+                action = 'keep' if len(dt) >= 8 and not (dt[-5:-4] in {'+', '-'}) else 'remove'
             if action == 'remove':
                 continue
             if action == 'replace':
@@ -123,7 +131,19 @@ def after_model(ds, config=None):
             elif action == 'remap' and value is not None:
                 value = '\\'.join(mappings[v] for v in value.split('\\'))
             elif action == 'shift' and value is not None:
-                value = '\\'.join((datetime.datetime.strptime(v, '%Y%m%d') + datetime.timedelta(days=14)).strftime('%Y%m%d') for v in value.split('\\'))
+                if tag == '0008002A':
+                    shifted = []
+                    for v in value.split('\\'):
+                        body, suffix = v, ''
+                        if len(v) >= 5 and v[-5] in '+-':
+                            body, suffix = v[:-5], v[-5:]
+                        if len(body) < 8:
+                            shifted.append(None)
+                        else:
+                            shifted.append((datetime.datetime.strptime(body[:8], '%Y%m%d') + datetime.timedelta(days=(config or {}).get('date_shift_days', 14))).strftime('%Y%m%d') + body[8:] + suffix)
+                    value = None if len(shifted) == 1 and shifted[0] is None else '\\'.join('' if item is None else item for item in shifted)
+                else:
+                    value = '\\'.join((datetime.datetime.strptime(v, '%Y%m%d') + datetime.timedelta(days=14)).strftime('%Y%m%d') for v in value.split('\\'))
             elif action == 'recurse':
                 value = [apply(nested) for nested in item[int(tag, 16)].value]
             if config and tag == '00081030':
@@ -165,6 +185,7 @@ def sample(ds, tag, vr, vm):
         value = {'UI': '1.2.3.40', 'DA': '20240229', 'DT': '20240229123456.123456+0800',
                  'TM': '123456.123456', 'DS': '1', 'IS': '1', 'AS': '007Y', 'CS': 'SYNTHETIC',
                  'SH': 'SYNTHETIC', 'LO': 'SYNTHETIC', 'PN': 'SYNTHETIC^SOURCE'}.get(vr, 'SYNTHETIC')
+        if tag == '00080201': value = '+0800'
         if count > 1:
             value = [value] * count
     ds.add_new(number, vr, value)
@@ -249,6 +270,18 @@ def products():
     for date in ['20230229','19000229','20241301']:
         changed=base(); changed.StudyDate=date
         add('date-invalid-'+date, 'malformed', changed, blocked='MEDSEAL-E530', rule='basic-values', stage='values')
+    temporal_policy = {'version': 2, 'mode': 'strict', 'namespace': 'temporal-qa',
+                       'date_shift_days': 14, 'temporal_policy': 'retain-dt-precision-v1',
+                       'path_rules': []}
+    changed = base()
+    changed.add_new(0x0008002A, 'DT', '20240229123456.123456')
+    changed.add_new(0x00080201, 'SH', '+0800')
+    add('temporal-precision-retained', 'valid', changed, config=temporal_policy,
+        rules=['temporal-precision'])
+    changed = base()
+    changed.add_new(0x0008002A, 'DT', '202402')
+    add('temporal-precision-low-cleared', 'privacy-risk', changed, config=temporal_policy,
+        rules=['temporal-precision'])
     for n in [0,1,2,7,31,131,132,133]:
         add('header-cut-'+str(n), 'malformed', raw=encode(base())[:n], blocked='MEDSEAL-E101' if n<132 else 'MEDSEAL-E104')
     raw=encode(base())

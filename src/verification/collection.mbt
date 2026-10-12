@@ -3,6 +3,7 @@ pub struct CollectionReport {
   objects : Int
   references : Int
   external_references : Int
+  historical_references : Int
 }
 
 ///|
@@ -20,6 +21,7 @@ fn references(
   patient : String,
   instances : Map[String, (String, String)],
   allow_external : Bool,
+  historical : Map[String, (String, String)],
   counts : Array[Int],
 ) -> Unit raise @model.MedSealError {
   match @identity.text(dataset, @model.Tag::new(0x0008U, 0x1155U)) {
@@ -42,6 +44,14 @@ fn references(
                 "reference points to a different patient or SOP Class",
               )
             }
+          None if historical.get(uid.to_owned()) is Some((owner, sop_class)) => {
+            if owner != patient || sop_class != class_uid {
+              raise @model.MedSealError::IdentityError(
+                "historical reference belongs to another patient or SOP Class",
+              )
+            }
+            counts[2] = counts[2] + 1
+          }
           None if allow_external => counts[1] = counts[1] + 1
           None =>
             raise @model.MedSealError::IdentityError(
@@ -56,7 +66,9 @@ fn references(
     match element.value {
       @model.ElementValue::Sequence(items) =>
         for item in items {
-          references(item, patient, instances, allow_external, counts)
+          references(
+            item, patient, instances, allow_external, historical, counts,
+          )
         }
       _ => ()
     }
@@ -67,6 +79,7 @@ fn references(
 pub fn check(
   datasets : Array[@model.DataSet],
   allow_external? : Bool = false,
+  historical? : Array[(String, String, String)] = [],
 ) -> CollectionReport raise @model.MedSealError {
   if datasets.is_empty() || datasets.length() > 10000 {
     raise @model.MedSealError::IdentityError(
@@ -155,14 +168,29 @@ pub fn check(
       }
     }
   }
-  let counts = [0, 0]
+  let targets : Map[String, (String, String)] = Map([])
+  for (uid, owner, sop_class) in historical {
+    if targets.contains(uid) || instances.contains(uid) {
+      raise @model.MedSealError::IdentityError("duplicate historical witness")
+    }
+    targets.set(uid, (owner, sop_class))
+  }
+  let counts = [0, 0, 0]
   for dataset in datasets {
-    references(dataset, key(dataset), instances, allow_external, counts)
+    references(
+      dataset,
+      key(dataset),
+      instances,
+      allow_external,
+      targets,
+      counts,
+    )
   }
   {
     objects: datasets.length(),
     references: counts[0],
     external_references: counts[1],
+    historical_references: counts[2],
   }
 }
 
@@ -191,4 +219,55 @@ pub fn metadata_only(dataset : @model.DataSet) -> @model.DataSet {
       }
     }),
   )
+}
+
+///|
+/// Unresolved references only. Native must verify each returned target before
+/// passing explicit historical witnesses to check; this does not authorize them.
+pub fn missing_references(
+  datasets : Array[@model.DataSet],
+) -> Array[(String, String, String)] raise @model.MedSealError {
+  let known_uids : Map[String, Bool] = Map([])
+  for dataset in datasets {
+    known_uids.set(
+      @identity.required_text(dataset, @model.Tag::new(0x0008U, 0x0018U)),
+      true,
+    )
+  }
+  let result : Array[(String, String, String)] = []
+  let seen : Map[String, (String, String)] = Map([])
+  fn visit(
+    item : @model.DataSet,
+    owner : String,
+  ) -> Unit raise @model.MedSealError {
+    if @identity.text(item, @model.Tag::new(0x0008U, 0x1155U)) is Some(uid) &&
+      !known_uids.contains(uid) {
+      let sop_class = @identity.required_text(
+        item,
+        @model.Tag::new(0x0008U, 0x1150U),
+      )
+      match seen.get(uid) {
+        Some(value) if value != (owner, sop_class) =>
+          raise @model.MedSealError::IdentityError(
+            "conflicting historical reference owners",
+          )
+        None => {
+          seen.set(uid, (owner, sop_class))
+          result.push((uid, owner, sop_class))
+        }
+        _ => ()
+      }
+    }
+    for element in item.elements {
+      if element.value is @model.Sequence(items) {
+        for nested in items {
+          visit(nested, owner)
+        }
+      }
+    }
+  }
+  for dataset in datasets {
+    visit(dataset, key(dataset))
+  }
+  result
 }
