@@ -11,7 +11,7 @@
 | W4 | 实现、本机与三平台远端 CI 通过 | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W5 | 实现、本机静态验收与三平台远端 CI 通过 | 回环本地工作台、精确 Host/Origin、会话 capability 与 CSRF、分页对象清单、受限解释摘要、取消请求闭环；证据见 `WORKBENCH.zh-CN.md`、`evidence/w5-workbench.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W6 | 归档消费者实现、本机与三平台远端 CI 通过；registry 回读待完成 | 发布归档 overlay 中的仓库外消费者、稳定版本来源和候选发行边界；Mooncakes/镜像真实发布仍不声称完成；[CI 38266290520](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38266290520) |
-| W7 | 软件演练已实现；待远端 CI 与实际主体材料 | 新操作者、真实授权来源与研究接收、独立审查；这些材料不能由实现者或合成测试代填 |
+| W7 | 软件演练与三平台远端 CI 通过；实际主体材料仍待完成 | 新操作者、真实授权来源与研究接收、独立审查；这些材料不能由实现者或合成测试代填；[CI 38267450046](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38267450046) |
 
 ## W0 验收记录
 
@@ -67,5 +67,5 @@
 
 ## W7 验收记录
 
-- [`tools/verify_w7_rehearsal.py`](../tools/verify_w7_rehearsal.py) 复用已有隔离运行时演练，覆盖全量、两次新增、强杀恢复、历史内容冲突、包装轮换/备份恢复和幂等接收；软件记录明确 `field_acceptance_complete:false`。
+- [`tools/verify_w7_rehearsal.py`](../tools/verify_w7_rehearsal.py) 复用已有隔离运行时演练，覆盖全量、两次新增、强杀恢复、历史内容冲突、包装轮换/备份恢复和幂等接收；三平台 CI 通过，软件记录明确 `field_acceptance_complete:false`，证据见 `evidence/w7-rehearsal.json`。
 - [`docs/REHEARSAL.zh-CN.md`](REHEARSAL.zh-CN.md) 提供新操作者逐步清单。真实来源授权、研究接收方、新操作者观察、独立隐私/可用性审查和持久存储灾备均登记为 `requires_field`，不能由脚本代填。
