@@ -28,6 +28,7 @@ def make_job(root, job_id, state="INGESTED", objects=3):
     job = root / job_id
     job.mkdir(mode=0o700)
     (job / "owner").write_text(job_id, encoding="ascii")
+    (job / "owner").chmod(0o600)
     (job / "sealed").mkdir(mode=0o700)
     for index in range(1, objects + 1):
         (job / "sealed" / ("input-%05d.dcm" % index)).write_bytes(b"synthetic")
@@ -37,6 +38,7 @@ def make_job(root, job_id, state="INGESTED", objects=3):
     db.execute("INSERT INTO events VALUES(1,?,?,?)", (state, "synthetic", time.time_ns()))
     db.commit()
     db.close()
+    (job / "job.sqlite").chmod(0o600)
 
 
 def main():
