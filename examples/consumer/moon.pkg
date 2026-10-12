@@ -1,0 +1,7 @@
+import {
+  "001-Elsa/medseal/api/policy",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "+native"

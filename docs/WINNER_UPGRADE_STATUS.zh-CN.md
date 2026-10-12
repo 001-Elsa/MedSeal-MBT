@@ -10,7 +10,7 @@
 | W3 | 修正实现、本机与远端 CI 通过 | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json`；[CI 38257617635](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38257617635) |
 | W4 | 实现、本机与三平台远端 CI 通过 | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W5 | 实现、本机静态验收与三平台远端 CI 通过 | 回环本地工作台、精确 Host/Origin、会话 capability 与 CSRF、分页对象清单、受限解释摘要、取消请求闭环；证据见 `WORKBENCH.zh-CN.md`、`evidence/w5-workbench.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
-| W6 | 待实施 | 仓库外归档和 registry 消费者、候选发行、镜像一致与隔离安装 |
+| W6 | 归档消费者实现、本机验收通过；待远端 CI 与 registry 回读 | 发布归档 overlay 中的仓库外消费者、稳定版本来源和候选发行边界；Mooncakes/镜像真实发布仍不声称完成 |
 | W7 | 软件演练待实施；实际主体项 requires_field | 新操作者、真实授权来源与研究接收、独立审查；这些材料不能由实现者或合成测试代填 |
 
 ## W0 验收记录
@@ -58,3 +58,9 @@
 - API 检查精确 `Host`、可选 `Origin`、0600 capability 会话和写请求 CSRF；工作区、作业 ID、owner 文件、分页上限和 JSON 请求体均重新校验。公开响应只返回作业 ID、状态、数量、策略摘要和下一步，不返回本机路径、原始值、映射密钥或日期偏移。
 - `tools/verify_workbench.py` 实际覆盖无会话、跨站、分页、对象摘要、路径穿越、错误 CSRF 和取消闭环。GitHub Actions 在 Ubuntu/macOS/Windows 三平台通过；取消端点仅在已认证 POSIX 提供方上运行，Windows 作业仍完成全部核心/静态门禁。
 - 本机受限沙箱禁止 TCP 监听，因此本地记录为语法/纯函数验收；三平台回环验收由远端 CI 执行。工作台仍是 M1 合成受控工具，不是多用户网络服务、TLS 终端、真实 PACS 或 W7 现场认证。
+
+## W6 验收记录
+
+- [`examples/consumer`](../examples/consumer) 只导入 `api/policy` 公共门面；[`tools/verify_consumer.py`](../tools/verify_consumer.py) 在临时目录解压当前包归档，复制第三方依赖缓存，构建并运行 `external-consumer`，原始源码 checkout 不在消费者搜索路径中。
+- 归档 overlay 的检查、Native 构建和执行均通过；结果只输出策略公共状态，`release_authorized` 固定为 `false`。候选归档使用 `moon.mod` 的 0.2.0 版本来源。
+- 真实 Mooncakes registry 消费者、GitLink 镜像、tag/release 和平台安装包的远端回读仍是待办；当前证据不能改写为“已发布”。

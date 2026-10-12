@@ -75,6 +75,9 @@ jobs:
       - name: W5 loopback workbench acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_workbench.py
+      - name: W6 archive consumer acceptance
+        if: runner.os != 'Windows'
+        run: python tools/verify_consumer.py tmp/w6-consumer-ci.json
       - name: Package
         run: moon package
       - name: Upload acceptance evidence
