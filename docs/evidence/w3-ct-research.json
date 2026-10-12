@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "stage": "W3",
+  "profile": "ct-classic-research-v1",
+  "status": "passed",
+  "source_base_commit": "aa3b13d7da3e3f46e0d2e2ab5d5300eb6b56b486",
+  "source_tree_scopes": [
+    "src",
+    "api",
+    "cmd",
+    "tools",
+    "tests",
+    "resources",
+    "conformance",
+    ".github",
+    "examples/authorization",
+    "moon.mod",
+    ".gitattributes",
+    "requirements-enterprise.txt",
+    "requirements-qa.txt"
+  ],
+  "source_tree_files": 706,
+  "source_tree_sha256": "ab78e7870753a26492a63efc3982e2b9821183f452d4b7dc32af0af86d83a33d",
+  "profile_sha256": "77c6ac29776710329d74408b2ea84e2e56c77449264ef9f4bcd42511cd8cb2ce",
+  "tool_sha256": "cab5df71727e18a16a47ead89d8470dd3cf6984725426cdad8288d7c47d3e5ef",
+  "binary_sha256": "5e89fe924e4f985db436ea98b07fc36807f8022624e8cfccaf46e8ddb9d699ce",
+  "series": [
+    {
+      "source": "series-1",
+      "slices": 50,
+      "voxel_differences": 0,
+      "hu_max_abs_error": 0.0,
+      "geometry_max_abs_error_mm": 0.0
+    },
+    {
+      "source": "series-2",
+      "slices": 50,
+      "voxel_differences": 0,
+      "hu_max_abs_error": 0.0,
+      "geometry_max_abs_error_mm": 0.0
+    },
+    {
+      "source": "series-3",
+      "slices": 50,
+      "voxel_differences": 0,
+      "hu_max_abs_error": 0.0,
+      "geometry_max_abs_error_mm": 0.0
+    }
+  ],
+  "negative_cases": [
+    {
+      "id": "missing-slice",
+      "status": "blocked",
+      "reason": "irregular slice spacing"
+    },
+    {
+      "id": "duplicate-position",
+      "status": "blocked",
+      "reason": "duplicate slice position"
+    },
+    {
+      "id": "mixed-orientation",
+      "status": "blocked",
+      "reason": "mixed orientation"
+    },
+    {
+      "id": "non-hu-unit",
+      "status": "blocked",
+      "reason": "HU contract not established"
+    },
+    {
+      "id": "compressed-transfer-syntax",
+      "status": "blocked",
+      "reason": "compressed transfer syntax"
+    }
+  ],
+  "series_count": 3,
+  "minimum_slices_per_series": 50,
+  "independent_reader": {
+    "pydicom": "3.0.1",
+    "transfer_syntax": "1.2.840.10008.1.2.1"
+  },
+  "tolerances": {
+    "direction_component": 1e-06,
+    "physical_coordinate_mm": 0.0001,
+    "hu": 1e-06
+  },
+  "release_authorized": false,
+  "limitations": [
+    "synthetic non-clinical series only",
+    "no burned-in pixel or human privacy clearance",
+    "no real scanner, source authorization or research recipient evidence",
+    "no enhanced CT, multi-frame, compressed syntax or arbitrary vendor extension support"
+  ]
+}

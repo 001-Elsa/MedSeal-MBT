@@ -7,7 +7,7 @@
 | W0 | 实现、本机验收与三平台远端 CI 通过 | 141 项规则索引、固定官方事实、三值条件、公开解释／Schema／四案例、公共门面与受控状态；Native 115，JS/wasm/wasm-gc 各 62；恢复／审核／签名回归；不扩张为完整 IOD 认证 |
 | W1 | 实现、本机 M1/M2 合成验收与三平台 CI 通过 | 473 实际案例，六类，零失败/跳过；四后端一致；pydicom 实际写回，选定 SC 的 dciodvfy 原始诊断，闭集合正反例；完整 CT Profile 留 W3 |
 | W2 | 实现、本机阶段验收通过；待提交与远端 CI | 私有缓存／迁移、已交付历史引用、时间精度、outbox 与计数守恒；证据见 `evidence/w2-incremental.json`、`evidence/w2-destination.json`、`evidence/w2-conformance.json`、`evidence/w2-rulebook.json` |
-| W3 | 待实施 | 限定经典 CT 完整矩阵、三组 50+ 切片、独立体素／HU／几何接收 |
+| W3 | 实现、本机合成验收通过；待提交与远端 CI | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json` |
 | W4 | 待实施 | 作业模型／提交窗口、100,000 次 fuzz、模型 seed、1/8/32 GiB 资源档 |
 | W5 | 待实施 | 受控本地工作台、权限／跨站防护、分页与操作者闭环 |
 | W6 | 待实施 | 仓库外归档和 registry 消费者、候选发行、镜像一致与隔离安装 |
@@ -38,3 +38,10 @@
 - 日期时间解析、对象级缓存与账本迁移已实现。新增 2 个独立字节语料后，475 个案例通过四后端核心检查，失败与跳过均为 0。
 - 目的地身份已绑定计划、审核、签名包和本地接收目录；实际端到端演练验证重复交付、逐对象内容寻址、历史引用、目标篡改拒绝和丢失回执重建。
 - `tools/verify_incremental.py`、`tools/verify_destination.py`、四后端 conformance、rulebook、持久身份、恢复、风险门和签名接收回归均通过。材料全部为合成私有输入；真实患者、真实操作者、真实接收方、独立审查和远程 PACS 仍保留为现场证据。
+
+## W3 验收记录
+
+- [`ct-classic-research-v1` 矩阵](../resources/rules/ct-classic-research-v1.json) 固定经典 CT、单帧、Explicit VR Little Endian、未压缩 16 位 `MONOCHROME2` 范围；MoonBit 入口 [`check_classic_ct`](../src/conformance/ct_profile.mbt) 逐层检查模块字段、CT 条件、像素位语义、HU 单位和几何向量。
+- [`tools/verify_ct_research.py`](../tools/verify_ct_research.py) 实际生成三组各 50 个切片，运行真实批处理后由独立 pydicom 接收器检查排序、解码体素、HU 重算和空间坐标；体素差异为 0，HU 最大绝对误差为 0，几何误差为 0。
+- 缺片、重复位置、方向混合、非 HU 单位和压缩传输语法五类负例均明确阻断。证据绑定提交前源码树、Profile、工具和原生二进制指纹；全部数据为合成非临床数据。
+- 真实扫描设备、真实来源授权、烧录文字/识别性像素审查、独立研究接收方和临床用途仍保留为 `requires_field`；增强 CT、多帧、压缩像素和任意厂商扩展不在该 Profile 内。

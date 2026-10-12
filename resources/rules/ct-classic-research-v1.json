@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "profile": "ct-classic-research-v1",
+  "standard": "DICOM 2025e",
+  "scope": {
+    "sop_class": "1.2.840.10008.5.1.4.1.1.2",
+    "modality": "CT",
+    "transfer_syntax": "1.2.840.10008.1.2.1",
+    "frames": 1,
+    "photometric_interpretation": "MONOCHROME2",
+    "bits_allocated": 16,
+    "research_use": "decoded voxel arrays, declared HU statistics and three-dimensional geometry"
+  },
+  "modules": [
+    {
+      "id": "patient",
+      "name": "Patient",
+      "fields": [
+        ["00100010", "PatientName", "2"], ["00100020", "PatientID", "2"],
+        ["00100030", "PatientBirthDate", "2"], ["00100040", "PatientSex", "2"]
+      ]
+    },
+    {
+      "id": "study",
+      "name": "General Study",
+      "fields": [
+        ["00080020", "StudyDate", "2"], ["00080030", "StudyTime", "2"],
+        ["00080050", "AccessionNumber", "2"], ["00080090", "ReferringPhysicianName", "2"],
+        ["0020000D", "StudyInstanceUID", "1"], ["00200010", "StudyID", "2"]
+      ]
+    },
+    {
+      "id": "series",
+      "name": "General Series",
+      "fields": [
+        ["00080060", "Modality", "1"], ["0020000E", "SeriesInstanceUID", "1"],
+        ["00200011", "SeriesNumber", "1"]
+      ]
+    },
+    {
+      "id": "frame-of-reference",
+      "name": "Frame of Reference",
+      "fields": [
+        ["00200052", "FrameOfReferenceUID", "1"], ["00201040", "PositionReferenceIndicator", "2"]
+      ]
+    },
+    {
+      "id": "equipment",
+      "name": "General Equipment",
+      "fields": [["00080070", "Manufacturer", "2"]]
+    },
+    {
+      "id": "image",
+      "name": "General Image and Pixel",
+      "fields": [
+        ["00080008", "ImageType", "1"], ["00080018", "SOPInstanceUID", "1"],
+        ["00200012", "AcquisitionNumber", "2"], ["00200013", "InstanceNumber", "2"],
+        ["00200032", "ImagePositionPatient", "1"], ["00200037", "ImageOrientationPatient", "1"],
+        ["00280002", "SamplesPerPixel", "1"], ["00280004", "PhotometricInterpretation", "1"],
+        ["00280010", "Rows", "1"], ["00280011", "Columns", "1"],
+        ["00280030", "PixelSpacing", "1"], ["00280100", "BitsAllocated", "1"],
+        ["00280101", "BitsStored", "1"], ["00280102", "HighBit", "1"],
+        ["00280103", "PixelRepresentation", "1"], ["7FE00010", "PixelData", "1C"]
+      ]
+    },
+    {
+      "id": "ct-image",
+      "name": "CT Image",
+      "fields": [
+        ["00180050", "SliceThickness", "2"], ["00180060", "KVP", "2"],
+        ["00281052", "RescaleIntercept", "1"], ["00281053", "RescaleSlope", "1"],
+        ["00281054", "RescaleType", "1"]
+      ]
+    }
+  ],
+  "conditions": [
+    {"id": "ct-original-primary", "when": "ImageType contains ORIGINAL and PRIMARY", "requires": "ct-unknown-condition", "unknown": "block"},
+    {"id": "ct-hu-domain", "when": "RescaleType is HU", "requires": "independent HU comparison", "unknown": "block"},
+    {"id": "ct-single-frame", "when": "NumberOfFrames absent or 1", "requires": "one decoded frame", "unknown": "block"},
+    {"id": "ct-explicit-vr-le", "when": "file transfer syntax is Explicit VR Little Endian", "requires": "independent reader acceptance", "unknown": "block"}
+  ],
+  "out_of_profile": [
+    "enhanced CT", "multi-frame", "compressed transfer syntax", "private or unknown public attributes",
+    "non-MONOCHROME2", "burned-in annotation unresolved", "mixed orientation", "duplicate or missing slice position"
+  ],
+  "implementation": ["src/conformance/ct_profile.mbt", "tools/verify_ct_research.py"],
+  "references": [
+    {"document": "PS3.3", "edition": "2025e", "section": "C.8.2.1, C.7.1, C.7.6.2", "purpose": "declared classic CT module subset"},
+    {"document": "PS3.5", "edition": "2025e", "section": "8, 8.1", "purpose": "Explicit VR Little Endian and pixel value encoding"},
+    {"document": "PS3.6", "edition": "2025e", "section": "6", "purpose": "VR/VM dictionary facts"}
+  ]
+}
