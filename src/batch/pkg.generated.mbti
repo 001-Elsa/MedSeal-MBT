@@ -23,8 +23,13 @@ pub struct Job {
   report : @verification.CollectionReport
   // private fields
 }
-pub async fn Job::execute(Self, String, faults? : @storage.Faults?, checkpoint? : (async (String, Int) -> Unit raise @model.MedSealError)?) -> String raise @model.MedSealError
+pub async fn Job::execute(Self, String, faults? : @storage.Faults?, checkpoint? : (async (String, Int) -> Unit raise @model.MedSealError)?, resume_stage? : ResumeStage?) -> String raise @model.MedSealError
 pub fn Job::preview(Self) -> String
+
+pub(all) struct ResumeStage {
+  path : String
+  token : String
+}
 
 // Type aliases
 

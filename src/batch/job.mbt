@@ -13,6 +13,33 @@ pub struct Job {
 }
 
 ///|
+/// Caller owns this private stage exclusively; owner token must match its marker.
+pub(all) struct ResumeStage {
+  path : String
+  token : String
+}
+
+///|
+async fn checkpoint_file(
+  path : String,
+  bytes : Bytes,
+) -> Unit raise @model.MedSealError {
+  if @storage.exists(path) {
+    // Recompute expected bytes; file existence alone is not a checkpoint.
+    if @storage.read(path) == bytes {
+      return
+    }
+    @async_fs.remove(path) catch {
+      _ =>
+        raise @model.MedSealError::IoError(
+          "could not discard owned incomplete checkpoint",
+        )
+    }
+  }
+  @storage.write_new(path, bytes)
+}
+
+///|
 fn join(parent : String, name : String) -> String {
   @path.Path(parent).join(@path.Path(name)).0
 }
@@ -195,6 +222,7 @@ pub async fn Job::execute(
   output : String,
   faults? : @storage.Faults? = None,
   checkpoint? : (async (String, Int) -> Unit raise @model.MedSealError)? = None,
+  resume_stage? : ResumeStage? = None,
 ) -> String raise @model.MedSealError {
   if self.consumed {
     raise @model.MedSealError::InvalidArgument(
@@ -218,9 +246,37 @@ pub async fn Job::execute(
       "job output must be a new directory",
     )
   }
-  let stage = "\{output}.medseal-\{@storage.token()}"
-  @storage.mkdir(stage)
-  defer (@async_fs.rmdir(stage, recursive=true) catch { _ => () })
+  let stage = match resume_stage {
+    Some(owned) => {
+      if owned.token.is_empty() ||
+        owned.token.length() > 128 ||
+        @storage.kind(owned.path) != @async_fs.FileKind::Directory {
+        raise @model.MedSealError::InvalidArgument(
+          "invalid private resume stage",
+        )
+      }
+      let stage = @storage.canonical(owned.path)
+      if nested(self.root, stage) ||
+        stage == output ||
+        @storage.read(join(stage + ".checkpoints", "owner"), limit=128) !=
+        @utf8.encode(owned.token) {
+        raise @model.MedSealError::InvalidArgument(
+          "resume stage ownership mismatch",
+        )
+      }
+      stage
+    }
+    None => {
+      let stage = "\{output}.medseal-\{@storage.token()}"
+      @storage.mkdir(stage)
+      stage
+    }
+  }
+  defer (if resume_stage is None {
+    @async_fs.rmdir(stage, recursive=true) catch {
+      _ => ()
+    }
+  })
   if checkpoint is Some(callback) {
     callback("stage-created", 0)
   }
@@ -251,7 +307,11 @@ pub async fn Job::execute(
     let bytes = @dicom_writer.write_deidentified(parsed, result.dataset)
     let id = "object-\{index + 1}"
     let path = join(stage, "\{id}.dcm")
-    @storage.write_new(path, bytes, faults~)
+    if resume_stage is Some(_) {
+      checkpoint_file(path, bytes)
+    } else {
+      @storage.write_new(path, bytes, faults~)
+    }
     let reparsed = @parser.parse(@storage.read(path))
     check_meta(reparsed)
     if !@verification.same_values(result.dataset, reparsed.dataset) ||
@@ -273,7 +333,24 @@ pub async fn Job::execute(
         "audit report exceeds 16 MiB limit",
       )
     }
-    @storage.write_new(join(stage, "\{id}.audit.json"), audit_bytes, faults~)
+    if resume_stage is Some(_) {
+      checkpoint_file(join(stage, "\{id}.audit.json"), audit_bytes)
+      checkpoint_file(
+        join(stage + ".checkpoints", "\{id}.checkpoint.json"),
+        @utf8.encode(
+          Json::object(
+            Map::from_array([
+              ("object", Json::string(id)),
+              ("sha256", Json::string(@checksum.sha256(bytes))),
+              ("audit_sha256", Json::string(@checksum.sha256(audit_bytes))),
+              ("policy_sha256", Json::string(self.policy.digest())),
+            ]),
+          ).stringify(),
+        ),
+      )
+    } else {
+      @storage.write_new(join(stage, "\{id}.audit.json"), audit_bytes, faults~)
+    }
     if checkpoint is Some(callback) {
       callback("object-verified", index)
     }
@@ -326,11 +403,15 @@ pub async fn Job::execute(
       ),
     ]),
   ).stringify(indent=2)
-  @storage.write_new(
-    join(stage, "manifest.json"),
-    @utf8.encode(manifest),
-    faults~,
-  )
+  if resume_stage is Some(_) {
+    checkpoint_file(join(stage, "manifest.json"), @utf8.encode(manifest))
+  } else {
+    @storage.write_new(
+      join(stage, "manifest.json"),
+      @utf8.encode(manifest),
+      faults~,
+    )
+  }
   if checkpoint is Some(callback) {
     callback("before-publication", self.paths.length())
   }

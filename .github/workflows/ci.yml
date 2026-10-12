@@ -51,6 +51,8 @@ jobs:
           python tools/verify_with_pydicom.py
       - name: Persistent identity regression
         if: runner.os != 'Windows'
-        run: python tools/verify_persistent_identity.py
+        run: |
+          python tools/verify_persistent_identity.py
+          python tools/verify_recovery.py
       - name: Package
         run: moon package

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "fixture": "synthetic only",
+  "checks": [
+    "SIGKILL-object-checkpoint-revalidates-and-rebuilds-partial",
+    "sealed-input-independent-of-subsequent-original-change",
+    "completed-filesystem-state-reconciled-with-journal-idempotently",
+    "SIGKILL-after-directory-rename-before-journal-recovers",
+    "pinned-policy-change-refuses-resume",
+    "cancel-blocks-release-and-owned-cleanup-keeps-result-evidence"
+  ],
+  "limitations": [
+    "process termination, not physical power loss",
+    "single-owner local POSIX filesystem",
+    "checkpoints recompute expected bytes; not yet streaming",
+    "publication to external delivery area requires P5/P6 gate"
+  ]
+}

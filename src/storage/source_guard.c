@@ -4,6 +4,7 @@
 #include <windows.h>
 #else
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #endif
 
@@ -33,5 +34,19 @@ MOONBIT_FFI_EXPORT int medseal_source_guard(int fd, moonbit_bytes_t path) {
   if (!S_ISREG(opened.st_mode) || !S_ISREG(named.st_mode) || opened.st_nlink != 1) return -2;
   if (opened.st_dev != named.st_dev || opened.st_ino != named.st_ino) return -3;
   return 0;
+#endif
+}
+
+MOONBIT_FFI_EXPORT int medseal_sync_directory(moonbit_bytes_t path) {
+#ifdef _WIN32
+  (void)path;
+  /* Windows durability is outside the certified private-job provider. */
+  return 0;
+#else
+  int fd = open((char *)path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW);
+  if (fd < 0) return -1;
+  int result = fsync(fd);
+  close(fd);
+  return result;
 #endif
 }

@@ -7,6 +7,20 @@ extern "C" fn entropy(buffer : Bytes, length : Int) -> Int = "medseal_entropy"
 extern "C" fn source_guard(fd : Int, path : Bytes) -> Int = "medseal_source_guard"
 
 ///|
+#borrow(path)
+extern "C" fn sync_directory(path : Bytes) -> Int = "medseal_sync_directory"
+
+///|
+fn sync_dir(path : String) -> Unit raise @model.MedSealError {
+  if path.contains("\u{0000}") ||
+    sync_directory(@utf8.encode(path + "\u{0000}")) != 0 {
+    raise @model.MedSealError::IoError(
+      "could not synchronize private directory",
+    )
+  }
+}
+
+///|
 #cfg(not(platform="windows"))
 fn guard_descriptor(file : @async_fs.File) -> Int {
   file.fd()
@@ -127,8 +141,15 @@ pub async fn publish(
   if faults is Some(faults) {
     faults.hit("publish")
   }
+  if kind(source) == @async_fs.FileKind::Directory {
+    sync_dir(source)
+  }
   @async_fs.rename(source, target, replace~) catch {
     _ => raise @model.MedSealError::IoError("could not publish staged result")
+  }
+  sync_dir(@path.Path(target).dirname().0)
+  if @path.Path(source).dirname().0 != @path.Path(target).dirname().0 {
+    sync_dir(@path.Path(source).dirname().0)
   }
 }
 
@@ -212,6 +233,7 @@ pub async fn write_new(
   file.sync() catch {
     _ => raise @model.MedSealError::IoError("could not synchronize staged file")
   }
+  sync_dir(@path.Path(path).dirname().0)
 }
 
 ///|
