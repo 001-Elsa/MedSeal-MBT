@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "stage": "W6",
+  "status": "passed",
+  "source_commit": "93df730e66dd5400557940e761ec40b010eb47fd",
+  "archive": "001-Elsa-medseal-0.2.0.zip",
+  "archive_sha256": "6e44a306ef56142d4f51004df57be7b508bf830c0062e1cdd18d568818da4082",
+  "remote_ci": {
+    "run_id": 38266290520,
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38266290520",
+    "platforms": ["ubuntu-latest", "macos-latest", "windows-latest"],
+    "conclusion": "success"
+  },
+  "checks": [
+    "consumer-imports-public-api-only",
+    "consumer-resolved-from-published-archive-overlay",
+    "clean-directory-check-and-build",
+    "original-checkout-not-on-consumer-path",
+    "consumer-runs-against-archived-package"
+  ],
+  "registry_consumer_pending": true,
+  "release_authorized": false,
+  "limitations": [
+    "archive overlay uses the local third-party dependency cache",
+    "Mooncakes/GitLink/tag/release remote readback is not claimed",
+    "0.2.0 remains an engineering preview candidate",
+    "W7 field authorization and receiver evidence are still required"
+  ]
+}
