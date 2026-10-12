@@ -1,0 +1,23 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/src/identity_store"
+
+import {
+  "001-Elsa/medseal/src/model",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub(all) struct Provider {
+  python : String
+  adapter : String
+  store : String
+  source_domain : String
+}
+pub async fn Provider::reserve(Self, String) -> String raise @model.MedSealError
+
+// Type aliases
+
+// Traits

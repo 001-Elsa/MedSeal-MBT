@@ -26,7 +26,9 @@ pub struct Context {
   // private fields
 }
 pub fn Context::apply(Self, @model.DataSet) -> Result raise @model.MedSealError
+pub fn Context::binding_request(Self, Array[@model.DataSet], Array[String]) -> String raise @model.MedSealError
 pub fn Context::date_offset(Self, String) -> Int raise @model.MedSealError
+pub fn Context::load_bindings(Self, String) -> Unit raise @model.MedSealError
 pub fn Context::mapped_uid(Self, String) -> String raise @model.MedSealError
 pub fn Context::new(String, @policy.Policy, Array[Int]) -> Self raise @model.MedSealError
 pub fn Context::patient(Self, @model.DataSet) -> String raise @model.MedSealError

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "fixture": "synthetic only",
+  "checks": [
+    "three-MoonBit-batches-stable-identities-uids-dates",
+    "eight-parallel-reservations-consistent",
+    "source-and-project-isolation",
+    "content-owner-patient-conflicts-rollback",
+    "wrapping-rotation-and-SQLite-backup-restore-stable",
+    "wrong-and-missing-key-fail-closed",
+    "no-source-markers-in-database-and-WAL"
+  ],
+  "enterprise_binary_sha256": "e7fed8d1b89f3506c6590f9d4e45cfa02732d74e91040aa9fdc4ce92211554be",
+  "cryptography": "50.0.2",
+  "sqlite": "3.53.1",
+  "limitations": [
+    "exact duplicates reuse identities but are still converted",
+    "closed batch references only",
+    "local POSIX key provider; backup contains keys",
+    "no physical power-loss certification"
+  ]
+}

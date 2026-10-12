@@ -57,6 +57,7 @@ fn check_meta(parsed : @parser.ParsedFile) -> Unit raise @model.MedSealError {
 pub async fn plan(
   input : String,
   policy : @policy.Policy,
+  provider? : @identity_store.Provider? = None,
 ) -> Job raise @model.MedSealError {
   if @storage.kind(input) != @async_fs.FileKind::Directory {
     raise @model.MedSealError::InvalidArgument(
@@ -102,6 +103,11 @@ pub async fn plan(
   )
   let context = @identity.Context::new(@storage.token(size=12), policy, offsets)
   context.prepare(metadata)
+  if provider is Some(provider) {
+    context.load_bindings(
+      provider.reserve(context.binding_request(metadata, hashes)),
+    )
+  }
   // Run transformations during dry-run as well, so incompatible dates, VRs and
   // rule applications fail before any output directory is created.
   for dataset in metadata {
@@ -351,7 +357,8 @@ pub async fn run(
   input : String,
   output : String,
   policy : @policy.Policy,
+  provider? : @identity_store.Provider? = None,
 ) -> String raise @model.MedSealError {
-  let job = plan(input, policy)
+  let job = plan(input, policy, provider~)
   job.execute(output)
 }

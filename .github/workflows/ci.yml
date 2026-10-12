@@ -47,7 +47,10 @@ jobs:
           python-version: '3.12'
       - name: Independent DICOM verification
         run: |
-          python -m pip install pydicom==3.0.1
+          python -m pip install pydicom==3.0.1 cryptography==50.0.2
           python tools/verify_with_pydicom.py
+      - name: Persistent identity regression
+        if: runner.os != 'Windows'
+        run: python tools/verify_persistent_identity.py
       - name: Package
         run: moon package

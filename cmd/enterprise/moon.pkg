@@ -1,0 +1,14 @@
+import {
+  "001-Elsa/medseal/src/batch",
+  "001-Elsa/medseal/src/policy",
+  "001-Elsa/medseal/src/identity_store",
+  "001-Elsa/medseal/src/storage",
+  "moonbitlang/async",
+  "moonbitlang/x/sys",
+  "moonbitlang/core/env",
+  "moonbitlang/core/encoding/utf8",
+}
+
+pkgtype(kind: "executable")
+
+supported_targets = "+native"
