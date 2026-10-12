@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "stage": "W5",
+  "status": "passed",
+  "source_commit": "8001fcc049c961037d5abcc9193dd6457ece4470",
+  "remote_ci": {
+    "run_id": 38263490405,
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405",
+    "platforms": ["ubuntu-latest", "macos-latest", "windows-latest"],
+    "conclusion": "success"
+  },
+  "checks": [
+    "exact-loopback-host",
+    "origin-allowlist",
+    "capability-session",
+    "csrf-on-mutation",
+    "bounded-pagination",
+    "public-allowlist-no-paths",
+    "cancel-state-machine",
+    "path-traversal-rejection"
+  ],
+  "release_authorized": false,
+  "limitations": [
+    "synthetic private job fixtures",
+    "loopback operator tool, not a multi-user network service",
+    "no TLS termination or real PACS integration",
+    "pixel review remains human evidence and is never inferred by the UI",
+    "actual source authorization, operator and receiver acceptance remain W7"
+  ]
+}

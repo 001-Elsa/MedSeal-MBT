@@ -8,8 +8,8 @@
 | W1 | 实现、本机 M1/M2 合成验收与三平台 CI 通过 | 473 实际案例，六类，零失败/跳过；四后端一致；pydicom 实际写回，选定 SC 的 dciodvfy 原始诊断，闭集合正反例；完整 CT Profile 留 W3 |
 | W2 | 实现、本机与远端 CI 通过 | 私有缓存／迁移、已交付历史引用、时间精度、outbox 与计数守恒；证据见 `evidence/w2-incremental.json`、`evidence/w2-destination.json`、`evidence/w2-conformance.json`、`evidence/w2-rulebook.json`；[CI 38251118417](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38251118417) |
 | W3 | 修正实现、本机与远端 CI 通过 | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json`；[CI 38257617635](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38257617635) |
-| W4 | 实现、本机验收通过；待远端 CI | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json`；CI 现已纳入 W4 门禁 |
-| W5 | 实现、本机静态验收；待远端 CI | 回环本地工作台、精确 Host/Origin、会话 capability 与 CSRF、分页对象清单、受限解释摘要、取消请求闭环；证据见 `docs/WORKBENCH.zh-CN.md` 与 CI W5 门禁 |
+| W4 | 实现、本机与三平台远端 CI 通过 | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
+| W5 | 实现、本机静态验收与三平台远端 CI 通过 | 回环本地工作台、精确 Host/Origin、会话 capability 与 CSRF、分页对象清单、受限解释摘要、取消请求闭环；证据见 `WORKBENCH.zh-CN.md`、`evidence/w5-workbench.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W6 | 待实施 | 仓库外归档和 registry 消费者、候选发行、镜像一致与隔离安装 |
 | W7 | 软件演练待实施；实际主体项 requires_field | 新操作者、真实授权来源与研究接收、独立审查；这些材料不能由实现者或合成测试代填 |
 
@@ -51,3 +51,10 @@
 - [`tools/state_model.py`](../tools/state_model.py) 固定作业状态合法转移和发布/签名/审核不变量；[`tools/verify_w4.py`](../tools/verify_w4.py) 执行 100 个 seed、每个 200 个事件，保存接受与拒绝计数及前五个可复现 seed 摘要。
 - 同一脚本运行 100,000 次有界 UTF-8/JSON 变异，未解释崩溃和超时均为 0；并运行实际 POSIX 双进程竞争、SIGKILL、写入限制、路径别名、硬链接和权限故障矩阵。
 - 状态模型、100,000 次原生策略解析器 fuzz、POSIX 故障矩阵以及转换/审核/发布/接收恢复回归均通过。证据限制为合成输入和本机进程终止，不升级为断电、真实磁盘耗尽或 Windows 认证。
+
+## W5 验收记录
+
+- [`tools/workbench.py`](../tools/workbench.py) 是只绑定 `127.0.0.1` 的薄宿主；真实转换、研究检查、人工复核、签名发布和接收继续复用已有 CLI/状态机，没有第二套转换引擎。
+- API 检查精确 `Host`、可选 `Origin`、0600 capability 会话和写请求 CSRF；工作区、作业 ID、owner 文件、分页上限和 JSON 请求体均重新校验。公开响应只返回作业 ID、状态、数量、策略摘要和下一步，不返回本机路径、原始值、映射密钥或日期偏移。
+- `tools/verify_workbench.py` 实际覆盖无会话、跨站、分页、对象摘要、路径穿越、错误 CSRF 和取消闭环。GitHub Actions 在 Ubuntu/macOS/Windows 三平台通过；取消端点仅在已认证 POSIX 提供方上运行，Windows 作业仍完成全部核心/静态门禁。
+- 本机受限沙箱禁止 TCP 监听，因此本地记录为语法/纯函数验收；三平台回环验收由远端 CI 执行。工作台仍是 M1 合成受控工具，不是多用户网络服务、TLS 终端、真实 PACS 或 W7 现场认证。
