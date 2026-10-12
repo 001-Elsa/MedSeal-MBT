@@ -32,8 +32,9 @@ was not committed is re-verified and reconciled. Conversion ends at
 AWAITING_REVIEW with release_authorized=false. P5/P6 supply final publication.
 
 Cancellation is a durable request checked before/after conversion, not immediate
-interruption of an in-flight object. A cancellation cannot become a released
-result. Cleanup requires CANCELLED/FAILED and removes only this job's owned sealed
+interruption of an in-flight object. Accepted cancellation blocks publication from starting. After an explicit signed
+publication begins, cancellation is rejected; finish/recover that operation and
+follow the receiving organization recall procedure if needed. Cleanup requires CANCELLED/FAILED and removes only this job's owned sealed
 and working directories; conversion evidence remains. Deletion does not imply
 physical erasure on SSD. Use encrypted volumes and retention policies.
 

@@ -7,7 +7,7 @@ it receives private records on stdin, returns bindings on stdout and never uses
 patient identifiers as process arguments.
 
 Supported deployment: a controlled single-user POSIX host, private local storage,
-Python >=3.10 with cryptography==50.0.2. Windows private-store operations fail
+Python 3.12 (tested) with cryptography==50.0.2. Windows private-store operations fail
 closed. This provider is not an institution KMS, multi-user authorization service
 or defense against an administrator reading the process/key directory.
 

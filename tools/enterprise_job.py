@@ -18,8 +18,8 @@ from private_store import StoreError, canonical, private_file, validate_director
 from local_fs import atomic_private, digest, signature
 
 REPO = Path(__file__).resolve().parents[1]
-DEFAULT_BINARY = REPO / '_build/native/debug/build/cmd/enterprise/enterprise.exe'
-DEFAULT_VERIFY = REPO / '_build/native/debug/build/cmd/main/main.exe'
+DEFAULT_BINARY = REPO / ('bin/medseal-enterprise' if (REPO / 'bin/medseal-enterprise').exists() else '_build/native/debug/build/cmd/enterprise/enterprise.exe')
+DEFAULT_VERIFY = REPO / ('bin/medseal' if (REPO / 'bin/medseal').exists() else '_build/native/debug/build/cmd/main/main.exe')
 
 
 def scan(root):
@@ -134,9 +134,10 @@ def state(db):
     return db.execute('SELECT state FROM current WHERE id=1').fetchone()[0]
 
 
-def transition(db, target, code='ok'):
+def transition(db, target, code='ok', precondition=lambda: None):
     db.execute('BEGIN IMMEDIATE')
     try:
+        precondition()
         db.execute('INSERT INTO events(state,code,time_ns) VALUES (?,?,?)', (target, code, time.time_ns()))
         db.execute('UPDATE current SET state=? WHERE id=1', (target,))
         db.execute('COMMIT')
@@ -253,7 +254,7 @@ def status_job(workspace, job_id):
     with locked_job(workspace, job_id) as job:
         db = journal(job)
         try:
-            return {'schema': 1, 'job_id': job_id, 'state': state(db), 'events': db.execute('SELECT count(*) FROM events').fetchone()[0], 'release_authorized': False}
+            return {'schema': 1, 'job_id': job_id, 'state': state(db), 'events': db.execute('SELECT count(*) FROM events').fetchone()[0], 'release_check': 'verify-signed-package-required'}
         finally:
             db.close()
 
@@ -266,7 +267,18 @@ def cancel_job(workspace, job_id):
     job = validate_directory(root / job_id)
     if private_file(job / 'owner', 64).decode() != job_id:
         raise StoreError('job-ownership-mismatch')
-    atomic_private(job / 'cancel-request', b'cancel')
+    db = journal(job)
+    try:
+        db.execute('BEGIN IMMEDIATE')
+        if state(db) in {'PUBLISHING', 'PUBLISHED'}:
+            raise StoreError('publication-started-cancellation-rejected')
+        atomic_private(job / 'cancel-request', b'cancel')
+        db.execute('COMMIT')
+    except BaseException:
+        db.execute('ROLLBACK')
+        raise
+    finally:
+        db.close()
     return {'schema': 1, 'job_id': job_id, 'status': 'cancellation-requested'}
 
 
@@ -290,10 +302,17 @@ def cleanup_job(workspace, job_id):
 def main():
     os.umask(0o077)
     parser = argparse.ArgumentParser()
-    parser.add_argument('operation', choices=['create', 'run', 'resume', 'status', 'cancel', 'cleanup', 'review', 'risks'])
+    parser.add_argument('operation', choices=['create', 'run', 'resume', 'status', 'cancel', 'cleanup', 'review', 'risks', 'publish', 'signer-init', 'deliver', 'doctor'])
     parser.add_argument('--workspace', type=Path, required=True)
     parser.add_argument('--job')
     parser.add_argument('--record', type=Path)
+    parser.add_argument('--signer', type=Path)
+    parser.add_argument('--trust', type=Path)
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--package', type=Path)
+    parser.add_argument('--inbox', type=Path)
+    parser.add_argument('--receiver-id')
+    parser.add_argument('--allow-synthetic', action='store_true')
     parser.add_argument('--reviewers', type=Path)
     parser.add_argument('--input', type=Path)
     parser.add_argument('--policy', type=Path)
@@ -307,6 +326,19 @@ def main():
             result = {'schema': 1, 'job_id': create_job(args.workspace, args.input, args.policy, args.store, args.source_domain, args.binary, args.verifier), 'state': 'INGESTED'}
         elif args.operation in {'run', 'resume'}:
             result = run_job(args.workspace, args.job)
+        elif args.operation == 'doctor':
+            import cryptography, platform
+            root = validate_directory(args.workspace)
+            result = {'schema': 1, 'status': 'environment-checked', 'platform': platform.system(), 'machine': platform.machine(), 'python': platform.python_version(), 'cryptography': cryptography.__version__, 'sqlite': sqlite3.sqlite_version, 'free_bytes': shutil.disk_usage(root).free, 'binary_sha256': digest(args.binary), 'verifier_sha256': digest(args.verifier), 'filesystem_certified': False, 'note': 'Local POSIX permissions/binaries checked; filesystem power-loss and vendor certification require external evidence'}
+        elif args.operation == 'signer-init':
+            from attestation import initialize_signer
+            result = initialize_signer(args.signer, args.trust)
+        elif args.operation == 'publish':
+            from attestation import publish_job
+            result = publish_job(args.workspace, args.job, args.output, args.reviewers, args.signer, args.trust)
+        elif args.operation == 'deliver':
+            from deliver_local import deliver
+            result = deliver(args.package, args.inbox, args.trust, args.receiver_id, args.allow_synthetic)
         elif args.operation == 'review':
             from risk_gate import review_job
             result = review_job(args.workspace, args.job, args.record, args.reviewers)

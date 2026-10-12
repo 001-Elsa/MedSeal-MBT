@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "status": "offline-installed",
+  "manifest_sha256": "89a23eb0a5d9042892f644c13fccd8c987158f32afb4646d1816d8e2d476568a",
+  "platform": "Darwin",
+  "machine": "arm64"
+}

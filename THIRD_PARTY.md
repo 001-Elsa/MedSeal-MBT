@@ -51,3 +51,17 @@ imply complete IOD/Profile validation. The upstream MIT license is retained in
 resources/licenses/pydicom-LICENSE. The independent official dicom3tools binary
 is a development tool installed outside this repository, not a runtime or
 redistributed package dependency.
+
+## Enterprise private adapter and delivery dependencies
+
+Python 3.12 standard library provides SQLite, local POSIX locking and filesystem
+coordination. cryptography50.0.2 (Apache-2.0 OR BSD-3-Clause;
+https://github.com/pyca/cryptography) provides HKDF/HMAC-related key derivation,
+AES-256-GCM and Ed25519. Python hmac/hashlib use the interpreter's vetted provider.
+The adapter does not implement cryptographic primitives or parse/transform DICOM.
+Fixed offline wheels include cffi2.1.1 (MIT) and pycparser3.0 (BSD-3-Clause); wheel
+license texts and SHA256 entries are included in generated installation packages.
+The native SHA dependency remains an integrity hash, not the identity encryption
+or signature provider. Development dciodvfy/pydicom executables are not bundled.
+The MoonBit core/runtime is included in native compiled binaries under its Apache-2.0
+license; compiler release0.10.14+7d59c7ec9 is recorded in the generated SBOM.

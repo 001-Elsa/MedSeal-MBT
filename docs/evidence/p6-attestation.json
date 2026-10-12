@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "fixture": "synthetic context only; no real clinical release",
+  "checks": [
+    "unreviewed-data-cannot-be-signed-or-published",
+    "SIGKILL-release-rename-before-journal-reconciles",
+    "independent-trusted-verify-and-default-synthetic-rejection",
+    "wrong-trust-key-rejected",
+    "simultaneous-data-and-both-manifest-tamper-rejected",
+    "partial-directory-copy-not-successful-and-idempotent-retry-reverified",
+    "lost-local-receipt-reconstructed-after-full-verification",
+    "no-source-identifiers-in-public-package"
+  ],
+  "limitations": [
+    "local POSIX controlled directory adapter",
+    "receipt acknowledges byte/signature verification, not PACS/clinical acceptance",
+    "out-of-band trusted-key/role distribution required",
+    "no physical power-loss certification"
+  ]
+}
