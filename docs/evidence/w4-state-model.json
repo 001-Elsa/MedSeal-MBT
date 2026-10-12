@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "stage": "W4",
+  "status": "passed",
+  "source_base_commit": "53adf70fa7866d09660897d65a0953394f900c59",
+  "source_tree_scopes": [
+    "src",
+    "api",
+    "cmd",
+    "tools",
+    "tests",
+    "resources",
+    "conformance",
+    ".github",
+    "examples/authorization",
+    "moon.mod",
+    ".gitattributes",
+    "requirements-enterprise.txt",
+    "requirements-qa.txt"
+  ],
+  "source_tree_files": 709,
+  "source_tree_sha256": "6eaceea680be64e09b4ab22a9e4dc258ccf448bfe0a2c6387b9d8d7d73fa9d9f",
+  "model": {
+    "seed_count": 100,
+    "events_per_seed": 200,
+    "transitions": 1888,
+    "rejected": 18112,
+    "examples": [
+      {
+        "seed": 0,
+        "final_state": "CANCELLED",
+        "objects": 0
+      },
+      {
+        "seed": 1,
+        "final_state": "CANCELLED",
+        "objects": 0
+      },
+      {
+        "seed": 2,
+        "final_state": "CANCELLED",
+        "objects": 0
+      },
+      {
+        "seed": 3,
+        "final_state": "CANCELLED",
+        "objects": 0
+      },
+      {
+        "seed": 4,
+        "final_state": "CANCELLED",
+        "objects": 0
+      }
+    ]
+  },
+  "fuzz": {
+    "iterations": 100000,
+    "accepted": 16,
+    "rejected": 99984,
+    "unexplained_crashes": 0,
+    "timeouts": 0
+  },
+  "native_parser_fuzz": {
+    "test": "w4-policy-parser-fuzz-100000",
+    "iterations": 100000,
+    "unexplained_crashes": 0,
+    "timeouts": 0
+  },
+  "failure_windows": {
+    "registered": [
+      "seal-write-before-fsync",
+      "conversion-object-before-checkpoint",
+      "conversion-directory-before-journal",
+      "review-before-authority-fix",
+      "publication-before-rename",
+      "publication-after-rename-before-journal",
+      "receiver-object-before-receipt",
+      "receipt-before-ledger-commit"
+    ],
+    "all_have_recovery_case": true,
+    "regressions": [
+      {
+        "window": "conversion-object-and-directory",
+        "status": "passed",
+        "script": "verify_recovery.py"
+      },
+      {
+        "window": "review-authority",
+        "status": "passed",
+        "script": "verify_risk_gate.py"
+      },
+      {
+        "window": "publication-and-receiver",
+        "status": "passed",
+        "script": "verify_attestation.py"
+      },
+      {
+        "window": "destination-ledger-and-receipt",
+        "status": "passed",
+        "script": "verify_destination.py"
+      }
+    ]
+  },
+  "system_failure_matrix": {
+    "scope": "actual process/path/permission failures on this POSIX host; not power-loss or real disk-full certification",
+    "scenarios": [
+      {
+        "scenario": "same-target-two-processes",
+        "result": "pass",
+        "exit_codes": [
+          4,
+          0
+        ]
+      },
+      {
+        "scenario": "sigkill-after-staging",
+        "result": "pass",
+        "private_leftover": true,
+        "recovery": "not available in P0; do not publish leftover"
+      },
+      {
+        "scenario": "kernel-file-size-write-failure",
+        "result": "pass",
+        "kind": "EFBIG; not ENOSPC"
+      },
+      {
+        "scenario": "parent-symlink-nested-output",
+        "result": "pass"
+      },
+      {
+        "scenario": "hardlinked-input",
+        "result": "pass"
+      },
+      {
+        "scenario": "unreadable-input",
+        "result": "pass"
+      }
+    ],
+    "real_enospc": "not exercised; instance-local storage failure tests cover cleanup"
+  },
+  "elapsed_seconds": 24.283,
+  "resource_reference": "docs/evidence/final-streaming-resources.json",
+  "release_authorized": false,
+  "limitations": [
+    "independent reference model and POSIX process failures with existing recovery regressions",
+    "fuzz cases are bounded contract inputs, not proof of arbitrary parser safety",
+    "no physical power-loss, real disk-full or Windows handle certification",
+    "resource reference excludes a claim of constant RSS for arbitrary 32 GiB inputs"
+  ]
+}

@@ -6,9 +6,9 @@
 | --- | --- | --- |
 | W0 | 实现、本机验收与三平台远端 CI 通过 | 141 项规则索引、固定官方事实、三值条件、公开解释／Schema／四案例、公共门面与受控状态；Native 115，JS/wasm/wasm-gc 各 62；恢复／审核／签名回归；不扩张为完整 IOD 认证 |
 | W1 | 实现、本机 M1/M2 合成验收与三平台 CI 通过 | 473 实际案例，六类，零失败/跳过；四后端一致；pydicom 实际写回，选定 SC 的 dciodvfy 原始诊断，闭集合正反例；完整 CT Profile 留 W3 |
-| W2 | 实现、本机阶段验收通过；待提交与远端 CI | 私有缓存／迁移、已交付历史引用、时间精度、outbox 与计数守恒；证据见 `evidence/w2-incremental.json`、`evidence/w2-destination.json`、`evidence/w2-conformance.json`、`evidence/w2-rulebook.json` |
-| W3 | 修正实现、本机验收通过；待修正提交远端 CI | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json` |
-| W4 | 草案；原验收不足，待真实核心/窗口/资源验收 | 独立状态模型、100 个 seed×200 事件、100,000 次有界契约 fuzz、POSIX 故障窗口矩阵；证据见 `evidence/w4-state-model.json` |
+| W2 | 实现、本机与远端 CI 通过 | 私有缓存／迁移、已交付历史引用、时间精度、outbox 与计数守恒；证据见 `evidence/w2-incremental.json`、`evidence/w2-destination.json`、`evidence/w2-conformance.json`、`evidence/w2-rulebook.json`；[CI 38251118417](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38251118417) |
+| W3 | 修正实现、本机与远端 CI 通过 | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json`；[CI 38257617635](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38257617635) |
+| W4 | 实现、本机验收通过；待提交与远端 CI | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json` |
 | W5 | 待实施 | 受控本地工作台、权限／跨站防护、分页与操作者闭环 |
 | W6 | 待实施 | 仓库外归档和 registry 消费者、候选发行、镜像一致与隔离安装 |
 | W7 | 软件演练待实施；实际主体项 requires_field | 新操作者、真实授权来源与研究接收、独立审查；这些材料不能由实现者或合成测试代填 |
@@ -50,4 +50,4 @@
 
 - [`tools/state_model.py`](../tools/state_model.py) 固定作业状态合法转移和发布/签名/审核不变量；[`tools/verify_w4.py`](../tools/verify_w4.py) 执行 100 个 seed、每个 200 个事件，保存接受与拒绝计数及前五个可复现 seed 摘要。
 - 同一脚本运行 100,000 次有界 UTF-8/JSON 变异，未解释崩溃和超时均为 0；并运行实际 POSIX 双进程竞争、SIGKILL、写入限制、路径别名、硬链接和权限故障矩阵。
-- 状态模型与 100,000 次原生策略解析器 fuzz 已通过；故障矩阵仍只覆盖现有 POSIX 注入场景，登记的全部窗口尚未逐项纳入独立注入报告。证据限制为合成输入和本机进程终止，不升级为断电、真实磁盘耗尽或 Windows 认证。
+- 状态模型、100,000 次原生策略解析器 fuzz、POSIX 故障矩阵以及转换/审核/发布/接收恢复回归均通过。证据限制为合成输入和本机进程终止，不升级为断电、真实磁盘耗尽或 Windows 认证。
