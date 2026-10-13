@@ -23,7 +23,9 @@ The private review JSON has schema2, context(controlled/synthetic),reviewer,
 reviewed_at(UTC ISO8601),recipient_accepts_declared_subset:true, records and bindings.
 Bindings exactly match the current job_id, producer_runtime_sha256,
 sealed_input_commitment, policy_file_sha256 and destination_domain. Obtain these
-from the current risks command; do not reuse another job's values. The saved
+through the trusted private review integration calling review_binding in
+tools/risk_gate.py; the risks CLI currently emits object risks only, not these
+private bindings. Do not reuse another job's values. The saved
 review envelope and reviewer registry remain schema1; they are not the input
 review schema. See tools/risk_gate.py review_binding/validate_review.
 Each record contains file,sha256,policy_sha256 and decisions covering every listed
