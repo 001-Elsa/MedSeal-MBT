@@ -12,7 +12,7 @@
 | W3 | 修正实现、本机独立 CT 验收与核心远端 CI 通过 | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json`；[CI 38257617635](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38257617635) |
 | W4 | 实现、本机与三平台远端 CI 通过 | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W5 | 实现、本机静态验收与三平台远端 CI 通过 | 回环本地工作台、精确 Host/Origin、会话 capability 与 CSRF、分页对象清单、受限解释摘要、取消请求闭环；证据见 `WORKBENCH.zh-CN.md`、`evidence/w5-workbench.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
-| W6 | 归档与真实 registry 消费者、Mooncakes 0.2.0、最终离线安装与三平台 CI 通过；GitLink 待 Git 认证 | 冻结源码 bc5b25c，官方包摘要一致；[最新 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38343632892) 与[发布回读](COMPETITION_REMEDIATION.zh-CN.md)；尚不声明 GitLink 已同步 |
+| W6 | 归档与真实 registry 消费者、Mooncakes 0.2.0、GitLink 镜像、最终离线安装与三平台 CI 通过 | 冻结源码 bc5b25c，官方包摘要一致，镜像保留历史快进；[发布源码 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38343632892) 与[发布回读](COMPETITION_REMEDIATION.zh-CN.md) |
 | W7 | 软件演练与三平台远端 CI 通过；现场主体材料仍待完成 | 新操作者、真实授权来源、研究接收、独立审查和灾备均有不含敏感数据的结构化模板及验证门禁；模板不能代替现场证据；[CI 38267450046](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38267450046) |
 
 ## W0 验收记录

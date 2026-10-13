@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "status": "mooncakes-published-gitlink-pending-git-authentication",
+  "status": "mooncakes-published-and-gitlink-mirrored",
   "release_status": "engineering-preview",
   "source_commit": "bc5b25c8dafd2fdcde147b08e357061ead14e76e",
-  "observed_at": "2026-10-13T04:01:45.091272+00:00",
+  "observed_at": "2026-10-13T04:57:43.440450+00:00",
   "module": "001-Elsa/medseal",
   "version": "0.2.0",
   "ci": {
@@ -26,9 +26,14 @@
   },
   "gitlink": {
     "url": "https://gitlink.org.cn/Hzhhhh/MedSeal-MBT",
-    "status": "browser-owner-login-confirmed-git-credential-pending",
-    "observed_commit": "bb7e895900dbaf55e13651460906044df50b12fe",
-    "fast_forward_ancestor": true
+    "status": "fast-forward-pushed-and-public-remote-readback-matched",
+    "observed_commit": "56f83fb784be19e132d72f9fbe3d37e34605a881",
+    "fast_forward_ancestor": true,
+    "previous_commit": "bb7e895900dbaf55e13651460906044df50b12fe",
+    "tag": "v0.2.0",
+    "tag_source_commit": "bc5b25c8dafd2fdcde147b08e357061ead14e76e",
+    "readback_method": "public-HTTPS-git-ls-remote",
+    "observation_point": "before-this-mirror-evidence-commit"
   },
   "macos_arm64_host": {
     "archive": "medseal-enterprise-macos-arm64-bc5b25c.tar.gz",
@@ -49,5 +54,10 @@
     "tag": "v0.2.0",
     "prerelease": true,
     "source_commit": "bc5b25c8dafd2fdcde147b08e357061ead14e76e"
+  },
+  "evidence_ci": {
+    "commit": "56f83fb784be19e132d72f9fbe3d37e34605a881",
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38344639434",
+    "status": "success"
   }
 }

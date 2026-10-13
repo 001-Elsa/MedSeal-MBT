@@ -4,7 +4,7 @@
 
 | 项目 | 当前整改 | 验证与剩余条件 |
 | --- | --- | --- |
-| F01 新版公开交付 | GitHub 源码、Mooncakes 0.2.0 已公开；真实 registry 消费者通过 | 官方下载包与冻结归档一致；GitLink 网页已登录，仍待 Git 推送凭据与快进回读 |
+| F01 新版公开交付 | GitHub、GitLink 源码与 Mooncakes 0.2.0 已公开；真实 registry 消费者通过 | 官方下载包与冻结归档一致；GitLink 保留历史快进同步，公开远端已回读 |
 | F02 文档落后 | README 英文/中文/Mooncakes 包文档统一；申报事实、维护指南、变更/贡献更新，旧记录标历史 | 安装/公共 API 示例、集合演示与对应验收实际执行；本人手写材料不由自动文档代替 |
 | F03 发行清单 | 修复带逗号依赖解析，拒绝缺失/畸形/重复，绑定归档每成员与来源提交 | 正反例通过；旧空依赖清单仅保留历史，替代证据为 `evidence/release-0.2.0-source.json`，平台结果单独记录 |
 | F04 场景完整度 | 三个角色的输入、步骤、输出、失败与边界完整说明 | `USE_CASES.zh-CN.md`；预期用途与合成验证，不声明客户采用 |
@@ -40,7 +40,8 @@
 - macOS ARM64 工程预览离线发行包 SHA-256 为 `65757654378298e2b0da6cb34bc553b4c8e95a8a8a06f97c61960e64588ac7be`；安装清单 SHA-256 为 `ed68b99add719f3bc13ca100ea02bfc105406a7880b2fb842813a7f914d797d4`。[实际隔离安装演练](evidence/release-0.2.0-offline-install.json) 通过三批、六对象、五项检查；全部为合成数据。
 - [源码发行清单](evidence/release-0.2.0-source.json) 是发布前冻结证据，保留其候选状态；[发布后平台回读](evidence/release-0.2.0-platforms.json) 记录真实结果。后续证据提交不作为 0.2.0 包的源码提交，不重复发布同版本。
 - [GitHub v0.2.0 工程预览发行](https://github.com/001-Elsa/MedSeal-MBT/releases/tag/v0.2.0) 固定上述源码提交，附模块包、macOS ARM64 宿主包、校验清单与独立安装/消费者证据。
-- GitLink 已确认账号 Hzhhhh 登录及 owner 权限，既有 master `bb7e895900dbaf55e13651460906044df50b12fe` 是发布源码祖先；网页没有既有仓库同步入口，Git 推送仍缺凭据，暂不声明镜像已更新。
+- [GitLink](https://gitlink.org.cn/Hzhhhh/MedSeal-MBT) 已保留全部历史，从旧 master `bb7e895900dbaf55e13651460906044df50b12fe` 快进到发布证据提交 `56f83fb784be19e132d72f9fbe3d37e34605a881`；公开 HTTPS 远端已回读一致。`v0.2.0` 标签固定到发布源码 `bc5b25c`。本页后续镜像证据提交与冻结版本分别记录，不改变 Mooncakes 0.2.0 包。
+- 发布证据提交 `56f83fb` 的[三平台 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38344639434) 也已全部成功。
 
 先前 CI 的 CT 缺 NumPy、离线演练密码库指纹不一致、规则报告未刷新三个失败已修复；未降低原验收门禁。F06 个人事实、F07 真实现场证据继续待本人/现场完成。
 
