@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "version": "0.2.1",
+  "module": "001-Elsa/medseal",
+  "release_status": "engineering-preview",
+  "source_commit": "3e6292668871a80d564e04973c2b6a2ce246a431",
+  "observed_at": "2026-10-13T07:40:24.415402+00:00",
+  "ci": {
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38363013106",
+    "status": "success",
+    "platforms": [
+      {
+        "name": "Verify (macos-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify (ubuntu-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify (windows-latest)",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "mooncakes": {
+    "url": "https://mooncakes.io/docs/001-Elsa/medseal@0.2.1",
+    "status": "published-and-independent-consumer-passed",
+    "download_url": "https://download.mooncakes.io/user/001-Elsa/medseal/0.2.1.zip",
+    "sha256": "af858f347209f8eed3f57a8a6a5119d815db17719fad0e6268d98cc9dabafcc2",
+    "matches_frozen_archive": true,
+    "output": "public-policy-ok"
+  },
+  "gitlink": {
+    "url": "https://gitlink.org.cn/Hzhhhh/MedSeal-MBT",
+    "observed_commit": "3e6292668871a80d564e04973c2b6a2ce246a431",
+    "tag": "v0.2.1",
+    "tag_source_commit": "3e6292668871a80d564e04973c2b6a2ce246a431",
+    "status": "fast-forward-pushed-and-public-HTTPS-readback-matched"
+  },
+  "official_application": {
+    "status": "participant-will-submit",
+    "receipt_verified": false,
+    "participant_name": "韩桢"
+  },
+  "field_acceptance_complete": false
+}

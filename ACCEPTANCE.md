@@ -51,7 +51,10 @@ passed all three jobs. New verification results remain bound to their own commit
 
 ## Publication and submission
 
-Mooncakes 001-Elsa/medseal@0.2.0 and GitHub v0.2.0 freeze bc5b25c.
+Mooncakes 001-Elsa/medseal@0.2.1 and GitHub v0.2.1 freeze 3e62926.
+Its [CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38363013106) passed
+all three jobs, including the document gate, CT and POSIX private-host acceptance.
+0.2.0 remains frozen at bc5b25c.
 The registry consumer actually installed and ran the public module; source,
 archive and platform evidence are in [release record](docs/COMPETITION_REMEDIATION.zh-CN.md).
 Current repository documents can evolve without overwriting immutable 0.2.0.

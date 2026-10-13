@@ -12,6 +12,16 @@
 | F06 个人参赛事实 | 姓名已确认韩桢，飞书由本人提交；项目材料已整理 | 报名、人数/一人一项目、主要贡献者身份、原创贡献说明、历史奖励与本人同意不能由仓库修改证明 |
 | F07 现场生产验收 | 保留 requires_field | 真实来源授权、研究接收、新操作者、独立审核/灾备不代填；它们不被章程统一规定为参赛前医院认证 |
 
+## 0.2.1 文档补丁与提交材料（当前）
+
+- 姓名已统一为 **韩桢**；全部 54 份受控 Markdown 的能力、入口、schema、预算、测试和发布状态已核对。文档检查器进入 CI，Windows 默认编码问题已修复为 UTF-8。[文档账本](DOCUMENTATION_STATUS.zh-CN.md)列出全部文件。
+- 0.2.1 冻结源码为 `3e6292668871a80d564e04973c2b6a2ce246a431`；[三平台 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38363013106)全部成功，Native117 / 三个其他后端各64。声明的 DICOM 行为未扩张，模块/CLI/SBOM版本来源一致。
+- [Mooncakes 0.2.1](https://mooncakes.io/docs/001-Elsa/medseal@0.2.1)已发布，官方包 SHA-256 `af858f347209f8eed3f57a8a6a5119d815db17719fad0e6268d98cc9dabafcc2` 等于冻结归档（854成员）。[独立 registry 消费者](evidence/release-0.2.1-registry-consumer.json)实际下载并输出 `public-policy-ok`；[归档消费者](evidence/release-0.2.1-archive-consumer.json)分别通过。
+- macOS ARM64 工程预览包摘要 `4bb032750ae8bef87f4ca71d0ed08e767da94ab71c825f7f6717449e48be51be`，安装清单摘要 `be7f73ee1954fc84bbf1745cdb4a5c6d3bd8ae04d85f190e1269a0d530ae8db8`。[最终离线安装演练](evidence/release-0.2.1-offline-install.json)5项/6对象通过，全部为合成数据。
+- GitHub/GitLink 的 `v0.2.1` 同时固定上述源码；GitLink master 保留完整历史快进，公开 HTTPS 回读一致。[发行与平台证据](evidence/release-0.2.1-platforms.json)分项保存，后续文档证据提交不改写冻结包。[GitHub Release](https://github.com/001-Elsa/MedSeal-MBT/releases/tag/v0.2.1)提供模块包、宿主包、校验、CI与消费者/安装证据。
+- [提交指南](SUBMISSION_GUIDE.zh-CN.md)与[本人说明参考](SUBMISSION_MATERIALS.zh-CN.md)使用实际账号和项目。旧 PDF/过时生成器已移出当前提交材料并在历史保留。正式表单由本人提交；不将 AI 辅助事实页冒称本人手写，不制造申报回执或现场证据。
+- 0.2.0 保留为历史发行；0.2.1 包内文档也是构建时快照，持续平台状态及修订以本仓库 master 为准。升级改变运行时指纹，原固定作业继续使用原包。
+
 ## 当前提交范围
 
 维护既有项目，提交公共库、关联转换与限定 POSIX 工程预览；不宣称整个原企业计划全部完成、生产 1.0、完整 IOD/Annex E 或无相似项目。新增贡献、生成代码、Python 宿主如实披露。章程新项目段的本人手写一页材料要求仍由本人负责，不把本轮自动更新事实页冒称本人手写。

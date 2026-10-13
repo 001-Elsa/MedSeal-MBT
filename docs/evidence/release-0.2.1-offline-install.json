@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "context": "synthetic",
+  "field_acceptance_complete": false,
+  "runtime": "isolated-offline-install",
+  "distribution_manifest_sha256": "be7f73ee1954fc84bbf1745cdb4a5c6d3bd8ae04d85f190e1269a0d530ae8db8",
+  "checks": [
+    "installed-runtime-SIGKILL-and-resume",
+    "wrapping-rotation-and-backup-restore-before-new-followup",
+    "full-and-two-new-object-incremental-cohorts-stable-patients-study-and-dates",
+    "six-unique-instance-uids-and-idempotent-package-receipts",
+    "historical-SOP-content-conflict-blocks-without-publication"
+  ],
+  "batches": [
+    {
+      "batch": 1,
+      "new_objects": 2,
+      "delivered_objects": 2,
+      "receipt_complete": true
+    },
+    {
+      "batch": 2,
+      "new_objects": 2,
+      "delivered_objects": 2,
+      "receipt_complete": true
+    },
+    {
+      "batch": 3,
+      "new_objects": 2,
+      "delivered_objects": 2,
+      "receipt_complete": true
+    }
+  ],
+  "limitations": [
+    "synthetic monochrome SC only",
+    "new cohorts have no outside-batch instance references",
+    "exact reimport still reconverts",
+    "no real user/PACS/CT-MR usability or independent security signoff"
+  ]
+}
