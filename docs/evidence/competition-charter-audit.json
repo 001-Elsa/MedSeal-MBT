@@ -1,0 +1,1219 @@
+{
+  "schema": 1,
+  "kind": "competition-charter-audit",
+  "checked_at_utc": "2026-10-13T03:04:47.417876+00:00",
+  "audit_source_commit": "2b088d4406b06b5b9402a38d0205c1ae7c2ac458",
+  "charter": {
+    "url": "https://bxup9uklfcb.feishu.cn/wiki/Dx4Bwd6D1i3GfHkajQCcF7SznEd",
+    "title": "MoonBit 黑客松大赛章程",
+    "visible_last_modified": "10月10日",
+    "access": "read-only browser; sequential reading from first section to appendix end",
+    "archive_used_as_authority": false,
+    "scope": "all numbered requirements and applicability of organizer/support/recommendation items; not a reproduction of full charter or legal approval",
+    "verified_key_excerpts": [
+      {
+        "section": "4.2",
+        "text": "该方向要求主要贡献者必须是参赛者本人，不要求项目是赛期内新建项目，也不要求是个人项目（允许多位贡献者）。"
+      },
+      {
+        "section": "5.1 application",
+        "text": "至少3个完整的预期使用场景；"
+      },
+      {
+        "section": "5.1 application",
+        "text": "GitHub 仓库链接，含有不少于10个有效commits，不得通过无意义拆分、空提交或重复提交满足次数要求。"
+      },
+      {
+        "section": "5.1 writing",
+        "text": "申报书务必人工撰写，篇幅控制在一页 Markdown 内，无须展开大篇幅的背景介绍。"
+      },
+      {
+        "section": "6.1 existing projects",
+        "text": "对于曾参与此前 MoonBit 开源赛事的项目，如本次存在新的、独立且可验证的开发或维护成果，仍可重新申报。赛事仅对本届比赛周期内新增的有效贡献进行评估和激励，历史成果不重复计算。"
+      },
+      {
+        "section": "Appendix 1",
+        "text": "使用场景过于特殊的。例如只能生成海报的排版软件、只能分析一种特定格式的审计工具"
+      },
+      {
+        "section": "Appendix 1",
+        "text": "以下推荐项目清单仅作为参考，不构成限制性要求。参赛者可根据自身能力和兴趣选择合适方向。"
+      }
+    ],
+    "excerpt_note": "Browser-observed wording with display whitespace normalized; excerpts only, not complete charter export."
+  },
+  "track_recommendation": "existing-project quarterly community selection",
+  "overall": "not-all-requirements-satisfied",
+  "new_project_basic_acceptance": {
+    "satisfied_scoped": 6,
+    "partial": 2,
+    "unmet_current_version": 1,
+    "applicability": "5.1 new-project baseline, used as conservative technical checklist; not asserted to be all additional mandatory requirements of 5.2"
+  },
+  "repository": {
+    "private": false,
+    "default_branch": "master",
+    "remote_head": "2b088d4406b06b5b9402a38d0205c1ae7c2ac458",
+    "commit_count": 58,
+    "baseline": "bb7e895",
+    "incremental_commit_count": 39
+  },
+  "ci": {
+    "run_id": 38337489608,
+    "source_commit": "2b088d4406b06b5b9402a38d0205c1ae7c2ac458",
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38337489608",
+    "jobs": [
+      {
+        "name": "Verify (ubuntu-latest)",
+        "conclusion": "success",
+        "skipped": []
+      },
+      {
+        "name": "Verify (macos-latest)",
+        "conclusion": "success",
+        "skipped": []
+      },
+      {
+        "name": "Verify (windows-latest)",
+        "conclusion": "success",
+        "skipped": [
+          "Native evidence and public output regression",
+          "Offline distribution regression",
+          "Persistent identity regression",
+          "W4 state, fault and parser fuzz acceptance",
+          "W5 loopback workbench acceptance",
+          "W6 archive consumer acceptance",
+          "W7 operator rehearsal and field-boundary acceptance"
+        ]
+      }
+    ],
+    "limits": [
+      "verify_ct_research.py not included in latest workflow; W3 3x50-slice independent receiver evidence is historical local evidence, not this latest CI step",
+      "POSIX enterprise acceptance skipped on Windows as listed"
+    ]
+  },
+  "local_recheck": {
+    "context": "actual execution this turn; synthetic collection",
+    "native": {
+      "executed": 117,
+      "passed": 117,
+      "failed": 0
+    },
+    "js": {
+      "executed": 64,
+      "passed": 64,
+      "failed": 0
+    },
+    "wasm": {
+      "executed": 64,
+      "passed": 64,
+      "failed": 0
+    },
+    "wasm_gc": {
+      "executed": 64,
+      "passed": 64,
+      "failed": 0
+    },
+    "fmt_check": "passed",
+    "all_target_check": "passed",
+    "moon_info": "passed; no tracked interface diff",
+    "collection": {
+      "objects": 4,
+      "references": 2,
+      "verification": "integrity-and-structure-verified",
+      "release_authorized": false
+    },
+    "independent_lab": "latest public CI succeeded; not rerun locally in this turn",
+    "corpus_inventory": {
+      "entries": 466,
+      "collections": 9
+    }
+  },
+  "registry_observation": {
+    "url": "https://mooncakes.io/docs/001-Elsa/medseal",
+    "method": "live browser DOM",
+    "latest": "0.1.1",
+    "downloads": 18,
+    "candidate_0_2_0_published": false,
+    "public_dependencies": [
+      "moonbitlang/async@0.20.4",
+      "moonbitlang/x@0.4.48"
+    ]
+  },
+  "related_observation": {
+    "url": "https://mooncakes.io/docs/CCllff-jpg/moondicom",
+    "method": "live browser README",
+    "latest": "0.1.2",
+    "overlap": "Part10 parse, validation, metadata deidentification",
+    "declared_not_implemented": [
+      "binary DICOM rewrite",
+      "date shift",
+      "UID remap"
+    ],
+    "whole_ecosystem_source_audit": false
+  },
+  "gitlink": {
+    "method": "attempted live browser; document body not loaded",
+    "current_head": "unverified",
+    "required_by_current_5_1_basic_acceptance": false
+  },
+  "dependency_check": {
+    "tool_output": {
+      "name": "001-Elsa/medseal",
+      "version": "0.2.0",
+      "dependencies": []
+    },
+    "actual_imports": [
+      "moonbitlang/async@0.22.4",
+      "moonbitlang/x@0.5.5",
+      "gmlewis/sha256@0.18.0"
+    ]
+  },
+  "source_census": {
+    "method": "git ls-files at audit SHA; exclude blank/full-line comments; generated files based on generator header; no .mbti/dependencies/build files; local approximate count not official effective LOC",
+    "categories": {
+      "moonbit_runtime": {
+        "files": 71,
+        "filtered_lines": 7482,
+        "paths": [
+          "api/authorization/authorization.mbt",
+          "api/dicom/dicom.mbt",
+          "api/explain/explain.mbt",
+          "api/policy/policy.mbt",
+          "api/validation/validation.mbt",
+          "cmd/enterprise/main.mbt",
+          "cmd/lab/main.mbt",
+          "cmd/main/main.mbt",
+          "conformance/lab/lab.mbt",
+          "src/app/anonymize.mbt",
+          "src/app/app.mbt",
+          "src/app/command.mbt",
+          "src/app/inspect.mbt",
+          "src/app/policy.mbt",
+          "src/app/validate.mbt",
+          "src/batch/cache.mbt",
+          "src/batch/history.mbt",
+          "src/batch/job.mbt",
+          "src/batch/verify.mbt",
+          "src/byteio/reader.mbt",
+          "src/byteio/writer.mbt",
+          "src/checksum/checksum.mbt",
+          "src/conformance/ct_profile.mbt",
+          "src/date/date.mbt",
+          "src/date/temporal.mbt",
+          "src/deid/action.mbt",
+          "src/deid/anonymizer.mbt",
+          "src/deid/audit.mbt",
+          "src/deid/policy.mbt",
+          "src/dicom_writer/check.mbt",
+          "src/dicom_writer/deidentified.mbt",
+          "src/dicom_writer/element_writer.mbt",
+          "src/dicom_writer/sequence_writer.mbt",
+          "src/dicom_writer/writer.mbt",
+          "src/dictionary/common_tags.mbt",
+          "src/dictionary/sensitive_tags.mbt",
+          "src/identity/bindings.mbt",
+          "src/identity/context.mbt",
+          "src/identity/transform.mbt",
+          "src/identity_store/adapter.mbt",
+          "src/inventory/inventory.mbt",
+          "src/model/dataset.mbt",
+          "src/model/element.mbt",
+          "src/model/error.mbt",
+          "src/model/tag.mbt",
+          "src/model/value.mbt",
+          "src/model/version.mbt",
+          "src/model/vr.mbt",
+          "src/parser/charset.mbt",
+          "src/parser/element_parser.mbt",
+          "src/parser/file_meta.mbt",
+          "src/parser/parser.mbt",
+          "src/parser/pixel_span.mbt",
+          "src/parser/preamble.mbt",
+          "src/parser/sequence_parser.mbt",
+          "src/pixel_review/classify.mbt",
+          "src/policy/compiler.mbt",
+          "src/policy/json_schema.mbt",
+          "src/policy/policy.mbt",
+          "src/rulebook/rulebook.mbt",
+          "src/storage/faults.mbt",
+          "src/storage/storage.mbt",
+          "src/storage/stream.mbt",
+          "src/streaming/streaming.mbt",
+          "src/validator/issue.mbt",
+          "src/validator/semantic_rules.mbt",
+          "src/validator/structural_rules.mbt",
+          "src/validator/validator.mbt",
+          "src/verification/collection.mbt",
+          "src/verification/file_meta.mbt",
+          "src/verification/output.mbt"
+        ]
+      },
+      "generated_moonbit": {
+        "files": 6,
+        "filtered_lines": 8686,
+        "paths": [
+          "conformance/lab/corpus_test.mbt",
+          "src/conformance/attributes_test.mbt",
+          "src/conformance/profile.mbt",
+          "src/dictionary/strict_attributes.mbt",
+          "src/rulebook/attributes.mbt",
+          "src/rulebook/contracts.mbt"
+        ]
+      },
+      "moonbit_examples_tools": {
+        "files": 4,
+        "filtered_lines": 379,
+        "paths": [
+          "examples/authorization/main.mbt",
+          "examples/collection/main.mbt",
+          "examples/consumer/main.mbt",
+          "tools/generate_samples/main.mbt"
+        ]
+      },
+      "moonbit_tests": {
+        "files": 23,
+        "filtered_lines": 2858,
+        "paths": [
+          "src/app/command_test.mbt",
+          "src/byteio/byteio_test.mbt",
+          "src/checksum/checksum_test.mbt",
+          "src/conformance/contracts_test.mbt",
+          "src/conformance/ct_profile_test.mbt",
+          "src/date/date_test.mbt",
+          "src/date/temporal_test.mbt",
+          "src/deid/anonymizer_test.mbt",
+          "src/dicom_writer/writer_test.mbt",
+          "src/model/model_test.mbt",
+          "src/parser/parser_test.mbt",
+          "src/policy/fuzz_test.mbt",
+          "src/policy/policy_test.mbt",
+          "src/validator/validator_test.mbt",
+          "tests/collection_test.mbt",
+          "tests/integration_test.mbt",
+          "tests/p0_test.mbt",
+          "tests/p1_test.mbt",
+          "tests/p4_test.mbt",
+          "tests/p5_test.mbt",
+          "tests/roundtrip_test.mbt",
+          "tests/safety_test.mbt",
+          "tests/w0_test.mbt"
+        ]
+      },
+      "c_shim": {
+        "files": 2,
+        "filtered_lines": 57,
+        "paths": [
+          "src/storage/entropy.c",
+          "src/storage/source_guard.c"
+        ]
+      },
+      "python_runtime": {
+        "files": 13,
+        "filtered_lines": 2241,
+        "paths": [
+          "tools/api_authorization.py",
+          "tools/attestation.py",
+          "tools/deliver_local.py",
+          "tools/enterprise_job.py",
+          "tools/history_outbox.py",
+          "tools/install_enterprise.py",
+          "tools/ledger_cache.py",
+          "tools/local_fs.py",
+          "tools/private_store.py",
+          "tools/risk_gate.py",
+          "tools/store_admin.py",
+          "tools/verify_delivery.py",
+          "tools/workbench.py"
+        ]
+      },
+      "python_development": {
+        "files": 33,
+        "filtered_lines": 3588,
+        "paths": [
+          "tools/benchmark_resources.py",
+          "tools/benchmark_streaming.py",
+          "tools/build_distribution.py",
+          "tools/create_proposal_pdf.py",
+          "tools/evidence.py",
+          "tools/explanation_report.py",
+          "tools/generate_conformance_corpus.py",
+          "tools/generate_rulebook.py",
+          "tools/generate_strict_dictionary.py",
+          "tools/moon_tokens.py",
+          "tools/release_readiness.py",
+          "tools/source_census.py",
+          "tools/state_model.py",
+          "tools/verify_attestation.py",
+          "tools/verify_conformance.py",
+          "tools/verify_consumer.py",
+          "tools/verify_ct_research.py",
+          "tools/verify_destination.py",
+          "tools/verify_distribution.py",
+          "tools/verify_enospc_macos.py",
+          "tools/verify_field_evidence.py",
+          "tools/verify_incremental.py",
+          "tools/verify_persistent_identity.py",
+          "tools/verify_pilot.py",
+          "tools/verify_recovery.py",
+          "tools/verify_risk_gate.py",
+          "tools/verify_rulebook.py",
+          "tools/verify_strict_profile.py",
+          "tools/verify_system_failures.py",
+          "tools/verify_w4.py",
+          "tools/verify_w7_rehearsal.py",
+          "tools/verify_with_pydicom.py",
+          "tools/verify_workbench.py"
+        ]
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "priority": "必须补齐交付",
+      "title": "新增版本没有公开发布",
+      "evidence": [
+        "https://mooncakes.io/docs/001-Elsa/medseal",
+        "docs/evidence/w6-consumer.json"
+      ],
+      "action": "发布与当前已验收commit对应的候选包；从干净独立模块执行moon add和公共API例子；记录registry版本、包摘要、实际消费者结果。保留旧项目/新版的区别。"
+    },
+    {
+      "id": "F02",
+      "priority": "必须统一材料",
+      "title": "README、申报书、贡献与维护说明陈旧",
+      "evidence": [
+        "README.md:25",
+        "README.mbt.md",
+        "PROJECT_APPLICATION.md:38",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "docs/CONTRIBUTION.md"
+      ],
+      "action": "统一限定核心/企业宿主/工作台/经典CT的能力表，增量基线和最新测试；旧版材料明确为历史。若走新项目段，申报书需本人按人工要求撰写；旧项目由本人说明新增成果。"
+    },
+    {
+      "id": "F03",
+      "priority": "必须修正证据错误",
+      "title": "W6依赖清单漏记真实三项依赖",
+      "evidence": [
+        "tools/release_readiness.py:23",
+        "docs/evidence/w6-release-readiness.json",
+        "moon.mod"
+      ],
+      "action": "修正IMPORT_RE对带逗号声明的解析，补正例与缺失阻断；之后从干净commit重新构建归档、生成正确依赖清单并绑定CI。本轮审计不更改功能、不把旧清单作完整SBOM。"
+    },
+    {
+      "id": "F04",
+      "priority": "提高生态价值证明",
+      "title": "选题通用性与完整场景证据不足",
+      "evidence": [
+        "PROJECT_APPLICATION.md:21",
+        "docs/PUBLIC_API.zh-CN.md",
+        "examples/consumer"
+      ],
+      "action": "基于真实已有能力描述三类角色的输入→库调用/流程→输出→失败边界：影像开发者批量转换、纵向研究导入与重复/引用控制、工具作者嵌入规则解释/验证。预期场景标预期，不能虚构医院已使用。"
+    },
+    {
+      "id": "F05",
+      "priority": "补齐开源审查",
+      "title": "标准事实、研究参考及QA依赖许可记录不全",
+      "evidence": [
+        "THIRD_PARTY.md",
+        "resources/rules/standard-facts-2025e.json",
+        "requirements-qa.txt",
+        "resources/licenses/pydicom-LICENSE",
+        "docs/WINNER_RESEARCH.zh-CN.md"
+      ],
+      "action": "核对NEMA使用条款并记录事实/表格摘录范围与权利依据；为13项研究参考补许可证及仅研究/不复制的范围；整理直接/间接/仅开发依赖许可，按实际分发物保留NOTICE/LICENSE。"
+    },
+    {
+      "id": "F06",
+      "priority": "本人资格事实",
+      "title": "报名、主要贡献者及历史奖励无法从仓库证明",
+      "evidence": [
+        "git authors",
+        "PROJECT_APPLICATION.md",
+        "online charter 4.2/5.2/6.1"
+      ],
+      "action": "本人确认报名方向、提交身份、原创/授权贡献和此前奖励史；用既有基线+增量列表举证，不重写Git作者历史，也不重复计算旧成果。"
+    },
+    {
+      "id": "F07",
+      "priority": "独立于基本参赛门槛",
+      "title": "真实现场与企业级生产验收仍未完成",
+      "evidence": [
+        "docs/evidence/w7-rehearsal.json",
+        "docs/field-evidence/w7-field-evidence.template.json"
+      ],
+      "action": "继续保留requires_field。真实来源、研究接收、新操作者、独立隐私/可用性与灾备材料属项目生产目标；章程没有统一规定必须取得医院/PACS认证才能参赛。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "一、赛事定位与二、宗旨",
+      "items": [
+        {
+          "id": "1.1",
+          "requirement": "以 MoonBit 语言和工具链为基础，建设开源库、生态包、开发工具或示例工程",
+          "status": "满足",
+          "finding": "核心解析、规则、转换、验证、流式处理及公共 API 在 MoonBit；同时有 CLI、示例、质量实验室。见 src/、api/、cmd/。"
+        },
+        {
+          "id": "1.2",
+          "requirement": "新项目和活跃维护的旧项目均可参加季度生态优秀项目评选",
+          "status": "满足",
+          "finding": "保留旧项目及 bb7e895 基线的 19 个提交；其后新增 39 个提交，最新源码为 2b088d4。旧项目本身不构成排除理由。"
+        },
+        {
+          "id": "2.1",
+          "requirement": "项目真实可用",
+          "status": "部分满足",
+          "finding": "合成输入和独立工具验收已运行，能够实际生成 DICOM 集合；没有独立真实使用者或研究接收证据。章程未统一要求医院试点，但真实使用价值证据仍偏弱。"
+        },
+        {
+          "id": "2.2",
+          "requirement": "边界清晰",
+          "status": "部分满足",
+          "finding": "SUPPORT_MATRIX、PUBLIC_API、CT_CLASSIC_RESEARCH、W0–W7 账本限定能力；顶层 README 和申报书仍把已实现的历史引用、去重、恢复等写成未实现，文档间范围不一致。"
+        },
+        {
+          "id": "2.3",
+          "requirement": "文档完整",
+          "status": "部分满足",
+          "finding": "运行、规则、恢复、隐私、接收文档具备；README.mbt.md、PROJECT_APPLICATION、CHANGELOG、CONTRIBUTING、CONTRIBUTION 等未随 P/W 阶段同步。"
+        },
+        {
+          "id": "2.4",
+          "requirement": "测试可运行",
+          "status": "满足",
+          "finding": "本次四后端实际复跑：Native 117/117；JS、wasm、wasm-gc 各 64/64；最新提交三平台公开 CI success。"
+        },
+        {
+          "id": "2.5",
+          "requirement": "后续可维护",
+          "status": "部分满足",
+          "finding": "固定工具链、生成漂移检查、接口文件和阶段历史具备；贡献指南仍限定 0.1.x，维护责任、后续支持范围及当前 changelog 需要更新。"
+        },
+        {
+          "id": "2.6",
+          "requirement": "允许合理使用 AI，参赛者须理解目标、技术路径、质量边界、开源合规",
+          "status": "待本人确认",
+          "finding": "THIRD_PARTY 公开了 AI 辅助；代码和证据可供理解与答辩，但不能从自动生成文档证明参赛者已掌握。须由本人解释核心实现和独立贡献。"
+        }
+      ]
+    },
+    {
+      "title": "三、参赛对象与参赛形式",
+      "items": [
+        {
+          "id": "3.1",
+          "requirement": "不限学生或社会人士",
+          "status": "满足",
+          "finding": "没有职业或学生身份排除要求；项目类型与可参与对象一致。报名个人信息真实性另行核验。"
+        },
+        {
+          "id": "3.2-1",
+          "requirement": "个人或团体参赛，提交一份报名表单",
+          "status": "待本人确认",
+          "finding": "仓库不能证明已报名或收到审核通知；本轮没有代填、提交报名表。"
+        },
+        {
+          "id": "3.2-2",
+          "requirement": "团体人数不超过 3 人，由队长或指定代表统一报名",
+          "status": "条件适用",
+          "finding": "若个人参赛则团队人数限制不适用；若团队参赛，需本人提供成员与代表信息。AI 工具使用不等于人类团队成员。"
+        },
+        {
+          "id": "3.2-3",
+          "requirement": "团队奖金交给队长/代表，按团队人数平均比例分配，组委会不承担纠纷",
+          "status": "条件适用",
+          "finding": "属团队奖励安排，无法从项目源码判定；需团队成员理解并确认。"
+        },
+        {
+          "id": "3.2-4",
+          "requirement": "每位参赛者原则上一个项目，选择新建设或旧项目维护方向",
+          "status": "待本人确认",
+          "finding": "本次检查对象只有 MedSeal；无法证明本人没有申报其他项目。推荐选择“继续维护已开启的项目并参与季度优秀社区项目评选”。"
+        }
+      ]
+    },
+    {
+      "title": "四、项目方向：4.1 新项目与 4.2 旧项目",
+      "items": [
+        {
+          "id": "4.1-1",
+          "requirement": "新项目可以原创，或移植/重写成熟语言生态开源库",
+          "status": "条件适用",
+          "finding": "MedSeal 声明为原创，非现有库移植；推荐以旧项目维护方向申报，本项为新项目条件。"
+        },
+        {
+          "id": "4.1-2",
+          "requirement": "新项目应有实际需求，避免高度重合且维护良好的成熟项目",
+          "status": "条件适用",
+          "finding": "MoonDICOM 0.1.2 当前仍提供基础解析和元数据脱敏，存在重合；当前 MedSeal 增量的二进制写回、跨批一致性、恢复、审核与签名交付有可验证差异。不能宣传“没有任何类似项目”。"
+        },
+        {
+          "id": "4.1-3",
+          "requirement": "申报前通过 Mooncakes 或比赛助手确认选题重合情况",
+          "status": "部分满足",
+          "finding": "已读取当前 MedSeal 与 MoonDICOM 页面，仓库 RELATED_WORK 有先前检索范围说明；本次没有逐个审计全生态源码，不能出具全生态无重合证明。"
+        },
+        {
+          "id": "4.1-4",
+          "requirement": "已有相关项目时优先评估维护/扩展/协作；类似新建项目须说明理由",
+          "status": "满足",
+          "finding": "本次持续深化自己的既有项目，保留原历史；RELATED_WORK 明确基础重合与增量价值。需要把最终申报理由更新到 W0–W7。"
+        },
+        {
+          "id": "4.2-1",
+          "requirement": "旧项目具备一定可用性",
+          "status": "满足",
+          "finding": "集合示例、公共 API 归档消费者、四后端测试、Linux/macOS 离线安装路径已有实际执行证据。"
+        },
+        {
+          "id": "4.2-2",
+          "requirement": "主要贡献者必须是参赛者本人，允许其他贡献者",
+          "status": "待本人确认",
+          "finding": "Git 历史显示 001-Elsa 38 个提交、韩桢 20 个提交；作者信息不是身份或著作权证明。需本人说明这两个提交身份与项目所有权、实际贡献、AI 使用。"
+        },
+        {
+          "id": "4.2-3",
+          "requirement": "不要求赛期新建，也不要求只有一个贡献者",
+          "status": "满足",
+          "finding": "既有仓库及旧版已发布不使项目自动失格，不需要更名新建来规避规则。"
+        },
+        {
+          "id": "4.2-a",
+          "requirement": "可新增重要功能或完善已有功能",
+          "status": "满足",
+          "finding": "新增严格策略、稳定身份、历史引用/缓存、时间语义、经典 CT Profile、解释门面；见 W0–W3 账本与源码。"
+        },
+        {
+          "id": "4.2-b",
+          "requirement": "可修复 Bug，提升稳定性、兼容性和性能",
+          "status": "满足",
+          "finding": "字符集/UTF-8、CRLF、File Meta 一致性、CT 门禁修正；流式资源与故障/恢复证据可追踪。"
+        },
+        {
+          "id": "4.2-c",
+          "requirement": "可适配 MoonBit 最新版本、标准库或工具链变化",
+          "status": "部分满足",
+          "finding": "从早期工具链升级并固定在 moonc 0.10.14；本次验证此基线可运行，没有核实它是当前最新。这是可选维护方式，不是必须追随最新版本的硬要求。"
+        },
+        {
+          "id": "4.2-d",
+          "requirement": "可完善测试、文档、示例和工程化",
+          "status": "满足",
+          "finding": "独立固定语料、CI、规则/状态模型、归档消费者、工作台与演练均为新增维护内容；文档同步缺口另见 F02。"
+        },
+        {
+          "id": "4.2-e",
+          "requirement": "可优化 API、结构和用户体验",
+          "status": "满足",
+          "finding": "api/ 五个门面及回环工作台已实现；工作台目前主要为查询/取消薄宿主，不能宣传完整影像审阅 GUI。"
+        },
+        {
+          "id": "4.2-f",
+          "requirement": "可依据社区反馈迭代、提升实际价值",
+          "status": "未取得证据",
+          "finding": "仓库未提供独立社区用户反馈与处理闭环；这是鼓励的维护方式，不是六项必须全部完成。"
+        }
+      ]
+    },
+    {
+      "title": "五、流程：5.1 新项目申报内容逐项核对",
+      "items": [
+        {
+          "id": "5.1-entry",
+          "requirement": "飞书问卷报名、加入通知群，审核邮件确认",
+          "status": "条件适用",
+          "finding": "新项目流程；旧项目季度报名也需本人按官方入口完成，仓库不证明报名成功。"
+        },
+        {
+          "id": "5.1-A1",
+          "requirement": "项目名称",
+          "status": "满足",
+          "finding": "PROJECT_APPLICATION 有 MedSeal-MBT 名称。"
+        },
+        {
+          "id": "5.1-A2",
+          "requirement": "项目简介",
+          "status": "部分满足",
+          "finding": "简介存在，但只覆盖早期作业内 research-v1，未反映当前 P/W 实际增量。"
+        },
+        {
+          "id": "5.1-A3",
+          "requirement": "项目方向与通用性说明",
+          "status": "部分满足",
+          "finding": "有医学影像生态库方向，缺少库调用方、可独立复用组件与多用途通用性的明确说明。"
+        },
+        {
+          "id": "5.1-A4",
+          "requirement": "至少 3 个完整预期使用场景",
+          "status": "不满足",
+          "finding": "现有申报书只有“合成影像整理、教学、研发联调和受控转换”的短语，没有三个包含角色、输入、步骤、输出、边界的完整场景。该数量条款位于新项目申报段；旧项目不应自动沿用为硬门槛，但材料仍建议补齐。"
+        },
+        {
+          "id": "5.1-A5",
+          "requirement": "拟实现核心功能",
+          "status": "部分满足",
+          "finding": "已列基础集合功能，当前新增跨批、CT、规则解释、质量实验室、恢复/交付范围没有更新。"
+        },
+        {
+          "id": "5.1-A6",
+          "requirement": "说明原创、移植或参考已有项目",
+          "status": "满足",
+          "finding": "PROJECT_APPLICATION、THIRD_PARTY 声明原创；RELATED_WORK 和 WINNER_RESEARCH 区分参考与复制。"
+        },
+        {
+          "id": "5.1-A7",
+          "requirement": "移植项目须说明原项目名称、链接和许可证",
+          "status": "条件适用",
+          "finding": "不是移植项目；依赖/字典等第三方来源仍须遵守第七章，不能因原创而免除。"
+        },
+        {
+          "id": "5.1-A8",
+          "requirement": "GitHub 链接且不少于 10 个有效 commits；不能空提交/重复拆分刷数",
+          "status": "满足（数量与抽查）",
+          "finding": "本次基线总计 58 个提交，旧基线后 39 个；没有空树变更提交，源码 diff 为 136 个文件、13,137 行增加/250 行删除（含测试、接口和生成文件）。数量超过下限；有效性最终由评审判断，文档提交不能都算有效代码贡献。"
+        },
+        {
+          "id": "5.1-review1",
+          "requirement": "客观需求与实际问题",
+          "status": "部分满足",
+          "finding": "跨文件身份/时间/引用一致性有明确技术问题和合成验证；缺少独立实际调用者需求记录。"
+        },
+        {
+          "id": "5.1-review2",
+          "requirement": "技术路径适当，不能陈旧粗糙",
+          "status": "部分满足",
+          "finding": "使用库边界、标准事实、独立差分、持久化/恢复与可信交付；Python 系统协调部分须如实披露，不宣称纯 MoonBit 企业平台。"
+        },
+        {
+          "id": "5.1-review3",
+          "requirement": "当前类似项目在 Mooncakes 不存在",
+          "status": "条件适用且不能承诺",
+          "finding": "这是新项目申报段的严格措辞；当前 MoonDICOM 基础功能相似，MedSeal 自身旧版也已发布。旧项目应走 4.2/5.2，不用“全生态无类似”论证。"
+        },
+        {
+          "id": "5.1-writing",
+          "requirement": "申报书务必人工撰写，一页 Markdown；避免 AI 套话",
+          "status": "条件适用，当前无满足证据",
+          "finding": "条款位于新项目申报段。已有 Markdown/PDF 是历史 AI 协助材料，不能当作人工撰写证明；本轮仅做核查，不代写冒充本人申报书，也不把本条擅自扩成旧项目新门槛。"
+        },
+        {
+          "id": "5.1-Q1",
+          "requirement": "回应具体痛点、生态缺口或竞品优势",
+          "status": "部分满足",
+          "finding": "RELATED_WORK 有差异，但申报书缺完整场景和当前独立贡献、生态复用价值。"
+        },
+        {
+          "id": "5.1-Q2",
+          "requirement": "回应交付范围与明确不做的内容",
+          "status": "部分满足",
+          "finding": "已有不做像素检查/临床诊断等说明；PROJECT_APPLICATION 仍将已实现恢复/持久身份写成未来工作，需要校正。"
+        },
+        {
+          "id": "5.1-Q3",
+          "requirement": "回应可选路径、实现能力和技术理解",
+          "status": "部分满足",
+          "finding": "研究/计划有路径与证据，但现有申报书没有本人对方案选择、MoonBit/Python边界的简明解释。"
+        },
+        {
+          "id": "5.1-dev",
+          "requirement": "公开、连续、可追踪的工程记录（工单、合并请求、提交、日志等）",
+          "status": "满足",
+          "finding": "分阶段 commit、公开 CI 和证据存在；工单/PR不是必须全部出现。CHANGELOG 陈旧属于维护改进项。"
+        },
+        {
+          "id": "5.1-support",
+          "requirement": "指南、模板、项目方向、答疑、宣讲、社区、阶段展示、最佳实践支持",
+          "status": "非项目验收条件",
+          "finding": "这些是主办方提供的八类支持，不要求项目必须逐个使用。"
+        }
+      ]
+    },
+    {
+      "title": "五、5.1 阶段三：九项基础验收",
+      "items": [
+        {
+          "id": "5.1-C1",
+          "requirement": "项目以 MoonBit 为主要实现语言",
+          "status": "满足（限定范围）",
+          "finding": "非生成产物的 MoonBit 实现 7,482 行、示例/工具 379 行；DICOM转换核心在 MoonBit。Python运行宿主 2,241 行，承担私有事务、审核、发布/交付、工作台等，不只是测试。章程没有百分比阈值；不能声称整个企业系统纯MoonBit。"
+        },
+        {
+          "id": "5.1-C2",
+          "requirement": "GitHub 公开可访问，提交记录清晰",
+          "status": "满足",
+          "finding": "本次公开 GitHub API：private=false、default_branch=master、最新 SHA 2b088d4；本核验固定为58提交，未重写历史。最新版此条已不要求 GitLink 同步。"
+        },
+        {
+          "id": "5.1-C3",
+          "requirement": "结构清晰，能够完成声明核心功能",
+          "status": "满足（限定声明）",
+          "finding": "src/api/cmd/tools分层；集合示例实际生成4对象2引用并重新验证，风险/放行仍false。若申报“企业生产全范围”则不满足；不得把整个原计划视为全部完成。"
+        },
+        {
+          "id": "5.1-C4",
+          "requirement": "README含目标、安装、用法、示例且可复现",
+          "status": "部分满足",
+          "finding": "目标/运行方法/示例存在并可复跑；包 README 仍用 /src 导入，缺新版 moon add API 快速开始，顶层安装与当前公共/企业路径没有统一，跨批能力状态陈旧。"
+        },
+        {
+          "id": "5.1-C5",
+          "requirement": "CI覆盖检查、构建、测试",
+          "status": "满足",
+          "finding": "CI 38337489608对应2b088d4，三平台check/test/build、接口、示例、包构建均成功；POSIX宿主验收只在Linux/macOS，Windows跳过7项，不能称Windows企业完整通过。"
+        },
+        {
+          "id": "5.1-C6",
+          "requirement": "至少一个可运行示例或最小样例",
+          "status": "满足",
+          "finding": "examples/collection本次实际执行；examples/consumer有Linux/macOS归档消费者验收。后者不是独立模块registry安装验收。"
+        },
+        {
+          "id": "5.1-C7",
+          "requirement": "完整测试覆盖核心功能路径",
+          "status": "满足（声明子集）",
+          "finding": "117+64×3 测试通过，475分类语料有既有执行证据，CT有3×50切片验收，CI跑独立conformance/恢复/审核/交付。测试计数不表示完整DICOM标准或医学生产安全。"
+        },
+        {
+          "id": "5.1-C8",
+          "requirement": "发布到 mooncakes.io",
+          "status": "不满足（本次新增版本）",
+          "finding": "当前页面最新仍0.1.1，安装命令moon add 001-Elsa/medseal@0.1.1，18次下载；0.2.0及新增公共门面未发布。仅“旧项目有公开包”已满足，不能让旧版替新增成果完成交付。"
+        },
+        {
+          "id": "5.1-C9",
+          "requirement": "OSI开源许可证及参考/移植许可证合规",
+          "status": "部分满足",
+          "finding": "Apache-2.0声明和LICENSE满足主许可证；pydicom许可保留。13项研究参考未逐项列许可证，NEMA标准事实使用/再分发依据和新增QA依赖说明不完整；未发现违规不等于完成许可核查。"
+        }
+      ]
+    },
+    {
+      "title": "五、5.2 季度优秀社区项目评选",
+      "items": [
+        {
+          "id": "5.2-1",
+          "requirement": "通过验收的新项目和报名社区项目进入季度评选",
+          "status": "待本人/主办方确认",
+          "finding": "项目符合旧项目维护类型，但报名、审核结果与进入评选名单没有仓库证据；不能承诺成功参赛或获奖。"
+        },
+        {
+          "id": "5.2-2",
+          "requirement": "主要贡献者须是参赛者本人，允许其他贡献者",
+          "status": "待本人确认",
+          "finding": "同4.2-2：需澄清两个作者身份、本人贡献与AI辅助责任；保留真实记录，不改写作者历史制造证明。"
+        },
+        {
+          "id": "5.2-3",
+          "requirement": "奖励机制按第六章",
+          "status": "非代码验收条件",
+          "finding": "按季度新增有效贡献、技术价值、质量与实际影响综合评审，没有可自动计算的获奖阈值。"
+        }
+      ]
+    },
+    {
+      "title": "六、激励机制：逐条区分技术、资格和奖励事实",
+      "items": [
+        {
+          "id": "6.1-N1",
+          "requirement": "启动支持需初始化及清晰可执行Proposal",
+          "status": "条件适用",
+          "finding": "新项目规则；MedSeal有工程与方案，但历史Proposal不完整反映当前增量。旧项目不能直接视为重新领取启动支持资格。"
+        },
+        {
+          "id": "6.1-N2",
+          "requirement": "生态价值、合理范围、可完成性需赛事组审核",
+          "status": "待主办方确认",
+          "finding": "无法由本地测试替代官方立项审核。"
+        },
+        {
+          "id": "6.1-N3",
+          "requirement": "完成支持需完成申报主要功能，可公开运行复现并符合测试文档CI开源",
+          "status": "部分满足",
+          "finding": "技术与CI基本具备；公开新版包、材料同步未完成，原P0–P7/W0–W7并非全部验收达成；需与实际提交Proposal范围一致。"
+        },
+        {
+          "id": "6.1-N4",
+          "requirement": "通过官方最终验收才发放完成支持",
+          "status": "待主办方确认",
+          "finding": "没有本轮官方验收通过或发放信息证据。"
+        },
+        {
+          "id": "6.1-L1",
+          "requirement": "不能重复提交此前获支持且无明显新增贡献项目",
+          "status": "满足增量，奖励史待确认",
+          "finding": "新增源码、测试、证据明显；此前是否获支持未知，历史成果不能重复计入。"
+        },
+        {
+          "id": "6.1-L2",
+          "requirement": "少量格式/文字/机械更新不算贡献",
+          "status": "满足",
+          "finding": "新增核心模块、CT约束、持久化、质量验收与接口非少量格式修改；本次审核文档提交本身不冒充新功能。"
+        },
+        {
+          "id": "6.1-L3",
+          "requirement": "拆Commit或空提交制造历史不算贡献",
+          "status": "满足（抽查）",
+          "finding": "39个增量提交无空树变更，功能/修复与CI绑定；不把证据校正、纯文档更新全计为核心开发。"
+        },
+        {
+          "id": "6.1-L4",
+          "requirement": "高度重复且无新增价值不算贡献",
+          "status": "满足限定增量",
+          "finding": "已知同类基础重合已披露，新增关联二进制集合处理/跨批与交付有独立证据；不保证全生态唯一。"
+        },
+        {
+          "id": "6.1-L5",
+          "requirement": "大量复制/机械生成且无法说明核心贡献不算贡献",
+          "status": "部分满足",
+          "finding": "生成MoonBit文件6个、8,686行另计，不冒充手写贡献；尚需本人解释独立算法和生成规则、来源与预期，不能靠总行数申报。"
+        },
+        {
+          "id": "6.1-L6",
+          "requirement": "维护项目须完成申报Proposal主要目标",
+          "status": "部分满足",
+          "finding": "当前历史申报目标可运行，但扩大后的企业/获奖对标方案有未达成门槛。必须明确最终承诺范围，不宣称全计划完成。"
+        },
+        {
+          "id": "6.1-L7",
+          "requirement": "不能无法运行、复现或与申报明显不符",
+          "status": "部分满足",
+          "finding": "执行证据充分；申报书和README与新增能力范围不一致，新用户通过registry只能获取旧版。"
+        },
+        {
+          "id": "6.1-L8",
+          "requirement": "其他无实质贡献行为由组委会判断",
+          "status": "待主办方确认",
+          "finding": "不能由代码检查排除组委会的其他资格判断。"
+        },
+        {
+          "id": "6.1-old",
+          "requirement": "此前参赛项目有新、独立、可验证成果可以重报；历史成果不重复计算",
+          "status": "满足工程事实",
+          "finding": "固定bb7e895为旧版，增量39个提交；最终计入何届/哪批有效贡献由主办方口径与本人申报决定，不给所有58提交统算本轮工作量。"
+        },
+        {
+          "id": "6.1-Q",
+          "requirement": "旧项目按新增有效贡献/维护，而非历史代码量/既有完成度评估",
+          "status": "部分满足",
+          "finding": "新增提交可分离；CONTRIBUTION统计仍是早期4,329行，缺P/W增量汇总及具体实际影响证据。"
+        },
+        {
+          "id": "6.2-1",
+          "requirement": "项目奖励分月度、季度及半年度等机制",
+          "status": "非代码验收条件",
+          "finding": "金额/名次安排不是项目功能门槛；本轮不据此判断必获某档奖励。"
+        },
+        {
+          "id": "6.2-2",
+          "requirement": "奖项可依规模质量预算调整，也可能空缺",
+          "status": "非代码验收条件",
+          "finding": "即使技术验收通过也不能保证获奖。"
+        },
+        {
+          "id": "6.2-3",
+          "requirement": "基础激励与优秀项目奖励不冲突",
+          "status": "非代码验收条件",
+          "finding": "允许叠加不等于本项目已取得某项资格。"
+        },
+        {
+          "id": "6.3-1",
+          "requirement": "转推荐仅限新项目方向",
+          "status": "条件适用",
+          "finding": "推荐旧项目方向，本次不申领或核验推荐奖。"
+        },
+        {
+          "id": "6.3-2",
+          "requirement": "推荐人须已成功通过报名，准确填写推荐人Github",
+          "status": "条件适用",
+          "finding": "如果以后参与推荐，需真实报名与问卷证据。"
+        },
+        {
+          "id": "6.3-3",
+          "requirement": "一人只绑定一推荐人，以首次有效问卷为准",
+          "status": "条件适用",
+          "finding": "不涉及项目源码，不能从仓库判定。"
+        },
+        {
+          "id": "6.3-4",
+          "requirement": "审核后不变更；不得互推/重复/虚假账号",
+          "status": "条件适用",
+          "finding": "如涉及推荐，需本人保证推荐关系真实。"
+        },
+        {
+          "id": "6.3-5",
+          "requirement": "新账号或高度相似仓库可视为风险；批量注册复制可取消奖励",
+          "status": "条件适用",
+          "finding": "本轮不创建账号、复制仓库或处理推荐关系。"
+        },
+        {
+          "id": "6.3-6",
+          "requirement": "双方验收通过才有奖励，上限5人，可叠加",
+          "status": "条件适用",
+          "finding": "不属于MedSeal技术验收；需要主办方审核，不视为已满足。"
+        }
+      ]
+    },
+    {
+      "title": "七、开源与成果提交：十项逐一核对",
+      "items": [
+        {
+          "id": "7-1",
+          "requirement": "GitHub或认可平台公开发布",
+          "status": "满足",
+          "finding": "公开GitHub API private=false，2b088d4与本地一致。"
+        },
+        {
+          "id": "7-2",
+          "requirement": "仓库含完整源码",
+          "status": "满足限定实现",
+          "finding": "MoonBit核心、Python宿主、C适配、生成器/字典事实、合成语料、工作流齐全；工具链、依赖需按官方流程获取，不要求内嵌所有依赖源码。"
+        },
+        {
+          "id": "7-3",
+          "requirement": "合理开发历史",
+          "status": "满足",
+          "finding": "58提交保留，39增量可复查；功能、失败修正、证据分开记录。"
+        },
+        {
+          "id": "7-4",
+          "requirement": "README存在",
+          "status": "满足存在性",
+          "finding": "README.md、README.zh-CN.md、README.mbt.md存在；内容一致性部分满足，见5.1-C4。"
+        },
+        {
+          "id": "7-5",
+          "requirement": "OSI认证许可证",
+          "status": "满足",
+          "finding": "LICENSE与moon.mod均Apache-2.0。"
+        },
+        {
+          "id": "7-6",
+          "requirement": "参考/移植说明含名称、链接、许可、参考范围",
+          "status": "部分满足",
+          "finding": "THIRD_PARTY有依赖/字典来源许可；RELATED_WORK及13项目研究有名称、链接、参考范围并声明未复制实现，但研究报告没有逐项许可证表。NEMA事实抽取再分发依据及开发依赖许可说明也待补齐。"
+        },
+        {
+          "id": "7-7",
+          "requirement": "遵守第三方依赖及参考项目许可",
+          "status": "部分满足",
+          "finding": "pydicom许可文本、离线wheel许可提取已有；W6清单依赖为空，新增QA依赖覆盖不全，NEMA事实数据条款缺明确记录，尚不能给完整合规结论。"
+        },
+        {
+          "id": "7-8",
+          "requirement": "不侵权，不提交未经授权私有/闭源/商业代码",
+          "status": "待本人确认",
+          "finding": "已检查来源声明和生成器，没有看到引入医院/公司私有代码的证据；无法从源码证明所有权和全部来源授权。需本人保证，不将未发现当作法律保证。"
+        },
+        {
+          "id": "7-9",
+          "requirement": "生成代码、测试数据、样例来源合法",
+          "status": "部分满足",
+          "finding": "samples由原MoonBit生成器，conformance标注original synthetic/Apache；pydicom字典保留MIT。NEMA标准事实提取许可/再分发边界需补充说明。"
+        },
+        {
+          "id": "7-10",
+          "requirement": "展示时同意保留署名的宣传/分享/推广",
+          "status": "待本人确认",
+          "finding": "这是参赛者同意事项，源码没有证明，未代替用户勾选或接受条款。"
+        },
+        {
+          "id": "7-rights",
+          "requirement": "作者保留著作权和署名权，奖励非购买商业/独占权",
+          "status": "非代码验收条件",
+          "finding": "章程权利说明，不需要改为其他许可证或转让著作权来满足。"
+        }
+      ]
+    },
+    {
+      "title": "八、时间安排及九、违规处理",
+      "items": [
+        {
+          "id": "8",
+          "requirement": "赛程可调整，以官方通知为准",
+          "status": "非代码验收条件",
+          "finding": "在线正文不同段落含不同进程描述，本报告不推断报名状态，也不重复赛程提醒；适用届次/评选批次需依官方确认。"
+        },
+        {
+          "id": "9-1",
+          "requirement": "不得提交虚假个人或项目信息",
+          "status": "待本人确认",
+          "finding": "技术陈述需先统一，个人身份/联系方式及报名真实性只能本人确认。"
+        },
+        {
+          "id": "9-2",
+          "requirement": "不得抄袭冒用盗用他人成果",
+          "status": "待本人确认",
+          "finding": "源码保留原项目，RELATED_WORK披露重合，研究明确未复制实现；非全面查重/法律鉴定。"
+        },
+        {
+          "id": "9-3",
+          "requirement": "不得未经授权使用闭源私有商业代码",
+          "status": "待本人确认",
+          "finding": "同7-8，未取得反证，但不能自动证明来源权利。"
+        },
+        {
+          "id": "9-4",
+          "requirement": "不得隐瞒来源或违反第三方许可",
+          "status": "部分满足",
+          "finding": "存在来源说明但许可清单仍有空缺，按F05补齐。"
+        },
+        {
+          "id": "9-5",
+          "requirement": "不得无意义提交、重复项目、空壳刷激励",
+          "status": "满足工程抽查",
+          "finding": "可运行代码和非空增量历史存在；是否重复领取或申报其他项目待本人/组委会。"
+        },
+        {
+          "id": "9-6",
+          "requirement": "不得违法、违背公序良俗或平台规则",
+          "status": "未发现违反，非完整证明",
+          "finding": "项目限定合成/受控元数据工程用途，不含真实患者公开夹具；法律和平台资格判断不由测试替代。"
+        },
+        {
+          "id": "9-7",
+          "requirement": "不得恶意代码、后门、攻击功能或明显安全风险",
+          "status": "部分满足",
+          "finding": "有权限/回环CSRF/恢复/签名门禁及负例；未做全源码独立安全审计。W7模板校验不是真实性验签，不能代替独立审查或部署安全认证。"
+        },
+        {
+          "id": "9-8",
+          "requirement": "沟通评审展示不得严重不诚信",
+          "status": "待本人确认",
+          "finding": "不得把synthetic、skipped、未发布、待现场改写成真实通过；本人须如实解释。"
+        },
+        {
+          "id": "9-9",
+          "requirement": "其他影响公平/生态目标行为可处理",
+          "status": "待主办方确认",
+          "finding": "不能通过本地代码工具穷尽或担保不存在。"
+        },
+        {
+          "id": "9-dispute",
+          "requirement": "争议时补充来源、许可、代码证明",
+          "status": "部分满足",
+          "finding": "现有生成器/固定SHA/研究链接可提供；需要补齐F05许可记录及本人贡献证据。"
+        }
+      ]
+    },
+    {
+      "title": "十、附则：七项",
+      "items": [
+        {
+          "id": "10-1",
+          "requirement": "激励非劳务、委托、购买或雇佣关系",
+          "status": "非代码验收条件",
+          "finding": "权利/关系说明，无需功能修改。"
+        },
+        {
+          "id": "10-2",
+          "requirement": "发放方式、时间、税务依主办方和规定",
+          "status": "待本人/主办方确认",
+          "finding": "奖励信息属于报名/发放流程，不在公共仓库存放。"
+        },
+        {
+          "id": "10-3",
+          "requirement": "信息真实并配合奖励信息确认",
+          "status": "待本人确认",
+          "finding": "不以Git作者名字推定实名认证或联系方式真实性。"
+        },
+        {
+          "id": "10-4",
+          "requirement": "尊重署名及许可的宣传展示",
+          "status": "待本人确认",
+          "finding": "与7-10对应；本轮没有接受协议或提交授权。"
+        },
+        {
+          "id": "10-5",
+          "requirement": "主办方不获得独占、商业权利或著作权转让",
+          "status": "非代码验收条件",
+          "finding": "无需改动项目著作权安排。"
+        },
+        {
+          "id": "10-6",
+          "requirement": "规则可合理调整并公告",
+          "status": "非代码验收条件",
+          "finding": "本报告固定本次在线观察版本；未来修改需重新核对。"
+        },
+        {
+          "id": "10-7",
+          "requirement": "提交报名视为阅读并同意章程",
+          "status": "待本人确认",
+          "finding": "必须由本人阅读决定，本轮只核查未报名。"
+        }
+      ]
+    },
+    {
+      "title": "十一、推广与两个附录",
+      "items": [
+        {
+          "id": "11-display",
+          "requirement": "项目墙、生态列表、官方渠道、访谈文章、分享、高校宣讲、维护协作、示例学习材料等展示机会",
+          "status": "非强制条件",
+          "finding": "不是项目必须逐项取得的认可；仓库有运行示例/研究记录，但没有这些正式入选证据。"
+        },
+        {
+          "id": "11-blog",
+          "requirement": "鼓励博客、日志或经验总结",
+          "status": "部分满足（鼓励项）",
+          "finding": "阶段账本与证据充分，CHANGELOG和面向开发者的当前使用教程陈旧；公开开发文章不是硬门槛。"
+        },
+        {
+          "id": "11-campus",
+          "requirement": "高校/社团/实验室/组织共建及校园宣讲、训练营、workshop、AI工作坊、认领、校内展示、优秀专场、组织荣誉",
+          "status": "非强制条件",
+          "finding": "组织合作机制，不要求个人MedSeal项目参与所有活动。"
+        },
+        {
+          "id": "A1-value",
+          "requirement": "推荐需求广泛、有实用价值及成熟解决方案或真实未解决需求",
+          "status": "部分满足",
+          "finding": "DICOM是标准化多机构影像格式，有跨文件/随访处理问题；真实需求仍主要由实现者描述，需场景和独立使用记录加强。"
+        },
+        {
+          "id": "A1-narrow",
+          "requirement": "不建议场景过特殊，如只能分析一种特定格式的审计工具",
+          "status": "存在选题评价风险",
+          "finding": "MedSeal限定DICOM，与该例有接近点；它也包含可复用解析/转换/身份/验证库与二进制交付，超出只审计。此为不建议而非禁止，不能据此自动判不合格。"
+        },
+        {
+          "id": "A1-reuse",
+          "requirement": "不建议完全无复用价值成品，例如游戏或自创语言编译器",
+          "status": "满足限定复用",
+          "finding": "api/可调用，消费者已运行；仍须新版registry包与至少三个完整调用场景证明实际复用。"
+        },
+        {
+          "id": "A1-official",
+          "requirement": "不建议自制MoonBit官方发布审计/fmt替代等，除非质量把握充分",
+          "status": "满足项目定位",
+          "finding": "MedSeal主要是医学影像处理；W6发布清单仅内部交付配套，不应把它包装为本项目主要生态贡献。"
+        },
+        {
+          "id": "A1-list",
+          "requirement": "推荐语言/开发工具、Web网络、数据数据库、云原生等清单只参考不限制",
+          "status": "不构成否决",
+          "finding": "MedSeal不需改成QUIC/Spark/Operator才能参赛；不在推荐清单不等于不合格。"
+        },
+        {
+          "id": "A2-sample",
+          "requirement": "moon_elk样本的功能/API/差分/性能/移植说明",
+          "status": "非本项目硬要求",
+          "finding": "ELK功能、与0.12.0结果一致和性能描述只约束样本Proposal，不要求MedSeal实现。当前在线样本未提出所有项目须300个测试文件；旧zip的4–10k行也未出现在在线最新版硬条款中。"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Git authors are not personal identity or ownership proof",
+    "rule and test evidence only supports declared subset",
+    "no guarantee of official admission awards or legal compliance",
+    "human consent and registration not performed",
+    "real hospital/site evidence not created"
+  ]
+}
