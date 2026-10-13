@@ -1,6 +1,6 @@
 # MedSeal-MBT
 
-面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.2.2 工程预览**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
+面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.2.3 工程预览**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
 ## 当前已实现的范围
 
@@ -19,7 +19,7 @@
 按[官方说明](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)安装 MoonBit。已验证基线为 moon `0.1.20260920` / moonc `0.10.14+7d59c7ec9`。在自己的独立 MoonBit 模块执行：
 
 ```sh
-moon add 001-Elsa/medseal@0.2.2
+moon add 001-Elsa/medseal@0.2.3
 ```
 
 创建 `app/moon.pkg`：

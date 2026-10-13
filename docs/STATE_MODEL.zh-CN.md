@@ -7,3 +7,5 @@
 故障证据只证明本机进程终止和受控目录恢复。真实 HFS+ ENOSPC 曾单独验证（evidence/p0-real-enospc.json）；它不覆盖所有磁盘满窗口。真实断电、Windows 句柄和所有存储系统的持久性仍然是未认证范围；资源报告也不承诺任意 32 GiB 输入具有恒定 RSS。
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+重新运行 `python tools/verify_w4.py` 默认写入 `tmp/w4-state-model.json`；使用 `--record PATH` 可指定输出。仓库中已冻结的历史证据不会被默认重跑覆盖。CI 收集 `tmp/w4-state-model-ci.json`，发布包仍保持冻结提交的原始证据。

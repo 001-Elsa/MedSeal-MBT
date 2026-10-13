@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Synthetic multi-batch enterprise and transactional store regression."""
 from pathlib import Path
+import argparse
 import concurrent.futures
 import copy
 import hashlib
@@ -32,6 +33,9 @@ def reserve(store, request, domain='synthetic-lab', ok=True):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--record', type=Path, default=REPO / 'tmp/p2-persistent-identity.json')
+    args = parser.parse_args()
     os.umask(0o077)
     checks = []
     (REPO / 'tmp').mkdir(exist_ok=True)
@@ -93,8 +97,9 @@ def main():
               'enterprise_binary_sha256': hashlib.sha256(BINARY.read_bytes()).hexdigest(),
               'cryptography': __import__('cryptography').__version__, 'sqlite': __import__('sqlite3').sqlite_version,
               'limitations': ['exact duplicates reuse identities but are still converted', 'closed batch references only', 'local POSIX key provider; backup contains keys', 'no physical power-loss certification']}
-    path = REPO / 'docs/evidence/p2-persistent-identity.json'
-    path.write_text(json.dumps(record, indent=2) + '\n')
+    path = args.record
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'status': 'passed', 'checks': len(checks)}))
 
 

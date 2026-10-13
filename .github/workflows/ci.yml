@@ -71,14 +71,14 @@ jobs:
       - name: Persistent identity regression
         if: runner.os != 'Windows'
         run: |
-          python tools/verify_persistent_identity.py
+          python tools/verify_persistent_identity.py --record tmp/p2-persistent-identity-ci.json
           python tools/verify_recovery.py
           python tools/verify_risk_gate.py
           python tools/verify_attestation.py
           python tools/verify_pilot.py --record tmp/p7-ci.json
       - name: W4 state, fault and parser fuzz acceptance
         if: runner.os != 'Windows'
-        run: python tools/verify_w4.py
+        run: python tools/verify_w4.py --record tmp/w4-state-model-ci.json
       - name: W5 loopback workbench acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_workbench.py
@@ -93,7 +93,9 @@ jobs:
       - name: Package
         run: moon package
       - name: Exact source snapshot in module package
-        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.2.2.zip --record tmp/platform-snapshot-ci.json
+        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.2.3.zip --record tmp/platform-snapshot-ci.json
+      - name: Source tree remains unchanged after acceptance
+        run: git diff --exit-code
       - name: Upload acceptance evidence
         if: always()
         uses: actions/upload-artifact@v4

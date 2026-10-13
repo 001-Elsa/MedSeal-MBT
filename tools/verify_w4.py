@@ -6,6 +6,7 @@ the safety properties that the coordinator must preserve, then runs the
 existing process recovery matrix on the recorded POSIX host.
 """
 from pathlib import Path
+import argparse
 import hashlib
 import json
 import random
@@ -104,6 +105,9 @@ def run_native_parser_fuzz():
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--record', type=Path, default=REPO / 'tmp/w4-state-model.json')
+    args = parser.parse_args()
     started = time.monotonic()
     model = model_runs()
     fuzz = contract_fuzz()
@@ -135,7 +139,8 @@ def main():
             "resource reference excludes a claim of constant RSS for arbitrary 32 GiB inputs",
         ],
     }
-    output = REPO / "docs/evidence/w4-state-model.json"
+    output = args.record
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"status": "passed", "transitions": model["transitions"], "fuzz": fuzz["iterations"], "windows": len(windows)}))
 

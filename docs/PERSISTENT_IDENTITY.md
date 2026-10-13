@@ -56,3 +56,5 @@ and `tools/verify_incremental.py` (synthetic multi-batch/cache/migration/history
 outbox checks). Original identities are not in the database/WAL in plaintext.
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+Rerunning `python tools/verify_persistent_identity.py` writes `tmp/p2-persistent-identity.json`; use `--record PATH` to select another output. The tracked historical evidence is not overwritten by default.

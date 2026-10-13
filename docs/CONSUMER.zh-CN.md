@@ -10,7 +10,7 @@
 
 ```sh
 python3.12 tools/verify_consumer.py tmp/archive-consumer.json
-python3.12 tools/verify_registry_consumer.py --version 0.2.2 --record tmp/registry-consumer.json
+python3.12 tools/verify_registry_consumer.py --version 0.2.3 --record tmp/registry-consumer.json
 ```
 
 历史 0.2.1 已公开发布，见[归档验收](evidence/release-0.2.1-archive-consumer.json)、[registry验收](evidence/release-0.2.1-registry-consumer.json)和[三平台CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38363013106)。
@@ -21,4 +21,4 @@ python3.12 tools/verify_registry_consumer.py --version 0.2.2 --record tmp/regist
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
 
-0.2.2 的真实 registry 消费者必须在新包发布后重新运行；输出证据保存到源码目录外的版本核验目录，参见[三平台同步](PLATFORM_SYNC.zh-CN.md)。
+0.2.3 的真实 registry 消费者必须在新包发布后重新运行；输出证据保存到源码目录外的版本核验目录，参见[三平台同步](PLATFORM_SYNC.zh-CN.md)。

@@ -1,6 +1,6 @@
 # MedSeal-MBT acceptance
 
-Current maintained contracts cover the 0.2.2 complete-source snapshot patch, preserving
+Current maintained contracts cover the 0.2.3 complete-source snapshot patch, preserving
 the DICOM behavior of the published 0.2.0 engineering preview. Publication of
 each immutable version is verified independently in the release record. The original bb7e895 / 0.1.1 history
 is preserved. This accepts the declared subset, not clinical production or all

@@ -2,11 +2,13 @@
 
 All notable changes to MedSeal-MBT are documented here.
 
-## 0.2.2 - 2026-10-13 (Complete source snapshot)
+## 0.2.3 - 2026-10-13 (Complete source snapshot)
 
+- The 0.2.2 Git candidate exposed evidence files being overwritten during POSIX CI; it was not published to Mooncakes. Its existing commit/tag remain unchanged, and 0.2.3 is the corrected release candidate.
 - Include every reviewed Git-tracked file in the Mooncakes package, including workflows, hooks, Git attributes and earlier publication evidence.
 - Add a default-deny publishing allowlist and an exact file/content verification gate to prevent repository/package divergence.
 - Preserve the author's public research helper scripts with explicit local input/output directories; third-party research sources and old working copies remain outside the maintained module.
+- Write persistent-identity and W4 rerun results to temporary paths instead of overwriting frozen evidence; CI retains the new records as artifacts.
 - Keep post-publication receipts outside the frozen source tree. Bump module/CLI version together; existing pinned jobs must use their original runtime.
 
 ## 0.2.1 - 2026-10-13 (Documentation patch)
