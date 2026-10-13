@@ -16,8 +16,18 @@ All notable changes to MedSeal-MBT are documented here.
 - Update the toolchain and fixed dependencies; add independent pydicom checks.
 - API changes: file inspection/validation are async, writer functions raise
   structured errors, and DataElement includes an optional original-byte cache.
-- Cross-job mapping, persisted secrets, automatic resume and pixel redaction
-  remain outside this version. No remote 0.2.0 publication is claimed.
+- Add persistent source/project identities, sealed recovery, bounded native-pixel
+  streaming, per-object review gates, Ed25519 signing and independent receipts.
+- Add public `api/*` facades, rulebook/explanation contracts and fixed differential corpus.
+- Add incremental cache/migration, exact-repeat reuse, delivered-history references,
+  date/time precision and destination-bound outbox/receipt recovery.
+- Add limited classic CT research validation with independent voxel/HU/geometry checks.
+- Add fault/state-model and parser fuzz regression, loopback workbench and cancellation.
+- Fix release dependency inventory and source/archive binding; update install/examples,
+  contribution/source records and independent registry consumer tooling.
+- Production field acceptance, compressed pixels, full IOD/Annex E conformance and
+  pixel redaction remain outside the declared release. Publication results are recorded
+  in docs/COMPETITION_REMEDIATION.zh-CN.md.
 
 ## 0.1.1 - 2026-08-08
 

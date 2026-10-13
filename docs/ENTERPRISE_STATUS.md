@@ -1,3 +1,5 @@
+> 历史阶段记录：以下结论保留当时提交的范围与证据；当前能力以 [README](../README.zh-CN.md)、[W0–W7 账本](WINNER_UPGRADE_STATUS.zh-CN.md)和[整改记录](COMPETITION_REMEDIATION.zh-CN.md)为准。
+
 # 企业升级实施记录
 
 基线：`9562904` / 0.2.0。执行依据：[企业级升级方案](ENTERPRISE_ROADMAP.zh-CN.md)。

@@ -1,0 +1,37 @@
+[
+  {
+    "dependency": "attrs",
+    "file": "resources/licenses/qa/attrs/licenses/LICENSE",
+    "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f"
+  },
+  {
+    "dependency": "jsonschema",
+    "file": "resources/licenses/qa/jsonschema/licenses/COPYING",
+    "sha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439"
+  },
+  {
+    "dependency": "jsonschema-specifications",
+    "file": "resources/licenses/qa/jsonschema-specifications/licenses/COPYING",
+    "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c"
+  },
+  {
+    "dependency": "pydicom",
+    "file": "resources/licenses/qa/pydicom/LICENSE",
+    "sha256": "39b3259cb15151df25167119087df1fef33624765e639af42447ba6fe86dada3"
+  },
+  {
+    "dependency": "referencing",
+    "file": "resources/licenses/qa/referencing/licenses/COPYING",
+    "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c"
+  },
+  {
+    "dependency": "rpds-py",
+    "file": "resources/licenses/qa/rpds-py/licenses/LICENSE",
+    "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909"
+  },
+  {
+    "dependency": "typing_extensions",
+    "file": "resources/licenses/qa/typing_extensions/licenses/LICENSE",
+    "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+  }
+]

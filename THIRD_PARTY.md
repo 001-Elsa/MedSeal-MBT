@@ -65,3 +65,51 @@ The native SHA dependency remains an integrity hash, not the identity encryption
 or signature provider. Development dciodvfy/pydicom executables are not bundled.
 The MoonBit core/runtime is included in native compiled binaries under its Apache-2.0
 license; compiler release0.10.14+7d59c7ec9 is recorded in the generated SBOM.
+
+## Complete development/QA dependency inventory
+
+These pinned Python packages are development-only, declared in requirements-qa.txt.
+They are not MoonBit runtime dependencies or part of the private runtime wheel set.
+License texts from the installed distribution are retained under resources/licenses/qa;
+qa-manifest.json records their exact bytes. Offline runtime wheels carry their own
+licenses and hashes in the distribution SBOM.
+
+| Package | Version | License | Source / role |
+| --- | --- | --- | --- |
+| pydicom | 3.0.1 | MIT | https://github.com/pydicom/pydicom — independent reader, synthetic fixtures, dictionary |
+| jsonschema | 4.23.0 | MIT | https://github.com/python-jsonschema/jsonschema — report schema validation |
+| attrs | 26.1.0 | MIT | https://github.com/python-attrs/attrs — transitive QA dependency |
+| jsonschema-specifications | 2025.9.1 | MIT | https://github.com/python-jsonschema/jsonschema-specifications — schema vocabulary |
+| referencing | 0.37.0 | MIT | https://github.com/python-jsonschema/referencing — schema references |
+| rpds-py | 2026.9.1 | MIT | https://github.com/crate-py/rpds — schema data structures |
+| typing-extensions | 4.16.0 | PSF-2.0 | https://github.com/python/typing_extensions — QA typing support |
+
+## Research references
+
+The 13 projects in docs/WINNER_RESEARCH.zh-CN.md are design/engineering research
+references, not dependencies or ports. No implementation, assets, license text or
+test fixture from them is distributed as MedSeal code. The report records fixed
+source commits, links and reference scope; its license table is based on the root
+LICENSE of those fixed snapshots. Future copying would require a new provenance
+record and applicable license/NOTICE retention.
+
+## DICOM standard facts and rights boundary
+
+DICOM® is the registered trademark of the National Electrical Manufacturers
+Association for its Standards publications relating to digital communications of
+medical information. The DICOM Standard copyright is held by NEMA, not MedSeal.
+Official rights statement: https://www.dicomstandard.org/about-home/trademark
+Standard notices: https://dicom.nema.org/medical/dicom/2025e/output/chtml/part01/chapter_Notice.html
+
+resources/rules/standard-facts-2025e.json stores selected interoperability facts
+(selected tag codes and MIT-pydicom VR/VM tokens) with fixed official PS3.6/PS3.15
+URLs and source hashes, not the standard document, explanatory prose, illustrations
+or a complete table reproduction. This factual subset is used to check the
+implementation's dictionary and policy, and is not labeled as NEMA endorsement,
+a complete confidentiality profile or a grant to redistribute the standard under
+Apache-2.0. Project-specific decisions and synthetic fixtures are original;
+The former PS3.15 bulk action-code table was removed during the contest audit remediation; the generator now retains only selected reference tags, source links and hashes, never action table cells. The official website terms (https://www.dicomstandard.org/dicom-terms-conditions, sections 1.1/1.2) restrict reprinting/distributing copyrighted works; no written permission to reprint is claimed. The strict dictionary subset separately derives from MIT-licensed pydicom, whose
+license is retained. Downloaded official HTML/PDF remains outside release archives.
+The standard's public availability alone is not treated as an unrestricted
+reproduction license; any future redistribution of standard text/full tables
+requires an explicit rights basis and retained original notices.

@@ -334,3 +334,23 @@
 所有第三方源代码只作为研究资料保存。若未来实际采用代码/依赖，应固定版本并保留许可证和来源说明；本轮没有复制它们的实现进入 MedSeal。
 
 在线演示观察：2026-10-12，Frontier 当前 Trace Clinic 完成内置错误诊断；MoonCharts 的 SVG 与示例调用可见；MoonMarkMind 的编辑区和脑图首屏可见；raft-moonbit README 提供的 GitHub Pages demo 链接返回 404。未验证所有交互和导出，未将当前部署当作历史评审证据。详细原始观察保存在工作区 `research/七月获奖项目对标/official-observation.md`。原始归档与完整文件清单不随本仓库发布。
+
+## 逐项研究参考许可
+
+许可证来自研究证据固定的 july17 快照根 LICENSE，链接绑定同一 SHA；该表不是运行依赖表，不把研究借鉴当作移植。
+
+| 项目 | 固定来源/许可文本 | 许可 | 参考范围 |
+| --- | --- | --- | --- |
+| MoUI | [wzzc-dev/MoUI](https://github.com/wzzc-dev/MoUI/blob/5bb64bbdb43e7e58ee8f4518741d82720da9762e/LICENSE) | Apache-2.0 | 仅研究 W0, W6 工程方法；不复制实现 |
+| aitne | [Arcelyth/aitne](https://github.com/Arcelyth/aitne/blob/b1ab95444fcbedccb3ab2ca382d8c7ec01ad4399/LICENSE) | MIT | 仅研究 W5 工程方法；不复制实现 |
+| MoonFrame | [ihb2032/MoonFrame](https://github.com/ihb2032/MoonFrame/blob/0285e6041cc9d216e5297e7de3189bb862fe43d9/LICENSE) | Apache-2.0 | 仅研究 W1, W4, W5 工程方法；不复制实现 |
+| Frontier Lab | [shop1111/FrontierLab](https://github.com/shop1111/FrontierLab/blob/26814a6abed16bee040cdd8b0c097708a1b58988/LICENSE) | MIT | 仅研究 W0, W5 工程方法；不复制实现 |
+| tokenizers-moonbit | [howtomakeaname/tokenizers-moonbit](https://github.com/howtomakeaname/tokenizers-moonbit/blob/2046a45ef93ac769b4dc9e7482b6091afbf08fbd/LICENSE) | Apache-2.0 | 仅研究 W1 工程方法；不复制实现 |
+| markitdown | [ZSeanYves/markitdown](https://github.com/ZSeanYves/markitdown/blob/7e6e1c89fdbcdd87ed7dcb508f051b16e5c4e3d4/LICENSE) | Apache-2.0 | 仅研究 W1, W3, W4 工程方法；不复制实现 |
+| moon_graphql | [Eisem/moon_graphql](https://github.com/Eisem/moon_graphql/blob/0923ce52c28af4022f17485496b6af1a4653d2d6/LICENSE) | Apache-2.0 | 仅研究 W0, W1, W3 工程方法；不复制实现 |
+| MoonBit Hex Editor | [R00TK17/moonbit-HexEditor](https://github.com/R00TK17/moonbit-HexEditor/blob/7a3e9d5d38c1a16f45b30b6dbea72aee869b23b2/LICENSE) | Apache-2.0 | 仅研究 W5 工程方法；不复制实现 |
+| moonsic | [hyl-star/moonsic](https://github.com/hyl-star/moonsic/blob/ae98a436f85e9c7c0b878c18bc5bd26c401f368d/LICENSE) | Apache-2.0 | 仅研究 W0, W6 工程方法；不复制实现 |
+| linear-algebra | [Luna-Flow/linear-algebra](https://github.com/Luna-Flow/linear-algebra/blob/a85b6ba32bee07f8b942ef1bc26b4fc3d8f15f64/LICENSE) | Apache-2.0 | 仅研究 W3, W4 工程方法；不复制实现 |
+| MoonCharts | [pxgt/mooncharts](https://github.com/pxgt/mooncharts/blob/b11795eea77bf5f5d2293103f1b54f0f4edc322b/LICENSE) | Apache-2.0 | 仅研究 W5 工程方法；不复制实现 |
+| raft-moonbit | [Lfan-ke/raft-moonbit](https://github.com/Lfan-ke/raft-moonbit/blob/31221c15d61b7c1910d0633271e4e5c17559152e/LICENSE) | Apache-2.0 | 仅研究 W4 工程方法；不复制实现 |
+| MoonMarkMind | [Xiao-li-He/MoonMarkMind](https://github.com/Xiao-li-He/MoonMarkMind/blob/fe2568132baf76bab7a3cdfc9d9f0740e0d29044/LICENSE) | Apache-2.0 | 仅研究 W5, W6, W7 工程方法；不复制实现 |

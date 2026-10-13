@@ -1,8 +1,16 @@
 # Contributing
 
-Contributions must remain inside the documented 0.1.x scope. Do not add
-diagnosis, networking, PACS, databases, web interfaces, OCR, or compressed
-pixel decoding without a separately reviewed scope change.
+Maintain the declared 0.2.0 scope: public MoonBit libraries, compatible CLI,
+controlled POSIX private adapters and loopback workbench. Database transactions,
+review/signing and local UI are existing components. Changes to compressed pixels,
+PACS/network services, diagnosis or full IOD/Profile claims need explicit scope,
+independent fixtures and acceptance criteria before those claims enter the README.
+
+Repository issues/PRs are the maintenance channel; the repository owner reviews
+behavior and source provenance. No support SLA or production certification is promised.
+Record breaking API/schema/tool fingerprints and migration/recovery consequences.
+Keep README.md and README.mbt.md synchronized, update the Chinese guide, changelog,
+support matrix and executable examples in the same change.
 
 Before submitting a change:
 

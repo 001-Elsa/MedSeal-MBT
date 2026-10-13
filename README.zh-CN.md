@@ -1,82 +1,106 @@
 # MedSeal-MBT
 
-获奖项目对标后的 W0 新增[规则账本与公共 API](docs/PUBLIC_API.zh-CN.md)、安全对象解释和合成报告；[W0–W7 升级状态](docs/WINNER_UPGRADE_STATUS.zh-CN.md)逐阶段记录实际完成情况。
+面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.2.0 工程预览**；真实发布结果以[整改与发布记录](docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
-MedSeal-MBT 使用 MoonBit 处理 DICOM 元数据。0.2.0 在原有单文件解析、校验、脱敏和二进制写回基础上，新增**多文件患者假名、身份 UID 一致映射、日期间隔保留、引用校验和作业验证**。
+## 当前已实现的范围
 
-目前为验证过的 0.2.0 候选版本，源码已按功能更新到 GitHub。Mooncakes 公共版本仍是 0.1.1，GitLink 同步与新版包发布尚未执行。原深化方案尚未逐项全部完成，已完成范围和差距见[逐项核对表](docs/PLAN_AUDIT.md)。
+| 入口 | 能力 | 适用范围 |
+| --- | --- | --- |
+| MoonBit 公共库 | 策略编译、DICOM 读取/写回、验证、隐私安全的解释及受控授权类型 | 公共门面 `api/*`；文件和授权提供方要求 Native |
+| 兼容集合 CLI | 作业内患者假名、身份 UID 映射、完整日期间隔、跨文件引用、清单与摘要 | 映射仅限本次作业，不使用持久身份库 |
+| 私有工程宿主 | 跨批持久身份、增量缓存和去重、已交付历史引用、时间精度、封存恢复、逐对象审核、Ed25519 签名及幂等目录接收 | MoonBit Native + Python 3.12；受控 POSIX 本机部署 |
+| 经典 CT 研究 Profile | 单帧、未压缩 16 位 MONOCHROME2；独立体素/HU/几何核验 | 限定 `ct-classic-research-v1`，三组合成系列验证 |
+| 本地工作台 | 作业状态、解释摘要、分页对象和取消 | 回环地址、会话 capability/CSRF；单机工具 |
 
-## 企业工程预览
+历史引用、重复转换/交付控制和恢复已实现；它们通过工程宿主使用。[W0–W7 账本](docs/WINNER_UPGRADE_STATUS.zh-CN.md)保存分阶段证据，旧 P/迭代核对表是对应提交的历史快照。实现完成、合成验证、真实现场验收是不同状态。
 
-P0–P7 已推进到离线安装和合成闭环演练。企业入口提供持久化身份、封存恢复、原生像素流式处理、逐对象审核、签名及独立接收验证；合成120MiB载荷峰值约29MiB，包含风险记录的10,000小对象最新复测约187MiB。核心转换仍由 MoonBit 实现，私有事务/密码适配使用 Python3.12。
+## 安装公共库并运行第一个例子
 
-当前不是生产1.0，完整CT/MR语义、历史外部引用、重复对象去重以及真实来源/接收方验收仍有未完成门槛。[实施与证据](docs/ENTERPRISE_STATUS.md) · [操作恢复手册](docs/OPERATIONS.zh-CN.md) · [现场验收表](docs/FIELD_ACCEPTANCE.zh-CN.md) · [流式支持范围](docs/STREAMING.md)。原库/CLI兼容路径继续保留；企业预览的受控部署目前是POSIX，本机离线安装认证为macOS ARM64。
-
-## 直接运行
-
-当前工作区已安装独立工具链。在项目目录执行：
-
-```sh
-tools/moon-local run --target native examples/collection
-```
-
-这个纯 MoonBit 示例创建两个合成患者、四个影像文件和两条引用，执行预检、转换和输出验证，并打印结果所在的 `tmp/demo-...` 目录。合成文件可以直接查看，不包含真实患者数据。
-
-工具链在项目外的 `../moonbit工具链`，启动脚本不会修改系统配置；没有该目录时，脚本使用 PATH 上的 MoonBit。
-
-## 处理一个数据集
+按[官方说明](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)安装 MoonBit。已验证基线为 moon `0.1.20260920` / moonc `0.10.14+7d59c7ec9`。在自己的独立 MoonBit 模块执行：
 
 ```sh
-tools/moon-local run --target native cmd/main -- plan INPUT_DIR --policy examples/research-policy.json
-tools/moon-local run --target native cmd/main -- batch INPUT_DIR --output NEW_JOB_DIR --policy examples/research-policy.json
-tools/moon-local run --target native cmd/main -- verify NEW_JOB_DIR
+moon add 001-Elsa/medseal@0.2.0
 ```
 
-- `plan` 检查患者分组、UID、引用、日期和规则，不创建输出目录。
-- `batch` 使用整个作业共享的映射逐文件处理；所有检查成功后发布新的结果目录。输入和输出不得嵌套，输出目录必须不存在。
-- `verify` 重新检查清单中的 DICOM/审计 SHA-256、文件头、私有元素和跨文件引用。它验证完整性和结构，不能证明全部隐私均已清除。
+创建 `app/moon.pkg`：
 
-输出目录包含 `object-1.dcm` 等匿名编号文件、各文件的动作审计和 `manifest.json`。审计包含元素路径与规则编号，不含原患者值、原文件名、原 UID 映射表或实际日期偏移量。
+```moonbit
+import {
+  "001-Elsa/medseal/api/policy",
+}
+pkgtype(kind: "executable")
+supported_targets = "+native"
+```
 
-同一患者的多个影像保持一个假名；不同患者不会统一变成 MEDSEAL-ID。同一身份 UID 在主体、File Meta 和引用中保持同一映射。每位患者随机获得一个非零日期偏移，同一患者所选完整 DA 字段的时间间隔不变。
+创建 `app/main.mbt`：
 
-`date_shift_days: 30` 表示随机偏移的最大正向天数，不表示所有患者统一偏移 30 天；负数表示负向范围。实际偏移和映射仅存在于本次进程内。默认闭合集合不允许断裂引用，可显式允许外部引用，但未解析部分始终保留为未验证计数。
+```moonbit
+///|
+fn main {
+  try {
+    let policy = @policy.strict()
+    ignore(policy)
+    println("public-policy-ok")
+  } catch {
+    _ => println("public-policy-rejected")
+  }
+}
+```
 
-## 兼容的单文件入口
+执行 `moon run --target native app`，预期输出 `public-policy-ok`。这个例子只编译严格策略，不生成审核或放行许可。[公共 API](docs/PUBLIC_API.zh-CN.md)覆盖 `api/dicom`、`api/policy`、`api/validation`、`api/explain` 和 Native `api/authorization`。旧 `src/` 导入继续兼容。
+
+## 安装源码命令行与完整演示
 
 ```sh
-tools/moon-local run --target native cmd/main -- inspect samples/input.dcm --json
-tools/moon-local run --target native cmd/main -- validate samples/input.dcm --json
-tools/moon-local run --target native cmd/main -- anonymize samples/input.dcm --output tmp/single.dcm --report tmp/single.json --remove-private
+git clone https://github.com/001-Elsa/MedSeal-MBT.git
+cd MedSeal-MBT
+moon update
+moon run --target native examples/collection
 ```
 
-先创建 `tmp` 目录。原 basic 模式保留固定字段替换、UID 保留和私有元素选项；它不具备 research 模式的患者分组及引用验证。单文件 DICOM 和报告位于两个不同位置，不能作为一个原子事务发布；报告状态为 `verified`，以命令退出成功确认操作完成。需要完整作业交付时使用 `batch`。
-
-## 验证工程
+示例生成两个合成患者、四个文件和两条引用，执行转换及清单验证，打印新建的 `tmp/demo-...` 目录；样例没有真实患者数据。当前工作区可把 `moon` 换成 `tools/moon-local`，使用 `../moonbit工具链`，不修改系统配置。
 
 ```sh
-tools/moon-local fmt --check
-tools/moon-local check --target all --deny-warn
-tools/moon-local test --target all --deny-warn
-tools/moon-local build --target native
-tools/moon-local info
-tools/moon-local package
+moon run --target native cmd/main -- plan INPUT_DIR --policy examples/research-policy.json
+moon run --target native cmd/main -- batch INPUT_DIR --output NEW_JOB_DIR --policy examples/research-policy.json
+moon run --target native cmd/main -- verify NEW_JOB_DIR
+moon run --target native cmd/main -- inspect samples/input.dcm --json
+moon run --target native cmd/main -- validate samples/input.dcm --json
+mkdir -p tmp
+moon run --target native cmd/main -- anonymize samples/input.dcm --output tmp/single.dcm --report tmp/single.json --remove-private
 ```
 
-工具链基线：moon `0.1.20260920`、moonc `0.10.14+7d59c7ec9`。CI 固定相同编译器和标准库版本；最新源码已通过 Linux/macOS/Windows 检查、构建、测试、示例和独立 pydicom 验证。Apple Silicon Mac 本地记录与[远程 CI 证据](docs/evidence/github-verification.json)分别保存，证据均注明对应源码版本。
+`plan` 检查患者分组、身份、引用和策略；`batch` 在私有暂存中形成匿名编号 DICOM、逐对象审计和 SHA-256 清单，再发布全新目录。输入/输出不得嵌套，输出目录必须不存在；源内容变化、身份冲突和未授权断裂引用会失败。`verify` 复核完整性及支持的结构，不代表隐私全面合格。
 
-开发对照检查：Python 3.10+ 安装 `pydicom==3.0.1`，运行 `python tools/verify_with_pydicom.py`。工作区已把它安装在独立工具链的 `python-packages` 目录。测试生成支持范围内的合成文件，再由 pydicom 检查输出，验证患者分组、日期间隔、引用、像素字节及清单摘要。
+集合模式每位患者使用同一假名和独立非零日期偏移；同一身份 UID 在 File Meta、主体及受支持引用中一致。basic `anonymize` 保留 UID、使用固定别名，DICOM 与独立报告不能作为同一目录事务发布。具体限制见[策略](docs/POLICY.md)与[支持矩阵](docs/SUPPORT_MATRIX.md)。
 
-## 范围与失败行为
+## 跨批、审核和交付
 
-支持 Part 10、Explicit VR Little Endian、ASCII / ISO_IR 192、定义/未定义长度 Sequence。research 集合只接受 CT Image Storage、MR Image Storage 和 Secondary Capture 的已列元数据规则，不检查完整 IOD。未知公共 UID 角色、患者键冲突、重复 SOP Instance、错误 File Meta、非法日期、未授权外部引用和不支持编码会明确失败。
+工程宿主需要 Python 3.12，按[部署与恢复手册](docs/OPERATIONS.zh-CN.md)安装受控离线包，初始化身份库，执行 create/run/resume、review/publish/deliver 和备份轮换。严格策略、运行程序、封存内容或审核变动时重新核验；不能通过修改记录绕过失败。
 
-像素数据不被解码、识别或涂抹；未知公共描述字段可能含身份信息，报告始终保留剩余风险。此版本不提供完整 DICOM 脱敏 Profile 的合规声明，不自动设置完全身份移除标记，不保证完全匿名化。
+[增量账本](docs/INCREMENTAL_LEDGER.zh-CN.md)解释来源域、同内容复用、相同 SOP 内容冲突及历史引用边界。[工作台](docs/WORKBENCH.zh-CN.md)复用上述流程。[三类完整场景](docs/USE_CASES.zh-CN.md)覆盖影像开发者批处理、纵向研究增量导入和工具作者嵌入公共库；场景为预期用途与合成验证，不冒称医院采用。
 
-上述兼容库/CLI 的映射仅限本次作业，失败后重新预检；进程硬中断可能遗留私有暂存目录。企业入口另提供跨批身份、密钥持久化和显式 resume 恢复，具体操作见企业手册。当前两种入口都未支持压缩传输语法、PACS/DICOMweb 或医疗诊断。
+## 验证与维护
 
-详情：[支持矩阵](docs/SUPPORT_MATRIX.md)、[策略与库 API](docs/POLICY.md)、[验收证据](ACCEPTANCE.md)、[性能记录](BENCHMARKS.md)、[同类对照](docs/RELATED_WORK.md)、[迭代进度](docs/ITERATION_STATUS.md)。
+```sh
+moon info
+moon fmt --check
+moon check --target all --deny-warn
+moon test --target all --deny-warn
+moon build --target native
+moon package
+python3.12 -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
+python3.12 tools/verify_with_pydicom.py
+python3.12 tools/verify_ct_research.py --record tmp/ct-research.json
+python3.12 tools/verify_release_readiness.py
+```
 
-升级目标与完整验收门槛见[企业级深化升级方案](docs/ENTERPRISE_ROADMAP.zh-CN.md)；已落实能力和未完成条件以[企业实施记录](docs/ENTERPRISE_STATUS.md)为准，方案中的拟议版本号不表示已经发布。
+CI 覆盖 Linux/macOS/Windows 核心；POSIX 工程宿主与离线安装验收在 Linux/macOS 执行，Windows 不属于企业部署认证范围。固定语料、生成漂移、失败门禁与独立读取分别验证；证据标明源码版本，不能把配置存在当成执行成功。[贡献指南](CONTRIBUTING.md) · [变更记录](CHANGELOG.md) · [新增贡献与语言边界](docs/CONTRIBUTION.md)。
 
-Apache-2.0。第三方依赖和合成数据来源见 [THIRD_PARTY.md](THIRD_PARTY.md)。
+## 支持与隐私边界
+
+支持 Part 10、Explicit VR Little Endian、ASCII / ISO_IR 192 和已列 Sequence/元数据规则。经典 CT 是限定研究 Profile，MR/SC 元数据检查不等于完整 IOD。压缩传输语法、未知公共 UID 角色、编码和身份冲突明确拒绝。
+
+保留像素字节，不做 OCR、像素涂抹或医疗诊断；未知公共字段与烧录文字仍需人工审查。不声明完整 Annex E 匿名化、PACS/DICOMweb 或真实现场生产验收。合成审核始终标记 synthetic，不能用于患者数据。[安全](SECURITY.md) · [流式上限](docs/STREAMING.md) · [现场门槛](docs/W7_FIELD_EVIDENCE.zh-CN.md)。
+
+Apache-2.0；[依赖、标准与样例来源](THIRD_PARTY.md)。[GitHub](https://github.com/001-Elsa/MedSeal-MBT) · [GitLink](https://gitlink.org.cn/Hzhhhh/MedSeal-MBT) · [Mooncakes](https://mooncakes.io/docs/001-Elsa/medseal)。

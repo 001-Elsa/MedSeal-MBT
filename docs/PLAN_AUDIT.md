@@ -1,3 +1,5 @@
+> 历史阶段记录：以下结论保留当时提交的范围与证据；当前能力以 [README](../README.zh-CN.md)、[W0–W7 账本](WINNER_UPGRADE_STATUS.zh-CN.md)和[整改记录](COMPETITION_REMEDIATION.zh-CN.md)为准。
+
 # 深化方案逐项核对
 
 核对对象：[《MedSeal-MBT 深化迭代与参赛方案》](ITERATION_PLAN.md)。基线为

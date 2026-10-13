@@ -2,14 +2,14 @@
 
 执行依据：[完整方案](WINNER_DRIVEN_ROADMAP.zh-CN.md)与[13 项对标研究](WINNER_RESEARCH.zh-CN.md)。本账本记录实现与实际验收，方案本身不改写为完成报告。原 P0–P7 的范围和未完成项继续保留。
 
-按在线最新版赛事章程的逐条核验见[赛事章程审核](COMPETITION_CHARTER_AUDIT.zh-CN.md)。该审核固定 `2b088d4`，确认工程范围与发布/材料缺口；其中 W6 发行清单漏记三项依赖，已列为待修正项，不视为完整依赖证据。审核结论不等于报名、官方验收或现场生产认证。
+按在线最新版赛事章程的逐条核验见[赛事章程审核](COMPETITION_CHARTER_AUDIT.zh-CN.md)。该审核固定 `2b088d4`，确认工程范围与发布/材料缺口；其中 W6 发行清单漏记三项依赖，已列为待修正项，不视为完整依赖证据。后续修复与平台发布见[整改记录](COMPETITION_REMEDIATION.zh-CN.md)。审核结论不等于报名、官方验收或现场生产认证。
 
 | 阶段 | 当前状态 | 已形成的证据与剩余门槛 |
 | --- | --- | --- |
 | W0 | 实现、本机验收与三平台远端 CI 通过 | 141 项规则索引、固定官方事实、三值条件、公开解释／Schema／四案例、公共门面与受控状态；Native 115，JS/wasm/wasm-gc 各 62；恢复／审核／签名回归；不扩张为完整 IOD 认证 |
 | W1 | 实现、本机 M1/M2 合成验收与三平台 CI 通过 | 473 实际案例，六类，零失败/跳过；四后端一致；pydicom 实际写回，选定 SC 的 dciodvfy 原始诊断，闭集合正反例；完整 CT Profile 留 W3 |
 | W2 | 实现、本机与远端 CI 通过 | 私有缓存／迁移、已交付历史引用、时间精度、outbox 与计数守恒；证据见 `evidence/w2-incremental.json`、`evidence/w2-destination.json`、`evidence/w2-conformance.json`、`evidence/w2-rulebook.json`；[CI 38251118417](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38251118417) |
-| W3 | 修正实现、本机与远端 CI 通过 | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json`；[CI 38257617635](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38257617635) |
+| W3 | 修正实现、本机独立 CT 验收与核心远端 CI 通过 | `ct-classic-research-v1` 限定矩阵、CT 模块/条件门禁、三组各 50 切片、独立体素／HU／几何接收；证据见 `evidence/w3-ct-research.json`；[CI 38257617635](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38257617635) |
 | W4 | 实现、本机与三平台远端 CI 通过 | 独立状态模型、100 个 seed×200 事件、原生策略解析器 100,000 次 fuzz、POSIX 故障与恢复回归；证据见 `evidence/w4-state-model.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W5 | 实现、本机静态验收与三平台远端 CI 通过 | 回环本地工作台、精确 Host/Origin、会话 capability 与 CSRF、分页对象清单、受限解释摘要、取消请求闭环；证据见 `WORKBENCH.zh-CN.md`、`evidence/w5-workbench.json`；[CI 38263490405](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38263490405) |
 | W6 | 归档消费者实现、候选发行清单、本机与三平台远端 CI 通过；registry 回读待完成 | 发布归档 overlay 中的仓库外消费者；`tools/release_readiness.py` 固定模块版本、归档成员摘要、依赖、提交和 CI；Mooncakes/镜像真实发布仍不声称完成；[CI 38266290520](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38266290520) |
@@ -66,7 +66,7 @@
 - [`examples/consumer`](../examples/consumer) 只导入 `api/policy` 公共门面；[`tools/verify_consumer.py`](../tools/verify_consumer.py) 在临时目录解压当前包归档，复制第三方依赖缓存，构建并运行 `external-consumer`，原始源码 checkout 不在消费者搜索路径中。
 - 归档 overlay 的检查、Native 构建和执行均通过；结果只输出策略公共状态，`release_authorized` 固定为 `false`。候选归档使用 `moon.mod` 的 0.2.0 版本来源。
 - [`tools/release_readiness.py`](../tools/release_readiness.py) 已记录候选归档的 SHA-256、逐成员摘要、模块/依赖、来源提交和 CI 链接；证据见 [`evidence/w6-release-readiness.json`](evidence/w6-release-readiness.json)。当前平台观察状态仍为 `pending-human-observation`。
-- 真实 Mooncakes registry 消费者、GitLink 镜像、tag/release 和平台安装包的远端回读仍是待办；当前证据不能改写为“已发布”。发布前后核对格式见 [`RELEASE_READINESS.zh-CN.md`](RELEASE_READINESS.zh-CN.md)。
+- 本段保留 W6 当时发布状态。后续真实 Mooncakes registry 消费者、GitLink 镜像与平台回读以[整改记录](COMPETITION_REMEDIATION.zh-CN.md)为准。发布前后核对格式见 [`RELEASE_READINESS.zh-CN.md`](RELEASE_READINESS.zh-CN.md)。
 
 ## W7 验收记录
 
