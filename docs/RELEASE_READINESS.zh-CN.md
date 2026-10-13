@@ -7,11 +7,11 @@ GitLink 页面导出的最小观察 JSON。
 
 ## 生成候选发行证据
 
-在干净的 Git 提交上先构建包，再运行：
+在干净的 Git 提交上先构建包，再运行（CI URL 必须替换为该冻结提交的实际成功运行，不使用旧运行号）：
 
 ```sh
 python3.12 tools/release_readiness.py \
-  --archive _build/publish/001-Elsa-medseal-0.2.0.zip \
+  --archive _build/publish/001-Elsa-medseal-0.2.1.zip \
   --record tmp/release-readiness.json \
   --ci-url https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38349000368
 ```

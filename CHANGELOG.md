@@ -2,7 +2,7 @@
 
 All notable changes to MedSeal-MBT are documented here.
 
-## Unreleased documentation maintenance
+## 0.2.1 - 2026-10-13 (Documentation patch)
 
 - Synchronize all maintained Markdown with actual API, policy, persistence, temporal,
   recovery/review schemas, runtime closures, budgets, research and publication scope.

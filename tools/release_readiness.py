@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create an auditable 0.2.0 release-readiness record.
+"""Create an auditable module-version release-readiness record.
 
 This tool deliberately separates a locally verified archive from publication on
 Mooncakes or a mirror.  Platform observations are supplied as small JSON files

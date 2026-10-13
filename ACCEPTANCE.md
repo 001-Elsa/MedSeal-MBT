@@ -1,7 +1,8 @@
 # MedSeal-MBT acceptance
 
-Current maintained contracts cover the published 0.2.0 engineering preview and
-the documentation corrections on master. The original bb7e895 / 0.1.1 history
+Current maintained contracts cover the 0.2.1 documentation patch, preserving
+the DICOM behavior of the published 0.2.0 engineering preview. Publication of
+each immutable version is verified independently in the release record. The original bb7e895 / 0.1.1 history
 is preserved. This accepts the declared subset, not clinical production or all
 DICOM IODs. See [support matrix](docs/SUPPORT_MATRIX.md) and
 [documentation audit](docs/DOCUMENTATION_STATUS.zh-CN.md).

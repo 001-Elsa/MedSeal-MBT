@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import tempfile
 from verify_consumer import REPO, moon_binary
+from release_readiness import module_metadata
 
 
 def verify(version, record):
@@ -49,7 +50,7 @@ def verify(version, record):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", default="0.2.0")
+    parser.add_argument("--version", default=module_metadata()["version"])
     parser.add_argument("--record", type=Path, required=True)
     args = parser.parse_args()
     result = verify(args.version, args.record)

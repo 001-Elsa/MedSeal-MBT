@@ -10,7 +10,7 @@
 
 ```sh
 python3.12 tools/verify_consumer.py tmp/archive-consumer.json
-python3.12 tools/verify_registry_consumer.py --version 0.2.0 --record tmp/registry-consumer.json
+python3.12 tools/verify_registry_consumer.py --version 0.2.1 --record tmp/registry-consumer.json
 ```
 
 0.2.0 已公开发布，真实记录分别为 [归档验收](evidence/release-0.2.0-archive-consumer.json)和[registry 验收](evidence/release-0.2.0-registry-consumer.json)。这些记录绑定冻结版本，不冒称后续文档修订已经包含在原归档。

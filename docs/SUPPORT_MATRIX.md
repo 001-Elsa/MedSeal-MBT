@@ -1,6 +1,6 @@
 # Support matrix
 
-Applies to maintained 0.2.0 contracts. This is a tested subset, not a full DICOM
+Applies to 0.2.1, retaining the 0.2.0 behavioral contracts. This is a tested subset, not a full DICOM
 conformance statement. Do not transfer private-host guarantees to basic commands.
 
 | Area | Supported behavior | Boundary |

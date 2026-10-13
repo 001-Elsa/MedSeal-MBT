@@ -3,7 +3,7 @@
 MoonBit libraries and native tools for DICOM metadata conversion, linked-object
 consistency and independent output verification. [中文指南](README.zh-CN.md).
 
-## Current scope: 0.2.0 engineering preview
+## Current scope: 0.2.1 engineering preview
 
 | Entry | Implemented behavior | Platform / boundary |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ Verified baseline: moon 0.1.20260920 / moonc 0.10.14+7d59c7ec9.
 In an existing independent MoonBit module:
 
 ```sh
-moon add 001-Elsa/medseal@0.2.0
+moon add 001-Elsa/medseal@0.2.1
 ```
 
 Create an executable package `app/moon.pkg`:
