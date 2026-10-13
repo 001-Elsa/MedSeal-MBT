@@ -56,6 +56,11 @@ jobs:
         run: python tools/verify_rulebook.py --record tmp/w0-rulebook-ci.json
       - name: Independent fixed corpus and actual writer acceptance
         run: python tools/verify_conformance.py --record tmp/w1-conformance-ci.json
+      - name: Release metadata regression
+        run: python tools/verify_release_readiness.py
+      - name: Independent classic CT research acceptance
+        if: runner.os != 'Windows'
+        run: python tools/verify_ct_research.py --record tmp/w3-ct-research-ci.json
       - name: Offline distribution regression
         if: runner.os != 'Windows'
         run: |

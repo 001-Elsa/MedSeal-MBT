@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import re
+import stat
 import subprocess
 import sys
 import zipfile
@@ -20,7 +21,7 @@ import zipfile
 REPO = Path(__file__).resolve().parents[1]
 MODULE_RE = re.compile(r"^name\s*=\s*\"([^\"]+)\"\s*$", re.MULTILINE)
 VERSION_RE = re.compile(r"^version\s*=\s*\"([^\"]+)\"\s*$", re.MULTILINE)
-IMPORT_RE = re.compile(r"^\s*\"([^\"]+)\"\s*$", re.MULTILINE)
+IMPORT_RE = re.compile(r'^\s*"([^"\s]+@[^"\s]+)"\s*,?\s*(?://.*)?$')
 EXPECTED_ARCHIVE_PREFIX = "001-Elsa-medseal-"
 PRIVATE_PARTS = {".git", ".mooncakes", "tmp", "_build", "private", "secrets"}
 
@@ -43,24 +44,37 @@ def git(*args):
     ).stdout.strip()
 
 
-def module_metadata():
-    text = (REPO / "moon.mod").read_text(encoding="utf-8")
+def module_metadata(text=None):
+    if text is None:
+        text = (REPO / "moon.mod").read_text(encoding="utf-8")
     name = MODULE_RE.search(text)
     version = VERSION_RE.search(text)
     if not name or not version:
         raise ValueError("moon-mod-name-and-version-required")
     imports = []
     in_imports = False
+    found_imports = False
     for line in text.splitlines():
         if line.strip() == "import {":
+            if found_imports:
+                raise ValueError("duplicate-import-block")
+            found_imports = True
             in_imports = True
             continue
         if in_imports and line.strip() == "}":
-            break
+            in_imports = False
+            continue
         if in_imports:
+            if not line.strip() or line.lstrip().startswith("//"):
+                continue
             match = IMPORT_RE.match(line)
-            if match:
-                imports.append(match.group(1))
+            if not match:
+                raise ValueError("malformed-pinned-import:" + line.strip())
+            if match.group(1) in imports:
+                raise ValueError("duplicate-import")
+            imports.append(match.group(1))
+    if not found_imports or in_imports or not imports:
+        raise ValueError("complete-nonempty-import-block-required")
     return {"name": name.group(1), "version": version.group(1), "dependencies": imports}
 
 
@@ -72,6 +86,8 @@ def archive_inventory(archive):
         files = []
         for name in names:
             path = Path(name)
+            if stat.S_ISLNK(package.getinfo(name).external_attr >> 16):
+                raise ValueError("archive-contains-symlink:" + name)
             if name.endswith("/"):
                 continue
             if path.is_absolute() or ".." in path.parts:
@@ -85,6 +101,18 @@ def archive_inventory(archive):
         if missing:
             raise ValueError("archive-missing-required-files:" + ",".join(missing))
         return {"files": files, "file_count": len(files), "moon_mod": package.read("moon.mod").decode("utf-8")}
+
+
+def verify_source_members(inventory):
+    tracked = set(git("ls-files").splitlines())
+    for item in inventory["files"]:
+        name = item["file"]
+        if name not in tracked:
+            raise ValueError("archive-member-not-tracked:" + name)
+        committed = subprocess.run(["git", "show", "HEAD:" + name], cwd=REPO,
+                                   check=True, capture_output=True).stdout
+        if hashlib.sha256(committed).hexdigest() != item["sha256"]:
+            raise ValueError("archive-member-differs-from-source-commit:" + name)
 
 
 def read_observation(path, platform, candidate_version):
@@ -114,11 +142,15 @@ def build_record(archive, mooncakes_observation=None, gitlink_observation=None, 
     archived_mod = VERSION_RE.search(inventory["moon_mod"])
     if not archived_mod or archived_mod.group(1) != metadata["version"]:
         raise ValueError("archive-moon-mod-version-mismatch")
-    if MODULE_RE.search(inventory["moon_mod"]).group(1) != metadata["name"]:
+    archived_name = MODULE_RE.search(inventory["moon_mod"])
+    if not archived_name or archived_name.group(1) != metadata["name"]:
         raise ValueError("archive-moon-mod-name-mismatch")
+    if module_metadata(inventory["moon_mod"]) != metadata:
+        raise ValueError("archive-dependency-metadata-mismatch")
     status = git("status", "--porcelain")
     if status:
         raise ValueError("tracked-worktree-must-be-clean-before-release-readiness")
+    verify_source_members(inventory)
     record = {
         "schema": 1,
         "stage": "W6-release-readiness",
@@ -146,6 +178,7 @@ def build_record(archive, mooncakes_observation=None, gitlink_observation=None, 
             "archive-paths-have-no-traversal-or-private-store",
             "archive-contains-required-public-metadata",
             "archive-and-member-sha256-recorded",
+            "every-archive-member-matches-source-commit",
             "ci-identifiers-recorded-separately-from-platform-publication",
         ],
         "publication_authorized": False,

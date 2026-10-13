@@ -52,10 +52,10 @@ def import_sources(root):
              'source_url': SOURCE_BASE + 'part15/chapter_E.html#table_E.1-1',
              'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
              'source_documents': json.loads((root / 'sources.json').read_text(encoding='utf-8')),
-             'attribute_actions': rows,
+             'reviewed_confidentiality_tags': sorted(a['tag'] for a in selected if a['tag'] in rows),
              'dictionary_source_sha256': hashlib.sha256(dictionary_source.read_bytes()).hexdigest(),
              'reviewed_dictionary_facts': {a['tag']: attributes[a['tag']] for a in selected},
-             'notice': 'Short factual action codes, not copied narrative or a certification claim.'}
+             'notice': 'Selected attribute review references only. No PS3.15 action table or narrative is redistributed. VR/VM subset originates from MIT pydicom and is independently checked against official facts.'}
     (FOLDER / 'standard-facts-2025e.json').write_text(canonical(facts), encoding='utf-8', newline='\n')
 
 
@@ -65,7 +65,7 @@ def products():
     rules = []
     for attribute in dictionary['attributes']:
         tag, role = attribute['tag'], attribute['role']
-        source = facts['attribute_actions'].get(tag)
+        source = tag in facts['reviewed_confidentiality_tags']
         # A table action describes an option, not this project's full policy.
         references = [{'document': 'PS3.6', 'edition': '2025e', 'section': '6',
                        'table': '6-1', 'row': f'({tag[:4]},{tag[4:]})',
@@ -76,7 +76,7 @@ def products():
             references.append({'document': 'PS3.15', 'edition': '2025e', 'section': 'E.1',
                                'table': 'E.1-1', 'row': references[0]['row'],
                                'url': facts['source_url'], 'purpose': 'confidentiality action options',
-                               'source_sha256': facts['source_sha256'], **source})
+                               'source_sha256': facts['source_sha256']})
         rules.append({'id': 'attr-' + tag, 'tag': tag, 'name': attribute['name'],
                       'vr': attribute['vr'], 'vm': attribute['vm'], 'role': role,
                       'action': ACTION[role], 'profiles': ['strict-v1'],

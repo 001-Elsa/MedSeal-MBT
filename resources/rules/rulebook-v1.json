@@ -112,10 +112,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0012)",
           "section": "E.1",
@@ -163,10 +161,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0013)",
           "section": "E.1",
@@ -214,10 +210,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0015)",
           "section": "E.1",
@@ -304,10 +298,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "U",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,0018)",
           "section": "E.1",
@@ -355,10 +347,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0020)",
           "section": "E.1",
@@ -406,10 +396,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0021)",
           "section": "E.1",
@@ -457,10 +445,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0022)",
           "section": "E.1",
@@ -508,10 +494,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0023)",
           "section": "E.1",
@@ -559,10 +543,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,002A)",
           "section": "E.1",
@@ -610,10 +592,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0030)",
           "section": "E.1",
@@ -661,10 +641,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0031)",
           "section": "E.1",
@@ -712,10 +690,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0032)",
           "section": "E.1",
@@ -763,10 +739,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0033)",
           "section": "E.1",
@@ -814,10 +788,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,0050)",
           "section": "E.1",
@@ -982,10 +954,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,0080)",
           "section": "E.1",
@@ -1033,10 +1003,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,0081)",
           "section": "E.1",
@@ -1084,10 +1052,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,0090)",
           "section": "E.1",
@@ -1135,10 +1101,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "C",
           "purpose": "confidentiality action options",
           "row": "(0008,0201)",
           "section": "E.1",
@@ -1186,10 +1150,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1010)",
           "section": "E.1",
@@ -1237,10 +1199,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1030)",
           "section": "E.1",
@@ -1288,10 +1248,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,103E)",
           "section": "E.1",
@@ -1339,10 +1297,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1040)",
           "section": "E.1",
@@ -1390,10 +1346,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1048)",
           "section": "E.1",
@@ -1441,10 +1395,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1050)",
           "section": "E.1",
@@ -1492,10 +1444,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1070)",
           "section": "E.1",
@@ -1543,10 +1493,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/U*",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1140)",
           "section": "E.1",
@@ -1633,10 +1581,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "U",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0008,1155)",
           "section": "E.1",
@@ -1684,10 +1630,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,0010)",
           "section": "E.1",
@@ -1735,10 +1679,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,0020)",
           "section": "E.1",
@@ -1786,10 +1728,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,0021)",
           "section": "E.1",
@@ -1837,10 +1777,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,0030)",
           "section": "E.1",
@@ -1888,10 +1826,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,0040)",
           "section": "E.1",
@@ -1939,10 +1875,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,1000)",
           "section": "E.1",
@@ -1990,10 +1924,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,1001)",
           "section": "E.1",
@@ -2041,10 +1973,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,1010)",
           "section": "E.1",
@@ -2092,10 +2022,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,1020)",
           "section": "E.1",
@@ -2143,10 +2071,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,1030)",
           "section": "E.1",
@@ -2194,10 +2120,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,2160)",
           "section": "E.1",
@@ -2245,10 +2169,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,21B0)",
           "section": "E.1",
@@ -2296,10 +2218,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0010,4000)",
           "section": "E.1",
@@ -3205,10 +3125,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0018,1000)",
           "section": "E.1",
@@ -3256,10 +3174,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "U",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0018,1002)",
           "section": "E.1",
@@ -3307,10 +3223,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0018,1004)",
           "section": "E.1",
@@ -3358,10 +3272,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/D",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0018,1030)",
           "section": "E.1",
@@ -3604,10 +3516,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "U",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0020,000D)",
           "section": "E.1",
@@ -3655,10 +3565,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "U",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0020,000E)",
           "section": "E.1",
@@ -3706,10 +3614,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0020,0010)",
           "section": "E.1",
@@ -3991,10 +3897,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "U",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0020,0052)",
           "section": "E.1",
@@ -4159,10 +4063,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0020,4000)",
           "section": "E.1",
@@ -5029,10 +4931,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0032,1032)",
           "section": "E.1",
@@ -5080,10 +4980,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0040,0241)",
           "section": "E.1",
@@ -5131,10 +5029,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0040,0275)",
           "section": "E.1",
@@ -5182,10 +5078,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X/Z",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0040,0555)",
           "section": "E.1",
@@ -5233,10 +5127,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(0400,0561)",
           "section": "E.1",
@@ -5323,10 +5215,8 @@
           "url": "https://dicom.nema.org/medical/dicom/2025e/output/chtml/part06/chapter_6.html#table_6-1"
         },
         {
-          "basic_action": "X",
           "document": "PS3.15",
           "edition": "2025e",
-          "modified_dates_option": "",
           "purpose": "confidentiality action options",
           "row": "(FFFC,FFFC)",
           "section": "E.1",
