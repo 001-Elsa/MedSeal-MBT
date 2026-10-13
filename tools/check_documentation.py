@@ -48,10 +48,10 @@ def check():
     model = (REPO / 'src/model/version.mbt').read_text(encoding='utf-8')
     if f'"{version}"' not in model:
         errors.append('CLI version differs from module metadata')
-    corpus = json.loads((REPO / 'conformance/manifest.json').read_text())
+    corpus = json.loads((REPO / 'conformance/manifest.json').read_text(encoding='utf-8'))
     facts = {
-        'classified_attributes': len(json.loads((REPO / 'resources/rules/strict-v1.json').read_text())['attributes']),
-        'rulebook_entries': len(json.loads((REPO / 'resources/rules/rulebook-v1.json').read_text())['rules']),
+        'classified_attributes': len(json.loads((REPO / 'resources/rules/strict-v1.json').read_text(encoding='utf-8'))['attributes']),
+        'rulebook_entries': len(json.loads((REPO / 'resources/rules/rulebook-v1.json').read_text(encoding='utf-8'))['rules']),
         'corpus_cases': len(corpus['entries']) + len(corpus['collections']),
     }
     for key, value in facts.items():
