@@ -17,3 +17,6 @@ python3 tools/verify_consumer.py tmp/w6-consumer.json
 候选发行继续使用现有 `tools/build_distribution.py` 和离线安装门禁。归档、
 Mooncakes、GitLink 与 GitHub 的真实平台回读仍需在发布时分别记录，不能把本地
 归档构建当成远端发布成功。
+
+W6 的可审计候选清单由 [`tools/release_readiness.py`](../tools/release_readiness.py)
+生成，步骤和平台观察文件格式见[候选发行与平台回读](RELEASE_READINESS.zh-CN.md)。
