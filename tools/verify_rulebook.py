@@ -46,6 +46,9 @@ def main():
     if args.index_only:
         print(json.dumps({'status': 'passed', 'catalog_rules': len(catalog['rules'])}))
         return
+    # Never exercise a stale prebuilt executable after a rulebook/source change.
+    subprocess.run([str(REPO / 'tools/moon-local'), 'build', '--target', 'native'],
+                   cwd=REPO, check=True, stdout=subprocess.DEVNULL)
     # POSIX adapters are deliberately outside the portable catalog gate.
     from verify_risk_gate import setup
     from risk_gate import review_job
