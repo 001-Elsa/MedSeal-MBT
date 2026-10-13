@@ -81,6 +81,8 @@ jobs:
       - name: W7 operator rehearsal and field-boundary acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_w7_rehearsal.py --record tmp/w7-rehearsal-ci.json
+      - name: W7 field evidence template contract
+        run: python tools/verify_field_evidence.py --input docs/field-evidence/w7-field-evidence.template.json
       - name: Package
         run: moon package
       - name: Upload acceptance evidence

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "stage": "W7-field-evidence",
+  "status": "requires_field",
+  "scope": "ct-classic-research-v1; site and receiver to be named by field owner",
+  "site_alias": null,
+  "items": [
+    {
+      "item": "representative-authorized-source",
+      "status": "requires_field",
+      "owner_role": "data-controller",
+      "evidence_refs": [],
+      "observed_at": null,
+      "reviewer_role": null,
+      "scope": null,
+      "notes": "Record source system, authorization scope, retention and provenance reference without patient data."
+    },
+    {
+      "item": "independent-research-receiver",
+      "status": "requires_field",
+      "owner_role": "receiver-owner",
+      "evidence_refs": [],
+      "observed_at": null,
+      "reviewer_role": null,
+      "scope": null,
+      "notes": "Record receiver import, semantic checks and rejection behavior for the supported profile."
+    },
+    {
+      "item": "new-operator",
+      "status": "requires_field",
+      "owner_role": "operations",
+      "evidence_refs": [],
+      "observed_at": null,
+      "reviewer_role": null,
+      "scope": null,
+      "notes": "The operator must be new to the implementation team and follow the runbook without source or private-store access."
+    },
+    {
+      "item": "independent-privacy-and-utility-review",
+      "status": "requires_field",
+      "owner_role": "independent-reviewer",
+      "evidence_refs": [],
+      "observed_at": null,
+      "reviewer_role": null,
+      "scope": null,
+      "notes": "Record privacy and research-utility conclusions separately; OCR negative is not a privacy proof."
+    },
+    {
+      "item": "persistent-storage-and-backup-platform",
+      "status": "requires_field",
+      "owner_role": "platform-operations",
+      "evidence_refs": [],
+      "observed_at": null,
+      "reviewer_role": null,
+      "scope": null,
+      "notes": "Record filesystem, backup, restore, RPO/RTO and disaster-recovery evidence for the deployment."
+    }
+  ],
+  "field_acceptance_complete": false,
+  "release_authorized": false
+}
