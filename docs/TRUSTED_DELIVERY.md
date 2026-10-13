@@ -5,7 +5,7 @@ release.json and signature.json. Ed25519 (cryptography50.0.2) signs the exact
 canonical UTF-8 release bytes. Sorted keys, compact JSON separators, integer
 schema/counts and no duplicate keys/NaN form release schema2; this is a fixed application
 contract, not a claim to implement arbitrary RFC8785 JSON. The release binds the producer runtime fingerprint (converter/verifier/Python and
-all eight runtime adapters, excluding paths/private inputs) and every file digest, policy/dictionary/tool identity, review digest and anonymous inventory.
+all ten private-job runtime adapters, excluding paths/private inputs) and every file digest, policy/dictionary/tool identity, review digest and anonymous inventory.
 Patient mappings, keys, source hashes, detailed private evidence and reviewer
 identity are excluded. The old conversion manifest remains release_authorized:false;
 the signed release decision applies only within its explicit context.
@@ -28,7 +28,7 @@ accepted cancellation prevents publication from starting; after publication star
 cancellation is rejected and completion/recovery is required (no recall claim). Resume of publish re-verifies an already renamed result and reconciles
 the PUBLISHED journal. Unknown existing targets or changed intents fail.
 
-A recipient uses `python tools/verify_delivery.py PACKAGE --trust TRUST`, requiring
+A recipient uses `python3.12 tools/verify_delivery.py PACKAGE --trust TRUST`, requiring
 only cryptography, not MoonBit, the producer's identity database or source files.
 It validates trusted signature, canonical release schema2, exact file inventory and all
 hashes. Synthetic context is rejected by default; --allow-synthetic is solely for
@@ -77,3 +77,5 @@ audits retain16MiB. Producers and independent consumers enforce the same bounds.
 Private job plan schema2 pins all runtime adapters as well as binaries. Older
 preview schema1 plans/releases require their original preview runtime; this reader
 fails closed rather than silently migrating them. Identity-store schema is unchanged.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

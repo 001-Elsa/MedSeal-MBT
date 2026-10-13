@@ -6,7 +6,7 @@
 材料单独列成 `requires_field`，不会把合成脚本代替真实操作者或真实接收方。
 
 ```sh
-python3 tools/verify_w7_rehearsal.py --record tmp/w7-rehearsal.json
+python3.12 tools/verify_w7_rehearsal.py --record tmp/w7-rehearsal.json
 ```
 
 ## 新操作者清单
@@ -22,3 +22,5 @@ python3 tools/verify_w7_rehearsal.py --record tmp/w7-rehearsal.json
 
 软件演练完成只证明受控合成路径的 M1 性质；真实来源、责任人、接收系统和独立评审
 仍是 W7 的 M3 材料。没有这些主体证据，`field_acceptance_complete` 必须保持 `false`。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

@@ -5,7 +5,7 @@
 ## 启动
 
 ```sh
-python3 tools/workbench.py serve \
+python3.12 tools/workbench.py serve \
   --root PRIVATE_WORKSPACE \
   --capability-file PRIVATE_WORKSPACE/.workbench-session \
   --port 0
@@ -31,3 +31,5 @@ python3 tools/workbench.py serve \
 `tools/verify_workbench.py` 覆盖 Host/Origin 校验、会话和 CSRF、分页上限、公开字段允许列表、对象状态摘要、取消闭环和路径穿越。HTML 使用内联 CSP，禁止脚本访问外部资源；UI 只调用上述 API，不实现第二套转换逻辑。
 
 这是受控本地工作台的 M1 合成验收，不是多用户网络服务、TLS 终端、真实 PACS 连接或生产现场认证。真实操作者、授权数据来源、独立像素审查和接收系统仍属于 W7 现场材料。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

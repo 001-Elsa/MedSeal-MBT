@@ -16,13 +16,14 @@ reports and publication. They are single observations, not a statistical
 performance claim. Later source changes and fixture additions can change the
 recorded sizes and times; use the JSON records from the latest run as evidence.
 
-No peak-memory or large-pixel benchmark is claimed yet. The architecture retains
-bounded metadata while processing full file bytes one at a time; that design
-does not by itself prove a measured memory ceiling. Reproduce with:
+The table is the initial small-fixture baseline, not the current streaming
+implementation. Current large-pixel/RSS observations are listed below; bounded
+metadata design alone does not prove a universal memory ceiling. Reproduce
+small-fixture checks without overwriting committed historical evidence:
 
 ```sh
-python tools/verify_with_pydicom.py --count 100 --record docs/evidence/pydicom-100.json
-python tools/verify_with_pydicom.py --count 1000 --record docs/evidence/pydicom-1000.json
+python3.12 tools/verify_with_pydicom.py --count 100 --record tmp/pydicom-100.json
+python3.12 tools/verify_with_pydicom.py --count 1000 --record tmp/pydicom-1000.json
 ```
 
 ## P0 large-payload baseline
@@ -34,3 +35,15 @@ fixture generation and the independent pydicom payload check run outside the
 measured process. A 120 MiB payload reached about 491 MiB RSS in the recorded
 run. This is a baseline for streaming work, not clinical throughput or an
 IOD-conformance claim. The earlier no-RSS statement describes the 0.2.0 baseline.
+
+## Current streaming observations
+
+P4 measured about 29 MiB RSS for a 120 MiB native pixel payload, compared
+with about 491 MiB on the P0 whole-file path. The later risk-aware 10,000
+small-object run measured about 187 MiB / 94 s. These are historical observed
+workloads, not a newly rerun benchmark or clinical throughput promise. See
+[streaming contract](docs/STREAMING.md), docs/evidence/p4-streaming-resources.json
+and docs/evidence/final-streaming-resources.json. Counts, hardware, binary
+fingerprint and fixture size in each JSON take precedence over rounded prose.
+
+> 文档核对：本文阶段计数、测量和发行摘要各自绑定原提交；当前状态已核对。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

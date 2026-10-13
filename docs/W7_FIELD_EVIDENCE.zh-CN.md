@@ -16,7 +16,7 @@ W7 的软件演练已经通过，但真正的现场验收必须由项目外的�
 验证模板：
 
 ```sh
-python3 tools/verify_field_evidence.py \
+python3.12 tools/verify_field_evidence.py \
   --input docs/field-evidence/w7-field-evidence.template.json
 ```
 
@@ -40,3 +40,5 @@ python3 tools/verify_field_evidence.py \
 
 **持久化与灾备。** 记录受支持的文件系统、权限、备份对象、密钥恢复方式、RPO/RTO 和演练结果。
 进程恢复成功不代表主机或磁盘损坏后的灾备目标已经达成。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

@@ -1,5 +1,23 @@
 # MedSeal-MBT 企业级深化升级方案
 
+## 当前实施对照（后续升级已落实）
+
+| 阶段 | 当前软件与证据 | 未宣称完成 |
+| --- | --- | --- |
+| P0 | 发现/路径/故障矩阵、真实进程竞争/强杀及 HFS+ ENOSPC | 全存储系统和断电认证 |
+| P1 / W0 / W1 | strict 路径/优先级/条件、120 属性/141 索引、475 固定案例、公共门面和解释 | 完整 IOD/Annex E |
+| P2 / W2 | 持久身份/备份/轮换、缓存迁移、历史确认引用、DT 精度与目的地 outbox | 任意远程协议 exactly-once 或自动跨源患者合并 |
+| P3 / P4 | 封存/固定运行时恢复及原生像素流式路径，120MiB和10,000对象测量 | 任意大负载恒定 RSS、网络存储/断电认证 |
+| P5 / P6 | schema2 审核、Ed25519、独立验签、目录回执和离线安装 | 真实人工证据质量、PACS和临床适用 |
+| W3 / W4 / W5 | 限定 CT 体素/HU/几何；状态/故障/fuzz；回环工作台 | 完整 MR/SC Profile、多用户网络服务 |
+| W6 | Mooncakes 0.2.0、真实 registry 消费者、GitHub Release 和 GitLink 历史同步 | 旧归档不自动包含后续 master 文档 |
+| P7 / W7 | 合成全量+增量+冲突/恢复/签名接收演练，现场证据模板 | 真实来源、接收方、新操作者、独立审查/灾备仍 requires_field |
+
+最新能力见 [支持矩阵](SUPPORT_MATRIX.md)，阶段原始记录见 [W 账本](WINNER_UPGRADE_STATUS.zh-CN.md)，公开发布见 [整改记录](COMPETITION_REMEDIATION.zh-CN.md)。源码基线 2c9a49e；当前测试 117 Native / 64×3，共 309 后端执行。原方案中的代码行号、拟议接口、未完成清单及旧测试数只对应方案制定基线，不能用于描述当前代码。
+
+## 原始设计内容（保留需求与决策背景）
+
+
 > 当前实施与验收证据见 [企业升级实施记录](ENTERPRISE_STATUS.md)。本文保留方案制定时的基线与目标，拟议版本号不表示已经发布。
 > 评估基线：`95629048fd91ca163300c221ec1cac4b88a2fe8e`，0.2.0 候选版，2026-10-10。
 > 本文是基于当前源码、测试和已有证据制定的后续计划。除“当前状态”外，新增模块、命令、版本和验收指标均为拟议内容，尚未实现或达成。
@@ -564,3 +582,5 @@ Web 后台只在多角色审核确实需要时增加，使用同一作业与策�
 - 工作区最终五批推送/文档提交 CI 记录：`../../research/MedSeal深化/push-stages/github-final-verification.json`，它是本地补充证据，不是仓库内公开文件。
 - [安全边界](../SECURITY.md)、[第三方与数据来源](../THIRD_PARTY.md)。
 - 标准入口：[DICOM 标准](https://www.dicomstandard.org/current)、[PS3.15 Annex E](https://dicom.nema.org/medical/dicom/current/output/chtml/part15/chapter_E.html)。实施时另记录固定版本；本轮未开展标准条文的完整逐项合规审计。
+
+> 文档核对：本文保留固定历史基线；当前实施差异与适用边界已补充核对。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

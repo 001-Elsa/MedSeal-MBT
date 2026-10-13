@@ -2,6 +2,15 @@
 
 # MedSeal-MBT 对照在线赛事章程逐条核验
 
+## 当前整改覆盖原结论
+
+下面逐条表格固定 2b088d4，保留审计原文；其中“当前”均指那个审计时刻。F01–F05 工程/文档/依赖/场景/许可缺口已由[整改记录](COMPETITION_REMEDIATION.zh-CN.md)覆盖：0.2.0 已发布，GitLink 已同步，真实 registry 消费者通过，CT 已纳入 POSIX CI，所有维护文档已核对。姓名本人确认是韩桢。飞书由本人提交，不宣称已获得回执。
+
+原基础九项按目前已声明范围都有对应工程证据；它们不证明个人原创/授权/历史奖励事实，也不保证组委会验收。新项目与旧项目条款应依申报方向适用，不将完整医院/PACS认证加作参赛前置。完整提交对照见[项目版指南](SUBMISSION_GUIDE.zh-CN.md)。
+
+## 原始逐条审计（历史快照）
+
+
 **结论：现有项目可以按旧项目持续维护方向提交评选，但目前不能判定“全部条件均已满足”，也不能保证审核通过或获奖。** MoonBit核心、四后端测试、公开历史与三平台CI具备；当前新版公共包、材料一致性、依赖证据准确性和部分来源许可记录仍有缺口。
 
 - 核验源码：`2b088d4406b06b5b9402a38d0205c1ae7c2ac458`；旧版基线：`bb7e895` / 0.1.1。
@@ -254,3 +263,5 @@ MoonBit仍承担核心DICOM算法；Python包含重要的SQLite事务、审核�
 - 第七章来源资料：[THIRD_PARTY](../THIRD_PARTY.md)、`resources/licenses/pydicom-LICENSE`、`resources/rules/standard-facts-2025e.json`、`tools/generate_rulebook.py`、`tools/generate_conformance_corpus.py`、`samples/README.md`、`conformance/manifest.json`。
 
 最后需要区分三个结论：**工程功能能运行**已有证据；**章程全部条件已满足**目前不能成立；**企业生产与真实医疗现场成熟**仍缺现场主体和独立审查。章程不要求每个项目都达到医院/PACS生产认证，不能把我们自己的W7目标错误写成所有参赛者的统一门槛。
+
+> 文档核对：本文保留固定历史基线；当前实施差异与适用边界已补充核对。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

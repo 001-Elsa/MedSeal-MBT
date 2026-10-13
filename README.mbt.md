@@ -146,3 +146,9 @@ Apache-2.0. [Third-party sources and licenses](THIRD_PARTY.md).
 [GitHub](https://github.com/001-Elsa/MedSeal-MBT) ·
 [GitLink](https://gitlink.org.cn/Hzhhhh/MedSeal-MBT) ·
 [Mooncakes](https://mooncakes.io/docs/001-Elsa/medseal).
+
+## Documentation and submission
+
+[全部文档索引 / document audit](docs/DOCUMENTATION_STATUS.zh-CN.md) · [项目提交指南](docs/SUBMISSION_GUIDE.zh-CN.md) · [申报事实与答辩提纲](docs/SUBMISSION_MATERIALS.zh-CN.md)。姓名：韩桢。正式表单由本人提交；项目发布不代表已经取得报名回执。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

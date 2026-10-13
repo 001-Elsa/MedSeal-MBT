@@ -38,3 +38,5 @@ Baseline history and authors are preserved. Human contributor identity,
 registration and previous awards require the participant's own declarations.
 Related work/source records describe reference scope and do not claim ecosystem
 uniqueness. No empty or artificially split commits are used to meet a count.
+
+> 文档核对：本文阶段计数、测量和发行摘要各自绑定原提交；当前状态已核对。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

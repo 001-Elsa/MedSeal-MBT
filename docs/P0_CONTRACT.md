@@ -36,3 +36,5 @@ before-publication。存储点：create、after-partial-write、before-sync、pu
 | P0-07 | 大像素/RSS/磁盘测量 | 载荷不变；报告机器与负载；不推算临床吞吐 |
 
 记录必须区分真实系统故障、测试注入与尚未认证条件。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

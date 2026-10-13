@@ -114,3 +114,5 @@ license is retained. Downloaded official HTML/PDF remains outside release archiv
 The standard's public availability alone is not treated as an unrestricted
 reproduction license; any future redistribution of standard text/full tables
 requires an explicit rights basis and retained original notices.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

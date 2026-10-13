@@ -2,7 +2,11 @@
 
 The baseline is this repository's `bb7e895` / 0.1.1, not a newly renamed project.
 Its parser, recursive basic de-identification, DICOM writer and fixtures remain
-the foundation. New work adds the collection workflow and correctness evidence.
+the foundation. New work adds the collection workflow and correctness evidence, followed by
+strict rules/public APIs, persistent incremental identities/history, streaming
+recovery, review/signature delivery, classic CT research checks and a local
+workbench. See [current use cases](USE_CASES.zh-CN.md) and
+[stage evidence](WINNER_UPGRADE_STATUS.zh-CN.md).
 
 On 2026-10-10 the Mooncakes index contained 2,907 published modules. Metadata and
 DICOM/de-identification searches were refreshed. Relevant MoonDICOM README,
@@ -29,3 +33,5 @@ Standards reference: [DICOM PS3.15 Annex E](https://dicom.nema.org/medical/dicom
 It specifically discusses replacing File Meta and the preamble to avoid identity
 leakage. MedSeal implements a documented subset and does not claim the complete
 Basic Application Confidentiality Profile.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

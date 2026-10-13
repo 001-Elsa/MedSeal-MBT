@@ -11,7 +11,7 @@ tools/moon-local run --target native cmd/main -- batch INPUT --output NEW_OUTPUT
 
 ## 规则与字典
 
-- 固定 pydicom 3.0.1 字典数据，117+ 个显式分类属性，生成器和数据在仓库内。
+- 固定 pydicom 3.0.1 字典数据，120 个显式分类属性，生成器和数据在仓库内。
   实际条目数/摘要以 `resources/rules/strict-v1.json` 和生成接口为准。
 - 本项目自行实现规则执行；字典数据不是复制的 parser 或脱敏实现。
 - 固定标准参考 DICOM 2025e；当前实现的是声明字段/模块子集，非全部 IOD 或 Annex E。
@@ -47,4 +47,6 @@ Laterality 在合成来源中未知，保留为空，真实来源需要核对单
 没有把这些 Warning 删除或当成完整 Profile 认证。
 
 独立检查不能替代像素风险审核，所有当前输出仍 `release_authorized=false`。
-P1 的完整 CT/MR 来源/IOD 条件、规则条文/测试逐项关联和接收方认证仍需继续补齐。
+W0 已补 141 项规则条文/实现/正反例索引，W3 已补限定经典 CT 的独立体素/HU/几何验收。其他完整 CT/MR IOD、真实来源、接收者认证和像素隐私审查仍未声明完成。转换 manifest 始终不授予发布；最终签名放行属于独立的私有宿主流程。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

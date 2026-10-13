@@ -1,71 +1,57 @@
 # Policies and library APIs
 
-Policy version 1 supports `mode: research`. See the runnable configuration in
-`examples/research-policy.json`. Unknown fields, duplicate tag rules, missing
-values, non-integer/zero/out-of-range date bounds and unsupported tag overrides
-are rejected rather than guessed.
+## Choose the correct policy contract
 
-`namespace` partitions Patient ID values when issuer information is absent.
-Use one source namespace per job; do not mix hospitals whose identifiers overlap.
-Names and birth dates are used only to detect conflicts in a patient key, never
-as the primary matching key. A conflict stops processing for review.
+| Configuration | Behavior | Runnable example |
+| --- | --- | --- |
+| version 1 / research | Compatibility per-job mapping, full DA shifting, three description-tag overrides | examples/research-policy.json |
+| version 2 / strict | Unknown public attributes blocked; compiled path, condition and priority rules | examples/strict-policy.json |
 
-`date_shift_days` is a signed maximum magnitude of 1–3650 days. The native CLI
-chooses an independent nonzero offset for each patient using OS entropy; every
-selected full DA value for that patient uses the same offset. Birth date is
-emptied. Offsets are omitted from public reports.
+Both reject invalid or unknown configuration rather than guessing. Strict
+configuration additionally rejects duplicate JSON keys, keep overrides,
+identity/structure changes and conflicting priorities. Rules operate only on
+classified descriptive fields, including supported nested Sequence paths; they
+cannot bypass identity, pixel or required-field constraints. Paths use uppercase
+eight-digit tags and supported Sequence ancestors. Higher priority wins; possible
+same-priority overlap fails compilation. Canonical policy digests ignore ordering.
+See [strict profile](STRICT_PROFILE.md) and [rulebook](RULEBOOK_INDEX.zh-CN.md).
 
-`allow_external_references` defaults to false. True permits missing referenced
-instances, keeps their consistent remapping, and reports the unverified count.
-References to a present object in another patient or the wrong SOP Class always
-fail.
+`namespace` partitions source patient IDs; patient keys include Issuer and ID.
+Names/birth dates detect conflicts rather than serving as fuzzy identity keys.
+Do not mix unrelated source systems in the same domain.
 
-Custom rules may `keep`, `empty`, `remove` or `replace` only Study Description
-`00081030`, Series Description `0008103E`, and Protocol Name `00181030`.
-Replacement values must be printable ASCII with at most 64 characters.
-`keep` explicitly retains a field that may contain identity; the report still
-indicates incomplete metadata coverage. Direct identifiers, UIDs, dates and
-pixel bytes cannot be overridden by custom rules.
+`date_shift_days` is an integer nonzero magnitude bound of 1–3650 days.
+Compatibility Native jobs draw independent per-patient nonzero offsets and fresh
+UID seeds from OS entropy. Private-host stores persist mappings/offsets within a
+project/source domain. Neither exposes offsets in public reports.
 
-## Public package imports
+Research `allow_external_references=true` permits unresolved references with an
+explicit unverified count; it is not proof that those targets were delivered.
+Strict private-host historical references require reverified Acknowledged targets
+in the same destination domain. Cross-patient and wrong-Class references fail.
 
-Consumers use `001-Elsa/medseal/src/parser`, `/src/policy`, `/src/identity`,
-`/src/dicom_writer`, `/src/verification` and Native-only `/src/batch`.
-The portable core does not depend on a filesystem or the small OS-entropy shim.
+Strict temporal behavior has two named policies: metadata-safe-v1 and opt-in
+retain-dt-precision-v1. The latter shifts only complete DT date components while
+preserving original time precision/fraction/timezone, clears incomplete DT and
+does not shift standalone TM. Unsupported leap-second shifting blocks.
+See [temporal semantics](TEMPORAL_SEMANTICS.zh-CN.md).
 
-Typical Native flow:
+## Public consumers and private orchestration
 
-```text
-policy = policy.research() or policy.from_json(json)
-job = batch.plan(input_directory, policy)
-job.preview()
-job.execute(new_output_directory)
-batch.verify(output_directory)
-```
+Prefer `001-Elsa/medseal/api/dicom`, `/api/policy`, `/api/validation`, `/api/explain`
+and Native `/api/authorization`. The older `/src/*` imports remain compatible but
+expose lower-level implementation contracts. [Public API](PUBLIC_API.zh-CN.md)
+and [consumer example](../examples/consumer/README.md) explain factories and trust.
 
-Typical in-memory flow:
+The compatibility Native flow remains plan → preview → execute → verify. It is a
+single-use per-job context without persistent resume. Private execution uses
+tools/enterprise_job.py and separate create/run/resume/review/publish/deliver
+states, sealed inputs and private identity/cache/history stores.
 
-```text
-verification.check(datasets)
-context = identity.Context::new(uid_seed, policy, per_patient_offsets)
-context.prepare(datasets)
-result = context.apply(dataset)
-bytes = dicom_writer.write_deidentified(parsed_file, result.dataset)
-verification.check(converted_datasets)
-```
+In-memory callers must prepare the Context with fresh private UID seed/offsets,
+transform original datasets, then use write_deidentified and revalidate converted
+relationships. Ordinary write_bytes preserves source headers; it is not the
+de-identifying writer. Never serialize source keys/offsets into public reports.
+Repeated processing markers reject accidental second date shifts.
 
-The caller supplies a fresh positive decimal seed of up to 29 digits and enough
-offsets for all patients. Patients are ordered deterministically by MoonBit's
-String comparator, not by source file iteration. The CLI obtains a 96-bit seed
-and independent offsets from the operating system. Never derive offsets from
-public output UIDs or put original identifiers in the seed. UID values allocate
-nonoverlapping counters inside the job and are checked against source values.
-
-Contexts retain original identity keys in memory. Do not serialize, log or share
-them as public artifacts. Preparation, including a failed attempt, is single-use;
-`apply` can transform the original datasets repeatedly with the prepared context
-but rejects existing processing markers to prevent another date shift.
-
-Ordinary `write_bytes` preserves source File Meta/preamble for serialization.
-Use `write_deidentified` for privacy processing. Both raise structured errors
-for unsupported data model encodings and resource limits.
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

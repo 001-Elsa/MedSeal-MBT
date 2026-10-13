@@ -31,3 +31,5 @@
 **输出与判定**：`public-policy-ok`、不可由 JSON true 伪造的验证/授权状态类型、版本化结构化错误与不包含原患者值的解释。`tools/verify_registry_consumer.py` 在独立模块安装公开版本；`tools/verify_rulebook.py` 验证 Schema、规则索引、实际解释与敏感值金丝雀。
 
 **失败与范围**：非法策略、Unknown 必要条件和验证错误不能创建通过状态；受控提供方指纹/审核/签名不符拒绝。`private_bytes/private_dataset` 是私有内容，不能作为公开解释序列化；策略编译不等于 IOD、像素或发布审核。旧 `src/` 兼容导入可用，新应用优先使用公共门面。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

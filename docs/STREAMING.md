@@ -36,3 +36,5 @@ Physical power-loss and network-filesystem guarantees remain out of scope.
 Public conversion manifests have an8MiB read/write budget, sized for10,000 objects
 including per-object risk IDs. Signed release inventories retain a4MiB budget;
 audits retain16MiB. Producers and independent consumers enforce the same bounds.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

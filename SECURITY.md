@@ -1,38 +1,49 @@
 # Security Policy
 
-## Supported version
+## Supported scope and reporting
 
-The published baseline is 0.1.1; 0.2.0 is a locally verified candidate.
+0.2.0 is a published engineering preview. Current maintenance and immutable
+release evidence are described in [release record](docs/COMPETITION_REMEDIATION.zh-CN.md).
+Use GitHub private security advisories for vulnerability reports. Include version,
+error code and a synthetic reproduction; never submit patient data, credentials
+or private identity stores to public issues.
 
-## Reporting a vulnerability
+## Different entry points have different guarantees
 
-Use the repository's private security-advisory reporting feature. Do not open
-a public issue containing a malicious DICOM sample, patient data, credentials,
-or a detailed exploit before a fix is available.
+| Entry | Security behavior | Boundary |
+| --- | --- | --- |
+| Basic single file | Metadata replacement; private tags removed only if requested | Identity UIDs retained; no collection consistency or final release authorization |
+| Compatibility research-v1 collection | Shared per-job mapping, private-tag removal, relationship/hash checks | Unknown public non-UID metadata may remain; mapping not persisted; unsigned manifest |
+| Strict-v1 core | Unknown public attributes rejected, classified rules and risks, stable public explanations | Partial IOD/metadata scope; no automatic pixel clearance |
+| Private POSIX host | Encrypted persistent identity, sealed input, runtime-bound resume, review gate and signed publication | Single-owner controlled host; local key provider, not organizational IAM/HSM or clinical certification |
 
-Include the affected version, error code, minimal reproduction steps, and a
-synthetic or fully de-identified sample. Never submit real patient data.
+All supported workflows enforce size/count/depth/format budgets and reject
+unsupported transfer syntax. File/path/hash checks on a live compatibility input
+are not an atomic snapshot. Private-host ingestion seals input bytes before later
+conversion; it still requires a controlled local filesystem and administrator.
 
-## Safety scope
+Persistent maps and date offsets exist only in the private store. Protect the
+0700 workspace, 0600 files, backups and keys; do not export private plans as reports.
+Strict streaming copies pixels unchanged and never runs OCR or redaction.
+Burned-in text, visual identity and unknown source semantics require human review.
 
-MedSeal-MBT performs metadata de-identification. Pixel Data is not inspected
-for burned-in identifying text. The compatibility basic mode retains identity
-UIDs and only removes private elements when `--remove-private` is selected.
-Research-v1 always removes private elements and maps its supported identity
-UIDs across the collection. The tool does not guarantee complete anonymization
-or regulatory compliance and is not medical diagnostic software.
+The compatibility checksum manifest detects changes only relative to a trusted
+manifest. Final private-host releases separately bind per-file hashes, runtime,
+policy and review to Ed25519 signatures. Recipients need public trust keys from
+an independent trusted channel. A valid signature proves bytes and attestations,
+not that a human review was truthful or that the images are clinically usable.
 
-The parser enforces explicit size, element-count, and nesting limits. Files
-using unsupported transfer syntaxes are rejected rather than guessed.
+## Recovery and operational limits
 
-Research-v1 only maps identities within one job and reports remaining metadata
-and pixel risks. Reverse maps and date offsets are not persisted or exposed.
-Unknown public UID roles fail, private elements are removed, and supported
-identities/references are checked. Keep inputs stable during processing;
-file-set, size/mtime and hash checks do not provide an atomic filesystem snapshot
-against hostile concurrent mutation.
+Recovery rechecks sealed bytes, policy, binaries, ten private runtime adapters,
+provider and interpreter identity. Changes invalidate plans/reviews/cache.
+Cancellation prevents publication starting; once publication starts, complete or
+recover it and use the receiver's recall procedure if needed. No automatic recall.
 
-Jobs use new directories, private staging and exclusive file creation. Handled
-errors remove staging; a hard-killed process may leave it for local review.
-The checksum manifest is unsigned and cannot authenticate simultaneous edits to
-data and manifest. Power-loss durability and network filesystems are not certified.
+Handled errors clean owned staging; hard termination can leave private staging.
+Only owned terminal jobs can be cleaned. SSD deletion does not prove erasure.
+Process-kill tests do not certify power-loss durability, network filesystems,
+Windows ACLs or hostile administrators. Real field gates are in
+[W7 field evidence](docs/W7_FIELD_EVIDENCE.zh-CN.md).
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

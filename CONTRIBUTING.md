@@ -30,3 +30,10 @@ original patient value in an assertion, snapshot, report, or issue.
 
 Only public, synthetic, or confirmed de-identified DICOM files may be added.
 Document every sample's source or generator in `samples/README.md`.
+
+Run python3.12 tools/check_documentation.py after updating all affected docs.
+The [document index](docs/DOCUMENTATION_STATUS.zh-CN.md) distinguishes current
+contracts, original plans and fixed evidence. Keep private-host guarantees out
+of compatibility/basic claims. Never overwrite immutable published archives.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

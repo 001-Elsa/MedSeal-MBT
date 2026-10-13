@@ -1,22 +1,20 @@
-# W6 仓库外消费者与候选发行
+# 仓库外消费者与公开包
 
-`examples/consumer` 只导入 `001-Elsa/medseal/api/policy` 公共门面，不依赖
-`src/` 实现路径。`tools/verify_consumer.py` 会先生成当前 MoonBit 包，再把
-归档解压到临时目录的模块根，复制消费者包并单独复制第三方依赖缓存，在与源码
-仓库无关的目录中执行 `moon check`、Native 构建和运行。运行结果只输出策略
-名称和摘要，不读写患者或影像值。
+`examples/consumer` 只导入 `001-Elsa/medseal/api/policy`，不依赖 `src/`。
+运行成功输出唯一公共结果 `public-policy-ok`，不输出患者、映射或日期值。
 
-这条验收链证明消费者能从归档编译和调用公共策略门面，不证明候选包已经发布到 Mooncakes
-registry，也不扩大 DICOM IOD、隐私或临床用途承诺。版本仍以 `moon.mod` 为单一
-来源，0.2.0 是工程预览候选；只有 W7 有限场景材料完成后才考虑 1.0。
+## 两种验收分别证明什么
+
+- `tools/verify_consumer.py` 构建当前模块归档，解压到临时独立模块，复制消费者和第三方依赖，检查、构建和运行。它证明归档可消费，不证明 registry 发布。
+- `tools/verify_registry_consumer.py` 在独立模块实际执行 `moon add`，检查下载版本、拒绝本地源码回退并运行同一公共示例。它证明公开版本可消费。
 
 ```sh
-python3 tools/verify_consumer.py tmp/w6-consumer.json
+python3.12 tools/verify_consumer.py tmp/archive-consumer.json
+python3.12 tools/verify_registry_consumer.py --version 0.2.0 --record tmp/registry-consumer.json
 ```
 
-候选发行继续使用现有 `tools/build_distribution.py` 和离线安装门禁。归档、
-Mooncakes、GitLink 与 GitHub 的真实平台回读仍需在发布时分别记录，不能把本地
-归档构建当成远端发布成功。
+0.2.0 已公开发布，真实记录分别为 [归档验收](evidence/release-0.2.0-archive-consumer.json)和[registry 验收](evidence/release-0.2.0-registry-consumer.json)。这些记录绑定冻结版本，不冒称后续文档修订已经包含在原归档。
 
-W6 的可审计候选清单由 [`tools/release_readiness.py`](../tools/release_readiness.py)
-生成，步骤和平台观察文件格式见[候选发行与平台回读](RELEASE_READINESS.zh-CN.md)。
+模块名、版本以 `moon.mod` 为准；源码、归档、CI 和平台回读分别核对，格式见[发行记录方法](RELEASE_READINESS.zh-CN.md)。工程预览不等于临床适用、像素匿名化、生产 1.0 或正式报名。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

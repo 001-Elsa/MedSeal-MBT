@@ -12,3 +12,5 @@ W3 固定一个可复核的经典 CT 范围：CT Image Storage、单帧、Explic
 验收脚本 [`tools/verify_ct_research.py`](../tools/verify_ct_research.py) 创建三组不同形成方式的合成系列，每组 50 个切片，并加入缺片、重复位置、方向混合、非 HU 和压缩传输语法负例。它运行实际批处理、逐对象重新读取、排序成数组并计算 HU/坐标，再检查所有负例是否阻断。合成系列用于可分享回归，不能冒称三台真实设备或临床认证；真实来源、授权、独立研究接收方和现场责任仍是 `requires_field`。
 
 烧录文字、识别性像素、增强 CT、多帧、压缩像素、厂商私有字段和完整 Annex E 不在本 Profile 内。`release_authorized` 永远保持 `false`，直到独立像素/隐私审查与实际用途验收分别完成。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

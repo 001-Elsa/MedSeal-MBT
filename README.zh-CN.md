@@ -104,3 +104,9 @@ CI 覆盖 Linux/macOS/Windows 核心；POSIX 工程宿主与离线安装验收�
 保留像素字节，不做 OCR、像素涂抹或医疗诊断；未知公共字段与烧录文字仍需人工审查。不声明完整 Annex E 匿名化、PACS/DICOMweb 或真实现场生产验收。合成审核始终标记 synthetic，不能用于患者数据。[安全](SECURITY.md) · [流式上限](docs/STREAMING.md) · [现场门槛](docs/W7_FIELD_EVIDENCE.zh-CN.md)。
 
 Apache-2.0；[依赖、标准与样例来源](THIRD_PARTY.md)。[GitHub](https://github.com/001-Elsa/MedSeal-MBT) · [GitLink](https://gitlink.org.cn/Hzhhhh/MedSeal-MBT) · [Mooncakes](https://mooncakes.io/docs/001-Elsa/medseal)。
+
+## 文档与提交材料
+
+[全部文档索引 / document audit](docs/DOCUMENTATION_STATUS.zh-CN.md) · [项目提交指南](docs/SUBMISSION_GUIDE.zh-CN.md) · [申报事实与答辩提纲](docs/SUBMISSION_MATERIALS.zh-CN.md)。姓名：韩桢。正式表单由本人提交；项目发布不代表已经取得报名回执。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

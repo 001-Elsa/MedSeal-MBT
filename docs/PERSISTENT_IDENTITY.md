@@ -11,7 +11,7 @@ Python 3.12 (tested) with cryptography==50.0.2. Windows private-store operations
 closed. This provider is not an institution KMS, multi-user authorization service
 or defense against an administrator reading the process/key directory.
 
-Initialize a NEW store with `python tools/private_store.py init --store PRIVATE`.
+Initialize a NEW store with `python3.12 tools/private_store.py init --store PRIVATE`.
 The directory is 0700 and files are 0600. Never commit, publish or move this store
 into a delivery directory. An OS file lock serializes transactions/maintenance;
 SQLite WAL + FULL synchronous and unique indexes guard stable allocations.
@@ -27,10 +27,10 @@ permission; output must pass the separate review/delivery gate.
 
 Maintenance commands (destination must not exist):
 
-- `python tools/store_admin.py backup --store PRIVATE --destination BACKUP`
-- `python tools/store_admin.py restore --store BACKUP --destination RESTORED`
-- `python tools/store_admin.py rotate --store PRIVATE`
-- `python tools/store_admin.py migrate --store PRIVATE --destination PRE_MIGRATION_BACKUP`
+- `python3.12 tools/store_admin.py backup --store PRIVATE --destination BACKUP`
+- `python3.12 tools/store_admin.py restore --store BACKUP --destination RESTORED`
+- `python3.12 tools/store_admin.py rotate --store PRIVATE`
+- `python3.12 tools/store_admin.py migrate --store PRIVATE --destination PRE_MIGRATION_BACKUP`
 
 The SQLite backup API produces a consistent snapshot while the store lock is held.
 Backup includes PRIVATE KEY MATERIAL; keep it in an independently controlled,
@@ -54,3 +54,5 @@ directory receipt, and remote PACS exactly-once is outside this local contract.
 Evidence: `evidence/p2-persistent-identity.json`, `evidence/w2-incremental.json`,
 and `tools/verify_incremental.py` (synthetic multi-batch/cache/migration/history/
 outbox checks). Original identities are not in the database/WAL in plaintext.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

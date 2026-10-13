@@ -2,7 +2,7 @@
 
 研究日期：2026-10-12。对象：官网名单全部 13 项；MedSeal 基线：`6800741`。
 
-结论：继续深化 MedSeal，比换题或堆叠功能更合理。下一轮应把它做成**可解释、可验证、保持研究可用性的 DICOM 数据准备工具库与本地工作台**。核心差异是“规则依据 → 字段动作 → 研究可用性 → 审核 → 可验证交付”的完整证据链。这里是研究建议，尚未实现新一轮功能。
+结论：继续深化 MedSeal，比换题或堆叠功能更合理。下一轮应把它做成**可解释、可验证、保持研究可用性的 DICOM 数据准备工具库与本地工作台**。核心差异是“规则依据 → 字段动作 → 研究可用性 → 审核 → 可验证交付”的完整证据链。这里保留研究时的建议与固定外部源码证据；之后 W0–W6 已完成所列范围实现/公开交付，W7 软件演练完成。当前增量包括公共解释 API、475 例质量实验室、持久增量/历史账本、限定 CT、状态/fuzz、本地工作台和真实公开包消费者，见 [实施账本](WINNER_UPGRADE_STATUS.zh-CN.md)。下文 MedSeal 差距表是研究时基线，不是当前缺口；外部 13 项研究的固定 SHA 不因本项目更新而改写。
 
 ## 研究范围与证据方法
 
@@ -354,3 +354,5 @@
 | MoonCharts | [pxgt/mooncharts](https://github.com/pxgt/mooncharts/blob/b11795eea77bf5f5d2293103f1b54f0f4edc322b/LICENSE) | Apache-2.0 | 仅研究 W5 工程方法；不复制实现 |
 | raft-moonbit | [Lfan-ke/raft-moonbit](https://github.com/Lfan-ke/raft-moonbit/blob/31221c15d61b7c1910d0633271e4e5c17559152e/LICENSE) | Apache-2.0 | 仅研究 W4 工程方法；不复制实现 |
 | MoonMarkMind | [Xiao-li-He/MoonMarkMind](https://github.com/Xiao-li-He/MoonMarkMind/blob/fe2568132baf76bab7a3cdfc9d9f0740e0d29044/LICENSE) | Apache-2.0 | 仅研究 W5, W6, W7 工程方法；不复制实现 |
+
+> 文档核对：本文保留固定历史基线；当前实施差异与适用边界已补充核对。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

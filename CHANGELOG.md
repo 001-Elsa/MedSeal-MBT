@@ -2,6 +2,15 @@
 
 All notable changes to MedSeal-MBT are documented here.
 
+## Unreleased documentation maintenance
+
+- Synchronize all maintained Markdown with actual API, policy, persistence, temporal,
+  recovery/review schemas, runtime closures, budgets, research and publication scope.
+- Correct participant name to 韩桢; prepare project-specific submission materials
+  while leaving official forms and personal declarations to the participant.
+- Add a document inventory/link/code-fact gate to CI and the optional pre-commit hook.
+- Preserve immutable release archives and original plan/research/evidence baselines.
+
 ## 0.2.0 - 2026-10-13 (Engineering preview)
 
 - Add research-v1 policies, per-job patient pseudonyms and identity UID mapping.
@@ -47,3 +56,5 @@ All notable changes to MedSeal-MBT are documented here.
 - Added Pixel Data preservation, staged write-back, and round-trip verification.
 - Added `inspect`, `validate`, and `anonymize` native CLI commands.
 - Added privacy-safe JSON audit reports and synthetic test samples.
+
+> 文档核对：本文阶段计数、测量和发行摘要各自绑定原提交；当前状态已核对。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

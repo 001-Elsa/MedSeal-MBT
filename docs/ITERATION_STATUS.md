@@ -1,46 +1,27 @@
-> 历史阶段记录：以下结论保留当时提交的范围与证据；当前能力以 [README](../README.zh-CN.md)、[W0–W7 账本](WINNER_UPGRADE_STATUS.zh-CN.md)和[整改记录](COMPETITION_REMEDIATION.zh-CN.md)为准。
+# Iteration status — current comparison
 
-# Iteration status
+The original 0.1.1 baseline is bb7e895 (19 commits). Current 0.2.0 release
+contracts include the later P/W work; [original plan](ITERATION_PLAN.md) retains
+its design baseline. Earlier 91/53-per-backend and 9cbd292 CI results remain
+fixed evidence, not the current test count.
 
-Baseline: bb7e895 / 0.1.1. Current local candidate: 0.2.0.
+| Original stage | Current implementation | Remaining boundary |
+| --- | --- | --- |
+| A correctness | Rebuilt headers, text-byte preservation, limits, alias/race/fault checks, strict VR/VM subset | Single-file report/DICOM are separate destinations; not every VR or filesystem certified |
+| B policy/context | research-v1 plus strict paths/conditions/priorities; 141 rule references; persistent private provider | Rules limited to classified fields; no automatic patient reconciliation |
+| C collection | UID/date/reference checks, private sealing/journal/resume, streaming, incremental cache/history | Compatibility batch stays per-job; no network/power-loss guarantees |
+| D validation | Fixed corpus, pydicom, selected dciodvfy, CT research, fault/state/fuzz and RSS records | Synthetic evidence does not certify vendor/clinical inputs |
+| E delivery | GitHub/GitLink history, CI, published Mooncakes 0.2.0, independent consumer/install | Participant completes official application and personal declarations |
 
-The original plan is not fully completed. The checkboxes below describe the
-implemented research-v1 subset, not every requirement in phases A–D.
-See [the item-by-item audit](PLAN_AUDIT.md) for partial and missing work.
+Audit source 2c9a49e passed 117 Native and 64 each JS/wasm/wasm-gc, 309 backend
+executions. [Three-platform CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38349000368)
+passed; Windows does not run the POSIX private host. New CI results bind their
+own commit. [Plan audit](PLAN_AUDIT.md), [release record](COMPETITION_REMEDIATION.zh-CN.md)
+and [documentation index](DOCUMENTATION_STATUS.zh-CN.md) provide current boundaries.
 
-- [x] A: Baseline reproduced, headers/text/report privacy repaired, bounded
-  exclusive I/O and writer model checks implemented.
-- [ ] A (full plan): Complete alias/race tests, selected SOP Type constraints
-  and VR semantics matrix; single-file two-destination publication remains limited.
-- [x] B: Limited versioned research policy, patient grouping, shared UID context
-  and per-patient date offsets implemented.
-- [ ] B (full plan): General Sequence path rules, priority/conditions and a
-  machine-readable provenance/test mapping are not implemented.
-- [x] C: Two-pass collection plan/execute, supported references, DA shifting,
-  File Meta synchronization and manifest verification implemented.
-- [ ] C (full plan): Recovery is not implemented; retry requires a new plan.
-- [x] D: Core mutation/path/publication regression tests and independent
-  pydicom interoperability checks implemented and locally exercised.
-- [ ] D (full plan): Execution-time fault injection, hard-termination and
-  concurrent-target tests; variable-pixel workloads and peak-memory measurements.
-- [x] E (local): Runnable MoonBit example, Chinese guide, support/policy/related
-  work documents, measurements and submission text prepared.
-- [x] E (GitHub): Candidate source pushed in functional commits on master.
-- [x] E (remote CI): All four source/test commits passed GitHub CI. The latest
-  source commit `9cbd292` passed Linux/macOS/Windows checks, tests, builds,
-  interface consistency, the collection example, pydicom verification and packaging.
-  Exact run/job evidence is in [github-verification.json](evidence/github-verification.json).
-- [ ] E (GitLink): New candidate has not been synchronized to the mirror.
-- [ ] E (Mooncakes): 0.2.0 has not been published; public-package consumer
-  verification remains pending.
+Original gaps in persistence, DT precision, recovery, path rules, large-pixel RSS,
+signatures, registry consumption and mirrored publication have software/evidence
+implementations now. Compressed pixels, networking/OCR, complete IOD/Annex E,
+real field users and physical power-loss certification remain outside the claim.
 
-The toolchain is isolated in ../moonbit工具链. tools/moon-local runs it without
-changing shell configuration. Test/measurement evidence is in docs/evidence.
-The GitHub record identifies its verified source commit; the documentation
-commit follows that snapshot and does not retroactively change earlier results.
-
-Scope was narrowed to a coherent research-v1 subset: three descriptive tag
-customizations, CT/MR/Secondary Capture metadata, full DA fields and per-job
-mapping. General path-expression policies, DT/TM semantics, automatic recovery,
-cross-job encrypted state and peak-memory/large-pixel benchmarks remain follow-up
-work. No extra code is added solely to meet a reference line-count range.
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

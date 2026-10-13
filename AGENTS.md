@@ -51,3 +51,14 @@ You can browse and install extra skills here:
   scientific computations), prefer assertion tests. You can use
   `moon coverage analyze > uncovered.log` to see which parts of your code are
   not covered by tests.
+
+## Documentation contract
+
+Update all affected Markdown with the actual entry-point, schema, budget and
+release behavior; README.md and README.mbt.md must remain byte-identical. Run
+Python 3.12 tools/check_documentation.py. Historical measurements, external
+research SHAs and plans remain attributed to their source baseline; update the
+current comparison rather than fabricating a rerun. Name: 韩桢. Never equate a
+repository publication or prepared application with an official submission receipt.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

@@ -1,54 +1,52 @@
-# Support matrix for 0.2.0
+# Support matrix
 
-This is a tested metadata subset, not a full DICOM conformance statement.
+Applies to maintained 0.2.0 contracts. This is a tested subset, not a full DICOM
+conformance statement. Do not transfer private-host guarantees to basic commands.
 
-| Area | Supported behavior | Explicit boundary |
+| Area | Supported behavior | Boundary |
 | --- | --- | --- |
-| File format | Part 10, Explicit VR Little Endian | No raw-dataset CLI, other transfer syntaxes or compression |
-| Character sets | Default ASCII, ISO_IR 6, ISO_IR 192 | Other or multivalued character sets rejected; no transcoding |
-| Values | Common text/integer VRs, raw binary values, Sequence | No interpretation of compressed pixels or every VR semantic |
-| Sequences | Defined and supported undefined item/sequence lengths | Maximum depth 32 |
-| Collection SOP classes | CT Image Storage, MR Image Storage, Secondary Capture | Class filtering does not implement full IOD Type/VM validation |
-| Patient key | Namespace + Issuer of Patient ID + Patient ID | Missing ID rejected; conflicting names/birth dates rejected; no automatic reconciliation |
-| Identity UIDs | SOP Instance, Study, Series, Frame of Reference, Referenced SOP Instance | Other public UI tags rejected in research mode; core identity fields are single-valued |
-| Standard UIDs | SOP Class and Referenced SOP Class | Preserved; unsupported primary SOP classes rejected |
-| References | Same-patient SOP references with matching SOP Class | Closed collection default; explicit external mode reports unresolved references |
-| Dates | Full DA in Study/Series/Acquisition/Content Date | No DT precision/timezone handling or TM pairing; birth date emptied |
-| Patient aliases | One alias per prepared job and patient key | Not stable between jobs; context preparation and job execution are single-use |
-| Output | Reconstructed File Meta, zero preamble, raw pixel preservation | Public metadata subset remains; no burned-in text inspection |
-| Policy overrides | Study Description, Series Description, Protocol Name | No arbitrary tag/path rules or structural overrides |
-| Privacy report | Anonymous object IDs, paths within the dataset, rule/action | No original paths/values or reverse map; never declares all privacy removed |
+| Format | Part 10, Explicit VR Little Endian | No compressed, other transfer syntaxes, raw-dataset CLI or networking |
+| Character sets | Default ASCII, ISO_IR 6, ISO_IR 192 | Other/multivalued character sets rejected; no transcoding |
+| Sequences | Supported defined/undefined item and Sequence lengths | Depth 32; supported strict Sequence contexts only |
+| Basic single file | Metadata editing, optional private-tag removal | Retains identity UIDs; report and DICOM destinations are not one atomic pair |
+| Research-v1 collection | Per-job patient aliases, UID mapping, full DA intervals, reference/hash checks | No persistent maps or signing in this entry; unknown public non-UID metadata can remain |
+| Strict-v1 | 120 classified attributes, VR/VM/selected Type rules, path/condition/priority compilation | Unknown public fields rejected; not all IODs, VR semantics or Annex E |
+| Patient identity | Namespace + Issuer + Patient ID; conflict rejection | No name-similarity matching or automatic cross-source reconciliation |
+| UID roles | Supported SOP/Study/Series/Frame/reference mappings; standard Classes retained | Unsupported public UID roles rejected; no arbitrary reference graph support |
+| Persistent identity | Private encrypted store, source/project separation, backups and wrapping-key rotation | Requires Native + Python 3.12 on controlled POSIX; compatibility batch remains per-job |
+| References | Closed current collection; private host can use reverified Acknowledged history | History must match project/source/destination; permissive research external mode is weaker |
+| Incremental reuse | Bound private Converted cache and source-content/ownership checks | Cache hit never grants review/publish permission; no remote exactly-once claim |
+| Dates/times | Full DA; strict opt-in DT precision policy; standalone TM not shifted | Incomplete DT cleared; unsupported leap-second shifting blocked; no timezone inference |
+| Pixel path | Buffered public API; private strict streaming with terminal finite OB/OW pixels | Single frame/sample, monochrome 8/16 bit; no pixel inspection or editing |
+| Classic CT research | Single-frame native 16-bit MONOCHROME2, selected CT matrix and independent voxel/HU/geometry checks | Only ct-classic-research-v1; no complete MR/SC/CT IOD or clinical claim |
+| Recovery | Private sealed inputs, immutable schema2 plan, SQLite journal/checkpoints and revalidation | Compatibility batch retries need new plans; no power-loss/network filesystem certification |
+| Review and delivery | Review schema2, signed release schema2, independent verifier and local directory receipts | Human evidence quality and clinical acceptance remain separate; no PACS/DICOMweb |
+| Public reports | Anonymous IDs, structural paths, registered actions/issues | No original patient values/paths, mapping state, offsets or secrets |
+| Workbench | Loopback pagination/explanations/cancel with Host/Origin/session/CSRF gates | Single-owner local tool; no organizational login or release authority |
 
 ## Resource budgets
 
-- 256 MiB per source/output file, 128 MiB per encoded element/Sequence.
-- 100,000 elements per file, 32 Sequence nesting levels.
-- 10,000 objects per job, 100,000 distinct mapped UIDs.
-- 2 MiB estimated indexed metadata per source; 64 MiB per collection.
-- 16 directory levels; recursive scans reject symbolic links and special files.
-- Discovery probes all regular files (132-byte header); extensionless Part 10
-  files are included, non-Part-10 files are counted, and discovery is capped at
-  20,000 entries. Hardlinked inputs are rejected.
-- 1 MiB policy JSON, 4 MiB manifest, 16 MiB per audit report.
+- 256 MiB/file; 128 MiB/encoded value or pixel span; 100,000 elements/file; depth 32.
+- 10,000 objects/job; 100,000 mapped UIDs; indexed metadata estimate 2 MiB/source,
+  64 MiB/collection. Streaming additionally caps its metadata prefix at 2 MiB.
+- Discovery depth 16 and 20,000 entries; reject links/special files/hardlinked inputs.
+  Extensionless Part 10 files are included; non-DICOM exclusions are counted.
+- Private sealing total 32 GiB, one worker and 1 MiB copy chunks. Free-space checks
+  are not quotas or concurrent reservations.
+- Policy JSON 1 MiB; conversion manifest 8 MiB; signed release 4 MiB; audit 16 MiB.
 
-Files are opened and their sizes checked before bounded reads. Source SHA-256,
-size/mtime and the selected file set are checked against the plan. Inputs should
-remain stable during processing; these checks are not an atomic filesystem
-snapshot and do not defend against a hostile administrator racing filesystem
-operations.
+## Publication and trust
 
-## Publication and integrity
+Compatibility collection uses exclusive sibling staging and an absent target.
+Its SHA-256 manifest is unsigned. Strict private conversion stops at
+AWAITING_REVIEW and release_authorized:false; final publish independently checks
+review, creates an Ed25519 package and uses no-replace local publication.
+Runtime/policy/input changes refuse recovery; existing unknown targets fail.
+Only complete, reverified packages enter the receiver directory.
 
-A job stages files with exclusive creation under a sibling directory with
-private permissions, prepares audit and manifest files, and renames that directory
-to an absent target. No automatic replacement or merging of existing jobs occurs.
-Actual visibility/durability depends on filesystem rename and sync guarantees;
-network filesystems and power-loss durability have not been certified.
+Local POSIX process recovery is tested. Physical power loss, network filesystem
+durability, Windows enterprise providers and real clinical acceptance are outside
+the current claim. See [operations](OPERATIONS.zh-CN.md),
+[security](../SECURITY.md) and [field evidence](W7_FIELD_EVIDENCE.zh-CN.md).
 
-Handled errors clean staging; hard termination can leave it for manual review.
-Do not treat a leftover staging directory as a published job. No mapping state is
-persisted, so retries require a new plan and new job.
-
-SHA-256 detects modifications relative to a trusted manifest. The manifest is
-not signed; changing both a file and its manifest is not authenticated tamper
-protection. `verify` does not replace reviewing unclassified metadata or pixels.
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

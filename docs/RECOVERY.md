@@ -1,6 +1,6 @@
 # Durable private jobs (P3)
 
-`python tools/enterprise_job.py` coordinates a controlled local POSIX job. The
+`python3.12 tools/enterprise_job.py` coordinates a controlled local POSIX job. The
 operator supplies an existing 0700 `--workspace` and initialized private identity
 store. `create --input SOURCE --policy POLICY --store PRIVATE --source-domain DOMAIN`
 returns an opaque job ID. `run --job ID`, `resume --job ID`, `status --job ID`,
@@ -17,7 +17,7 @@ inputs. Counts/exclusion reasons remain in the private plan. Limits: depth16,
 are local policy checks, not filesystem quotas or concurrent-space guarantees.
 
 The immutable schema2 plan pins policy bytes, sealed hashes, converter/verifier/
-Python and all eight runtime adapter hashes,
+Python and all ten runtime adapter hashes,
 resource settings, source domain and store location. The compiled binary binds
 dictionary semantics. Replacing tools/policy/sealed bytes refuses resume. SQLite
 FULL/WAL journal and OS job lock serialize operations. Mapping reservations commit
@@ -46,6 +46,8 @@ Scope: controlled single-owner local filesystem. No network filesystem, Windows
 ACL/durability certification, hostile administrator defense or physical power-loss
 claim. Process-kill tests are recorded in `evidence/p3-recovery.json`. Remaining
 full P3 gates include exhaustive crash-window/system certification and migration
-of pinned runtimes. Checkpoint reuse currently recomputes output; P4 addresses
-large-payload memory. Failed ingest needs a fresh job. Public delivery is a distinct
+of pinned runtimes. Checkpoint reuse recomputes the expected digest through the existing P4
+streaming path; it does not load the full large pixel payload in memory. Failed ingest needs a fresh job. Public delivery is a distinct
 state transition and cannot be obtained from this tool's conversion result alone.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

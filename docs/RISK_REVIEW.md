@@ -6,7 +6,7 @@ feature flags and source overlay presence into anonymous risk IDs in the audit a
 manifest. A NO flag never clears the mandatory pixel gate. Multiframe remains an
 unsupported strict input; it is rejected, not sampled and approved.
 
-`python tools/enterprise_job.py risks --workspace PRIVATE --job ID` lists anonymous
+`python3.12 tools/enterprise_job.py risks --workspace PRIVATE --job ID` lists anonymous
 objects, output/policy digests and required decisions. An operator must inspect the
 actual images and retain appropriate private evidence, including complete frame
 coverage for any future multiframe profile. This implementation does not change
@@ -19,8 +19,13 @@ This is local single-owner authorization configuration, not organizational login
 or multi-user authentication. Protect it independently from operators who must not
 approve their own work if your institution requires separated roles.
 
-The private review JSON has schema1, context(controlled/synthetic),reviewer,
-reviewed_at(UTC ISO8601),recipient_accepts_declared_subset:true and records.
+The private review JSON has schema2, context(controlled/synthetic),reviewer,
+reviewed_at(UTC ISO8601),recipient_accepts_declared_subset:true, records and bindings.
+Bindings exactly match the current job_id, producer_runtime_sha256,
+sealed_input_commitment, policy_file_sha256 and destination_domain. Obtain these
+from the current risks command; do not reuse another job's values. The saved
+review envelope and reviewer registry remain schema1; they are not the input
+review schema. See tools/risk_gate.py review_binding/validate_review.
 Each record contains file,sha256,policy_sha256 and decisions covering every listed
 risk exactly once. Each decision contains risk,action,evidence_sha256. Visual risks
 require human-reviewed-clear; public-metadata-subset-only requires
@@ -39,3 +44,5 @@ context:synthetic and cannot become a controlled release by the default recipien
 Evidence: `evidence/p5-risk-gate.json`, `tools/verify_risk_gate.py`, native classifier
 test. Remaining enterprise gates include real reviewers, independent assessment of
 privacy/quality evidence, source SOP certification and institutional role controls.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

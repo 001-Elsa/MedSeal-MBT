@@ -10,10 +10,10 @@ GitLink 页面导出的最小观察 JSON。
 在干净的 Git 提交上先构建包，再运行：
 
 ```sh
-python3 tools/release_readiness.py \
+python3.12 tools/release_readiness.py \
   --archive _build/publish/001-Elsa-medseal-0.2.0.zip \
-  --record docs/evidence/w6-release-readiness.json \
-  --ci-url https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38268435012
+  --record tmp/release-readiness.json \
+  --ci-url https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38349000368
 ```
 
 记录中的 `candidate-ready-for-platform-publish` 只表示归档可交给发布人，
@@ -58,5 +58,8 @@ python3 tools/release_readiness.py \
 5. 从公开包做一次仓库外消费者验收，确认消费者没有偷偷解析本地 `src/`。
 6. 只在真实操作者、真实数据来源、接收方和独立审查材料齐全后，推进 W7 的现场状态。
 
-本阶段不证明临床适用性、隐私审查通过、真实 PACS 接收或生产可用性。当前候选仍是
-受控工程预览版。
+0.2.0 已实际发布；本页说明发行核验工具，不代表发布仍待完成。旧 w6-release-readiness.json 是早期历史记录（曾漏依赖），完整替代证据见 release-0.2.0-source.json 与[发布后回读](COMPETITION_REMEDIATION.zh-CN.md)。后续文档提交不能冒充 0.2.0 的冻结源码 bc5b25c。新版本必须从自己的干净源码、归档与 CI 重新核验。
+
+本工具不证明临床适用性、像素隐私通过、真实 PACS 接收或生产 1.0。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

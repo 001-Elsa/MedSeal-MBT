@@ -1,6 +1,12 @@
 #!/bin/sh
 
 set -e
-moon fmt --check
-moon check --target all --deny-warn
-moon test --target all --deny-warn
+if [ -x ../moonbit工具链/bin/moon ]; then
+    moon_runner=tools/moon-local
+else
+    moon_runner=moon
+fi
+"$moon_runner" fmt --check
+"$moon_runner" check --target all --deny-warn
+"$moon_runner" test --target all --deny-warn
+python3.12 tools/check_documentation.py

@@ -1,6 +1,39 @@
 # Architecture and safety model
 
-## Collection workflow added in 0.2.0
+## Current entry points and private host
+
+The portable MoonBit public facades live in api/dicom, api/policy,
+api/validation and api/explain. Native api/authorization validates evidence
+through an administrator-pinned **eight-file** authorization closure. That is
+separate from the private job coordinator's **ten-adapter** runtime closure.
+Factories prove checks at creation time; operations recheck current evidence.
+
+Strict rules classify 120 attributes and 21 additional contracts. The 141-entry
+rulebook links implementation and positive/negative cases; the 475-case fixed
+corpus provides independent expectations. Classic CT uses a separate limited
+profile and independent voxel/HU/geometry acceptance.
+
+```text
+controlled source -> private sealed input + immutable plan
+ -> encrypted identity reservations / bound Converted cache
+ -> MoonBit bounded metadata conversion + streaming native pixels
+ -> object checkpoints / full relationship verification
+ -> AWAITING_REVIEW -> schema2 human review -> READY
+ -> Ed25519 signed package -> no-replace PUBLISHED
+ -> destination-bound outbox -> local receipt -> Acknowledged history
+```
+
+Python 3.12 provides SQLite/private filesystem coordination, vetted encryption
+and signature integration, review/delivery orchestration and loopback UI.
+DICOM parsing, rules, mapping application, writing and verification remain in
+MoonBit. Cache reuse never grants review or publication authority. Acknowledged
+history is eligible only after revalidation in the same project/source/target
+scope. No PACS, remote exactly-once, full IOD or pixel-redaction claim.
+
+The loopback workbench is a thin view/cancel host with session/CSRF/Host/Origin
+checks, not another conversion engine or publication authority.
+
+## Compatibility collection workflow added in 0.2.0
 
 ```text
 input directory
@@ -19,7 +52,9 @@ patient/UID maps and date offsets, `verification` checks relationships and
 semantic value equality, `storage` bounds I/O and obtains OS entropy, `batch`
 coordinates staging/publication, and `checksum` wraps a tested SHA-256 dependency.
 
-Only bounded stripped metadata is retained between passes. Full files are
+The following per-job description applies to the compatibility collection API.
+Private host state is encrypted/persisted and recoverable as described above.
+Only bounded stripped metadata is retained between compatibility passes. Full files are
 processed one at a time. Contexts and plans retain private source identities
 in memory and are never serialized into public reports. Job execution is
 single-use; retries require a fresh plan.
@@ -56,12 +91,12 @@ DICOM bytes
 | `src/deid` | Built-in actions, recursive policy application, and safe audit JSON |
 | `src/dicom_writer` | Length/padding recomputation and Explicit VR LE serialization |
 | `src/date` | Full Gregorian DA validation and shifting |
-| `src/policy` | Strict limited research-v1 policy configuration |
-| `src/identity` | Per-job patient/UID maps and per-patient date offsets |
+| `src/policy` | Compatibility research-v1 and strict path/priority/condition compilation |
+| `src/identity` | Mapping application, per-job or private-provider context and temporal policies |
 | `src/verification` | Metadata equality and cross-file relationship checks |
 | `src/storage` | Bounded filesystem access, exclusive staging and OS entropy |
-| `src/checksum` | SHA-256 file integrity hashes |
-| `src/batch` | Two-pass planning, staged collection publication and verification |
+| `src/checksum` | SHA-256 file and incremental streaming integrity hashes |
+| `src/batch` | Compatibility collection planning plus strict Native streaming execution |
 | `src/app` | Native CLI workflows, output and exit codes |
 
 ## Safety invariants
@@ -89,8 +124,18 @@ lengths. This is valid for the supported scope: tag order, VR, nested item
 structure, retained values, and Pixel Data bytes are preserved, while element
 and Sequence lengths are recalculated from the serialized values.
 
+## Durable-host contracts
+
+Private job plans and input review records use schema2; reviewer registries and
+saved review envelopes use schema1. Signed release manifests use schema2.
+Conversion manifests have an 8 MiB budget, signed releases 4 MiB, audits 16 MiB.
+See [recovery](docs/RECOVERY.md), [incremental ledger](docs/INCREMENTAL_LEDGER.zh-CN.md)
+and [review gate](docs/RISK_REVIEW.md) for exact bindings and transitions.
+
 ## Non-goals
 
 Version 0.2.0 does not implement compressed pixel decoding, other transfer
 syntaxes, DICOM networking, PACS/DICOMweb, OCR, pixel redaction, a complete
 DICOM dictionary, diagnosis, or a guarantee of complete anonymization.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

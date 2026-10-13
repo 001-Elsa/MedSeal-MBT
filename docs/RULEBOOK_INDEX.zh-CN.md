@@ -148,3 +148,5 @@
 | temporal-precision | DT/TM 精度、分数秒、显式时区与闰秒边界；低精度不补全 | [代码](../src/date/temporal.mbt), [代码](../src/validator/structural_rules.mbt), [代码](../src/identity/transform.mbt) | [temporal-precision-valid](../src/date/temporal_test.mbt) | [temporal-precision-invalid](../src/date/temporal_test.mbt) |
 
 VR/VM 正反例直接调用生产检查器；生成条目不替代 W1 的独立预期语料。条件和结构约束使用手写反例，公开边界与受控状态另外执行完整路径。规则来源及条款逐行见机器账本。
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

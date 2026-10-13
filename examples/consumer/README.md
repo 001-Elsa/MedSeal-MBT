@@ -14,3 +14,5 @@ moon run --target native examples/consumer
 Policy compilation is a public API operation. It does not grant IOD, privacy,
 pixel or release approval; those remain explicit MedSeal validation and review
 gates.
+
+> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](../../docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
