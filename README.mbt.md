@@ -14,7 +14,7 @@ consistency and independent output verification. [中文指南](README.zh-CN.md)
 | Local workbench | Loopback job/status/explanation and cancellation interface | Single-host capability/CSRF protection; no multi-user network service |
 
 Publication state and the contest remediation ledger are recorded in
-[COMPETITION_REMEDIATION](docs/COMPETITION_REMEDIATION.zh-CN.md).
+[live competition remediation record](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md).
 [W0–W7 evidence](docs/WINNER_UPGRADE_STATUS.zh-CN.md) separates implementation,
 synthetic verification and remaining field evidence. Earlier P/iteration audits
 are historical snapshots, not the current capability list.

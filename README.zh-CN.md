@@ -1,6 +1,6 @@
 # MedSeal-MBT
 
-面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.2.0 工程预览**；真实发布结果以[整改与发布记录](docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
+面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.2.0 工程预览**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
 ## 当前已实现的范围
 

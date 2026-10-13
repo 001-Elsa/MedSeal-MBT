@@ -17,7 +17,7 @@
   {
     "dependency": "pydicom",
     "file": "resources/licenses/qa/pydicom/LICENSE",
-    "sha256": "39b3259cb15151df25167119087df1fef33624765e639af42447ba6fe86dada3"
+    "sha256": "9909d6138b4cd21ddc639085eaead54922d402941a495e4a4db3f7565f3f5d47"
   },
   {
     "dependency": "referencing",
