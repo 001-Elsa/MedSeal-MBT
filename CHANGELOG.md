@@ -2,7 +2,7 @@
 
 All notable changes to MedSeal-MBT are documented here.
 
-## 0.2.0 - Release candidate
+## 0.2.0 - 2026-10-13 (Engineering preview)
 
 - Add research-v1 policies, per-job patient pseudonyms and identity UID mapping.
 - Preserve supported cross-file references and per-patient full-date intervals.

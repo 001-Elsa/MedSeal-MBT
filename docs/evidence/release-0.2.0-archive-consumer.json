@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "archive": "001-Elsa-medseal-0.2.0.zip",
+  "archive_sha256": "ac50fba8f74be8a2b8ee80dbc7f4cf5b29191e97cd5b6a2639d9e831c6c58fbb",
+  "checks": [
+    "consumer-imports-public-api-only",
+    "consumer-resolved-from-published-archive-overlay",
+    "clean-directory-check-and-build",
+    "original-checkout-not-on-consumer-path",
+    "consumer-runs-against-archived-package"
+  ],
+  "output": "public-policy-ok",
+  "release_authorized": false,
+  "registry_consumer_pending": true
+}

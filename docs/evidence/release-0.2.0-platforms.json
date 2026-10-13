@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "status": "mooncakes-published-gitlink-pending-git-authentication",
+  "release_status": "engineering-preview",
+  "source_commit": "bc5b25c8dafd2fdcde147b08e357061ead14e76e",
+  "observed_at": "2026-10-13T04:01:45.091272+00:00",
+  "module": "001-Elsa/medseal",
+  "version": "0.2.0",
+  "ci": {
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38343632892",
+    "status": "success",
+    "platforms": [
+      "ubuntu-latest",
+      "macos-latest",
+      "windows-latest"
+    ],
+    "scope": "POSIX provider steps execute only on Ubuntu/macOS; Windows core and static gates only"
+  },
+  "mooncakes": {
+    "url": "https://mooncakes.io/docs/001-Elsa/medseal@0.2.0",
+    "download_url": "https://download.mooncakes.io/user/001-Elsa/medseal/0.2.0.zip",
+    "status": "published-and-independent-consumer-passed",
+    "sha256": "ac50fba8f74be8a2b8ee80dbc7f4cf5b29191e97cd5b6a2639d9e831c6c58fbb",
+    "matches_frozen_archive": true,
+    "public_output": "public-policy-ok"
+  },
+  "gitlink": {
+    "url": "https://gitlink.org.cn/Hzhhhh/MedSeal-MBT",
+    "status": "browser-owner-login-confirmed-git-credential-pending",
+    "observed_commit": "bb7e895900dbaf55e13651460906044df50b12fe",
+    "fast_forward_ancestor": true
+  },
+  "macos_arm64_host": {
+    "archive": "medseal-enterprise-macos-arm64-bc5b25c.tar.gz",
+    "sha256": "65757654378298e2b0da6cb34bc553b4c8e95a8a8a06f97c61960e64588ac7be",
+    "distribution_manifest_sha256": "ed68b99add719f3bc13ca100ea02bfc105406a7880b2fb842813a7f914d797d4",
+    "offline_install": "passed",
+    "synthetic_rehearsal": {
+      "batches": 3,
+      "objects": 6,
+      "checks": 5,
+      "status": "passed"
+    }
+  },
+  "field_acceptance_complete": false,
+  "personal_competition_facts_verified": false,
+  "github_release": {
+    "url": "https://github.com/001-Elsa/MedSeal-MBT/releases/tag/v0.2.0",
+    "tag": "v0.2.0",
+    "prerelease": true,
+    "source_commit": "bc5b25c8dafd2fdcde147b08e357061ead14e76e"
+  }
+}
