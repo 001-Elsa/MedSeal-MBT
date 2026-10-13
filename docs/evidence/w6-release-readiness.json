@@ -4,7 +4,7 @@
   "status": "candidate-ready-for-platform-publish",
   "release_status": "engineering-preview",
   "repository": "https://github.com/001-Elsa/MedSeal-MBT.git",
-  "source_commit": "84f091e10bf3d8c32182a75a738cd2f3554588aa",
+  "source_commit": "1488cd17e0013afe61154ef81366af30de5766ce",
   "module": {
     "name": "001-Elsa/medseal",
     "version": "0.2.0",
@@ -12,9 +12,9 @@
   },
   "archive": {
     "file": "001-Elsa-medseal-0.2.0.zip",
-    "bytes": 975990,
-    "sha256": "26f4f442fd0c7639a84fad5ee42f4c3f98a435d0a438a62ae10bb3eccb514161",
-    "file_count": 828,
+    "bytes": 1018621,
+    "sha256": "d8517b75bcc949cac94dcd2c0d560f2764e529a598da30ccbebdfd4054848b09",
+    "file_count": 832,
     "content_manifest": [
       {
         "file": "moon.pkg",
@@ -257,6 +257,11 @@
         "sha256": "3eb065d7eedaf3965860da0d16bef55650353c06b408a220b51857424cc07bad"
       },
       {
+        "file": "tools/verify_field_evidence.py",
+        "bytes": 3546,
+        "sha256": "f3f0817dd791a28b3e0c8137e5d657365b000f80301c8a00272599cd51475b7a"
+      },
+      {
         "file": "tools/build_distribution.py",
         "bytes": 7012,
         "sha256": "a0fe6e6afb5d5e8d6d8a1100c58222e00391f93089bcb8067987571da48f83e9"
@@ -488,13 +493,18 @@
       },
       {
         "file": "docs/WINNER_UPGRADE_STATUS.zh-CN.md",
-        "bytes": 10508,
-        "sha256": "19eebc333fd8978e9bce615a4e84c48103a4132dcbf1a6f8783ee9309dbcee13"
+        "bytes": 11304,
+        "sha256": "56492c76ad9ad76c1de8937ee1144ee113a0643ee6952aeeb12a3566988fd2bb"
       },
       {
         "file": "docs/RISK_REVIEW.md",
         "bytes": 2777,
         "sha256": "389a59f4cdd4cc9efea044904ea52ac264b3dc7f9dfda45ac61e5400b8943119"
+      },
+      {
+        "file": "docs/evidence/w6-release-readiness.json",
+        "bytes": 152046,
+        "sha256": "eb3126dd5238271af7f5aa9cf3ce30818bd0b2a2355620ccaf258d0b1801696e"
       },
       {
         "file": "docs/evidence/pydicom-16.json",
@@ -737,6 +747,11 @@
         "sha256": "c9ecfb17cbb47c30d3996e5e5998a16ad06e0a554aa79ba14f131fa7e3a45f22"
       },
       {
+        "file": "docs/field-evidence/w7-field-evidence.template.json",
+        "bytes": 2045,
+        "sha256": "de907e2b63b4e20d3e51f078b16bad107dc0faff4eee19d6567f4a471d1e02e6"
+      },
+      {
         "file": "docs/PLAN_AUDIT.md",
         "bytes": 6659,
         "sha256": "2d32e496abab75ede47b5753098cf4f003308bc8aab7e2e20a47dd972869f078"
@@ -750,6 +765,11 @@
         "file": "docs/PERSISTENT_IDENTITY.md",
         "bytes": 3584,
         "sha256": "763db09edd0f3a52e8f8b6006f4159ccdde151f0cac85fbc8ad2a83b7710a5ab"
+      },
+      {
+        "file": "docs/W7_FIELD_EVIDENCE.zh-CN.md",
+        "bytes": 2574,
+        "sha256": "e4f7594906079583db599d17c770eae49200ba45835bb0de2e73caddee9a9b67"
       },
       {
         "file": "docs/examples/rule-explanation/condition-not-met.svg",
@@ -4159,7 +4179,7 @@
     ]
   },
   "ci_urls": [
-    "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38268435012"
+    "https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38336672487"
   ],
   "platforms": {
     "mooncakes": {
