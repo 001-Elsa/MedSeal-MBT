@@ -83,6 +83,7 @@ licenses and hashes in the distribution SBOM.
 | referencing | 0.37.0 | MIT | https://github.com/python-jsonschema/referencing — schema references |
 | rpds-py | 2026.9.1 | MIT | https://github.com/crate-py/rpds — schema data structures |
 | typing-extensions | 4.16.0 | PSF-2.0 | https://github.com/python/typing_extensions — QA typing support |
+| numpy | 2.3.5 | BSD-3-Clause; bundled third-party notices retained | https://github.com/numpy/numpy — independent CT voxel/HU arithmetic |
 
 ## Research references
 

@@ -23,6 +23,7 @@ if LOCAL_PACKAGES.exists():
     import sys
     sys.path.insert(0, str(LOCAL_PACKAGES))
 import pydicom
+import numpy
 from pydicom.dataset import FileDataset, FileMetaDataset
 from pydicom.uid import CTImageStorage, ExplicitVRLittleEndian, JPEGBaseline8Bit
 from evidence import code_identity
@@ -285,7 +286,7 @@ def main():
             "negative_enforcement": "independent series receiver contract; per-object CT fields are also enforced by the MoonBit batch path",
             "series_count": len(series_results),
             "minimum_slices_per_series": min(item["slices"] for item in series_results),
-            "independent_reader": {"pydicom": pydicom.__version__, "transfer_syntax": str(ExplicitVRLittleEndian)},
+            "independent_reader": {"pydicom": pydicom.__version__, "numpy": numpy.__version__, "transfer_syntax": str(ExplicitVRLittleEndian)},
             "tolerances": {"direction_component": 1e-6, "physical_coordinate_mm": 1e-4, "hu": 1e-6},
             "release_authorized": False,
             "limitations": [

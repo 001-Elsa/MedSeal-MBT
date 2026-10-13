@@ -33,5 +33,10 @@
     "dependency": "typing_extensions",
     "file": "resources/licenses/qa/typing_extensions/licenses/LICENSE",
     "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+  },
+  {
+    "dependency": "numpy",
+    "file": "resources/licenses/qa/numpy/LICENSE.txt",
+    "sha256": "d84715000c6b3fd8719b2027238b6f6457cb853b2eb7023821a585949387f7bf"
   }
 ]
