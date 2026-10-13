@@ -2,7 +2,7 @@
 
 ## Supported scope and reporting
 
-0.2.1 is the published documentation patch; 0.2.0 is the prior published baseline. Current maintenance and immutable
+0.2.2 preserves the security contracts of the published 0.2.1 documentation patch and 0.2.0 baseline. Current maintenance and immutable
 release evidence are described in [release record](docs/COMPETITION_REMEDIATION.zh-CN.md).
 Use GitHub private security advisories for vulnerability reports. Include version,
 error code and a synthetic reproduction; never submit patient data, credentials

@@ -7,13 +7,13 @@ GitLink 页面导出的最小观察 JSON。
 
 ## 生成候选发行证据
 
-在干净的 Git 提交上先构建包，再运行（CI URL 必须替换为该冻结提交的实际成功运行，不使用旧运行号）：
+在干净的 Git 提交上先构建包，设置 MEDSEAL_CI_URL 为该提交的实际成功运行 URL，再运行（CI URL 必须替换为该冻结提交的实际成功运行，不使用旧运行号）：
 
 ```sh
 python3.12 tools/release_readiness.py \
-  --archive _build/publish/001-Elsa-medseal-0.2.1.zip \
+  --archive _build/publish/001-Elsa-medseal-0.2.2.zip \
   --record tmp/release-readiness.json \
-  --ci-url https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38363013106
+  --ci-url "$MEDSEAL_CI_URL"
 ```
 
 记录中的 `candidate-ready-for-platform-publish` 只表示归档可交给发布人，
@@ -38,13 +38,13 @@ python3.12 tools/release_readiness.py \
   "observed_at": "2026-10-13T12:00:00+08:00",
   "url": "https://mooncakes.io/docs/001-Elsa/medseal",
   "status": "published",
-  "observed_version": "0.2.1",
+  "observed_version": "0.2.2",
   "observed_commit": "optional-platform-value",
   "notes": "页面显示版本、下载数和包摘要"
 }
 ```
 
-只有 `status=published` 且 `observed_version` 等于当前候选模块版本（本轮为 `0.2.1`） 才会把该平台标成
+只有 `status=published` 且 `observed_version` 等于当前候选模块版本（当前候选为 `0.2.2`） 才会把该平台标成
 `candidate_visible=true`。GitHub CI、Mooncakes、GitLink、Git tag 和 Release
 分别记录，任何一项都不能从另一项推断。平台页面显示旧版或没有可验证版本时，
 保持 `pending`，不要修改成成功。
@@ -54,7 +54,7 @@ python3.12 tools/release_readiness.py \
 1. 核对 `moon.mod` 的模块名、版本和依赖；确认候选提交与 CI 运行号一致。
 2. 记录归档 SHA-256 和 manifest 成员摘要，发布前保存一份只读副本。
 3. 按平台流程发布或同步，保存平台返回的版本、提交、包摘要、时间和操作者。
-4. 重新运行回读工具，确认公开版本与冻结模块版本一致（本轮为 `0.2.1`）；失败时保留旧版，不重试未知状态。
+4. 重新运行回读工具，确认公开版本与冻结模块版本一致（当前候选为 `0.2.2`）；失败时保留旧版，不重试未知状态。
 5. 从公开包做一次仓库外消费者验收，确认消费者没有偷偷解析本地 `src/`。
 6. 只在真实操作者、真实数据来源、接收方和独立审查材料齐全后，推进 W7 的现场状态。
 
@@ -63,3 +63,5 @@ python3.12 tools/release_readiness.py \
 本工具不证明临床适用性、像素隐私通过、真实 PACS 接收或生产 1.0。
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+0.2.2 起完整文件一致性另由[三平台同步核验](PLATFORM_SYNC.zh-CN.md)强制检查，包含隐藏仓库文件。发布后的报告写到源码树外，避免报告本身导致下一次差异。

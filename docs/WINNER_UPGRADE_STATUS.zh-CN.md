@@ -81,3 +81,5 @@
 - [`docs/REHEARSAL.zh-CN.md`](REHEARSAL.zh-CN.md) 提供新操作者逐步清单；[`docs/W7_FIELD_EVIDENCE.zh-CN.md`](W7_FIELD_EVIDENCE.zh-CN.md) 和 [`field-evidence/w7-field-evidence.template.json`](field-evidence/w7-field-evidence.template.json) 提供现场材料模板，`tools/verify_field_evidence.py` 强制五项现场证据、范围和完成标志一致。真实来源授权、研究接收方、新操作者观察、独立隐私/可用性审查和持久存储灾备仍为 `requires_field`，不能由脚本代填。
 
 > 文档核对：本文阶段计数、测量和发行摘要各自绑定原提交；当前状态已核对。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+当前源码候选 0.2.2 增加[完整快照同步](PLATFORM_SYNC.zh-CN.md)，0.2.1 及各 W 阶段固定证据保留原版本。0.2.2 平台/消费者/CI 实际结果由外置同步报告记录，不倒推历史验收。
