@@ -80,7 +80,11 @@ def main():
             else:
                 result=job_command('run','--job',job_id)
             assert result['state']=='AWAITING_REVIEW'
-            record=root/('review-'+str(batch)+'.json');write_exclusive(record,canonical(synthetic_review(job)))
+            # Bind the synthetic fixture with the installed interpreter/provider,
+            # not the QA interpreter's possibly different crypto wheel build.
+            binding_code='import sys,json;from pathlib import Path;sys.path.insert(0,sys.argv[1]);from risk_gate import review_binding;print(json.dumps(review_binding(Path(sys.argv[2]))))'
+            binding=json.loads(subprocess.run([str(python),'-c',binding_code,str(runtime/'tools'),str(job)],cwd=runtime,check=True,capture_output=True,text=True).stdout)
+            record=root/('review-'+str(batch)+'.json');write_exclusive(record,canonical(synthetic_review(job,binding=binding)))
             job_command('review','--job',job_id,'--record',record,'--reviewers',registry)
             signed=exports/('batch-'+str(batch))
             published=job_command('publish','--job',job_id,'--output',signed,'--reviewers',registry,'--signer',signer,'--trust',trust)

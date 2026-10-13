@@ -14,9 +14,9 @@ from enterprise_job import create_job, run_job, status_job
 from risk_gate import risk_inventory, review_job, gate, VISUAL_RISKS, review_binding
 
 
-def synthetic_review(job, reviewer='synthetic-test-reviewer'):
+def synthetic_review(job, reviewer='synthetic-test-reviewer', binding=None):
     _, inventory = risk_inventory(job)
-    return {'schema': 2, 'context': 'synthetic', 'reviewer': reviewer, 'reviewed_at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'recipient_accepts_declared_subset': True, 'bindings': review_binding(job),
+    return {'schema': 2, 'context': 'synthetic', 'reviewer': reviewer, 'reviewed_at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'recipient_accepts_declared_subset': True, 'bindings': review_binding(job) if binding is None else binding,
             'records': [{'file': entry['file'], 'sha256': entry['sha256'], 'policy_sha256': entry['policy_sha256'], 'decisions': [
                 {'risk': risk, 'action': 'human-reviewed-clear' if risk in VISUAL_RISKS else 'recipient-accepted-subset', 'evidence_sha256': hashlib.sha256(b'SYNTHETIC TEST REVIEW ONLY').hexdigest()} for risk in entry['risks']]} for entry in inventory]}
 
