@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "external-mathematical-phantom-not-patient-scan",
+  "name": "Shepp-Logan",
+  "upstream": "scikit-image/scikit-image",
+  "version": "v0.22.0",
+  "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.22.0/skimage/data/phantom.png",
+  "sha256": "552ff698167aa402cceb17981130607a228a0a0aa7c519299eaa4d5f301ba36c",
+  "license": "BSD-3-Clause",
+  "license_file": "resources/licenses/scikit-image-LICENSE.txt",
+  "patient_data": false,
+  "dicom_origin": "none; derived DICOM fixture generated locally and labelled synthetic",
+  "purpose": "independent external pixel pattern for transport/fidelity; not clinical CT validation"
+}

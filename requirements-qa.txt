@@ -6,3 +6,4 @@ referencing==0.37.0
 rpds-py==2026.9.1
 typing-extensions==4.16.0
 numpy==2.3.5
+Pillow==12.3.0

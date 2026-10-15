@@ -47,3 +47,5 @@ and docs/evidence/final-streaming-resources.json. Counts, hardware, binary
 fingerprint and fixture size in each JSON take precedence over rounded prose.
 
 > 文档核对：本文阶段计数、测量和发行摘要各自绑定原提交；当前状态已核对。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+V4当前实测与固定外部数学幻影来源见[应用负载与资源基线](docs/APPLICATION_BENCHMARKS.zh-CN.md)。保留本文件旧测量的原始版本，不把不同路径/机器数字混成提速结论。

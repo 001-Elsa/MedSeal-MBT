@@ -92,6 +92,9 @@ jobs:
       - name: W4 state, fault and parser fuzz acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_w4.py --record tmp/w4-state-model-ci.json
+      - name: Licensed mathematical phantom fidelity
+        if: runner.os != 'Windows'
+        run: python tools/verify_phantom.py --record tmp/v4-phantom-ci.json
       - name: Dataset preflight acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_dataset_preflight.py --record tmp/v2-preflight-ci.json

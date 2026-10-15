@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — application V4
+
+- Add fixed BSD mathematical phantom provenance and strict CT pixel/HU/geometry
+  fidelity acceptance; distinguish external pixels from locally generated DICOM.
+- Record hardware/toolchain-bound payload and count benchmarks with per-run
+  RSS, throughput, failure and fidelity checks; preserve different path semantics.
+
 ## Unreleased — application V3
 
 - Add a loopback-only, fixed-version Orthanc REST adapter for reverified signed

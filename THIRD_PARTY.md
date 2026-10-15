@@ -133,3 +133,5 @@ The offline lab embeds only original project synthetic fixtures selected from
 `conformance/manifest.json`; the builder checks their committed hashes.
 
 Orthanc is an external executable used only for independent integration acceptance, not linked into or redistributed with MedSeal. Official macOS bundle26.9.1 contains Orthanc1.13.0 (GPLv3+); download origin and fixed hashes are recorded in [the integration guide](docs/ORTHANC_INTEGRATION.zh-CN.md). Source availability: https://orthanc.uclouvain.be/downloads/sources/orthanc/Orthanc-1.13.0.tar.gz .
+
+V4 bundles the non-patient mathematical Shepp–Logan pixel image from scikit-image v0.22.0 under BSD-3-Clause. Fixed origin/hash and derived-DICOM scope: `resources/phantom/manifest.json`; complete upstream copyright/license notices: `resources/licenses/scikit-image-LICENSE.txt`. Pillow12.3.0 is a QA-only PNG reader; its full license is retained at `resources/licenses/Pillow-LICENSE.txt`. The phantom is not an external patient/scanner dataset.

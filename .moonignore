@@ -543,6 +543,7 @@
 !/conformance/lab/moon.pkg
 !/conformance/lab/pkg.generated.mbti
 !/conformance/manifest.json
+!/docs/APPLICATION_BENCHMARKS.zh-CN.md
 !/docs/APPLICATION_VALUE_PLAN.zh-CN.md
 !/docs/COMMUNITY_LAB.zh-CN.md
 !/docs/COMMUNITY_ROADMAP.zh-CN.md
@@ -673,6 +674,7 @@
 !/pkg.generated.mbti
 !/requirements-enterprise.txt
 !/requirements-qa.txt
+!/resources/licenses/Pillow-LICENSE.txt
 !/resources/licenses/pydicom-LICENSE
 !/resources/licenses/qa-manifest.json
 !/resources/licenses/qa/attrs/licenses/LICENSE
@@ -683,6 +685,9 @@
 !/resources/licenses/qa/referencing/licenses/COPYING
 !/resources/licenses/qa/rpds-py/licenses/LICENSE
 !/resources/licenses/qa/typing_extensions/licenses/LICENSE
+!/resources/licenses/scikit-image-LICENSE.txt
+!/resources/phantom/manifest.json
+!/resources/phantom/shepp-logan.png
 !/resources/rules/contracts-v1.json
 !/resources/rules/ct-classic-research-v1.json
 !/resources/rules/explanation-v1.schema.json
@@ -841,6 +846,7 @@
 !/tests/w0_test.mbt
 !/tools/api_authorization.py
 !/tools/attestation.py
+!/tools/benchmark_application.py
 !/tools/benchmark_resources.py
 !/tools/benchmark_streaming.py
 !/tools/build_community_lab.py
@@ -888,6 +894,7 @@
 !/tools/verify_incremental.py
 !/tools/verify_orthanc_integration.py
 !/tools/verify_persistent_identity.py
+!/tools/verify_phantom.py
 !/tools/verify_pilot.py
 !/tools/verify_platform_snapshot.py
 !/tools/verify_recovery.py
