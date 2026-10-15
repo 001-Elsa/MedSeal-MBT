@@ -1,6 +1,6 @@
 # 仓库外消费者与公开包
 
-C1 的 `examples/consumer` 仅导入 `api/dicom`、`api/policy`、`api/validation` 和 MoonBit 标准库。合成夹具也使用公开读写类型构建，不使用 MedSeal `src/`。
+C1 的 `examples/consumer` 仅导入 `api/dicom`、C3a `api/dicom_json`、`api/policy`、`api/validation` 和 MoonBit 标准库。合成夹具也使用公开读写类型构建，不使用 MedSeal `src/`。
 
 ## 当前源码的完整任务
 
@@ -20,7 +20,7 @@ moon run --target js examples/consumer
 python3.12 tools/verify_consumer.py tmp/c1-consumer.json
 ```
 
-示例实际生成两份有关联的 SC 影像，执行严格转换、重新验证、像素检查，末行输出 `public-collection-ok`。中间的 `synthetic-output-N:` 是**仅用于独立验证的合成 DICOM 十六进制字节**，不是通用公开日志入口；实际患者数据不得使用这种输出方式。公开报告不含身份、原日期、UID、seed 或偏移。
+示例实际生成两份有关联的 SC 影像，经二进制解析、DICOM JSON 编码与 Part 10 重建后执行严格转换、重新验证、像素检查，末行输出 `public-collection-ok`。中间的 `synthetic-output-N:` 是**仅用于独立验证的合成 DICOM 十六进制字节**，不是通用公开日志入口；实际患者数据不得使用这种输出方式。公开报告不含身份、原日期、UID、seed 或偏移。
 
 ## 两类证据不能混用
 
@@ -35,3 +35,5 @@ python3.12 tools/verify_registry_consumer.py --version 0.2.3 --contract policy -
 ```
 
 [0.2.1 归档](evidence/release-0.2.1-archive-consumer.json)、[0.2.1 registry](evidence/release-0.2.1-registry-consumer.json)、[0.2.0 归档](evidence/release-0.2.0-archive-consumer.json)、[0.2.0 registry](evidence/release-0.2.0-registry-consumer.json)仍是对应旧版本的策略契约记录，不能用于证明 C1。当前证据默认写入忽略的 `tmp/`；发布回读写入源码外的版本目录。见[三平台同步](PLATFORM_SYNC.zh-CN.md)和[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)。
+
+C3a 格式桥的支持矩阵、ESM 宿主与独立双向验收见[DICOM JSON](DICOM_JSON.zh-CN.md)；`tools/verify_dicom_json.py` 额外测试 pydicom 生成的输入，不能只靠库自产自读证明兼容。

@@ -33,6 +33,13 @@ server or release authority. Its transport/structure limits and pending browser
 validation are documented in [lab contracts](COMMUNITY_LAB.zh-CN.md). These are
 source additions, not capabilities already installed by `moon add ...@0.2.3`.
 
+C3a adds private DICOM JSON interchange for 25 VRs, exact DS/IS token
+preservation and Part 10 reconstruction. Rejects unsupported VRs and remote
+BulkDataURI. JSON 8 MiB, InlineBinary 1 MiB, SQ depth 16, 20,000 counted nodes;
+conservative escaping allocations may reject earlier. See the explicit
+[JSON matrix, normalization and oracle](DICOM_JSON.zh-CN.md). This source-only
+addition is separate from binary parsing, strict IOD checks and public reports.
+
 ## Resource budgets
 
 - 256 MiB/file; 128 MiB/encoded value or pixel span; 100,000 elements/file; depth 32.

@@ -9,6 +9,7 @@ W0 建立公共门面，旧 `src/` 导入和已有命令继续可用。所有类
 | 导入路径（模块前缀 `001-Elsa/medseal/`） | 用途与边界 |
 | --- | --- |
 | `api/dicom` | 读取和写入 Explicit VR Little Endian；单独解析不代表 IOD 合格或允许交付 |
+| `api/dicom_json` | C3a 未另行发布：25种VR的私有 JSON 编解码及 Part 10 重建；保留十进制 token、有界拒绝、pydicom 双向检查；不是公开报告/脱敏，详见[DICOM JSON](DICOM_JSON.zh-CN.md) |
 | `api/policy` | 严格策略编译、规范摘要；身份、日期、结构字段不能被描述字段规则覆盖 |
 | `api/validation` | `validate(Bytes)` 创建不受调用方数组修改影响的 `ValidatedObject`；`convert` 使用已准备的严格 Context，重新验证输出和写回值，返回 `ConvertedObject` |
 | `api/explain` | 配置／对象／当前集合关系的公开解释，及版本化 `ValidationIssue`；原值、原 UID／日期、输入摘要、本机路径、偏移、替换内容与管理员规则 ID 不进入公开出口 |

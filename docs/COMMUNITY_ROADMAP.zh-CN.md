@@ -42,6 +42,7 @@
 | --- | --- | --- |
 | C1 | 本机及三平台 CI 通过；registry 新版待发布 | `api/validation/collection.mbt`、`examples/consumer`、`tools/verify_consumer.py`；`tmp/c1-consumer.json` 记录四后端实际输出、pydicom 3.0.1 及隔离归档 SHA；七个新增场景、全量 Native124/其余各71 通过；[C1 三平台 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38676792525) |
 | C2 | 实现、编译核心/DOM 事件验收通过；浏览器渲染/CSP 执行待验 | [实验室说明](COMMUNITY_LAB.zh-CN.md)、`web/core`、`tools/build_community_lab.py`、`tools/verify_community_lab.mjs`；本机 `tmp/community-lab/acceptance.json` 的 12 类检查通过，明确验证边界；全量 Native126/其余各73 通过 |
-| C3–C6 | 待实施 | 上表为计划，不是现有能力 |
+| C3a | DICOM JSON子集实现及本机独立双向验收通过；非C3全部完成 | [JSON矩阵](DICOM_JSON.zh-CN.md)、`api/dicom_json`、`tools/verify_dicom_json.py`；25种VR、5个精度token、22个拒绝；新增11个场景，全量Native137/其余各84通过；关联消费者先经JSON再严格转换 |
+| C3余项、C4–C6 | 待实施 | 具体实际任务、顺序和退出标准见[应用价值计划](APPLICATION_VALUE_PLAN.zh-CN.md)，不是现有能力 |
 
 0.2.3 已发布快照保留；新增能力先作为工作区改进，经过验证后分阶段提交。公开新版本必须独立完成包清单、平台回读与消费者核验，不能把本地新增功能写成 0.2.3 已有功能。

@@ -24,3 +24,5 @@ The archive verifier runs four backends outside the checkout; registry
 verification is a separate action after a new release. The explicit legacy
 `--contract policy` check remains available for 0.2.3.
 See [consumer contracts](../../docs/CONSUMER.zh-CN.md).
+
+C3a：示例新增公开 `api/dicom_json`，先经 JSON/Part 10 重建再执行严格集合转换；格式交换保留私有原值。支持子集与独立 pydicom 双向检查见[JSON 契约](../../docs/DICOM_JSON.zh-CN.md)。

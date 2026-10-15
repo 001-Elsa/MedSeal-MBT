@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — community C3a
+
+- Add public DICOM JSON interchange for a documented 25-VR subset, bounded
+  duplicate-aware parsing, exact DS/IS tokens, and private Part 10 reconstruction.
+- Reject unsupported VRs, remote bulk references, ambiguous representations and
+  rounded fractional integers; normalize pydicom's empty SQ explicitly.
+- Exercise real pydicom JSON and binary inputs in both directions; extend the
+  archive consumer through JSON before strict linked-object conversion.
+- Record a task-based application plan for dataset preflight, independent
+  reception, measured workloads, usability and a separately frozen release.
+
 ## Unreleased — community C2
 
 - Build a self-contained offline rule lab using the compiled MoonBit SDK;

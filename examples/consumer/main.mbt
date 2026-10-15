@@ -2,7 +2,11 @@
 /// End-to-end consumer using public imports only, on all four backends.
 fn main {
   try {
-    let inputs = linked_pair()
+    // Simulate metadata supplied by another DICOM JSON implementation.
+    // The format bridge preserves private values; strict conversion is separate.
+    let inputs = linked_pair().map(bytes => {
+      @dicom_json.to_part10(@dicom_json.encode(@dicom.parse(bytes).dataset))
+    })
     let result = @validation.convert_collection(
       inputs,
       @policy.strict(),

@@ -21,6 +21,15 @@ export. [使用与验收边界](docs/COMMUNITY_LAB.zh-CN.md): Node/DOM contracts
 rendered-browser and CSP enforcement checks remain pending.
 
 
+C3a adds public DICOM JSON interchange for 25 VRs, exact decimal token
+preservation, bounded parsing, and Part 10 reconstruction. A bidirectional
+pydicom oracle checks actual output. The full consumer now passes through JSON
+before strict collection conversion. [支持范围与示例](docs/DICOM_JSON.zh-CN.md).
+The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) next prioritizes
+dataset preflight, independent reception, measured workloads and usability.
+These additions remain unreleased source; they do not change installed 0.2.3.
+
+
 ## 当前已实现的范围
 
 | 入口 | 能力 | 适用范围 |

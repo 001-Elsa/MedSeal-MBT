@@ -28,6 +28,13 @@
 !/api/dicom/dicom.mbt
 !/api/dicom/moon.pkg
 !/api/dicom/pkg.generated.mbti
+!/api/dicom_json/codec_test.mbt
+!/api/dicom_json/decode.mbt
+!/api/dicom_json/encode.mbt
+!/api/dicom_json/guards.mbt
+!/api/dicom_json/moon.pkg
+!/api/dicom_json/part10.mbt
+!/api/dicom_json/pkg.generated.mbti
 !/api/explain/explain.mbt
 !/api/explain/moon.pkg
 !/api/explain/pkg.generated.mbti
@@ -535,6 +542,7 @@
 !/conformance/lab/moon.pkg
 !/conformance/lab/pkg.generated.mbti
 !/conformance/manifest.json
+!/docs/APPLICATION_VALUE_PLAN.zh-CN.md
 !/docs/COMMUNITY_LAB.zh-CN.md
 !/docs/COMMUNITY_ROADMAP.zh-CN.md
 !/docs/COMPETITION_CHARTER_AUDIT.zh-CN.md
@@ -543,6 +551,7 @@
 !/docs/CONSUMER.zh-CN.md
 !/docs/CONTRIBUTION.md
 !/docs/CT_CLASSIC_RESEARCH.zh-CN.md
+!/docs/DICOM_JSON.zh-CN.md
 !/docs/DOCUMENTATION_STATUS.zh-CN.md
 !/docs/ENTERPRISE_ROADMAP.zh-CN.md
 !/docs/ENTERPRISE_STATUS.md
@@ -651,6 +660,9 @@
 !/examples/consumer/main.mbt
 !/examples/consumer/moon.pkg
 !/examples/consumer/pkg.generated.mbti
+!/examples/dicom-json/bridge.mbt
+!/examples/dicom-json/moon.pkg
+!/examples/dicom-json/pkg.generated.mbti
 !/examples/research-policy.json
 !/examples/strict-policy.json
 !/moon.mod
@@ -832,6 +844,7 @@
 !/tools/build_distribution.py
 !/tools/check_documentation.py
 !/tools/deliver_local.py
+!/tools/dicom_json_bridge.mjs
 !/tools/enterprise_job.py
 !/tools/evidence.py
 !/tools/explanation_report.py
@@ -862,6 +875,7 @@
 !/tools/verify_ct_research.py
 !/tools/verify_delivery.py
 !/tools/verify_destination.py
+!/tools/verify_dicom_json.py
 !/tools/verify_distribution.py
 !/tools/verify_enospc_macos.py
 !/tools/verify_field_evidence.py

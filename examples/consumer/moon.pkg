@@ -1,6 +1,7 @@
 import {
   "001-Elsa/medseal/api/policy",
   "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/dicom_json",
   "001-Elsa/medseal/api/validation",
   "moonbitlang/core/encoding/hex",
 }

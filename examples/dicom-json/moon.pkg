@@ -1,0 +1,9 @@
+import {
+  "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/dicom_json",
+  "moonbitlang/core/encoding/hex",
+}
+
+options(
+  link: { "js": { "exports": [ "exchange" ], "format": "esm" } },
+)
