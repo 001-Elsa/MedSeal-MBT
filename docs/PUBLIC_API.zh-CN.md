@@ -1,5 +1,9 @@
 # 公共 API 与解释契约 v1
 
+C1 新增公开 SDK 集合入口（开发中源码，尚未发布到 Mooncakes 0.2.3）：`api/validation.convert_collection(inputs, policy, uid_seed, date_offsets)`。仅通过 `api/dicom`、`api/policy`、`api/validation` 即可构造、读取、转换并复核影像，无需导入内部 Context。详见[完整消费者](CONSUMER.zh-CN.md)。
+
+该入口要求严格封闭集合，先检查 1–256 个对象、每对象至多 64 MiB、合计至多 128 MiB，再解析/验证所有输入、核对关联、准备单作业身份、逐对象转换并核对全部输出的关系。失败不返回部分结果，也不写文件。`ConvertedCollection.length()`、`private_bytes(index)` 保持输入顺序；索引错误返回类型化异常。`public_report()` 只包含数量、受限决定和 `release_authorized:false`。UID seed/每患者非零偏移必须由宿主显式提供；库没有随机源，也不替代跨作业身份库、审核或事务性文件交付。旧 `convert(ValidatedObject, Context)` 继续兼容。
+
 W0 建立公共门面，旧 `src/` 导入和已有命令继续可用。所有类型状态表示工厂在指定时刻完成过相应核验，不自动授予以后一次文件操作的许可。
 
 | 导入路径（模块前缀 `001-Elsa/medseal/`） | 用途与边界 |

@@ -1,7 +1,8 @@
 import {
   "001-Elsa/medseal/api/policy",
+  "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/validation",
+  "moonbitlang/core/encoding/hex",
 }
 
 pkgtype(kind: "executable")
-
-supported_targets = "+native"

@@ -3,6 +3,17 @@
 MoonBit libraries and native tools for DICOM metadata conversion, linked-object
 consistency and independent output verification. [中文指南](README.zh-CN.md).
 
+
+## Community upgrade in source / 社区升级源码
+
+C1 adds a complete portable public collection SDK: strict closed-batch
+conversion, bounded inputs, revalidated relationships and privacy-safe reports.
+The source consumer runs on Native, JS, wasm and wasm-gc; an independent pydicom
+oracle checks its actual output. This addition is not in published 0.2.3.
+Run `moon run --target js examples/consumer` from the source checkout.
+See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
+[六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
+
 ## Current scope: 0.2.3 engineering preview
 
 | Entry | Implemented behavior | Platform / boundary |

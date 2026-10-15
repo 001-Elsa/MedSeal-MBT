@@ -1,18 +1,26 @@
-# External consumer example
+# Portable public SDK consumer
 
-This executable imports only `001-Elsa/medseal/api/policy`. It does not import
-any `src/` implementation package. The W6 verifier extracts the local package archive at a temporary module root, overlays an
-external-consumer package and copies third-party dependencies. This checks the
-archive, not registry publication. `tools/verify_registry_consumer.py` instead
-creates an independent module, runs `moon add` and checks the downloaded version
-without copying MedSeal source or the local dependency directory.
+This source-only example imports MedSeal `api/dicom`, `api/policy`,
+`api/validation` and the core hex encoder. Even fixture construction uses public
+APIs. It creates two synthetic linked SC objects, converts the entire closed
+collection, validates the outputs and checks pixel preservation. The last line
+is `public-collection-ok`.
 
 ```sh
 moon run --target native examples/consumer
+moon run --target js examples/consumer
+moon test --target all examples/consumer
+python3.12 tools/verify_consumer.py tmp/c1-consumer.json
 ```
 
-Policy compilation is a public API operation. It does not grant IOD, privacy,
-pixel or release approval; those remain explicit MedSeal validation and review
-gates.
+Intermediate `synthetic-output-N:` lines contain synthetic private DICOM bytes
+for the independent pydicom oracle. Never adapt this logging mode to patient
+files. Public reports exclude identifiers, seeds and dates. Conversion does not
+authorize clinical use or release. The memory workflow is limited to 256 objects,
+64 MiB per object and 128 MiB total.
 
-> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](../../docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+This SDK addition is unreleased source work relative to published 0.2.3.
+The archive verifier runs four backends outside the checkout; registry
+verification is a separate action after a new release. The explicit legacy
+`--contract policy` check remains available for 0.2.3.
+See [consumer contracts](../../docs/CONSUMER.zh-CN.md).

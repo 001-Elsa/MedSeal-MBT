@@ -4,16 +4,26 @@ package "001-Elsa/medseal/api/validation"
 import {
   "001-Elsa/medseal/src/identity",
   "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/policy",
 }
 
 // Values
 pub fn convert(ValidatedObject, @identity.Context) -> ConvertedObject raise @model.MedSealError
+
+pub fn convert_collection(Array[Bytes], @policy.Policy, String, Array[Int]) -> ConvertedCollection raise @model.MedSealError
 
 pub fn validate(Bytes) -> ValidatedObject raise @model.MedSealError
 
 // Errors
 
 // Types and methods
+pub struct ConvertedCollection {
+  // private fields
+}
+pub fn ConvertedCollection::length(Self) -> Int
+pub fn ConvertedCollection::private_bytes(Self, Int) -> Bytes raise @model.MedSealError
+pub fn ConvertedCollection::public_report(Self) -> Json
+
 pub struct ConvertedObject {
   // private fields
 }

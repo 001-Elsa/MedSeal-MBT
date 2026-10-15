@@ -1,7 +1,14 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "001-Elsa/medseal/examples/consumer"
 
+import {
+  "001-Elsa/medseal/src/model",
+}
+
 // Values
+pub fn linked_pair() -> Array[Bytes] raise @model.MedSealError
+
+pub fn object(String, reference? : String?, name? : String) -> Bytes raise @model.MedSealError
 
 // Errors
 

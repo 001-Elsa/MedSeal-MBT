@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased — community C1
+
+- Add public, portable closed-collection conversion with bounded inputs,
+  all-output validation and a private result type; retain legacy APIs.
+- Replace the policy-only source consumer with actual linked-object conversion
+  on four backends; validate serialized outputs independently with pydicom.
+- Preserve an explicit policy-only registry contract for published <=0.2.3.
+- Record the C1–C6 community roadmap separately from historical W0–W7 evidence.
+
+
 All notable changes to MedSeal-MBT are documented here.
 
 ## 0.2.3 - 2026-10-13 (Complete source snapshot)

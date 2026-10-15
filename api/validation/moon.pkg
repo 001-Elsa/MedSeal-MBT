@@ -6,4 +6,5 @@ import {
   "001-Elsa/medseal/src/dicom_writer",
   "001-Elsa/medseal/src/rulebook",
   "001-Elsa/medseal/src/verification",
+  "001-Elsa/medseal/api/policy" @public_policy,
 }

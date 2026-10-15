@@ -34,6 +34,7 @@
 !/api/policy/moon.pkg
 !/api/policy/pkg.generated.mbti
 !/api/policy/policy.mbt
+!/api/validation/collection.mbt
 !/api/validation/moon.pkg
 !/api/validation/pkg.generated.mbti
 !/api/validation/validation.mbt
@@ -534,6 +535,7 @@
 !/conformance/lab/moon.pkg
 !/conformance/lab/pkg.generated.mbti
 !/conformance/manifest.json
+!/docs/COMMUNITY_ROADMAP.zh-CN.md
 !/docs/COMPETITION_CHARTER_AUDIT.zh-CN.md
 !/docs/COMPETITION_REMEDIATION.zh-CN.md
 !/docs/CONFORMANCE_LAB.zh-CN.md
@@ -643,6 +645,8 @@
 !/examples/collection/moon.pkg
 !/examples/collection/pkg.generated.mbti
 !/examples/consumer/README.md
+!/examples/consumer/collection_wbtest.mbt
+!/examples/consumer/fixture.mbt
 !/examples/consumer/main.mbt
 !/examples/consumer/moon.pkg
 !/examples/consumer/pkg.generated.mbti

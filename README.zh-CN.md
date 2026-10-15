@@ -2,6 +2,17 @@
 
 面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.2.3 工程预览**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
+
+## Community upgrade in source / 社区升级源码
+
+C1 adds a complete portable public collection SDK: strict closed-batch
+conversion, bounded inputs, revalidated relationships and privacy-safe reports.
+The source consumer runs on Native, JS, wasm and wasm-gc; an independent pydicom
+oracle checks its actual output. This addition is not in published 0.2.3.
+Run `moon run --target js examples/consumer` from the source checkout.
+See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
+[六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
+
 ## 当前已实现的范围
 
 | 入口 | 能力 | 适用范围 |
