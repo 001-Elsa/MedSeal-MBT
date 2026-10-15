@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — community C2
+
+- Build a self-contained offline rule lab using the compiled MoonBit SDK;
+  synthetic scenarios, structure/decision views, policy action comparisons and
+  public explanation export run without a server or external assets.
+- Add bounded JSON/hex bridge, public-error boundary and two four-backend tests.
+- Add Node/DOM event acceptance and three-OS CI; explicitly keep rendered-browser
+  and CSP-enforcement acceptance pending.
+
 ## Unreleased — community C1
 
 - Add public, portable closed-collection conversion with bounded inputs,

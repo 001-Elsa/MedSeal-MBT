@@ -10,7 +10,6 @@ import subprocess
 import sys
 import tempfile
 import zipfile
-import pydicom
 
 
 REPO = Path(__file__).resolve().parents[1]
@@ -19,6 +18,7 @@ MARKER = "public-collection-ok"
 
 def verify_output(output):
     """Independent semantic oracle, rather than the writer checking itself."""
+    import pydicom
     lines = output.strip().splitlines()
     if lines[-1:] != [MARKER]:
         raise AssertionError("consumer-output-contract")
@@ -66,6 +66,7 @@ def moon_binary():
 
 
 def run_consumer(record_path):
+    import pydicom
     moon = moon_binary()
     environment = dict(os.environ)
     environment["MOON_HOME"] = str(moon.parent.parent)

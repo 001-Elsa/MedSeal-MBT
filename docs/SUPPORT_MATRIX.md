@@ -24,6 +24,15 @@ conformance statement. Do not transfer private-host guarantees to basic commands
 | Public reports | Anonymous IDs, structural paths, registered actions/issues | No original patient values/paths, mapping state, offsets or secrets |
 | Workbench | Loopback pagination/explanations/cancel with Host/Origin/session/CSRF gates | Single-owner local tool; no organizational login or release authority |
 
+## Unreleased community additions after 0.2.3
+
+C1 adds public `convert_collection`: 1–256 objects, 64 MiB/object, 128 MiB total,
+strict closed references and all-output verification, on four backends. C2 adds
+an offline synthetic rule lab compiled from the same SDK; no patient import,
+server or release authority. Its transport/structure limits and pending browser
+validation are documented in [lab contracts](COMMUNITY_LAB.zh-CN.md). These are
+source additions, not capabilities already installed by `moon add ...@0.2.3`.
+
 ## Resource budgets
 
 - 256 MiB/file; 128 MiB/encoded value or pixel span; 100,000 elements/file; depth 32.

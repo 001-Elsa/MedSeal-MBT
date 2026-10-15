@@ -1,6 +1,6 @@
 # Markdown 文档与代码同步账本
 
-当前已发布模块为 0.2.3，C1 社区 SDK 为尚未另行发布的源码升级；完整快照同步流程见[三平台同步](PLATFORM_SYNC.zh-CN.md)。0.2.1 的发布证据保留原版本，不冒充本轮回执。
+当前已发布模块为 0.2.3，C1 社区 SDK 与 C2 离线实验室为尚未另行发布的源码升级；完整快照同步流程见[三平台同步](PLATFORM_SYNC.zh-CN.md)。0.2.1 的发布证据保留原版本，不冒充本轮回执。
 
 核对范围：项目自有、受 Git 管理的全部 Markdown（含隐藏 .githooks）；不修改依赖缓存、构建目录或固定 JSON 证据。核对运行基线 2c9a49e / 已发布 0.2.0；本轮文档补丁 0.2.1 已公开发布，冻结 3e62926 且三平台 CI 成功；真实消费者/安装/镜像证据见整改记录。后续文档提交不改写 bc5b25c 冻结发行物。
 
@@ -8,7 +8,7 @@
 
 当前 0.2.3 完整源码快照补丁不扩张 DICOM 算法/医疗范围；模块、CLI、安装示例及 SBOM 版本来源已同步，版本更新会改变运行时指纹，旧固定作业需使用原包。
 
-代码可重验事实：`classified_attributes=120`、`rulebook_entries=141`、`corpus_cases=475`（466 单对象 + 9 集合）。历史维护基线 Native117 / JS、wasm、wasm-gc 各64，309后端执行。C1 新增七个消费者场景后，本机实际通过 Native124 / 其余三后端各71，共337后端执行；不是337个独立场景。
+代码可重验事实：`classified_attributes=120`、`rulebook_entries=141`、`corpus_cases=475`（466 单对象 + 9 集合）。历史维护基线 Native117 / JS、wasm、wasm-gc 各64，309后端执行。C1 新增七个消费者场景后，本机通过 Native124 / 其余各71；C2 再增两个桥接场景，当前全量结果在社区升级账本记录。后端执行数不等于独立场景数。
 
 `python3.12 tools/check_documentation.py` 检查所有文档列入本表、相对文件链接、README字节一致、姓名、模块/CLI版本以及三个代码事实；CI独立执行。它不能自动验证自然语言全部准确、外链永久有效或人工现场证据，人工契约核对和原始记录仍需保留。
 
@@ -30,6 +30,7 @@
 | `docs/COMPETITION_CHARTER_AUDIT.zh-CN.md` | 历史设计/逐条研究，已补当前对照，原基线保留 |
 | `docs/COMPETITION_REMEDIATION.zh-CN.md` | 阶段/测量/来源/发布账本，当前摘要与固定历史分别说明 |
 | `docs/CONFORMANCE_LAB.zh-CN.md` | 当前契约/操作/材料，代码入口与字段/限制核对 |
+| `docs/COMMUNITY_LAB.zh-CN.md` | C2 离线单文件构建、操作与 Node/DOM 验证边界 |
 | `docs/COMMUNITY_ROADMAP.zh-CN.md` | C1–C6 社区升级规划，阶段证据与待实现能力分列 |
 | `docs/CONSUMER.zh-CN.md` | 当前契约/操作/材料，代码入口与字段/限制核对 |
 | `docs/CONTRIBUTION.md` | 阶段/测量/来源/发布账本，当前摘要与固定历史分别说明 |

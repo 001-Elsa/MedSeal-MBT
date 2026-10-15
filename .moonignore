@@ -535,6 +535,7 @@
 !/conformance/lab/moon.pkg
 !/conformance/lab/pkg.generated.mbti
 !/conformance/manifest.json
+!/docs/COMMUNITY_LAB.zh-CN.md
 !/docs/COMMUNITY_ROADMAP.zh-CN.md
 !/docs/COMPETITION_CHARTER_AUDIT.zh-CN.md
 !/docs/COMPETITION_REMEDIATION.zh-CN.md
@@ -827,6 +828,7 @@
 !/tools/attestation.py
 !/tools/benchmark_resources.py
 !/tools/benchmark_streaming.py
+!/tools/build_community_lab.py
 !/tools/build_distribution.py
 !/tools/check_documentation.py
 !/tools/deliver_local.py
@@ -854,6 +856,7 @@
 !/tools/state_model.py
 !/tools/store_admin.py
 !/tools/verify_attestation.py
+!/tools/verify_community_lab.mjs
 !/tools/verify_conformance.py
 !/tools/verify_consumer.py
 !/tools/verify_ct_research.py
@@ -878,3 +881,11 @@
 !/tools/verify_with_pydicom.py
 !/tools/verify_workbench.py
 !/tools/workbench.py
+!/web/core/lab.mbt
+!/web/core/lab_test.mbt
+!/web/core/moon.pkg
+!/web/core/pkg.generated.mbti
+!/web/lab.html
+!/web/lab.js
+!/web/package.json
+!/web/pnpm-lock.yaml

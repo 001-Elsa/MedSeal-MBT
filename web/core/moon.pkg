@@ -1,0 +1,13 @@
+import {
+  "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/policy",
+  "001-Elsa/medseal/api/validation",
+  "001-Elsa/medseal/api/explain",
+  "moonbitlang/core/json",
+  "moonbitlang/core/encoding/hex",
+  "moonbitlang/core/encoding/utf8",
+}
+
+options(
+  link: { "js": { "exports": [ "analyze" ], "format": "esm" } },
+)

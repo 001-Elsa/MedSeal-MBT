@@ -14,6 +14,14 @@ Run `moon run --target js examples/consumer` from the source checkout.
 See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
 [六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
 
+C2 adds an offline rule lab powered by the compiled MoonBit core. Build with
+`python3.12 tools/build_community_lab.py`, then open
+`tmp/community-lab/index.html` in a regular browser. It uses bundled synthetic
+objects and provides rule/structure views, failure experiments and public JSON
+export. [使用与验收边界](docs/COMMUNITY_LAB.zh-CN.md): Node/DOM contracts pass;
+rendered-browser and CSP enforcement checks remain pending.
+
+
 ## Current scope: 0.2.3 engineering preview
 
 | Entry | Implemented behavior | Platform / boundary |

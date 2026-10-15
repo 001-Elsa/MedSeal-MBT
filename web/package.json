@@ -1,0 +1,12 @@
+{
+  "name": "medseal-offline-lab-checks",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "test": "node ../tools/verify_community_lab.mjs ../tmp/community-lab"
+  },
+  "devDependencies": {
+    "linkedom": "0.18.12"
+  }
+}

@@ -116,3 +116,18 @@ reproduction license; any future redistribution of standard text/full tables
 requires an explicit rights basis and retained original notices.
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+
+## Offline lab development dependencies (C2)
+
+`web/package.json` pins linkedom 0.18.12 (ISC) for Node DOM event tests only.
+It and its transitive packages are absent from the generated offline page.
+`web/pnpm-lock.yaml` fixes versions and integrity. Transitive licenses: boolbase
+1.0.0 and uhyphen 0.2.0 (ISC); cssom 0.5.0, dom-serializer 2.0.0, html-escaper
+3.0.3 and htmlparser2 10.1.0 (MIT); css-select 5.2.2, css-what 6.2.2,
+domelementtype 2.3.0, domhandler 5.0.3, domutils 3.2.2, entities 4.5.0 / 7.0.1
+and nth-check 2.1.1 (BSD-2-Clause). linkedom is not a browser and does not verify
+visual layout or CSP enforcement.
+
+The offline lab embeds only original project synthetic fixtures selected from
+`conformance/manifest.json`; the builder checks their committed hashes.
