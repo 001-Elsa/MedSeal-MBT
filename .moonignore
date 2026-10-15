@@ -7,6 +7,7 @@
 !/.githooks/pre-commit
 !/.github/workflows/ci.yml
 !/.github/workflows/copilot-setup-steps.yml
+!/.github/workflows/orthanc.yml
 !/.gitignore
 !/.moonignore
 !/ACCEPTANCE.md
@@ -561,6 +562,7 @@
 !/docs/ITERATION_PLAN.md
 !/docs/ITERATION_STATUS.md
 !/docs/OPERATIONS.zh-CN.md
+!/docs/ORTHANC_INTEGRATION.zh-CN.md
 !/docs/P0_CONTRACT.md
 !/docs/PERSISTENT_IDENTITY.md
 !/docs/PLAN_AUDIT.md
@@ -862,6 +864,7 @@
 !/tools/local_fs.py
 !/tools/moon-local
 !/tools/moon_tokens.py
+!/tools/orthanc_receiver.py
 !/tools/private_store.py
 !/tools/release_readiness.py
 !/tools/research/build_review.py
@@ -883,6 +886,7 @@
 !/tools/verify_enospc_macos.py
 !/tools/verify_field_evidence.py
 !/tools/verify_incremental.py
+!/tools/verify_orthanc_integration.py
 !/tools/verify_persistent_identity.py
 !/tools/verify_pilot.py
 !/tools/verify_platform_snapshot.py

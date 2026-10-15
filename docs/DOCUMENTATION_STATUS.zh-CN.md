@@ -32,6 +32,7 @@
 | `docs/CONFORMANCE_LAB.zh-CN.md` | 当前契约/操作/材料，代码入口与字段/限制核对 |
 | `docs/COMMUNITY_LAB.zh-CN.md` | C2 离线单文件构建、操作与 Node/DOM 验证边界 |
 | `docs/APPLICATION_VALUE_PLAN.zh-CN.md` | 实际应用任务、V1–V6计划及本轮执行账本 |
+| `docs/ORTHANC_INTEGRATION.zh-CN.md` | V3固定Orthanc实际本地接收验收 |
 | `docs/DATASET_PREFLIGHT.zh-CN.md` | V2预检入口、预算、失败分类与公开报告边界 |
 | `docs/DICOM_JSON.zh-CN.md` | C3a JSON矩阵、规范化、数值精度、预算和独立双向验收 |
 | `docs/COMMUNITY_ROADMAP.zh-CN.md` | C1–C6 社区升级规划，阶段证据与待实现能力分列 |

@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — application V3
+
+- Add a loopback-only, fixed-version Orthanc REST adapter for reverified signed
+  packages; explicit partial retry semantics and no remote credentials.
+- Run actual Orthanc1.13.0 with signed synthetic CT, identity-matched voxel/HU/geometry
+  readback, duplicates, malformed input, disconnect/restart/retry and tamper refusal.
+
 ## Unreleased — application V2
 
 - Add bounded POSIX dataset preflight reusing sealed discovery, actual MoonBit

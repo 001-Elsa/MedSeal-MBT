@@ -40,6 +40,8 @@ conservative escaping allocations may reject earlier. See the explicit
 [JSON matrix, normalization and oracle](DICOM_JSON.zh-CN.md). This source-only
 addition is separate from binary parsing, strict IOD checks and public reports.
 
+V2 adds [dataset preflight](DATASET_PREFLIGHT.zh-CN.md); V3 adds a [loopback Orthanc REST adapter](ORTHANC_INTEGRATION.zh-CN.md) for reverified signed packages. Actual Orthanc 1.13.0 synthetic reception passed; no complete DICOMweb/PACS claim.
+
 ## Resource budgets
 
 - 256 MiB/file; 128 MiB/encoded value or pixel span; 100,000 elements/file; depth 32.

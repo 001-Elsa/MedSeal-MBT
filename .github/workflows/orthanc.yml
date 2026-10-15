@@ -1,0 +1,38 @@
+name: Fixed Orthanc integration
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  receiver:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: hustcer/setup-moonbit@v1
+        with:
+          version: 0.10.14+7d59c7ec9
+          core-version: 0.10.14+7d59c7ec9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Build and install acceptance dependencies
+        run: |
+          moon update
+          moon build --target native cmd/main
+          moon build --target native cmd/enterprise
+          python -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
+      - name: Fixed official receiver and actual synthetic acceptance
+        run: |
+          mkdir -p tmp/orthanc
+          curl -fsSL --max-time 900 https://orthanc.uclouvain.be/downloads/macos/packages/universal/Orthanc-macOS-26.9.1.zip -o tmp/orthanc/receiver.zip
+          echo '5bcc14501e8846296966e03fdec10608d6f8558d3a3d841e68db05f7b01e4617  tmp/orthanc/receiver.zip' | shasum -a 256 -c -
+          unzip -q tmp/orthanc/receiver.zip -d tmp/orthanc
+          chmod u+x tmp/orthanc/Orthanc-MacOS-26.9.1-stable/Orthanc
+          python tools/verify_orthanc_integration.py --orthanc tmp/orthanc/Orthanc-MacOS-26.9.1-stable/Orthanc --version 1.13.0 --record tmp/v3-orthanc-ci.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orthanc-integration
+          path: tmp/v3-orthanc-ci.json
