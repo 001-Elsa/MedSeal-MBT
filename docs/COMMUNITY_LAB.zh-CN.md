@@ -62,4 +62,8 @@ node tools/verify_lab_browser.mjs
 # 本机也可显式 MEDSEAL_CHROME=/本机/Chrome可执行文件路径
 ```
 
-`browser-acceptance.json`明确真实浏览器/CSP/键盘为true，`acceptance.json`继续只描述Node/DOM。两个结果不互相替代。真实文件私有视图的范围与退出标准见[设计](PRIVATE_FILE_VIEW.zh-CN.md)；当前页面仍只处理内置合成影像。
+`browser-acceptance.json`明确真实浏览器/CSP/键盘为true，`acceptance.json`继续只描述Node/DOM。两个结果不互相替代。0.4.0 已完成[私有文件模式](PRIVATE_FILE_VIEW.zh-CN.md)；教学模式与本机只读检查独立清除状态。
+
+## 0.4.0 本机私有检查已开放
+
+教学模式继续使用固定合成样例；新增独立的[本机私有文件模式](PRIVATE_FILE_VIEW.zh-CN.md)，原始文件在 Worker 只读验证，绝不使用教学固定 seed/偏移。匿名摘要和显式私有文本原值分离；取消、清除、超时与模式切换终止任务并清空状态。运行 `node tools/verify_private_browser.mjs` 实际验证，详细预算和边界见上述文档。

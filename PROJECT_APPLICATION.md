@@ -1,35 +1,39 @@
 # MedSeal-MBT 项目申报书
 
-## 基本信息
+关联医学影像的一致性转换、标准交换与本地验证工具
 
 | 项目 | 内容 |
 | --- | --- |
-| 项目名称 | MedSeal-MBT（面向关联医学影像数据集的一致性脱敏与验证工具） |
 | 参赛者 | 韩桢 |
-| 邮箱 | 766903826@qq.com |
-| 手机号 | 17889572851 |
-| GitHub 仓库链接 | https://github.com/001-Elsa/MedSeal-MBT |
-| Gitlink 仓库链接 | https://gitlink.org.cn/Hzhhhh/MedSeal-MBT |
-| Mooncakes 包 | https://mooncakes.io/docs/001-Elsa/medseal |
-| 项目方向 | MoonBit 医学影像生态库 / 关联数据处理与验证 |
-| 项目类型 | 围绕实际开发需求制作的开发工具（原创 MoonBit 项目） |
+| 联系方式 | 766903826@qq.com · 17889572851 |
+| 项目方向 | MoonBit 医学影像生态库与开发工具；既有项目深化迭代 |
+| 对应版本 | 0.4.0 社区发行快照；Apache-2.0 |
 
-## 当前项目范围与申报材料性质
+## 需求与实际价值
 
-本页更新可核验的项目事实，不代替章程要求的本人手写 Proposal 或个人声明。既有项目 0.1.1 基线和历史保留；建议按旧项目维护/季度社区贡献路径说明新增成果。参赛者姓名已由本人确认是韩桢；联系方式、主要贡献者身份、报名方向、历史奖励和协议声明仍由本人提交时核实。正式表单由本人提交，仓库不宣称已有成功回执。按[提交清单](docs/SUBMISSION_GUIDE.zh-CN.md)使用真实账号和项目链接。
+研究数据常由一组相互引用的 DICOM 文件组成。逐文件替换姓名可能破坏患者分组、Study/Series/SOP、跨文件引用和随访日期关系。MedSeal 面向影像开发者与研究管理员，提供可嵌入的 MoonBit 库、批量预检和可验证交付流程，降低自行实现医疗二进制格式、标准 JSON 交换与关联一致性的成本。
 
-MedSeal-MBT 的新增贡献是关联 DICOM 的元数据一致转换和可验证交付：公共 MoonBit API、严格规则与解释、集合身份/日期/引用、持久跨批缓存和历史引用、恢复、逐对象审核/签名/接收、限定经典 CT 研究 Profile、固定独立质量实验室与本地工作台。MoonBit 承担 DICOM/规则/转换与公开契约；Python 3.12 承担私有事务、密码库和系统协调。
+## 已实现能力
 
-## 三个完整预期场景
+① 公共封闭集合 SDK：整批预算、患者/UID/日期一致转换和输出复验，失败不返回部分集合；② DICOM JSON：25 种 VR、PN/多值/Sequence、精确 DS/IS token 和 Part 10 重建，双向 pydicom 验证；③ 数据集预检：匿名错误分类、修复建议和策略影响；④ 持久身份、增量缓存、封存恢复、逐对象审核、Ed25519 签名与幂等目录接收；⑤ 固定 Orthanc 本地适配，真实上传/查询/取回及断连重试；⑥ 离线浏览器实验室与本机私有文件只读检查，Worker 预算/取消/超时、显式原值区域与匿名导出分离。
 
-[场景文档](docs/USE_CASES.zh-CN.md)逐项列出角色、输入、步骤、输出、失败与验收证据：影像开发者批量联调、纵向研究增量导入、工具作者嵌入公共规则/验证/解释 API。用途以合成测试证明实现可运行，没有虚构临床客户或医院采用。
+## MoonBit 生态贡献与技术实现
 
-## 验证、开源和交付
+六个公共 api 包覆盖 DICOM、DICOM JSON、策略、验证、公开解释与 Native 授权提供方。MoonBit 实现格式、规则、身份/时间和集合关系；Python 3.12 承担私有 SQLite、密码库与本机作业协调；页面运行编译后的同一 MoonBit 核心。提供独立消费者、稳定 API/迁移契约、环境诊断、问题模板和可重跑门禁，支持其他社区项目复用。
 
-[README](README.zh-CN.md)提供安装、运行、公共 API 和完整示例；[实施账本](docs/WINNER_UPGRADE_STATUS.zh-CN.md)保存每阶段源码和验证证据；[整改记录](docs/COMPETITION_REMEDIATION.zh-CN.md)保存 GitHub/GitLink/Mooncakes 实际发布状态。[贡献说明](docs/CONTRIBUTION.md)区分历史基线、新增手写/生成代码和宿主语言；[第三方来源](THIRD_PARTY.md)列出依赖、标准与研究参考。许可证为 Apache-2.0。
+## 可复核的工程证据
 
-## 承诺范围
+120 个已分类属性、141 个 Rulebook 索引、475 个固定案例；四后端测试 Native139、JS/wasm/wasm-gc 各86。独立检查实际 JSON/二进制输出及像素、HU、几何；授权 BSD 数学幻影与 1/16/64 MiB、100/1000 对象负载均有实测记录。真实隔离 Chromium 验证文件选择、预算前置、Worker 清除、匿名下载、恶意文本与 CSP。三平台 CI、固定 Orthanc 接收、干净目录门禁、独立 Mooncakes 安装与离线宿主演练由发行证据分别记录，源码包按提交逐文件回读。
 
-仅支持所列 Part 10/Explicit VR Little Endian/字符集与元数据规则，经典 CT 单帧未压缩 16 位 Profile 有独立体素/HU/几何合成验证。MR/SC 不声明完整 IOD；像素未识别/涂抹，未知公共元数据需审查。跨批映射、密钥持久化和恢复已通过工程宿主实现；真实来源授权、独立研究接收、操作者与现场灾备仍为 requires_field。不承诺完整匿名化、医疗诊断、PACS、压缩像素或生产 1.0。
+## 支持边界
 
-> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+限定 Part 10、Explicit VR Little Endian、ASCII/ISO_IR 6/ISO_IR 192 与已列元数据子集；经典 CT 研究限单帧未压缩16位 MONOCHROME2。像素保真复制，不做 OCR、像素涂抹或诊断。浏览器私有模式只检查原文件，不生成去标识影像。工程演练不冒充临床现场、完整 IOD/Annex E 或完整 DICOMweb。
+
+## 开源与验证入口
+
+- GitHub：https://github.com/001-Elsa/MedSeal-MBT
+- GitLink：https://gitlink.org.cn/Hzhhhh/MedSeal-MBT
+- Mooncakes：https://mooncakes.io/docs/001-Elsa/medseal@0.4.0
+- CI与发行证据：https://github.com/001-Elsa/MedSeal-MBT/actions
+
+本稿经 AI 辅助整理；事实以0.4.0源码和发行验收记录为准，正式申报由韩桢本人完成。

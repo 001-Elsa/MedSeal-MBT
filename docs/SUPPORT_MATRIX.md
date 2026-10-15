@@ -1,6 +1,6 @@
 # Support matrix
 
-Applies to 0.3.0, retaining the 0.2.0 behavioral contracts. This is a tested subset, not a full DICOM
+Applies to 0.4.0, retaining the 0.2.0 behavioral contracts. This is a tested subset, not a full DICOM
 conformance statement. Do not transfer private-host guarantees to basic commands.
 
 | Area | Supported behavior | Boundary |
@@ -24,14 +24,16 @@ conformance statement. Do not transfer private-host guarantees to basic commands
 | Public reports | Anonymous IDs, structural paths, registered actions/issues | No original patient values/paths, mapping state, offsets or secrets |
 | Workbench | Loopback pagination/explanations/cancel with Host/Origin/session/CSRF gates | Single-owner local tool; no organizational login or release authority |
 
-## Community additions included in 0.3.0
+## Community additions included in 0.4.0
 
 C1 adds public `convert_collection`: 1–256 objects, 64 MiB/object, 128 MiB total,
 strict closed references and all-output verification, on four backends. C2 adds
-an offline synthetic rule lab compiled from the same SDK; no patient import,
-server or release authority. Its transport/structure limits and actual Chromium browser
+an offline rule lab compiled from the same SDK. 0.4.0 adds a separate local
+read-only file mode (16 objects, 8 MiB each, 16 MiB total, 15s deadline),
+Worker isolation, explicit private-text reveal and anonymous summary export.
+No browser conversion, server or release authority. Its transport/structure limits and actual Chromium browser
 validation are documented in [lab contracts](COMMUNITY_LAB.zh-CN.md). These are
-0.3.0 additions, capabilities installed by `moon add ...@0.3.0`.
+0.4.0 additions, capabilities installed by `moon add ...@0.4.0`.
 
 C3a adds private DICOM JSON interchange for 25 VRs, exact DS/IS token
 preservation and Part 10 reconstruction. Rejects unsupported VRs and remote

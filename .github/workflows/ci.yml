@@ -63,6 +63,7 @@ jobs:
         run: |
           pnpm --dir web exec playwright install --with-deps chromium
           node tools/verify_lab_browser.mjs
+          node tools/verify_private_browser.mjs
       - name: Independent DICOM verification
         run: |
           python -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
@@ -118,7 +119,7 @@ jobs:
       - name: Package
         run: moon package
       - name: Exact source snapshot in module package
-        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.3.0.zip --record tmp/platform-snapshot-ci.json
+        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.4.0.zip --record tmp/platform-snapshot-ci.json
       - name: Source tree remains unchanged after acceptance
         run: git diff --exit-code
       - name: Upload acceptance evidence

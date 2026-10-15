@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 - 2026-10-15 (Local private inspection)
+
+- Implement the previously designed local file view with read-only MoonBit validation in an isolated Worker; never convert private files using synthetic identity settings.
+- Enforce count/per-file/total budgets before reading, transfer ArrayBuffers without hex, and terminate/clear on cancellation, failure, timeout or mode switch.
+- Separate explicit bounded private text reveal from a fixed anonymous summary download; render original strings as text.
+- Add real-browser acceptance for file selection, malicious text, transfer detachment, cleanup, actual download, narrow layout, CSP and no persistence writes.
+
+
 ## 0.3.0 - 2026-10-15 (Community release)
 
 - Publish the V1–V5 community upgrade as one independently consumable module.

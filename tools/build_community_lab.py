@@ -16,13 +16,18 @@ def build(output):
     env = dict(os.environ, MOON_HOME=str(moon.parent.parent))
     subprocess.run([str(moon), "build", "--target", "js", "--deny-warn", "web/core"], cwd=REPO, env=env, check=True)
     engine = (REPO / "_build/js/debug/build/web/core/core.js").read_text(encoding="utf-8")
-    # The compiler emits a single named ESM export. Keep exactly that binding
-    # in the inline module so opening the resulting file needs no HTTP server.
-    pattern = r'export\s*\{\s*([A-Za-z0-9_$]+)\s+as\s+analyze\s*\}\s*;?'
-    if len(re.findall(pattern, engine)) != 1:
+    # Bind only the explicit, compiler-generated ESM exports. Worker receives
+    # the same binary-input functions, never the synthetic JSON/hex transport.
+    pattern = r'export\s*\{([^}]+)\}\s*;?'
+    exports = re.findall(pattern, engine)
+    if len(exports) != 1:
         raise ValueError("unexpected-moonbit-js-export-shape")
-    inline = re.sub(pattern, r'const analyze = \1;', engine)
+    bindings = re.findall(r'([A-Za-z0-9_$]+)\s+as\s+([A-Za-z0-9_$]+)', exports[0])
+    if {alias for _, alias in bindings} != {"analyze", "inspect_private", "reveal_private"}:
+        raise ValueError("unexpected-moonbit-js-exports")
+    inline = re.sub(pattern, lambda _: "\n".join("const " + alias + " = " + symbol + ";" for symbol, alias in bindings), engine)
     inline = re.sub(r'//# sourceMappingURL=.*', '', inline)
+    worker = inline + "\n" + (REPO / "web/private-worker.js").read_text(encoding="utf-8")
     manifest = json.loads((REPO / "conformance/manifest.json").read_text(encoding="utf-8"))
     collection = next(item for item in manifest["collections"] if item["id"] == "closed-reference")
     samples = []
@@ -42,11 +47,13 @@ def build(output):
     page = template.replace('/*ENGINE*/', inline).replace('/*SAMPLES*/',
         'const SAMPLES = ' + json.dumps(samples) + ';\nconst BUILD = ' + json.dumps({k: record[k] for k in ("engine_sha256", "source_base_commit")}) + ';')
     page = page.replace('/*UI*/', (REPO / "web/lab.js").read_text(encoding="utf-8"))
+    private_ui = "const PRIVATE_WORKER_SOURCE = " + json.dumps(worker).replace("</", "<\\/") + ";\n" + (REPO / "web/private.js").read_text(encoding="utf-8")
+    page = page.replace('/*PRIVATE_UI*/', private_ui)
     script = re.search(r'<script type="module">([\s\S]*?)</script>', page).group(1)
     digest = base64.b64encode(hashlib.sha256(script.encode()).digest()).decode()
-    csp = f"default-src 'none'; script-src 'sha256-{digest}'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'"
+    csp = f"default-src 'none'; script-src 'sha256-{digest}'; style-src 'unsafe-inline'; connect-src 'none'; worker-src blob:; img-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'"
     page = page.replace('<!--CSP-->', '<meta http-equiv="Content-Security-Policy" content="' + csp + '">')
-    if len(re.findall(r'</script', page, flags=re.I)) != 1 or any(t in page for t in ('/*ENGINE*/', '/*SAMPLES*/', '/*UI*/')):
+    if len(re.findall(r'</script', page, flags=re.I)) != 1 or any(t in page for t in ('/*ENGINE*/', '/*SAMPLES*/', '/*UI*/', '/*PRIVATE_UI*/')):
         raise ValueError("unsafe-inline-bundle-or-unreplaced-placeholder")
     output.mkdir(parents=True, exist_ok=True)
     (output / "index.html").write_text(page, encoding="utf-8", newline="\n")

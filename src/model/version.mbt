@@ -1,2 +1,2 @@
 ///|
-pub let medseal_version : String = "0.3.0"
+pub let medseal_version : String = "0.4.0"

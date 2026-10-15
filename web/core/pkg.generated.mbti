@@ -4,6 +4,10 @@ package "001-Elsa/medseal/web/core"
 // Values
 pub fn analyze(String, String) -> String
 
+pub fn inspect_private(Array[Bytes]) -> String
+
+pub fn reveal_private(Array[Bytes], Int) -> String
+
 // Errors
 
 // Types and methods

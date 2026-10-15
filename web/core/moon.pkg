@@ -9,5 +9,10 @@ import {
 }
 
 options(
-  link: { "js": { "exports": [ "analyze" ], "format": "esm" } },
+  link: {
+    "js": {
+      "exports": [ "analyze", "inspect_private", "reveal_private" ],
+      "format": "esm",
+    },
+  },
 )

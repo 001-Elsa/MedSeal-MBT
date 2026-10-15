@@ -58,7 +58,7 @@ for(const node of document.querySelectorAll('select')) {
   });
 }
 const downloads=[];let blobId=0;
-const context=vm.createContext({document,console,TextEncoder,TextDecoder,Blob,
+const context=vm.createContext({window:{addEventListener(){}},document,console,TextEncoder,TextDecoder,Blob,
   setTimeout:(f)=>{f();},URL:{createObjectURL(blob){downloads.push(blob);return `blob:test-${++blobId}`;},revokeObjectURL(){}},
 });
 vm.runInContext(script,context,{timeout:15000});

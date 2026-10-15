@@ -9,7 +9,7 @@ consistency and independent output verification. [中文指南](README.zh-CN.md)
 C1 adds a complete portable public collection SDK: strict closed-batch
 conversion, bounded inputs, revalidated relationships and privacy-safe reports.
 The source consumer runs on Native, JS, wasm and wasm-gc; an independent pydicom
-oracle checks its actual output. These additions are included in the 0.3.0 community release.
+oracle checks its actual output. These additions are included in the 0.4.0 community release.
 Run `moon run --target js examples/consumer` from the source checkout.
 See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
 [六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
@@ -20,7 +20,7 @@ C2 adds an offline rule lab powered by the compiled MoonBit core. Build with
 objects and provides rule/structure views, failure experiments and public JSON
 export. [使用与验收边界](docs/COMMUNITY_LAB.zh-CN.md): Node/DOM contracts pass;
 V5 also verifies actual Chromium rendering, CSP enforcement, downloads, keyboard
-activation and a 390px layout. Patient-file import remains a separate design.
+activation and a 390px layout. 0.4.0 adds local read-only file inspection with an isolated Worker, explicit private text reveal, anonymous export and cancellation; no image conversion or release authority.
 
 
 C3a adds public DICOM JSON interchange for 25 VRs, exact decimal token
@@ -33,10 +33,10 @@ V3–V5 now include actual loopback Orthanc reception, licensed phantom fidelity
 measured application costs and rendered-browser checks; see the linked plan.
 V2 adds a bounded dataset preflight with actionable, privacy-safe diagnostics:
 `python3.12 tools/dataset_preflight.py INPUT`. [操作说明](docs/DATASET_PREFLIGHT.zh-CN.md).
-These additions are included in the 0.3.0 community release.
+These additions are included in the 0.4.0 community release.
 
 
-## Current scope: 0.3.0 community release
+## Current scope: 0.4.0 community release
 
 | Entry | Implemented behavior | Platform / boundary |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ Verified baseline: moon 0.1.20260920 / moonc 0.10.14+7d59c7ec9.
 In an existing independent MoonBit module:
 
 ```sh
-moon add 001-Elsa/medseal@0.3.0
+moon add 001-Elsa/medseal@0.4.0
 ```
 
 Create an executable package `app/moon.pkg`:
@@ -186,6 +186,6 @@ Apache-2.0. [Third-party sources and licenses](THIRD_PARTY.md).
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
 
-0.3.0 maintenance: [API compatibility](docs/API_COMPATIBILITY.zh-CN.md),
+0.4.0 maintenance: [API compatibility](docs/API_COMPATIBILITY.zh-CN.md),
 [migration](docs/MIGRATION_0.3.zh-CN.md), [doctor](docs/DOCTOR.zh-CN.md), and
 [clean-checkout release gate](docs/V6_ACCEPTANCE.zh-CN.md).

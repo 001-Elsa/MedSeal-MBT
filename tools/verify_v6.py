@@ -55,6 +55,7 @@ def main():
         ('lab-build', [sys.executable, 'tools/build_community_lab.py']),
         ('lab-dom', [node, 'tools/verify_community_lab.mjs']),
         ('lab-browser', [node, 'tools/verify_lab_browser.mjs']),
+        ('private-files-browser', [node, 'tools/verify_private_browser.mjs']),
         ('archive-public-consumer-four-backends', [sys.executable, 'tools/verify_consumer.py', 'tmp/v6/consumer.json']),
         ('moon-package', [str(moon), 'package', '--frozen']),
         ('exact-source-package', [sys.executable, 'tools/verify_platform_snapshot.py', '--archive',

@@ -7,7 +7,7 @@
   <title>MedSeal · 离线规则实验室</title>
   <style>
     :root{color-scheme:light;--ink:#152c3e;--muted:#5c6f7f;--line:#dce5e9;--teal:#087e83;--bg:#f2f6f7}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"PingFang SC",sans-serif}button,select,textarea,input{font:inherit}button,select,input{border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:white;color:var(--ink)}button{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #50b5bd;outline-offset:2px}button.primary{background:var(--teal);border-color:var(--teal);color:white;font-weight:650}button:disabled{opacity:.45;cursor:default}header{background:#102c40;color:white;padding:36px max(24px,calc((100vw - 1240px)/2)) 42px}header .brand{font-size:13px;letter-spacing:.12em;color:#8fd5d6}h1{font-size:clamp(26px,3.2vw,40px);line-height:1.25;margin:16px 0 12px;letter-spacing:-.02em}header p{color:#c8d9e4;max-width:760px;margin:0}.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.badges span{padding:4px 10px;border:1px solid #416074;border-radius:30px;font-size:12px}main{max-width:1288px;margin:24px auto;padding:0 24px}aside,.panel,.metrics{background:white;border:1px solid var(--line);border-radius:14px}.layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px}aside{padding:22px;height:fit-content}h2{font-size:18px;margin:0 0 15px}h3{font-size:14px;margin:0 0 8px}label{display:block;font-size:13px;font-weight:600;margin:18px 0 7px}select{width:100%}.hint{font-size:12px;color:var(--muted)}.step{display:inline-grid;place-items:center;background:#e4f4f3;color:var(--teal);width:25px;height:25px;border-radius:50%;margin-right:7px}aside .primary{margin-top:20px;width:100%}details{margin-top:16px}summary{cursor:pointer;font-size:13px;color:var(--teal)}textarea{width:100%;height:230px;border:1px solid var(--line);border-radius:8px;padding:10px;font:12px/1.5 ui-monospace,monospace;resize:vertical;margin-top:10px}#status{margin-bottom:16px;border-radius:10px;padding:14px 18px;background:#e2f3ef;color:#07594f}#status[data-state=blocked]{background:#fff0df;color:#8f4d08}#status[data-state=error]{background:#fdeaea;color:#912b2b}.metrics{display:grid;grid-template-columns:repeat(3,1fr);padding:16px 20px;gap:16px;margin-bottom:18px}.metric strong{display:block;font-size:28px;line-height:1.2}.metric span{font-size:12px;color:var(--muted)}.panel{padding:20px;margin-bottom:18px}.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}.toolbar h2{margin:0}.toolbar input{width:235px;font-size:13px}.table-wrap{overflow:auto;max-height:430px}table{border-collapse:collapse;width:100%;font-size:12px}th{text-align:left;background:#f5f8f9;color:var(--muted);position:sticky;top:0}td,th{padding:10px;border-bottom:1px solid #e8eef0;vertical-align:top}td:first-child{font-family:ui-monospace,monospace;white-space:nowrap}.pill{display:inline-block;border-radius:5px;padding:2px 6px;background:#e3f3f1;color:#076d68;white-space:nowrap}.columns{display:grid;grid-template-columns:1fr 1fr;gap:16px}.columns .table-wrap{max-height:245px}#issue{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 ui-monospace,monospace;padding:14px;background:#f5f8f9;border-radius:8px}.empty{padding:20px;color:var(--muted);font-size:13px}footer{padding:12px 0 30px;font-size:12px;color:var(--muted)}#comparison{margin:12px 0}#comparison[hidden]{display:none}#comparison td{overflow-wrap:anywhere}#changes{font-size:13px;color:var(--teal);margin:12px 0}#export{font-size:12px}#build{overflow-wrap:anywhere;font-family:ui-monospace,monospace;font-size:10px} @media(max-width:850px){.layout{grid-template-columns:1fr}.columns{grid-template-columns:1fr}header{padding:28px 24px}.metrics{gap:10px}.toolbar input{width:100%}}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"PingFang SC",sans-serif}button,select,textarea,input{font:inherit}button,select,input{border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:white;color:var(--ink)}button{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #50b5bd;outline-offset:2px}button.primary{background:var(--teal);border-color:var(--teal);color:white;font-weight:650}button:disabled{opacity:.45;cursor:default}header{background:#102c40;color:white;padding:36px max(24px,calc((100vw - 1240px)/2)) 42px}header .brand{font-size:13px;letter-spacing:.12em;color:#8fd5d6}h1{font-size:clamp(26px,3.2vw,40px);line-height:1.25;margin:16px 0 12px;letter-spacing:-.02em}header p{color:#c8d9e4;max-width:760px;margin:0}.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.badges span{padding:4px 10px;border:1px solid #416074;border-radius:30px;font-size:12px}main{max-width:1288px;margin:24px auto;padding:0 24px}aside,.panel,.metrics{background:white;border:1px solid var(--line);border-radius:14px}[hidden]{display:none!important}input[type=file]{max-width:100%;width:100%}#private-value-rows td{overflow-wrap:anywhere;white-space:normal}#mode{margin-bottom:20px}.layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px}aside{padding:22px;height:fit-content}h2{font-size:18px;margin:0 0 15px}h3{font-size:14px;margin:0 0 8px}label{display:block;font-size:13px;font-weight:600;margin:18px 0 7px}select{width:100%}.hint{font-size:12px;color:var(--muted)}.step{display:inline-grid;place-items:center;background:#e4f4f3;color:var(--teal);width:25px;height:25px;border-radius:50%;margin-right:7px}aside .primary{margin-top:20px;width:100%}details{margin-top:16px}summary{cursor:pointer;font-size:13px;color:var(--teal)}textarea{width:100%;height:230px;border:1px solid var(--line);border-radius:8px;padding:10px;font:12px/1.5 ui-monospace,monospace;resize:vertical;margin-top:10px}#status{margin-bottom:16px;border-radius:10px;padding:14px 18px;background:#e2f3ef;color:#07594f}#status[data-state=blocked]{background:#fff0df;color:#8f4d08}#status[data-state=error]{background:#fdeaea;color:#912b2b}.metrics{display:grid;grid-template-columns:repeat(3,1fr);padding:16px 20px;gap:16px;margin-bottom:18px}.metric strong{display:block;font-size:28px;line-height:1.2}.metric span{font-size:12px;color:var(--muted)}.panel{padding:20px;margin-bottom:18px}.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}.toolbar h2{margin:0}.toolbar input{width:235px;font-size:13px}.table-wrap{overflow:auto;max-height:430px}table{border-collapse:collapse;width:100%;font-size:12px}th{text-align:left;background:#f5f8f9;color:var(--muted);position:sticky;top:0}td,th{padding:10px;border-bottom:1px solid #e8eef0;vertical-align:top}td:first-child{font-family:ui-monospace,monospace;white-space:nowrap}.pill{display:inline-block;border-radius:5px;padding:2px 6px;background:#e3f3f1;color:#076d68;white-space:nowrap}.columns{display:grid;grid-template-columns:1fr 1fr;gap:16px}.columns .table-wrap{max-height:245px}#issue{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 ui-monospace,monospace;padding:14px;background:#f5f8f9;border-radius:8px}.empty{padding:20px;color:var(--muted);font-size:13px}footer{padding:12px 0 30px;font-size:12px;color:var(--muted)}#comparison{margin:12px 0}#comparison[hidden]{display:none}#comparison td{overflow-wrap:anywhere}#changes{font-size:13px;color:var(--teal);margin:12px 0}#export{font-size:12px}#build{overflow-wrap:anywhere;font-family:ui-monospace,monospace;font-size:10px} @media(max-width:850px){.layout{grid-template-columns:1fr}.columns{grid-template-columns:1fr}header{padding:28px 24px}.metrics{gap:10px}.toolbar input{width:100%}}
   </style>
 </head>
 <body>
@@ -15,10 +15,26 @@
     <div class="brand">MEDSEAL / MOONBIT COMMUNITY LAB</div>
     <h1>看懂每一次影像转换</h1>
     <p>从字段结构，到规则决定，再到整组引用验证。浏览器直接运行 MoonBit 核心，用可复现的合成影像理解转换的依据与边界。</p>
-    <div class="badges"><span>离线单文件</span><span>无上传 · 无遥测</span><span>内置合成影像</span><span>源码开发版 · V5</span></div>
+    <div class="badges"><span>离线单文件</span><span>无上传 · 无遥测</span><span>内置合成影像</span><span>本机只读检查已开放</span></div>
   </header>
   <main>
-    <div class="layout">
+    <label for="mode">使用方式</label>
+    <select id="mode"><option value="synthetic">合成教学实验</option><option value="private">本机私有文件 · 只读检查</option></select>
+    <section id="private-panel" class="panel" hidden aria-label="本机私有文件检查">
+      <h2>本机私有检查</h2>
+      <p>自行选择有权处理的 DICOM 文件。仅在本机内存中检查原始对象与集合引用，不上传、不转换、不生成去标识影像。签名交付使用原本地工具流程。</p>
+      <p class="hint">1–16 个对象，每个至多 8 MiB，合计至多 16 MiB；15 秒超时终止。页面不会保存文件，但不保证浏览器扩展、交换区或系统转储无法访问内存。</p>
+      <label for="private-files">选择本机 DICOM 文件（文件名只出现在浏览器选择控件中）</label>
+      <input id="private-files" type="file" multiple aria-label="选择本机 DICOM 文件">
+      <div class="toolbar"><button id="private-check" class="primary">开始只读检查</button><button id="private-cancel" disabled>取消检查</button><button id="private-clear">清除本次检查</button><button id="private-export" disabled>导出匿名检查摘要</button></div>
+      <p id="private-status" role="status" aria-live="polite">选择文件后开始本机只读检查。</p>
+      <div class="table-wrap"><table aria-label="匿名对象结构"><thead><tr><th>对象</th><th>字段路径</th><th>VR</th></tr></thead><tbody id="private-structures"></tbody></table></div>
+      <label for="private-object">私有原值查看对象</label><select id="private-object" aria-label="私有原值查看对象"></select>
+      <button id="private-reveal" disabled>显示所选对象的私有文本原值</button>
+      <p class="hint">此按钮会在下方显示敏感原值；不进入匿名摘要，不提供私有导出。离开模式或清除检查将终止任务并清空原值。</p>
+      <section id="private-values" hidden aria-label="私有原值区域"><h3>私有原值 · 请勿截图或分享</h3><p id="private-values-note"></p><button id="private-hide">关闭原值并清除本次检查</button><div class="table-wrap"><table aria-label="私有文本原值"><thead><tr><th>路径</th><th>VR</th><th>原值</th></tr></thead><tbody id="private-value-rows"></tbody></table></div></section>
+    </section>
+    <div class="layout" id="synthetic-layout">
       <aside>
         <h2><span class="step">1</span>配置实验</h2>
         <label for="scenario">影像集合</label>
@@ -28,7 +44,7 @@
         <select id="preset"><option value="empty">严格策略：清空研究描述</option><option value="remove">严格策略：移除研究描述</option><option value="invalid">无效策略：试图保留描述</option></select>
         <details><summary>编辑策略 JSON</summary><textarea id="policy" aria-label="策略 JSON" spellcheck="false"></textarea><p class="hint">修改后点击运行。原样文本不写入导出的报告；输入限制为 16 KiB。</p></details>
         <button id="run" class="primary">运行 MoonBit 验证</button>
-        <p class="hint">固定合成 seed 与 1 天偏移仅用于演示。本页不导入真实患者文件，不授予交付许可。</p>
+        <p class="hint">固定合成 seed 与 1 天偏移仅用于演示。教学模式不使用私有文件，不授予交付许可。</p>
         <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
         <h3>同一核心，跨平台使用</h3><p class="hint">核心调用 api/dicom、api/policy、api/validation 与 api/explain。界面只负责展示。</p>
         <div id="build"></div>
@@ -50,12 +66,13 @@
         </div>
       </section>
     </div>
-    <footer>韩桢 · Apache-2.0 · 样例来自项目固定的 Apache-2.0 合成语料。页面无外部字体、CDN、网络接口或患者数据。</footer>
+    <footer>韩桢 · Apache-2.0 · 样例来自项目固定的 Apache-2.0 合成语料。页面无外部字体、CDN、网络接口；私有文件仅由用户本机选择。</footer>
   </main>
   <script type="module">
 /*ENGINE*/
 /*SAMPLES*/
 /*UI*/
+/*PRIVATE_UI*/
   </script>
 </body>
 </html>

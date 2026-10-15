@@ -863,6 +863,7 @@
 !/tools/build_community_lab.py
 !/tools/build_distribution.py
 !/tools/check_documentation.py
+!/tools/create_application_pdf.py
 !/tools/dataset_preflight.py
 !/tools/deliver_local.py
 !/tools/dicom_json_bridge.mjs
@@ -910,6 +911,7 @@
 !/tools/verify_phantom.py
 !/tools/verify_pilot.py
 !/tools/verify_platform_snapshot.py
+!/tools/verify_private_browser.mjs
 !/tools/verify_recovery.py
 !/tools/verify_registry_consumer.py
 !/tools/verify_release_readiness.py
@@ -927,7 +929,11 @@
 !/web/core/lab_test.mbt
 !/web/core/moon.pkg
 !/web/core/pkg.generated.mbti
+!/web/core/private.mbt
+!/web/core/private_test.mbt
 !/web/lab.html
 !/web/lab.js
 !/web/package.json
 !/web/pnpm-lock.yaml
+!/web/private-worker.js
+!/web/private.js

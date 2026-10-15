@@ -4,7 +4,7 @@ V6 把源码、包、消费者和维护入口绑定到同一提交。完整验�
 
 ```sh
 python3.12 tools/verify_v6.py --record /path/out/v6.json
-python3.12 tools/verify_registry_consumer.py --version 0.3.0 --record /path/out/registry.json
+python3.12 tools/verify_registry_consumer.py --version 0.4.0 --record /path/out/registry.json
 ```
 
 验收包括版本/文档一致性、`moon info`/格式/四后端检查和测试、公共消费者、预检、授权 phantom、浏览器实验室和精确模块快照。registry 消费者必须从 Mooncakes 独立安装；GitHub、GitLink 和 Mooncakes 的回读摘要另存源码树外，不把凭据或回执提交进仓库。

@@ -1,6 +1,6 @@
 # MedSeal-MBT
 
-面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.3.0 社区发行版**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
+面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.4.0 社区发行版**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
 
 ## Community upgrade in source / 社区升级源码
@@ -8,7 +8,7 @@
 C1 adds a complete portable public collection SDK: strict closed-batch
 conversion, bounded inputs, revalidated relationships and privacy-safe reports.
 The source consumer runs on Native, JS, wasm and wasm-gc; an independent pydicom
-oracle checks its actual output. These additions are included in the 0.3.0 community release.
+oracle checks its actual output. These additions are included in the 0.4.0 community release.
 Run `moon run --target js examples/consumer` from the source checkout.
 See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
 [六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
@@ -19,7 +19,7 @@ C2 adds an offline rule lab powered by the compiled MoonBit core. Build with
 objects and provides rule/structure views, failure experiments and public JSON
 export. [使用与验收边界](docs/COMMUNITY_LAB.zh-CN.md): Node/DOM contracts pass;
 V5 also verifies actual Chromium rendering, CSP enforcement, downloads, keyboard
-activation and a 390px layout. Patient-file import remains a separate design.
+activation and a 390px layout. 0.4.0 adds local read-only file inspection with an isolated Worker, explicit private text reveal, anonymous export and cancellation; no image conversion or release authority.
 
 
 C3a adds public DICOM JSON interchange for 25 VRs, exact decimal token
@@ -30,7 +30,7 @@ The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) next priori
 dataset preflight, independent reception, measured workloads and usability.
 V2 adds a bounded dataset preflight with actionable, privacy-safe diagnostics:
 `python3.12 tools/dataset_preflight.py INPUT`. [操作说明](docs/DATASET_PREFLIGHT.zh-CN.md).
-These additions are included in the 0.3.0 community release.
+These additions are included in the 0.4.0 community release.
 
 
 ## 当前已实现的范围
@@ -50,7 +50,7 @@ These additions are included in the 0.3.0 community release.
 按[官方说明](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)安装 MoonBit。已验证基线为 moon `0.1.20260920` / moonc `0.10.14+7d59c7ec9`。在自己的独立 MoonBit 模块执行：
 
 ```sh
-moon add 001-Elsa/medseal@0.3.0
+moon add 001-Elsa/medseal@0.4.0
 ```
 
 创建 `app/moon.pkg`：
