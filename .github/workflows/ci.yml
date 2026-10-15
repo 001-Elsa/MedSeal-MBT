@@ -119,7 +119,7 @@ jobs:
       - name: Package
         run: moon package
       - name: Exact source snapshot in module package
-        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.4.0.zip --record tmp/platform-snapshot-ci.json
+        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.4.1.zip --record tmp/platform-snapshot-ci.json
       - name: Source tree remains unchanged after acceptance
         run: git diff --exit-code
       - name: Upload acceptance evidence

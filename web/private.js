@@ -1,9 +1,10 @@
 // Separate private-file state. Patient bytes are never passed to analyze(),
 // the synthetic conversion engine, public exporter or the DOM.
-let privateWorker=null, privateGeneration=0, privateTimer=null, privateReport=null;
+let privateWorker=null, privateGeneration=0, privateTimer=null, privateReport=null, privateRequest=0;
 const PRIVATE_LIMITS={objects:16,objectBytes:8*1024*1024,totalBytes:16*1024*1024};
 const pstatus=text=>{$('private-status').textContent=text;};
 function clearPrivateValues() {
+  privateRequest++;
   $('private-value-rows').replaceChildren();$('private-values').hidden=true;
   $('private-reveal').disabled=true;
 }
@@ -64,8 +65,9 @@ async function inspectSelection() {
   finally { URL.revokeObjectURL(workerURL); }
   privateWorker.onmessage=event=>{
     if(generation!==privateGeneration)return;
-    clearTimeout(privateTimer);privateTimer=null;$('private-check').disabled=false;
     const msg=event.data;
+    if(msg.kind==='private' && msg.request!==privateRequest)return;
+    clearTimeout(privateTimer);privateTimer=null;$('private-check').disabled=false;
     if(msg.kind==='public')renderPrivatePublic(msg.result);
     else if(msg.kind==='private') {
       $('private-reveal').disabled=false;
@@ -101,6 +103,8 @@ $('private-cancel').addEventListener('click',()=>resetPrivate('已取消；隔�
 $('private-clear').addEventListener('click',()=>resetPrivate());
 $('private-hide').addEventListener('click',()=>resetPrivate());
 $('private-object').addEventListener('change',()=>{
+  privateRequest++;clearTimeout(privateTimer);privateTimer=null;
+  $('private-reveal').disabled=!privateReport;
   $('private-value-rows').replaceChildren();$('private-values').hidden=true;
 });
 $('private-reveal').addEventListener('click',()=>{
@@ -108,7 +112,7 @@ $('private-reveal').addEventListener('click',()=>{
   $('private-reveal').disabled=true;
   $('private-value-rows').replaceChildren();$('private-values').hidden=true;
   // Separate explicit action; original text never enters privateReport.
-  privateWorker.postMessage({kind:'reveal',index:Number($('private-object').value)});
+  privateWorker.postMessage({kind:'reveal',request:++privateRequest,index:Number($('private-object').value)});
   privateTimer=setTimeout(()=>resetPrivate('私有视图超时，输入和结果已清除。'),15000);
 });
 $('private-export').addEventListener('click',()=>{

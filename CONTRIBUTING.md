@@ -1,6 +1,6 @@
 # Contributing
 
-Maintain the declared 0.4.0 scope: public MoonBit libraries, compatible CLI,
+Maintain the declared 0.4.1 scope: public MoonBit libraries, compatible CLI,
 controlled POSIX private adapters and loopback workbench. Database transactions,
 review/signing and local UI are existing components. Changes to compressed pixels,
 PACS/network services, diagnosis or full IOD/Profile claims need explicit scope,

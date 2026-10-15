@@ -100,6 +100,17 @@ try {
  assert.equal(await page.locator('#private-export').isDisabled(),true);
  await page.locator('#mode').selectOption('private');assert.match(await page.locator('#private-status').innerText(),/选择文件/);
  checks.push('mode-switch-terminates-clears-separate-synthetic-and-private-states');
+ // Same-task switch invalidates a pending original-value response.
+ await inspect(fixtures);await passed();
+ await page.evaluate(()=>{
+   document.getElementById('private-reveal').click();
+   const select=document.getElementById('private-object');select.value='1';select.dispatchEvent(new Event('change'));
+ });
+ await page.waitForTimeout(150);
+ assert.equal(await page.locator('#private-value-rows tr').count(),0);
+ assert.equal(await page.locator('#private-values').isVisible(),false);
+ await page.locator('#private-reveal').click();await page.locator('#private-values').waitFor({state:'visible'});
+ await page.locator('#private-hide').click();checks.push('pending-reveal-discarded-on-object-selection-change');
  // Pause the actual worker after construction, then cancel during file reading.
  // A real Worker is created/terminated; no completed message can repopulate DOM.
  await select(fixtures);

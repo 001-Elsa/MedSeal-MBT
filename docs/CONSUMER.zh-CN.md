@@ -29,8 +29,8 @@ python3.12 tools/verify_consumer.py tmp/c1-consumer.json
 - `--contract policy` 显式选择历史的仅策略契约，用于重验已发布 0.2.3 等旧版本。不会在集合编译失败后静默降级。
 
 ```sh
-# 0.4.0 完整集合消费者；真实 registry 安装，不能回退本地源码
-python3.12 tools/verify_registry_consumer.py --version 0.4.0 --record tmp/registry-collection.json
+# 0.4.1 完整集合消费者；真实 registry 安装，不能回退本地源码
+python3.12 tools/verify_registry_consumer.py --version 0.4.1 --record tmp/registry-collection.json
 # 仅在重验旧版时显式选择 --version 0.2.3 --contract policy
 ```
 

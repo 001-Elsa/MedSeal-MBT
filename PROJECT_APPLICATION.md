@@ -7,7 +7,7 @@
 | 参赛者 | 韩桢 |
 | 联系方式 | 766903826@qq.com · 17889572851 |
 | 项目方向 | MoonBit 医学影像生态库与开发工具；既有项目深化迭代 |
-| 对应版本 | 0.4.0 社区发行快照；Apache-2.0 |
+| 对应版本 | 0.4.1 社区发行快照；Apache-2.0 |
 
 ## 需求与实际价值
 
@@ -33,7 +33,7 @@
 
 - GitHub：https://github.com/001-Elsa/MedSeal-MBT
 - GitLink：https://gitlink.org.cn/Hzhhhh/MedSeal-MBT
-- Mooncakes：https://mooncakes.io/docs/001-Elsa/medseal@0.4.0
+- Mooncakes：https://mooncakes.io/docs/001-Elsa/medseal@0.4.1
 - CI与发行证据：https://github.com/001-Elsa/MedSeal-MBT/actions
 
-本稿经 AI 辅助整理；事实以0.4.0源码和发行验收记录为准，正式申报由韩桢本人完成。
+本稿经 AI 辅助整理；事实以0.4.1源码和发行验收记录为准，正式申报由韩桢本人完成。

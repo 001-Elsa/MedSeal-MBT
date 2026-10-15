@@ -19,7 +19,7 @@ self.onmessage = event => {
       if(result.status!=='passed')clear();
       self.postMessage({kind:'public',result});
     } else if(msg.kind==='reveal' && held && Number.isInteger(msg.index)) {
-      self.postMessage({kind:'private',result:JSON.parse(reveal_private(held,msg.index))});
+      self.postMessage({kind:'private',request:msg.request,result:JSON.parse(reveal_private(held,msg.index))});
     } else { clear();self.postMessage({kind:'public',result:blocked()}); }
   } catch { clear();self.postMessage({kind:'public',result:blocked()}); }
 };

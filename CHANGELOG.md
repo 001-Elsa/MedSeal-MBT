@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1 - 2026-10-15
+
+- Ignore stale private-value responses after a rapid object selection change. Preserve immutable 0.4.0 and independently repeat publication checks.
+
+
 ## 0.4.0 - 2026-10-15 (Local private inspection)
 
 - Implement the previously designed local file view with read-only MoonBit validation in an isolated Worker; never convert private files using synthetic identity settings.
