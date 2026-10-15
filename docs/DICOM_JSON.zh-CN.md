@@ -12,7 +12,7 @@ let normalized_private_json = @dicom_json.encode(dataset)
 let private_part10 = @dicom_json.to_part10(private_json)
 ```
 
-`decode` 返回公开 `api/dicom.DataSet`；`encode` 返回单个 Dataset 的 JSON 对象（不是对象数组）。`to_part10` 新建 Explicit VR Little Endian 文件头，要求单值 SOP Class/Instance UID，写回后由实际二进制解析器复核结构和字符集。非 ASCII 二进制内容必须在 Dataset 中明确指定 `ISO_IR 192`；JSON 自身使用 UTF-8 不会自动替它设置源字符集。File Meta、原 preamble 和原传输语法不由 Dataset JSON 保留。
+`decode` 返回公开 `api/dicom.DataSet`；`encode` 返回单个 Dataset 的 JSON 对象（不是对象数组）。`to_part10` 新建 Explicit VR Little Endian 文件头，要求单值 SOP Class/Instance UID，写回后由实际二进制解析器复核结构和字符集。非 ASCII 二进制内容必须在 Dataset 中明确指定 `ISO_IR 192`；JSON 自身使用 UTF-8 不会自动替它设置源字符集。File Meta、原 preamble 和原传输语法不由 Dataset JSON 保留。二进制写回/重读遵循现有 DICOM 填充规则，尾部填充空格或NUL不作为内容保留；JSON编解码本身不执行这种二进制规范化。
 
 编码输出按 Tag 升序排列，属性成员按 `vr`、值表示排列；不宣称 RFC 8785。DS/IS 统一输出字符串以保留十进制字面文本，包括末尾零、指数形式和负零。不得对含原值的这个 JSON 直接签发公开报告。
 

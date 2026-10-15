@@ -53,9 +53,15 @@ pub fn to_part10(text : String) -> Bytes raise @dicom.MedSealError {
     transfer_syntax: "1.2.840.10008.1.2.1",
     element_count: dataset.count_recursive(),
   }
-  let bytes = @dicom.write(file)
+  let bytes = @dicom.write(file) catch {
+    _ => raise invalid("Part 10 encoding constraints")
+  }
   // Reuse the actual parser's charset, length and structural checks. A JSON
   // string never implicitly selects a source binary character set.
-  ignore(@dicom.parse(bytes))
+  ignore(
+    @dicom.parse(bytes) catch {
+      _ => raise invalid("Part 10 structure or character set")
+    },
+  )
   bytes
 }

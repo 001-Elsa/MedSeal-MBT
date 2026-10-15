@@ -193,6 +193,18 @@ test "DICOM JSON Part10 construction requires SOP IDs and explicit charset" {
     },
   )
   let minimal = "{\"00080016\":{\"vr\":\"UI\",\"Value\":[\"1.2.840.10008.5.1.4.1.1.7\"]},\"00080018\":{\"vr\":\"UI\",\"Value\":[\"1.2.3\"]}}"
+  let with_text = minimal[0:minimal.length() - 1].to_owned() +
+    ",\"00100010\":{\"vr\":\"PN\",\"Value\":[{\"Alphabetic\":\"合成\"}]}}"
+  assert_true(
+    try {
+      ignore(@dicom_json.to_part10(with_text))
+      false
+    } catch {
+      @dicom.MedSealError::InvalidModel(reason) =>
+        reason == "DICOM JSON: Part 10 structure or character set"
+      _ => false
+    },
+  )
   let parsed = @dicom.parse(@dicom_json.to_part10(minimal))
   assert_eq(parsed.transfer_syntax, "1.2.840.10008.1.2.1")
   assert_eq(@dicom_json.encode(parsed.dataset), canonical(minimal))
