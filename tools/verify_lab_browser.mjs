@@ -63,7 +63,7 @@ try {
   const result={schema:1,status:'passed',stage:'V5',checks,browser:browser.version(),viewportWidths:[1280,390],
     html_sha256:createHash('sha256').update(fs.readFileSync(path.join(root,'index.html'))).digest('hex'),
     rendered_browser_verified:true,csp_enforcement_verified:true,keyboard_verified:true,release_authorized:false,
-    limits:['isolated headless Chromium; not all browsers/assistive technologies','synthetic bundled data; no real patient file import']};
+    limits:['isolated headless Chromium; not all browsers/assistive technologies','this test covers synthetic teaching mode; private-file mode is tested separately']};
   fs.writeFileSync(path.join(root,'browser-acceptance.json'),JSON.stringify(result,null,2)+'\n');
   console.log(JSON.stringify(result));await context.close();
 }finally{await browser.close();}
