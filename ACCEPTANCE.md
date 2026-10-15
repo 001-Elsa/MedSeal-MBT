@@ -1,6 +1,6 @@
 # MedSeal-MBT acceptance
 
-Current maintained contracts cover the 0.5.0 local data-processing candidate.
+Current maintained contracts cover the 0.5.0 data-processing source release.
 The previous public baseline is 0.4.1; historical P/W releases retain their own evidence. Publication of
 each immutable version is verified independently in the release record. The original bb7e895 / 0.1.1 history
 is preserved. This accepts the declared subset, not clinical production or all

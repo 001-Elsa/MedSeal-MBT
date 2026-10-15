@@ -20,7 +20,7 @@ authorize clinical use or release. The memory workflow is limited to 256 objects
 64 MiB per object and 128 MiB total.
 
 This collection/JSON SDK is retained from the previously published 0.4.1 baseline.
-Current source is a 0.5.0 local candidate; query/quality/plans are demonstrated
+Current source is a 0.5.0 source release; query/quality/plans are demonstrated
 separately in `examples/data_pipeline` and Native I/O in `examples/native_pipeline`.
 The archive verifier runs four backends outside the checkout; registry
 verification is a separate action after a new release. The explicit legacy

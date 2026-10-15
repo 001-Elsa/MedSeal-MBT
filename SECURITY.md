@@ -2,7 +2,7 @@
 
 ## Supported scope and reporting
 
-The 0.5.0 local candidate adds bounded queries/quality/plans, Native directory
+The 0.5.0 source release adds bounded queries/quality/plans, Native directory
 processing and pinned-dictionary Implicit VR input to the previous 0.4.1 baseline.
 Current maintenance and immutable
 release evidence are described in [release record](docs/COMPETITION_REMEDIATION.zh-CN.md).

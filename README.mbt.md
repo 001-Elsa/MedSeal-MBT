@@ -4,7 +4,7 @@ MoonBit libraries and native tools for DICOM metadata conversion, linked-object
 consistency and independent output verification. [中文指南](README.zh-CN.md).
 
 
-## 0.5.0 data-processing candidate (local source, not registry publication)
+## 0.5.0 data-processing libraries and tools
 
 Add public `api/query` (typed paths, filters, grouping, CSV/JSONL and anonymous
 inventory), `api/quality` (object/collection diagnostics and caller-required fields),
@@ -24,8 +24,9 @@ moon run --target native cmd/data -- convert INPUT_DIR --output NEW_DIR
 Read the [data-processing guide](docs/DATA_PROCESSING.zh-CN.md),
 [0.5 migration and boundaries](docs/MIGRATION_0.5.zh-CN.md), and
 [implementation/acceptance ledger](docs/DATA_UPGRADE_STATUS.zh-CN.md).
-Existing `moon add ...@0.4.1` below installs the previously published package;
-new APIs require this 0.5.0 source candidate until a separate registry release.
+The installation example below targets 0.5.0. Verify registry availability and
+the frozen source snapshot using the external release readback report described
+in the [synchronization protocol](docs/PLATFORM_SYNC.zh-CN.md).
 The following sections describe capabilities retained in the current candidate; historical release and measurement references keep their original versions.
 
 
@@ -78,14 +79,14 @@ Publication state and the contest remediation ledger are recorded in
 synthetic verification and remaining field evidence. Earlier P/iteration audits
 are historical snapshots, not the current capability list.
 
-## Install the previously published library (0.4.1)
+## Install the 0.5.0 library
 
 Install MoonBit using the [official instructions](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html).
 Verified baseline: moon 0.1.20260920 / moonc 0.10.14+7d59c7ec9.
 In an existing independent MoonBit module:
 
 ```sh
-moon add 001-Elsa/medseal@0.4.1
+moon add 001-Elsa/medseal@0.5.0
 ```
 
 Create an executable package `app/moon.pkg`:
@@ -121,7 +122,7 @@ Expected output: `public-policy-ok`. Compiling a policy does not authorize
 privacy, pixel or release approval. Public import paths are `api/dicom`,
 `api/dicom_json`, `api/policy`, `api/validation`, `api/explain`, `api/query`,
 `api/quality`, and Native `api/authorization` / `api/native` in current 0.5.0 source.
-The last three new packages are not supplied by the 0.4.1 install above.
+Versions before 0.5.0 do not provide the new data-processing packages.
 See [API contracts](docs/PUBLIC_API.zh-CN.md); existing `src/` imports remain
 compatible. This package install supplies the library, not a certified enterprise deployment.
 

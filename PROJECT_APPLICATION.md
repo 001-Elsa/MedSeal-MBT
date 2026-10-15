@@ -8,8 +8,8 @@
 | 联系方式 | 766903826@qq.com · 17889572851 |
 | 项目性质 | 参赛者韩桢的原创项目；本次在本人原有原创项目基础上继续深化迭代 |
 | 项目方向 | MoonBit 数据处理与工具库；医学影像元数据场景；既有原创项目深化迭代 |
-| 对应版本 | 0.5.0 发行源码源码；Apache-2.0；0.4.1 为此前公开基线 |
-| 材料状态 | 已按当前源码更新的申报事实稿；本轮未取得 0.5.0 公开发布或官方申报回执 |
+| 对应版本 | 0.5.0 发行源码；Apache-2.0；0.4.1 为此前公开基线 |
+| 材料状态 | 已按当前源码更新的申报事实稿；平台发布状态见本版本外置回读报告；正式申报回执单独记录 |
 
 ## 需求与实际价值
 
@@ -48,7 +48,7 @@ Native 新入口对 1/16/64 MiB 像素及 100/1,000 对象分别重复测量三�
 ## 开源与复现入口
 
 - [GitHub 仓库](https://github.com/001-Elsa/MedSeal-MBT)、[GitLink 镜像](https://gitlink.org.cn/Hzhhhh/MedSeal-MBT)；远端不据本地改动自动视为更新。
-- [Mooncakes 0.4.1 公开基线](https://mooncakes.io/docs/001-Elsa/medseal@0.4.1)；新增 API 使用本地 0.5.0 源码候选，旧安装命令不能取得新增能力。
+- [Mooncakes 0.5.0 入口](https://mooncakes.io/docs/001-Elsa/medseal@0.5.0)；实际可用状态与源码一致性按[同步协议](docs/PLATFORM_SYNC.zh-CN.md)在源码树外核验，旧版不含新增接口。
 - 当前源码运行 `tools/moon-local run --target native examples/data_pipeline`，或 `tools/medseal-data summary INPUT_DIR`；完整命令与预算见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)。
 - [迁移说明](docs/MIGRATION_0.5.zh-CN.md)、[公共 API](docs/PUBLIC_API.zh-CN.md)、[支持矩阵](docs/SUPPORT_MATRIX.md)、[文档同步账本](docs/DOCUMENTATION_STATUS.zh-CN.md)、[第三方许可](THIRD_PARTY.md)。
 

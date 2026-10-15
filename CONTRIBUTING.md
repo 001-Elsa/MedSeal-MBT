@@ -1,6 +1,6 @@
 # Contributing
 
-Maintain the declared 0.5.0 local-candidate scope: public MoonBit libraries, compatible CLI,
+Maintain the declared 0.5.0 source-release scope: public MoonBit libraries, compatible CLI,
 portable queries/quality/plans, Native data tools, controlled POSIX private adapters and loopback workbench. Database transactions,
 review/signing and local UI are existing components. Changes to compressed pixels,
 PACS/network services, diagnosis or full IOD/Profile claims need explicit scope,

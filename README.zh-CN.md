@@ -1,6 +1,6 @@
 # MedSeal-MBT
 
-面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.5.0 发行源码版**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
+面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.5.0**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
 
 ## 0.5.0 数据处理与工具库升级
@@ -9,7 +9,7 @@
 
 先运行 `tools/moon-local run --target native examples/data_pipeline`；自己的目录可用 `tools/medseal-data summary INPUT_DIR`、`quality INPUT_DIR`、`export INPUT_DIR --output NEW.csv --format csv` 和 `convert INPUT_DIR --output NEW_DIR`。详细说明见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)、[迁移说明](docs/MIGRATION_0.5.zh-CN.md)和[验收账本](docs/DATA_UPGRADE_STATUS.zh-CN.md)。
 
-本地候选源码及打包验收不代表 registry 发布或正式申报。后文 0.4.1 安装命令与历史测量保留其原版本含义，新增接口不能从旧版安装获得。
+后文安装示例以0.5.0为目标；registry实际可用状态以[同步协议](docs/PLATFORM_SYNC.zh-CN.md)所述本版本外置回读报告为准。源码验收、公开发布与正式申报分别记录，历史测量保留原版本。
 
 ## Community upgrade in source / 社区升级源码
 
@@ -54,12 +54,12 @@ These additions are included in the 0.4.1 community release.
 
 历史引用、重复转换/交付控制和恢复已实现；它们通过工程宿主使用。[W0–W7 账本](docs/WINNER_UPGRADE_STATUS.zh-CN.md)保存分阶段证据，旧 P/迭代核对表是对应提交的历史快照。实现完成、合成验证、真实现场验收是不同状态。
 
-## 安装此前公开的 0.4.1 公共库
+## 安装 0.5.0 公共库
 
 按[官方说明](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)安装 MoonBit。已验证基线为 moon `0.1.20260920` / moonc `0.10.14+7d59c7ec9`。在自己的独立 MoonBit 模块执行：
 
 ```sh
-moon add 001-Elsa/medseal@0.4.1
+moon add 001-Elsa/medseal@0.5.0
 ```
 
 创建 `app/moon.pkg`：
@@ -87,7 +87,7 @@ fn main {
 }
 ```
 
-执行 `moon run --target native app`，预期输出 `public-policy-ok`。这个例子只编译严格策略，不生成审核或放行许可。当前源码的[公共 API](docs/PUBLIC_API.zh-CN.md)覆盖 `api/dicom`、`api/dicom_json`、`api/policy`、`api/validation`、`api/explain`、`api/query`、`api/quality` 及 Native `api/authorization`、`api/native`；新增三包不包含在上述 0.4.1 安装中。旧 `src/` 导入继续兼容。
+执行 `moon run --target native app`，预期输出 `public-policy-ok`。这个例子只编译严格策略，不生成审核或放行许可。当前源码的[公共 API](docs/PUBLIC_API.zh-CN.md)覆盖 `api/dicom`、`api/dicom_json`、`api/policy`、`api/validation`、`api/explain`、`api/query`、`api/quality` 及 Native `api/authorization`、`api/native`；0.5.0之前版本不包含新增数据处理包。旧 `src/` 导入继续兼容。
 
 ## 安装源码命令行与完整演示
 
@@ -97,7 +97,7 @@ moon update
 moon run --target native examples/collection
 ```
 
-新接口使用本地 0.5.0 候选源码或候选归档；公开仓库地址不证明该候选已经推送。示例生成两个合成患者、四个文件和两条引用，执行转换及清单验证，打印新建的 `tmp/demo-...` 目录；样例没有真实患者数据。当前工作区可把 `moon` 换成 `tools/moon-local`，使用 `../moonbit工具链`，不修改系统配置。
+新接口使用0.5.0源码或经本版本外置回读核验的官方包。示例生成两个合成患者、四个文件和两条引用，执行转换及清单验证，打印新建的 `tmp/demo-...` 目录；样例没有真实患者数据。当前工作区可把 `moon` 换成 `tools/moon-local`，使用 `../moonbit工具链`，不修改系统配置。
 
 ```sh
 moon run --target native cmd/main -- plan INPUT_DIR --policy examples/research-policy.json

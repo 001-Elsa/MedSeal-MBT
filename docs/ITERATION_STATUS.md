@@ -1,6 +1,6 @@
 # Iteration status — current comparison
 
-The original 0.1.1 baseline is bb7e895 (19 commits). Current 0.5.0 local-candidate contracts include P/W, C/V and data-processing work; [original plan](ITERATION_PLAN.md) retains
+The original 0.1.1 baseline is bb7e895 (19 commits). Current 0.5.0 source-release contracts include P/W, C/V and data-processing work; [original plan](ITERATION_PLAN.md) retains
 its design baseline. Earlier 91/53-per-backend and 9cbd292 CI results remain
 fixed evidence, not the current test count.
 

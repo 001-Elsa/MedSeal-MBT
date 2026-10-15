@@ -34,7 +34,7 @@
 
 **问题与输入**：教学工具或影像处理应用需要可复用的策略编译和结构解释，不应依赖 MedSeal 私有事务/数据库，也不应把患者值直接显示在可分享报告中。先从自己的独立 MoonBit 模块安装公共包。
 
-**完整步骤**：按 README 执行 `moon add 001-Elsa/medseal@0.4.1`（此前公开基线；0.5.0新增接口使用候选源码） → 创建仅导入 `api/policy` 的 executable → 运行 strict 策略编译示例 → 依据 PUBLIC_API 合约使用 `api/validation` 对 Bytes 创建 ValidatedObject，调用 `convert_collection` 完成封闭集合转换并重新验证（0.5.0还可用命名配置与 `plan_collection`） → 使用 `api/explain` 的条件/对象解释生成受限公开结果。需要文件读取/可信授权时使用 Native 提供方，部署审核/交付仍由宿主明确执行。
+**完整步骤**：按 README 执行 `moon add 001-Elsa/medseal@0.5.0`（目标版本；实际公开可用状态见本版本外置回读报告） → 创建仅导入 `api/policy` 的 executable → 运行 strict 策略编译示例 → 依据 PUBLIC_API 合约使用 `api/validation` 对 Bytes 创建 ValidatedObject，调用 `convert_collection` 完成封闭集合转换并重新验证（0.5.0还可用命名配置与 `plan_collection`） → 使用 `api/explain` 的条件/对象解释生成受限公开结果。需要文件读取/可信授权时使用 Native 提供方，部署审核/交付仍由宿主明确执行。
 
 **输出与判定**：`public-policy-ok`、不可由 JSON true 伪造的验证/授权状态类型、版本化结构化错误与不包含原患者值的解释。`tools/verify_registry_consumer.py` 在独立模块安装公开版本；`tools/verify_rulebook.py` 验证 Schema、规则索引、实际解释与敏感值金丝雀。
 

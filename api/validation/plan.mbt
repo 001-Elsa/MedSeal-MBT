@@ -33,12 +33,23 @@ pub struct ConversionOptions {
 }
 
 ///|
+// Keep the optional default non-raising: the pinned C backend emits an invalid
+// Result return type for a raising default expression in another raising API.
+fn default_budget() -> Budget {
+  {
+    max_objects: 256,
+    max_file_bytes: 64 * 1024 * 1024,
+    max_total_bytes: 128 * 1024 * 1024,
+  }
+}
+
+///|
 /// Offsets follow the existing sorted patient-key contract; copied at construction.
 pub fn ConversionOptions::new(
   policy~ : @public_policy.Policy,
   uid_seed~ : String,
   date_offsets~ : Array[Int],
-  budget? : Budget = Budget::new(),
+  budget? : Budget = default_budget(),
 ) -> ConversionOptions raise @model.MedSealError {
   if !policy.strict_metadata || policy.allow_external_references {
     raise @model.PolicyError("a closed strict policy is required")
@@ -163,7 +174,7 @@ pub fn ConversionOptions::for_patients(
   policy~ : @public_policy.Policy,
   uid_seed~ : String,
   patients~ : Array[PatientOffset],
-  budget? : Budget = Budget::new(),
+  budget? : Budget = default_budget(),
 ) -> ConversionOptions raise @model.MedSealError {
   if patients.is_empty() || patients.length() > budget.max_objects {
     raise @model.MedSealError::InvalidArgument("invalid patient binding count")

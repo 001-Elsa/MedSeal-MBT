@@ -1,6 +1,6 @@
 # Architecture and safety model
 
-> 0.5.0本地候选新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)。
+> 0.5.0发行源码新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)。
 
 ## Current entry points and private host
 

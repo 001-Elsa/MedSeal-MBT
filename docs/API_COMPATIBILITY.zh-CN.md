@@ -27,12 +27,12 @@
 
 `0.4.1` 的包内容、工具链和规则指纹固定在发布证据中。旧作业、旧审核和旧缓存绑定其原始指纹，升级不会自动批准或重放它们。
 
-当前 0.5.0 的新增接受、写出规范化及预算见[迁移](MIGRATION_0.5.zh-CN.md)与[数据指南](DATA_PROCESSING.zh-CN.md)。没有取得本轮 registry 回执，新增 API 先按[消费者说明](CONSUMER.zh-CN.md)从候选源码归档验收。
+当前 0.5.0 的新增接受、写出规范化及预算见[迁移](MIGRATION_0.5.zh-CN.md)与[数据指南](DATA_PROCESSING.zh-CN.md)。本轮 registry 回执存放于源码树外，新增 API 按[消费者说明](CONSUMER.zh-CN.md)独立验收；不以旧版回执推断本轮状态。
 
 ## 此前公开 0.4.1 的消费者最小检查
 
 ```sh
-moon add 001-Elsa/medseal@0.4.1
+moon add 001-Elsa/medseal@0.5.0
 moon check --target native --deny-warn
 moon run --target native app
 ```
