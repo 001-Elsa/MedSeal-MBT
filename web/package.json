@@ -7,6 +7,7 @@
     "test": "node ../tools/verify_community_lab.mjs ../tmp/community-lab"
   },
   "devDependencies": {
-    "linkedom": "0.18.12"
+    "linkedom": "0.18.12",
+    "playwright": "1.56.1"
   }
 }

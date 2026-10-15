@@ -29,7 +29,7 @@ python3.12 tools/build_community_lab.py
 - 结构展示每对象最多 512 个节点，达到上限明确标注；只显示路径和 VR，不显示原值。解析器深度/元素上限继续生效。
 - 固定合成 seed 和每患者 1 天偏移不适用于真实作业；本页没有跨作业数据库、人工审核、OCR、签名、交付或医疗适用性保证。
 - 页面设置 `connect-src 'none'`、默认禁止外部资源，并以实际内联模块的 SHA-256 授权脚本。无外部脚本、字体、图片、遥测、文件上传和 Service Worker。构建器拒绝额外 `</script>`，界面用 `textContent` 展示输入与报告。
-- CSP 的存在和摘要一致性由自动检查验证；真实浏览器的 CSP 执行、排版与文件下载体验仍需浏览器验收，不把 Node 测试当作其证明。
+- CSP摘要由Node检查；V5另用真实Chrome154完成实际强制执行、排版、下载和键盘激活检查，证据范围与Node测试分列。
 
 ## 可复现实跑
 
@@ -46,4 +46,20 @@ Node 运行实际编译的 `engine.mjs`，再用 linkedom 模拟页面事件，�
 
 `tmp/community-lab/build.json` 绑定源码文件摘要、固定夹具、编译核心和页面摘要；`acceptance.json` 明确 `rendered_browser_verified:false`、`csp_enforcement_verified:false`。CI 在三个 OS 上重新构建并上传这些产物；配置已存在不等于远端运行成功。
 
-本功能仍是 0.2.3 发布之后的源码增量。新版 Mooncakes/GitLink 发布与浏览器验收状态分列在[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)，不会改写旧版本证明。
+本功能仍是 0.2.3 发布之后的源码增量。新版 Mooncakes/GitLink 发布状态分列在[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)，不会改写旧版本证明。
+
+
+## V5 真实浏览器验收和逐字段比较
+
+新增逐字段上次/本次动作表，失败时清除旧成功结构和比较结果。`tools/verify_lab_browser.mjs` 使用隔离临时浏览器状态，实际运行编译核心、键盘Enter激活、筛选、阻断清除和恢复、真实下载及金丝雀、1280/390px排版，并实际注入未授权脚本和网络请求确认CSP拦截。后者是验收探针，不是产品网络功能；没有外部请求发出。Chrome154.0.8037.98的8项检查已本机通过；不代表全部浏览器或读屏器认证。
+
+```sh
+# 使用项目固定playwright；CI安装其固定Chromium
+pnpm --dir web install --frozen-lockfile --ignore-scripts
+pnpm --dir web exec playwright install chromium
+python3.12 tools/build_community_lab.py
+node tools/verify_lab_browser.mjs
+# 本机也可显式 MEDSEAL_CHROME=/本机/Chrome可执行文件路径
+```
+
+`browser-acceptance.json`明确真实浏览器/CSP/键盘为true，`acceptance.json`继续只描述Node/DOM。两个结果不互相替代。真实文件私有视图的范围与退出标准见[设计](PRIVATE_FILE_VIEW.zh-CN.md)；当前页面仍只处理内置合成影像。

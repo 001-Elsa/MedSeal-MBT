@@ -45,11 +45,17 @@ function run() {
     for(const item of result.structures?.[0]?.rows??[]) { const row=document.createElement('tr');cell(row,item.path);cell(row,item.vr);tree.append(row); }
     $('truncated').textContent=result.structures?.[0]?.truncated?'结构展示已达到 512 节点上限。':'';
     $('issue').textContent=passed?'当前批次内对象与引用已重新校验。\n公开报告：release_authorized = false\n未执行：像素 OCR、人工复核或交付。':JSON.stringify(result.issue,null,2);
-    $('changes').textContent='';
+    $('changes').textContent='';$('comparison-rows').replaceChildren();$('comparison').hidden=true;
     if(passed) {
       const current=new Map(result.report.decisions[0].map(d=>[d.path,d.action]));
       if(previous?.scenario===scenario) {
         const changed=[...current].filter(([path,action])=>previous.map.get(path)!==action);
+        for (const [path,action] of changed) {
+          const row=document.createElement('tr');cell(row,path);
+          cell(row,actionText[previous.map.get(path)]??previous.map.get(path)??'新增');
+          cell(row,actionText[action]??action);$('comparison-rows').append(row);
+        }
+        $('comparison').hidden=changed.length===0;
         $('changes').textContent=changed.length?changed.map(([path,action])=>`${path}：${actionText[previous.map.get(path)]??previous.map.get(path)??'新增'} → ${actionText[action]??action}`).join('；'):'与上次成功运行相比，动作未变化。';
       }
       previous={scenario,map:current};
@@ -59,7 +65,7 @@ function run() {
     lastResult=null;$('export').disabled=true;$('status').dataset.state='error';
     $('status').textContent='实验室运行异常，请重新生成页面或查看核心构建检查。';
     $('objects').textContent=$('references').textContent=$('decisions').textContent='—';
-    $('structure-rows').replaceChildren();$('changes').textContent='';$('truncated').textContent='';
+    $('structure-rows').replaceChildren();$('changes').textContent='';$('truncated').textContent='';$('comparison-rows').replaceChildren();$('comparison').hidden=true;
     $('issue').textContent='界面未产生可用结果。';renderDecisions();
   } finally { $('run').disabled=false; }
 }

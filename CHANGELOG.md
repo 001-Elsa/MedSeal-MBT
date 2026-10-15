@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — application V5
+
+- Add per-field previous/current action comparison and fail-state clearing.
+- Verify actual isolated Chromium rendering, keyboard activation, download,
+  390px layout and enforced CSP; retain Node-only evidence separately.
+- Document private-file-view design and opening criteria; no patient import yet.
+
 ## Unreleased — application V4
 
 - Add fixed BSD mathematical phantom provenance and strict CT pixel/HU/geometry

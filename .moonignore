@@ -569,6 +569,7 @@
 !/docs/PLAN_AUDIT.md
 !/docs/PLATFORM_SYNC.zh-CN.md
 !/docs/POLICY.md
+!/docs/PRIVATE_FILE_VIEW.zh-CN.md
 !/docs/PUBLIC_API.zh-CN.md
 !/docs/RECOVERY.md
 !/docs/REHEARSAL.zh-CN.md
@@ -675,6 +676,10 @@
 !/requirements-enterprise.txt
 !/requirements-qa.txt
 !/resources/licenses/Pillow-LICENSE.txt
+!/resources/licenses/browser/playwright-LICENSE
+!/resources/licenses/browser/playwright-NOTICE
+!/resources/licenses/browser/playwright-core-LICENSE
+!/resources/licenses/browser/playwright-core-NOTICE
 !/resources/licenses/pydicom-LICENSE
 !/resources/licenses/qa-manifest.json
 !/resources/licenses/qa/attrs/licenses/LICENSE
@@ -892,6 +897,7 @@
 !/tools/verify_enospc_macos.py
 !/tools/verify_field_evidence.py
 !/tools/verify_incremental.py
+!/tools/verify_lab_browser.mjs
 !/tools/verify_orthanc_integration.py
 !/tools/verify_persistent_identity.py
 !/tools/verify_phantom.py

@@ -18,7 +18,8 @@ C2 adds an offline rule lab powered by the compiled MoonBit core. Build with
 `tmp/community-lab/index.html` in a regular browser. It uses bundled synthetic
 objects and provides rule/structure views, failure experiments and public JSON
 export. [使用与验收边界](docs/COMMUNITY_LAB.zh-CN.md): Node/DOM contracts pass;
-rendered-browser and CSP enforcement checks remain pending.
+V5 also verifies actual Chromium rendering, CSP enforcement, downloads, keyboard
+activation and a 390px layout. Patient-file import remains a separate design.
 
 
 C3a adds public DICOM JSON interchange for 25 VRs, exact decimal token
