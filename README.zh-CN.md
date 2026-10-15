@@ -27,6 +27,8 @@ pydicom oracle checks actual output. The full consumer now passes through JSON
 before strict collection conversion. [支持范围与示例](docs/DICOM_JSON.zh-CN.md).
 The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) next prioritizes
 dataset preflight, independent reception, measured workloads and usability.
+V2 adds a bounded dataset preflight with actionable, privacy-safe diagnostics:
+`python3.12 tools/dataset_preflight.py INPUT`. [操作说明](docs/DATASET_PREFLIGHT.zh-CN.md).
 These additions remain unreleased source; they do not change installed 0.2.3.
 
 

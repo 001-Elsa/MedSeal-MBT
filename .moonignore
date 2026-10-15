@@ -551,6 +551,7 @@
 !/docs/CONSUMER.zh-CN.md
 !/docs/CONTRIBUTION.md
 !/docs/CT_CLASSIC_RESEARCH.zh-CN.md
+!/docs/DATASET_PREFLIGHT.zh-CN.md
 !/docs/DICOM_JSON.zh-CN.md
 !/docs/DOCUMENTATION_STATUS.zh-CN.md
 !/docs/ENTERPRISE_ROADMAP.zh-CN.md
@@ -843,6 +844,7 @@
 !/tools/build_community_lab.py
 !/tools/build_distribution.py
 !/tools/check_documentation.py
+!/tools/dataset_preflight.py
 !/tools/deliver_local.py
 !/tools/dicom_json_bridge.mjs
 !/tools/enterprise_job.py
@@ -873,6 +875,7 @@
 !/tools/verify_conformance.py
 !/tools/verify_consumer.py
 !/tools/verify_ct_research.py
+!/tools/verify_dataset_preflight.py
 !/tools/verify_delivery.py
 !/tools/verify_destination.py
 !/tools/verify_dicom_json.py

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — application V2
+
+- Add bounded POSIX dataset preflight reusing sealed discovery, actual MoonBit
+  per-object explanations and whole-collection planning; actionable fixed
+  diagnostics and no private values in public output.
+
 ## Unreleased — community C3a
 
 - Add public DICOM JSON interchange for a documented 25-VR subset, bounded
