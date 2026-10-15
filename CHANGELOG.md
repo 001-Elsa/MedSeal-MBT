@@ -2,6 +2,8 @@
 
 ## 0.4.1 - 2026-10-15
 
+- Preserve the full dotted version in offline distribution archive and checksum filenames.
+
 - Ignore stale private-value responses after a rapid object selection change. Preserve immutable 0.4.0 and independently repeat publication checks.
 
 

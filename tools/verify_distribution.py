@@ -29,8 +29,10 @@ def main():
     (REPO / 'tmp').mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory(dir=REPO / 'tmp', prefix='offline-distribution-') as temp:
         root = Path(temp)
-        source = root / 'distribution'
+        source = root / 'distribution-0.4.1'
         preview = build(source, args.wheels.resolve(strict=True))
+        assert (root / (source.name + '.tar.gz')).is_file()
+        assert (root / (source.name + '.checksums.json')).is_file()
         checksum = preview['manifest_sha256']
         rejected(source, root / 'wrong-checksum', args.python, '0' * 64)
         altered = root / 'altered'

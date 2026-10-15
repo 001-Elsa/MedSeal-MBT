@@ -71,13 +71,13 @@ def build(destination, wheels):
                 'python_required': '3.12', 'files': [{'file': str(path.relative_to(destination)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} for path in sorted(destination.rglob('*')) if path.is_file()]}
     encoded = canonical(manifest)
     (destination / 'distribution.json').write_bytes(encoded)
-    archive_path = destination.with_suffix('.tar.gz')
+    archive_path = destination.parent / (destination.name + '.tar.gz')
     with tarfile.open(archive_path, 'w:gz') as archive:
         for path in sorted(destination.rglob('*')):
             if path.is_file():
                 archive.add(path, arcname=str(Path(destination.name) / path.relative_to(destination)), recursive=False)
     result = {'schema': 1, 'status': 'preview-built', 'archive_sha256': hashlib.sha256(archive_path.read_bytes()).hexdigest(), 'manifest_sha256': hashlib.sha256(encoded).hexdigest(), 'platform': manifest['platform'], 'machine': manifest['machine']}
-    destination.with_suffix('.checksums.json').write_bytes(canonical(result))
+    (destination.parent / (destination.name + '.checksums.json')).write_bytes(canonical(result))
     return result
 
 
