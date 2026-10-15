@@ -1,0 +1,21 @@
+name: Bug report
+description: Report a reproducible behavior issue without sharing private DICOM data
+title: "[bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "请只提供合成数据、匿名对象 ID、版本和错误码；不要上传患者影像、UID、路径或密钥。"
+  - type: input
+    id: version
+    attributes:
+      label: MedSeal version
+      placeholder: "0.3.0"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Include the command, expected behavior and actual stable error code.
+    validations:
+      required: true

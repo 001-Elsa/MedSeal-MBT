@@ -1,0 +1,18 @@
+name: Feature request
+description: Propose a bounded, testable community improvement
+title: "[feature] "
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: User task and boundary
+      description: Explain who needs it, the smallest useful behavior and what must remain rejected.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance evidence
+      description: Give a synthetic fixture, independent oracle or reproducible check.
+    validations:
+      required: true

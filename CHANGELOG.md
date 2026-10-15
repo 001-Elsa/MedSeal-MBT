@@ -1,33 +1,40 @@
 # Changelog
 
-## Unreleased — application V5
+## 0.3.0 - 2026-10-15 (Community release)
+
+- Publish the V1–V5 community upgrade as one independently consumable module.
+- Add DICOM JSON interchange, bounded dataset preflight, loopback Orthanc delivery, licensed phantom fidelity checks and measured workloads.
+- Add browser lab acceptance, stable API compatibility and migration contracts, environment diagnosis, contribution templates and the V6 acceptance runner. Historical 0.2.x packages remain immutable.
+
+
+### Included in 0.3.0 — application V5
 
 - Add per-field previous/current action comparison and fail-state clearing.
 - Verify actual isolated Chromium rendering, keyboard activation, download,
   390px layout and enforced CSP; retain Node-only evidence separately.
 - Document private-file-view design and opening criteria; no patient import yet.
 
-## Unreleased — application V4
+### Included in 0.3.0 — application V4
 
 - Add fixed BSD mathematical phantom provenance and strict CT pixel/HU/geometry
   fidelity acceptance; distinguish external pixels from locally generated DICOM.
 - Record hardware/toolchain-bound payload and count benchmarks with per-run
   RSS, throughput, failure and fidelity checks; preserve different path semantics.
 
-## Unreleased — application V3
+### Included in 0.3.0 — application V3
 
 - Add a loopback-only, fixed-version Orthanc REST adapter for reverified signed
   packages; explicit partial retry semantics and no remote credentials.
 - Run actual Orthanc1.13.0 with signed synthetic CT, identity-matched voxel/HU/geometry
   readback, duplicates, malformed input, disconnect/restart/retry and tamper refusal.
 
-## Unreleased — application V2
+### Included in 0.3.0 — application V2
 
 - Add bounded POSIX dataset preflight reusing sealed discovery, actual MoonBit
   per-object explanations and whole-collection planning; actionable fixed
   diagnostics and no private values in public output.
 
-## Unreleased — community C3a
+### Included in 0.3.0 — community C3a
 
 - Add public DICOM JSON interchange for a documented 25-VR subset, bounded
   duplicate-aware parsing, exact DS/IS tokens, and private Part 10 reconstruction.
@@ -38,16 +45,16 @@
 - Record a task-based application plan for dataset preflight, independent
   reception, measured workloads, usability and a separately frozen release.
 
-## Unreleased — community C2
+### Included in 0.3.0 — community C2
 
 - Build a self-contained offline rule lab using the compiled MoonBit SDK;
   synthetic scenarios, structure/decision views, policy action comparisons and
   public explanation export run without a server or external assets.
 - Add bounded JSON/hex bridge, public-error boundary and two four-backend tests.
 - Add Node/DOM event acceptance and three-OS CI; explicitly keep rendered-browser
-  and CSP-enforcement acceptance pending.
+  and CSP-enforcement acceptance pending at C2 (completed in V5).
 
-## Unreleased — community C1
+### Included in 0.3.0 — community C1
 
 - Add public, portable closed-collection conversion with bounded inputs,
   all-output validation and a private result type; retain legacy APIs.

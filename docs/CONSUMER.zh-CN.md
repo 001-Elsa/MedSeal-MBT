@@ -29,9 +29,9 @@ python3.12 tools/verify_consumer.py tmp/c1-consumer.json
 - `--contract policy` 显式选择历史的仅策略契约，用于重验已发布 0.2.3 等旧版本。不会在集合编译失败后静默降级。
 
 ```sh
-# 当前已发布版本只具备历史消费者契约
-python3.12 tools/verify_registry_consumer.py --version 0.2.3 --contract policy --record tmp/registry-policy.json
-# 新版本发布后，明确指定它并运行默认 collection 契约
+# 0.3.0 完整集合消费者；真实 registry 安装，不能回退本地源码
+python3.12 tools/verify_registry_consumer.py --version 0.3.0 --record tmp/registry-collection.json
+# 仅在重验旧版时显式选择 --version 0.2.3 --contract policy
 ```
 
 [0.2.1 归档](evidence/release-0.2.1-archive-consumer.json)、[0.2.1 registry](evidence/release-0.2.1-registry-consumer.json)、[0.2.0 归档](evidence/release-0.2.0-archive-consumer.json)、[0.2.0 registry](evidence/release-0.2.0-registry-consumer.json)仍是对应旧版本的策略契约记录，不能用于证明 C1。当前证据默认写入忽略的 `tmp/`；发布回读写入源码外的版本目录。见[三平台同步](PLATFORM_SYNC.zh-CN.md)和[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)。

@@ -1,8 +1,8 @@
 # 三平台完整源码同步
 
-当前模块版本：0.2.3。参赛者：韩桢。同步范围经本人确认：现行 MedSeal 源码、自有辅助脚本和相关维护文档。
+当前模块版本：0.3.0。参赛者：韩桢。同步范围经本人确认：现行 MedSeal 源码、自有辅助脚本和相关维护文档。
 
-GitHub：<https://github.com/001-Elsa/MedSeal-MBT>；GitLink：<https://gitlink.org.cn/Hzhhhh/MedSeal-MBT>；Mooncakes：<https://mooncakes.io/docs/001-Elsa/medseal@0.2.3>。
+GitHub：<https://github.com/001-Elsa/MedSeal-MBT>；GitLink：<https://gitlink.org.cn/Hzhhhh/MedSeal-MBT>；Mooncakes：<https://mooncakes.io/docs/001-Elsa/medseal@0.3.0>。
 
 ## 文件范围
 
@@ -26,16 +26,16 @@ git add .moonignore
 ```sh
 moon package --frozen
 python tools/verify_platform_snapshot.py \
-  --archive _build/publish/001-Elsa-medseal-0.2.3.zip \
+  --archive _build/publish/001-Elsa-medseal-0.3.0.zip \
   --record tmp/source-snapshot.json
 ```
 
 核验必须达到：缺失文件 0、额外文件 0、内容差异 0。CI 同样运行该检查。允许清单过期、归档含非跟踪成员、符号链接或路径越界时失败。
 
-同步冻结提交至 GitHub 和 GitLink 的 master 与 v0.2.3 标签；发布同一包至 Mooncakes。再从两家 Git 服务读取该提交和源码，从 Mooncakes 官方下载 ZIP，与本地 Git 快照逐文件、逐字节对比。对官方包重新运行真实 registry 消费者，不能回退本地源码。
+同步冻结提交至 GitHub 和 GitLink 的 master 与 v0.3.0 标签；发布同一包至 Mooncakes。再从两家 Git 服务读取该提交和源码，从 Mooncakes 官方下载 ZIP，与本地 Git 快照逐文件、逐字节对比。对官方包重新运行真实 registry 消费者，不能回退本地源码。
 
-发布后的提交号、平台返回、完整摘要清单、CI、消费者和安装证据写到源码树外，例如父目录 `MedSeal参赛核验/release-0.2.3/`。本页描述协议和候选内容，发布前不伪造成功；核验结果以该外置报告为准。冻结后不再单独追加“发布成功”文档，否则最新仓库又会领先固定包。任何下一次变更需新版本整体重新发布。
+发布后的提交号、平台返回、完整摘要清单、CI、消费者和安装证据写到源码树外，例如父目录 `MedSeal参赛核验/release-0.3.0/`。本页描述协议和候选内容，发布前不伪造成功；核验结果以该外置报告为准。冻结后不再单独追加“发布成功”文档，否则最新仓库又会领先固定包。任何下一次变更需新版本整体重新发布。
 
-0.2.0、0.2.1 的固定证据保留原值；本轮不扩张 DICOM 支持、不代表 W7 真实医疗现场验收或正式申报成功。版本升级会改变运行时指纹，已固定作业继续使用原运行时。
+0.2.0、0.2.1 的固定证据保留原值；本轮增加已列明的 JSON 子集、集合 SDK 与本地适配器，不代表 W7 真实医疗现场验收或正式申报成功。版本升级会改变运行时指纹，已固定作业继续使用原运行时。
 
 验收脚本的默认运行证据均写入临时目录；持久身份与 W4 可用 `--record` 显式指定外置记录。CI 打包后再次检查 Git 工作区，发现任何受跟踪文件变化即失败，不自动恢复或隐藏差异。

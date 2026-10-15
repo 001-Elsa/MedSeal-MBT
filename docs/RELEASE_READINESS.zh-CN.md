@@ -11,7 +11,7 @@ GitLink 页面导出的最小观察 JSON。
 
 ```sh
 python3.12 tools/release_readiness.py \
-  --archive _build/publish/001-Elsa-medseal-0.2.3.zip \
+  --archive _build/publish/001-Elsa-medseal-0.3.0.zip \
   --record tmp/release-readiness.json \
   --ci-url "$MEDSEAL_CI_URL"
 ```
@@ -38,13 +38,13 @@ python3.12 tools/release_readiness.py \
   "observed_at": "2026-10-13T12:00:00+08:00",
   "url": "https://mooncakes.io/docs/001-Elsa/medseal",
   "status": "published",
-  "observed_version": "0.2.3",
+  "observed_version": "0.3.0",
   "observed_commit": "optional-platform-value",
   "notes": "页面显示版本、下载数和包摘要"
 }
 ```
 
-只有 `status=published` 且 `observed_version` 等于当前候选模块版本（当前候选为 `0.2.3`） 才会把该平台标成
+只有 `status=published` 且 `observed_version` 等于当前候选模块版本（当前候选为 `0.3.0`） 才会把该平台标成
 `candidate_visible=true`。GitHub CI、Mooncakes、GitLink、Git tag 和 Release
 分别记录，任何一项都不能从另一项推断。平台页面显示旧版或没有可验证版本时，
 保持 `pending`，不要修改成成功。
@@ -54,7 +54,7 @@ python3.12 tools/release_readiness.py \
 1. 核对 `moon.mod` 的模块名、版本和依赖；确认候选提交与 CI 运行号一致。
 2. 记录归档 SHA-256 和 manifest 成员摘要，发布前保存一份只读副本。
 3. 按平台流程发布或同步，保存平台返回的版本、提交、包摘要、时间和操作者。
-4. 重新运行回读工具，确认公开版本与冻结模块版本一致（当前候选为 `0.2.3`）；失败时保留旧版，不重试未知状态。
+4. 重新运行回读工具，确认公开版本与冻结模块版本一致（当前候选为 `0.3.0`）；失败时保留旧版，不重试未知状态。
 5. 从公开包做一次仓库外消费者验收，确认消费者没有偷偷解析本地 `src/`。
 6. 只在真实操作者、真实数据来源、接收方和独立审查材料齐全后，推进 W7 的现场状态。
 

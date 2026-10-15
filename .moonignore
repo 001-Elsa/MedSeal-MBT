@@ -5,6 +5,8 @@
 !/.gitattributes
 !/.githooks/README.md
 !/.githooks/pre-commit
+!/.github/ISSUE_TEMPLATE/bug_report.yml
+!/.github/ISSUE_TEMPLATE/feature_request.yml
 !/.github/workflows/ci.yml
 !/.github/workflows/copilot-setup-steps.yml
 !/.github/workflows/orthanc.yml
@@ -543,6 +545,7 @@
 !/conformance/lab/moon.pkg
 !/conformance/lab/pkg.generated.mbti
 !/conformance/manifest.json
+!/docs/API_COMPATIBILITY.zh-CN.md
 !/docs/APPLICATION_BENCHMARKS.zh-CN.md
 !/docs/APPLICATION_VALUE_PLAN.zh-CN.md
 !/docs/COMMUNITY_LAB.zh-CN.md
@@ -555,6 +558,7 @@
 !/docs/CT_CLASSIC_RESEARCH.zh-CN.md
 !/docs/DATASET_PREFLIGHT.zh-CN.md
 !/docs/DICOM_JSON.zh-CN.md
+!/docs/DOCTOR.zh-CN.md
 !/docs/DOCUMENTATION_STATUS.zh-CN.md
 !/docs/ENTERPRISE_ROADMAP.zh-CN.md
 !/docs/ENTERPRISE_STATUS.md
@@ -562,6 +566,7 @@
 !/docs/INCREMENTAL_LEDGER.zh-CN.md
 !/docs/ITERATION_PLAN.md
 !/docs/ITERATION_STATUS.md
+!/docs/MIGRATION_0.3.zh-CN.md
 !/docs/OPERATIONS.zh-CN.md
 !/docs/ORTHANC_INTEGRATION.zh-CN.md
 !/docs/P0_CONTRACT.md
@@ -587,6 +592,7 @@
 !/docs/TEMPORAL_SEMANTICS.zh-CN.md
 !/docs/TRUSTED_DELIVERY.md
 !/docs/USE_CASES.zh-CN.md
+!/docs/V6_ACCEPTANCE.zh-CN.md
 !/docs/W7_FIELD_EVIDENCE.zh-CN.md
 !/docs/WINNER_DRIVEN_ROADMAP.zh-CN.md
 !/docs/WINNER_RESEARCH.zh-CN.md
@@ -860,6 +866,7 @@
 !/tools/dataset_preflight.py
 !/tools/deliver_local.py
 !/tools/dicom_json_bridge.mjs
+!/tools/doctor.py
 !/tools/enterprise_job.py
 !/tools/evidence.py
 !/tools/explanation_report.py
@@ -910,6 +917,7 @@
 !/tools/verify_rulebook.py
 !/tools/verify_strict_profile.py
 !/tools/verify_system_failures.py
+!/tools/verify_v6.py
 !/tools/verify_w4.py
 !/tools/verify_w7_rehearsal.py
 !/tools/verify_with_pydicom.py

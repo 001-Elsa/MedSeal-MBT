@@ -1,6 +1,6 @@
 # Support matrix
 
-Applies to 0.2.3, retaining the 0.2.0 behavioral contracts. This is a tested subset, not a full DICOM
+Applies to 0.3.0, retaining the 0.2.0 behavioral contracts. This is a tested subset, not a full DICOM
 conformance statement. Do not transfer private-host guarantees to basic commands.
 
 | Area | Supported behavior | Boundary |
@@ -24,20 +24,20 @@ conformance statement. Do not transfer private-host guarantees to basic commands
 | Public reports | Anonymous IDs, structural paths, registered actions/issues | No original patient values/paths, mapping state, offsets or secrets |
 | Workbench | Loopback pagination/explanations/cancel with Host/Origin/session/CSRF gates | Single-owner local tool; no organizational login or release authority |
 
-## Unreleased community additions after 0.2.3
+## Community additions included in 0.3.0
 
 C1 adds public `convert_collection`: 1–256 objects, 64 MiB/object, 128 MiB total,
 strict closed references and all-output verification, on four backends. C2 adds
 an offline synthetic rule lab compiled from the same SDK; no patient import,
-server or release authority. Its transport/structure limits and pending browser
+server or release authority. Its transport/structure limits and actual Chromium browser
 validation are documented in [lab contracts](COMMUNITY_LAB.zh-CN.md). These are
-source additions, not capabilities already installed by `moon add ...@0.2.3`.
+0.3.0 additions, capabilities installed by `moon add ...@0.3.0`.
 
 C3a adds private DICOM JSON interchange for 25 VRs, exact DS/IS token
 preservation and Part 10 reconstruction. Rejects unsupported VRs and remote
 BulkDataURI. JSON 8 MiB, InlineBinary 1 MiB, SQ depth 16, 20,000 counted nodes;
 conservative escaping allocations may reject earlier. See the explicit
-[JSON matrix, normalization and oracle](DICOM_JSON.zh-CN.md). This source-only
+[JSON matrix, normalization and oracle](DICOM_JSON.zh-CN.md). This
 addition is separate from binary parsing, strict IOD checks and public reports.
 
 V2 adds [dataset preflight](DATASET_PREFLIGHT.zh-CN.md); V3 adds a [loopback Orthanc REST adapter](ORTHANC_INTEGRATION.zh-CN.md) for reverified signed packages. Actual Orthanc 1.13.0 synthetic reception passed; no complete DICOMweb/PACS claim.

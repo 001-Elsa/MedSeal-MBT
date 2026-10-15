@@ -46,7 +46,7 @@ Node 运行实际编译的 `engine.mjs`，再用 linkedom 模拟页面事件，�
 
 `tmp/community-lab/build.json` 绑定源码文件摘要、固定夹具、编译核心和页面摘要；`acceptance.json` 明确 `rendered_browser_verified:false`、`csp_enforcement_verified:false`。CI 在三个 OS 上重新构建并上传这些产物；配置已存在不等于远端运行成功。
 
-本功能仍是 0.2.3 发布之后的源码增量。新版 Mooncakes/GitLink 发布状态分列在[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)，不会改写旧版本证明。
+本功能已纳入 0.3.0 社区发行版。新版 Mooncakes/GitLink 发布状态分列在[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)，不会改写旧版本证明。
 
 
 ## V5 真实浏览器验收和逐字段比较

@@ -9,7 +9,7 @@ consistency and independent output verification. [中文指南](README.zh-CN.md)
 C1 adds a complete portable public collection SDK: strict closed-batch
 conversion, bounded inputs, revalidated relationships and privacy-safe reports.
 The source consumer runs on Native, JS, wasm and wasm-gc; an independent pydicom
-oracle checks its actual output. This addition is not in published 0.2.3.
+oracle checks its actual output. These additions are included in the 0.3.0 community release.
 Run `moon run --target js examples/consumer` from the source checkout.
 See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
 [六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
@@ -29,12 +29,14 @@ pydicom oracle checks actual output. The full consumer now passes through JSON
 before strict collection conversion. [支持范围与示例](docs/DICOM_JSON.zh-CN.md).
 The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) next prioritizes
 dataset preflight, independent reception, measured workloads and usability.
+V3–V5 now include actual loopback Orthanc reception, licensed phantom fidelity,
+measured application costs and rendered-browser checks; see the linked plan.
 V2 adds a bounded dataset preflight with actionable, privacy-safe diagnostics:
 `python3.12 tools/dataset_preflight.py INPUT`. [操作说明](docs/DATASET_PREFLIGHT.zh-CN.md).
-These additions remain unreleased source; they do not change installed 0.2.3.
+These additions are included in the 0.3.0 community release.
 
 
-## Current scope: 0.2.3 engineering preview
+## Current scope: 0.3.0 community release
 
 | Entry | Implemented behavior | Platform / boundary |
 | --- | --- | --- |
@@ -57,7 +59,7 @@ Verified baseline: moon 0.1.20260920 / moonc 0.10.14+7d59c7ec9.
 In an existing independent MoonBit module:
 
 ```sh
-moon add 001-Elsa/medseal@0.2.3
+moon add 001-Elsa/medseal@0.3.0
 ```
 
 Create an executable package `app/moon.pkg`:
@@ -91,7 +93,7 @@ moon run --target native app
 
 Expected output: `public-policy-ok`. Compiling a policy does not authorize
 privacy, pixel or release approval. Public import paths are `api/dicom`,
-`api/policy`, `api/validation`, `api/explain`, and Native `api/authorization`.
+`api/dicom_json`, `api/policy`, `api/validation`, `api/explain`, and Native `api/authorization`.
 See [API contracts](docs/PUBLIC_API.zh-CN.md); existing `src/` imports remain
 compatible. This package install supplies the library, not a certified enterprise deployment.
 
@@ -183,3 +185,7 @@ Apache-2.0. [Third-party sources and licenses](THIRD_PARTY.md).
 [全部文档索引 / document audit](docs/DOCUMENTATION_STATUS.zh-CN.md) · [项目提交指南](docs/SUBMISSION_GUIDE.zh-CN.md) · [申报事实与答辩提纲](docs/SUBMISSION_MATERIALS.zh-CN.md)。姓名：韩桢。正式表单由本人提交；项目发布不代表已经取得报名回执。
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+0.3.0 maintenance: [API compatibility](docs/API_COMPATIBILITY.zh-CN.md),
+[migration](docs/MIGRATION_0.3.zh-CN.md), [doctor](docs/DOCTOR.zh-CN.md), and
+[clean-checkout release gate](docs/V6_ACCEPTANCE.zh-CN.md).

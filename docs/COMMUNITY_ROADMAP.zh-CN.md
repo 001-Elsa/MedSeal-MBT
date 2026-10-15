@@ -43,6 +43,9 @@
 | C1 | 本机及三平台 CI 通过；registry 新版待发布 | `api/validation/collection.mbt`、`examples/consumer`、`tools/verify_consumer.py`；`tmp/c1-consumer.json` 记录四后端实际输出、pydicom 3.0.1 及隔离归档 SHA；七个新增场景、全量 Native124/其余各71 通过；[C1 三平台 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38676792525) |
 | C2 | 实现、Node/DOM与V5实际Chrome渲染/CSP/下载/窄屏8项通过 | [实验室说明](COMMUNITY_LAB.zh-CN.md)、`web/core`、`tools/build_community_lab.py`、`tools/verify_community_lab.mjs`；本机 `tmp/community-lab/acceptance.json` 的12类Node检查及`browser-acceptance.json`真实浏览器8项通过，验证范围分列；全量 Native126/其余各73 通过 |
 | C3a | DICOM JSON子集实现及本机独立双向验收通过；非C3全部完成 | [JSON矩阵](DICOM_JSON.zh-CN.md)、`api/dicom_json`、`tools/verify_dicom_json.py`；25种VR、5个精度token、22个拒绝；新增11个场景，全量Native137/其余各84通过；关联消费者先经JSON再严格转换 |
-| C3余项、C4–C6 | 待实施 | 具体实际任务、顺序和退出标准见[应用价值计划](APPLICATION_VALUE_PLAN.zh-CN.md)，不是现有能力 |
+| C4 | V4 许可数学幻影与负载实测完成 | [资源基线](APPLICATION_BENCHMARKS.zh-CN.md)；样本保真与实际逐次测量 |
+| C5 | V3 真实本地 Orthanc 接收、拒绝与重试完成 | [集成证据边界](ORTHANC_INTEGRATION.zh-CN.md)；未声称临床或第三方采用 |
+| C6 | V6 稳定 API、迁移、诊断、贡献入口及干净目录门禁完成；发行回读另核验 | [V6 门禁](V6_ACCEPTANCE.zh-CN.md)、[兼容](API_COMPATIBILITY.zh-CN.md)、[迁移](MIGRATION_0.3.zh-CN.md) |
+| C3 其余候选 | Implicit VR LE 仍为评估项，不在 V1–V6 范围 | 不把未实现的传输语法列为已支持 |
 
-0.2.3 已发布快照保留；新增能力先作为工作区改进，经过验证后分阶段提交。公开新版本必须独立完成包清单、平台回读与消费者核验，不能把本地新增功能写成 0.2.3 已有功能。
+0.2.x 已发布快照保留；V1–V5 能力已在 0.3.0 候选源码中完成。公开新版本仍必须独立完成包清单、平台回读与消费者核验，不能把本地新增功能写成已发布能力。

@@ -66,6 +66,7 @@ jobs:
       - name: Independent DICOM verification
         run: |
           python -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
+          python tools/doctor.py --json
           python tools/verify_with_pydicom.py
       - name: Independent DICOM JSON bidirectional acceptance
         run: python tools/verify_dicom_json.py --record tmp/c3-dicom-json-ci.json
@@ -117,7 +118,7 @@ jobs:
       - name: Package
         run: moon package
       - name: Exact source snapshot in module package
-        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.2.3.zip --record tmp/platform-snapshot-ci.json
+        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.3.0.zip --record tmp/platform-snapshot-ci.json
       - name: Source tree remains unchanged after acceptance
         run: git diff --exit-code
       - name: Upload acceptance evidence
