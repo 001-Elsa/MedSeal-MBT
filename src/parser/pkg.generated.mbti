@@ -11,6 +11,8 @@ pub fn check_preamble(Bytes) -> Unit raise @model.MedSealError
 
 pub let explicit_vr_little_endian_uid : String
 
+pub let implicit_vr_little_endian_uid : String
+
 pub fn index_pixel_prefix(Bytes, Int64) -> PixelSpan raise @model.MedSealError
 
 pub let max_sequence_depth : Int

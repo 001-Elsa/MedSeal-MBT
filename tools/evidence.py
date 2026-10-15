@@ -7,7 +7,7 @@ import subprocess
 
 def code_identity(repo):
     repo = Path(repo)
-    scopes = ['src', 'api', 'cmd', 'tools', 'tests', 'resources', 'conformance', '.github', 'examples/authorization']
+    scopes = ['src', 'api', 'cmd', 'tools', 'tests', 'resources', 'conformance', '.github', 'examples']
     paths = [repo / name for name in ['moon.mod', '.gitattributes', 'requirements-enterprise.txt', 'requirements-qa.txt'] if (repo / name).is_file()]
     for name in scopes:
         root = repo / name

@@ -12,8 +12,9 @@
 | W3 / W4 / W5 | 限定 CT 体素/HU/几何；状态/故障/fuzz；回环工作台 | 完整 MR/SC Profile、多用户网络服务 |
 | W6 | Mooncakes 0.2.0、真实 registry 消费者、GitHub Release 和 GitLink 历史同步 | 旧归档不自动包含后续 master 文档 |
 | P7 / W7 | 合成全量+增量+冲突/恢复/签名接收演练，现场证据模板 | 真实来源、接收方、新操作者、独立审查/灾备仍 requires_field |
+| 0.5.0 数据处理 | 九个公共包、查询/质量/计划/Native SDK、固定字典 Implicit VR LE | 发行源码；不扩张旧阶段的 IOD/现场认证 |
 
-最新能力见 [支持矩阵](SUPPORT_MATRIX.md)，阶段原始记录见 [W 账本](WINNER_UPGRADE_STATUS.zh-CN.md)，公开发布见 [整改记录](COMPETITION_REMEDIATION.zh-CN.md)。源码基线 2c9a49e；当前测试 117 Native / 64×3，共 309 后端执行。原方案中的代码行号、拟议接口、未完成清单及旧测试数只对应方案制定基线，不能用于描述当前代码。
+最新能力见 [支持矩阵](SUPPORT_MATRIX.md)，阶段原始记录见 [W 账本](WINNER_UPGRADE_STATUS.zh-CN.md)，公开发布见 [整改记录](COMPETITION_REMEDIATION.zh-CN.md)。历史核对基线 2c9a49e 当时通过 117 Native / 64×3，共 309 后端执行。当前 0.5.0 本机 Native152 / 其余各99，475固定案例；查询、质量、命名患者计划、Native SDK 与固定字典 Implicit VR LE 已落地，详见[本轮实施账本](DATA_UPGRADE_STATUS.zh-CN.md)。原方案中的代码行号、拟议接口、未完成清单及旧测试数只对应方案制定基线，不能用于描述当前代码。
 
 ## 原始设计内容（保留需求与决策背景）
 

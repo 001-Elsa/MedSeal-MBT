@@ -4,6 +4,31 @@ MoonBit libraries and native tools for DICOM metadata conversion, linked-object
 consistency and independent output verification. [中文指南](README.zh-CN.md).
 
 
+## 0.5.0 data-processing candidate (local source, not registry publication)
+
+Add public `api/query` (typed paths, filters, grouping, CSV/JSONL and anonymous
+inventory), `api/quality` (object/collection diagnostics and caller-required fields),
+`api/validation` named configuration and immutable conversion plans, and Native
+`api/native` metadata scans and streaming closed-collection jobs without Python.
+The parser additionally accepts a pinned-dictionary Implicit VR Little Endian
+subset; binary output is normalized to Explicit VR Little Endian.
+
+```sh
+moon run --target native examples/data_pipeline
+moon run --target native cmd/data -- summary INPUT_DIR
+moon run --target native cmd/data -- quality INPUT_DIR
+moon run --target native cmd/data -- export INPUT_DIR --output NEW.csv --format csv --fields 00080060,00280010,00280011
+moon run --target native cmd/data -- convert INPUT_DIR --output NEW_DIR
+```
+
+Read the [data-processing guide](docs/DATA_PROCESSING.zh-CN.md),
+[0.5 migration and boundaries](docs/MIGRATION_0.5.zh-CN.md), and
+[implementation/acceptance ledger](docs/DATA_UPGRADE_STATUS.zh-CN.md).
+Existing `moon add ...@0.4.1` below installs the previously published package;
+new APIs require this 0.5.0 source candidate until a separate registry release.
+The following sections describe capabilities retained in the current candidate; historical release and measurement references keep their original versions.
+
+
 ## Community upgrade in source / 社区升级源码
 
 C1 adds a complete portable public collection SDK: strict closed-batch
@@ -27,7 +52,7 @@ C3a adds public DICOM JSON interchange for 25 VRs, exact decimal token
 preservation, bounded parsing, and Part 10 reconstruction. A bidirectional
 pydicom oracle checks actual output. The full consumer now passes through JSON
 before strict collection conversion. [支持范围与示例](docs/DICOM_JSON.zh-CN.md).
-The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) next prioritizes
+The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) records the implementation of
 dataset preflight, independent reception, measured workloads and usability.
 V3–V5 now include actual loopback Orthanc reception, licensed phantom fidelity,
 measured application costs and rendered-browser checks; see the linked plan.
@@ -36,11 +61,12 @@ V2 adds a bounded dataset preflight with actionable, privacy-safe diagnostics:
 These additions are included in the 0.4.1 community release.
 
 
-## Current scope: 0.4.1 community release
+## Current scope: 0.5.0 source release
 
 | Entry | Implemented behavior | Platform / boundary |
 | --- | --- | --- |
-| Public library | Policy compilation, DICOM read/write, validation and privacy-safe explanation | Portable core; file I/O and authorization providers require Native |
+| Public library | DICOM/JSON exchange, policy, query/filter/group/export, quality, immutable collection plans and privacy-safe explanation | Portable core; directory streaming and authorization providers require Native |
+| Native data tools | Metadata summary/quality, private CSV/JSONL and strict streaming conversion | No Python required; per-job identity, new output destinations, cooperative cancellation |
 | Collection CLI | Patient pseudonyms, identity UID mapping, full-date intervals, references and SHA-256 manifests | Per-job mappings; no persisted secrets in this compatible entry |
 | Private host | Persistent project/source identities, incremental cache/dedup, delivered-history references, precise time handling, resumable sealed jobs, object review, Ed25519 packages and idempotent directory receipts | Python 3.12 + MoonBit Native, controlled POSIX deployment |
 | Classic CT research | Single-frame uncompressed 16-bit MONOCHROME2, independent voxel/HU/geometry checks | Narrow `ct-classic-research-v1`; synthetic series tested |
@@ -52,7 +78,7 @@ Publication state and the contest remediation ledger are recorded in
 synthetic verification and remaining field evidence. Earlier P/iteration audits
 are historical snapshots, not the current capability list.
 
-## Install the library
+## Install the previously published library (0.4.1)
 
 Install MoonBit using the [official instructions](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html).
 Verified baseline: moon 0.1.20260920 / moonc 0.10.14+7d59c7ec9.
@@ -93,19 +119,22 @@ moon run --target native app
 
 Expected output: `public-policy-ok`. Compiling a policy does not authorize
 privacy, pixel or release approval. Public import paths are `api/dicom`,
-`api/dicom_json`, `api/policy`, `api/validation`, `api/explain`, and Native `api/authorization`.
+`api/dicom_json`, `api/policy`, `api/validation`, `api/explain`, `api/query`,
+`api/quality`, and Native `api/authorization` / `api/native` in current 0.5.0 source.
+The last three new packages are not supplied by the 0.4.1 install above.
 See [API contracts](docs/PUBLIC_API.zh-CN.md); existing `src/` imports remain
 compatible. This package install supplies the library, not a certified enterprise deployment.
 
-## Install and run the source CLI
+## Run the source CLI
 
 ```sh
-git clone https://github.com/001-Elsa/MedSeal-MBT.git
 cd MedSeal-MBT
 moon update
 moon run --target native examples/collection
 ```
 
+Use this local 0.5.0 candidate checkout or its source archive for the new APIs.
+The public repository URL alone does not establish that this candidate was pushed.
 The demo creates two synthetic patients, four files and two references, converts
 them and verifies the manifest. It prints a new `tmp/demo-...` directory. No real
 patient data is included. In the supplied workspace, `tools/moon-local` replaces
@@ -136,7 +165,7 @@ Use [operations and offline installation](docs/OPERATIONS.zh-CN.md) for Python
 [Incremental ledger](docs/INCREMENTAL_LEDGER.zh-CN.md) explains source-domain
 boundaries, exact-repeat reuse and historical-reference checks. The
 [workbench](docs/WORKBENCH.zh-CN.md) reuses these operations.
-[Three complete scenarios](docs/USE_CASES.zh-CN.md) describe batch integration,
+[Four complete scenarios](docs/USE_CASES.zh-CN.md) describe batch integration,
 longitudinal research and embedding the public library, with executable evidence
 and explicit failure boundaries. They are intended uses supported by synthetic
 checks, not claims of hospital adoption.
@@ -151,6 +180,9 @@ moon test --target all --deny-warn
 moon build --target native
 moon package
 python3.12 -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
+python3.12 tools/check_documentation.py
+python3.12 tools/verify_data_processing.py --record tmp/data-processing-ci.json
+python3.12 tools/verify_data_consumer.py --record tmp/data-consumer-ci.json
 python3.12 tools/verify_with_pydicom.py
 python3.12 tools/verify_ct_research.py --record tmp/ct-research.json
 python3.12 tools/verify_release_readiness.py
@@ -165,8 +197,10 @@ See [CONTRIBUTING](CONTRIBUTING.md), [CHANGELOG](CHANGELOG.md) and
 
 ## Privacy and limits
 
-Only Part 10 Explicit VR Little Endian, ASCII / ISO_IR 192 and documented
-Sequence/metadata rules are supported. Classic CT has a limited research profile;
+Part 10 Explicit VR Little Endian and pinned-dictionary Implicit VR Little Endian
+inputs, ASCII / ISO_IR 6 / ISO_IR 192 and documented Sequence/metadata rules are supported.
+Unknown/private implicit tags and ambiguous VRs are rejected. Binary writes
+normalize to Explicit VR LE; raw dataset parsing remains Explicit VR only. Classic CT has a limited research profile;
 MR/SC metadata checks do not establish full IOD conformance. Unsupported transfer
 syntax, public UID role, encoding and conflicting identities fail explicitly.
 Pixel bytes are preserved without OCR, redaction or diagnosis. Unknown public
@@ -186,6 +220,6 @@ Apache-2.0. [Third-party sources and licenses](THIRD_PARTY.md).
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
 
-0.4.1 maintenance: [API compatibility](docs/API_COMPATIBILITY.zh-CN.md),
-[migration](docs/MIGRATION_0.3.zh-CN.md), [doctor](docs/DOCTOR.zh-CN.md), and
+Current candidate maintenance: [API compatibility](docs/API_COMPATIBILITY.zh-CN.md),
+[0.5 migration](docs/MIGRATION_0.5.zh-CN.md), [doctor](docs/DOCTOR.zh-CN.md), and
 [clean-checkout release gate](docs/V6_ACCEPTANCE.zh-CN.md).

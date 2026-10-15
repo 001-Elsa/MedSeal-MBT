@@ -1,5 +1,7 @@
 # 环境诊断
 
+本工具诊断的是维护/既有私有宿主的完整 Python 环境；0.5.0 Native 数据二进制的 summary/quality/export/convert 运行本身无需 Python。缺少 QA/宿主依赖不应被解释为该二进制必需这些依赖。
+
 `tools/doctor.py` 在执行前检查 固定 MoonBit/Python 3.12、两份 requirements 的全部固定依赖版本和模块版本，输出可分享的匿名 JSON。它不会读取患者文件、密钥或环境变量值。
 
 ```sh

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "quality-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "objects",
+    "object_checks",
+    "collection_checks",
+    "ready",
+    "release_authorized",
+    "issues"
+  ],
+  "properties": {
+    "schema": {
+      "const": "medseal-quality-v1"
+    },
+    "objects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "object_checks": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-checked",
+        "unsupported"
+      ]
+    },
+    "collection_checks": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-checked",
+        "unsupported"
+      ]
+    },
+    "ready": {
+      "type": "boolean"
+    },
+    "release_authorized": {
+      "const": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "object_index",
+          "code",
+          "severity",
+          "location",
+          "suggestion"
+        ],
+        "properties": {
+          "object_index": {
+            "type": "integer",
+            "minimum": -1
+          },
+          "code": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "blocking",
+              "advisory"
+            ]
+          },
+          "location": {
+            "type": "string"
+          },
+          "suggestion": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

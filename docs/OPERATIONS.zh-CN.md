@@ -1,5 +1,7 @@
 # MedSeal 企业候选版操作与恢复手册
 
+当前0.5.0的summary/quality/export/convert与Native SDK无需本页Python私有宿主；不提供本页跨批持久身份、封存恢复或签名。先按[数据指南](DATA_PROCESSING.zh-CN.md)选择入口。下文0.2.1下载是冻结宿主包，不含本轮新增数据工具；旧作业继续使用原运行时。
+
 当前是限定范围的工程预览：核心数据变换在 MoonBit 中，私有身份、作业与签名适配用于受控 POSIX 本机部署。已验证 macOS ARM64 离线安装、合成 SC 作业链路和限定经典 CT 独立研究验证；Ubuntu/macOS CI 执行宿主验收，Windows 仅覆盖可移植核心。生产启用前必须填写现场验收表；不得把合成审核记录用在患者影像上。
 
 ## 1. 部署和职责
@@ -12,7 +14,7 @@
 
 从 [GitHub 工程预览 Release](https://github.com/001-Elsa/MedSeal-MBT/releases/tag/v0.2.1) 取得对应平台包，独立核对[发行记录](COMPETITION_REMEDIATION.zh-CN.md)中的归档及安装清单摘要，再解压。包内文档是冻结快照；操作前核对程序版本，不混用 master 新文档与旧固定运行时。已有 Python3.12。用安装器的 `--source` 指向解压目录、`--destination` 指向不存在的新安装目录、`--python` 指向解释器、`--expected-manifest-sha256` 指向可信清单摘要。安装器核对平台/全部文件并离线建立隔离环境，依赖固定且校验哈希。
 
-后续使用 `安装目录/.venv/bin/python 安装目录/tools/enterprise_job.py`。本文简称为“作业工具”；所有作业命令都带 `--workspace 私有作业目录`。增量缓存、历史引用和目的地绑定步骤见[增量账本](INCREMENTAL_LEDGER.zh-CN.md)；时间策略见[日期时间](TEMPORAL_SEMANTICS.zh-CN.md)。增量缓存、历史引用和目的地绑定步骤见[增量账本](INCREMENTAL_LEDGER.zh-CN.md)；时间策略见[日期时间](TEMPORAL_SEMANTICS.zh-CN.md)。`doctor` 核对运行环境、权限、二进制与空间，filesystem_certified:false 提醒其没有替代现场文件系统认证。
+后续使用 `安装目录/.venv/bin/python 安装目录/tools/enterprise_job.py`。本文简称为“作业工具”；所有作业命令都带 `--workspace 私有作业目录`。增量缓存、历史引用和目的地绑定步骤见[增量账本](INCREMENTAL_LEDGER.zh-CN.md)；时间策略见[日期时间](TEMPORAL_SEMANTICS.zh-CN.md)。`doctor` 核对运行环境、权限、二进制与空间，filesystem_certified:false 提醒其没有替代现场文件系统认证。
 
 ## 3. 初始化身份和准备来源
 

@@ -12,11 +12,32 @@ pub fn convert(ValidatedObject, @identity.Context) -> ConvertedObject raise @mod
 
 pub fn convert_collection(Array[Bytes], @policy.Policy, String, Array[Int]) -> ConvertedCollection raise @model.MedSealError
 
+pub fn plan_collection(Array[Bytes], ConversionOptions) -> ConversionPlan raise @model.MedSealError
+
 pub fn validate(Bytes) -> ValidatedObject raise @model.MedSealError
 
 // Errors
 
 // Types and methods
+pub struct Budget {
+  max_objects : Int
+  max_file_bytes : Int
+  max_total_bytes : Int
+}
+pub fn Budget::new(max_objects? : Int, max_file_bytes? : Int, max_total_bytes? : Int) -> Self raise @model.MedSealError
+
+pub struct ConversionOptions {
+  // private fields
+}
+pub fn ConversionOptions::for_patients(policy~ : @policy.Policy, uid_seed~ : String, patients~ : Array[PatientOffset], budget? : Budget) -> Self raise @model.MedSealError
+pub fn ConversionOptions::new(policy~ : @policy.Policy, uid_seed~ : String, date_offsets~ : Array[Int], budget? : Budget) -> Self raise @model.MedSealError
+
+pub struct ConversionPlan {
+  // private fields
+}
+pub fn ConversionPlan::execute(Self) -> ConvertedCollection raise @model.MedSealError
+pub fn ConversionPlan::public_report(Self) -> Json
+
 pub struct ConvertedCollection {
   // private fields
 }
@@ -29,6 +50,12 @@ pub struct ConvertedObject {
 }
 pub fn ConvertedObject::private_bytes(Self) -> Bytes
 pub fn ConvertedObject::public_decisions(Self) -> Json
+
+pub(all) struct PatientOffset {
+  patient_id : String
+  issuer : String
+  days : Int
+}
 
 pub struct ValidatedObject {
   // private fields

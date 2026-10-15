@@ -215,7 +215,7 @@ fn generate() -> Unit raise {
   write_sample(
     "samples/invalid/unsupported-transfer-syntax.dcm",
     @dicom_writer.write_bytes(
-      parsed(minimal, transfer_syntax="1.2.840.10008.1.2"),
+      parsed(minimal, transfer_syntax="1.2.840.10008.1.2.2"),
     ),
   )
   let prefix = @dicom_writer.write_bytes(parsed(@model.DataSet::empty()))

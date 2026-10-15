@@ -89,10 +89,11 @@ test "reject missing DICM marker" {
 ///|
 test "reject unsupported transfer syntax" {
   let rejected = try {
-    ignore(@parser.parse(minimal_file("1.2.840.10008.1.2")))
+    ignore(@parser.parse(minimal_file("1.2.840.10008.1.2.2")))
     false
   } catch {
-    @model.MedSealError::UnsupportedTransferSyntax("1.2.840.10008.1.2") => true
+    @model.MedSealError::UnsupportedTransferSyntax("1.2.840.10008.1.2.2") =>
+      true
     _ => false
   }
   assert_true(rejected)

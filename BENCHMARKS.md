@@ -1,5 +1,7 @@
 # Synthetic collection measurements
 
+The current 0.5.0 Native data entry has a separate three-repeat summary/conversion baseline for 1/16/64 MiB and 100/1,000 objects; see the [data-processing results](docs/DATA_UPGRADE_STATUS.zh-CN.md). The tables below retain their original P0/P4/V4 inputs and runtime fingerprints. They are not fresh runs or directly comparable speedup measurements.
+
 Independent pydicom 3.0.1 checks on the local Apple Silicon Mac, MoonBit
 0.1.20260920 / moonc 0.10.14+7d59c7ec9. The script is
 `tools/verify_with_pydicom.py`; machine-readable records are in `docs/evidence`.

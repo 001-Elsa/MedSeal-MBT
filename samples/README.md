@@ -21,7 +21,7 @@ Valid fixtures:
 
 Invalid fixtures:
 
-- `unsupported-transfer-syntax.dcm`: Implicit VR Little Endian UID.
+- `unsupported-transfer-syntax.dcm`: Explicit VR Big Endian UID (unsupported).
 - `truncated-element.dcm`: declared value length exceeds remaining bytes.
 - `invalid-vr.dcm`: uses the illegal VR `ZZ`.
 - `invalid-sequence.dcm`: missing Item and Sequence delimiters.

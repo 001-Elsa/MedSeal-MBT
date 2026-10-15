@@ -318,7 +318,7 @@ def products():
     changed=base(); changed.SOPClassUID='1.2.840.10008.5.1.4.1.1.66.4'
     add('seg-sop','unsupported',changed,blocked='MEDSEAL-E530',rule='supported-sop',stage='profile')
     changed=base(); changed.file_meta.TransferSyntaxUID='1.2.840.10008.1.2'
-    add('implicit-vr','unsupported',changed,blocked='MEDSEAL-E103')
+    add('implicit-vr','valid',changed)
     changed=base(); changed.DeidentificationMethod='SYNTHETIC PREVIOUS PASS'
     add('already-processed','unsupported',changed,blocked='MEDSEAL-E520')
     for tag,value,rule in [('00280102',6,'pixel-high-bit'),('00280002',3,'pixel-sample-bits')]:

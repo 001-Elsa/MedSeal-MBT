@@ -1,4 +1,12 @@
-# 三个完整预期使用场景
+# 四个完整预期使用场景
+
+## 4. 数据处理工具作者：目录清单、质量检查与结构化导出
+
+**输入与步骤**：使用当前 0.5.0 候选源码，以 `tools/medseal-data summary INPUT_DIR` 获得匿名清单，`quality INPUT_DIR` 检查元数据关系；用 `export INPUT_DIR --output NEW.jsonl --format jsonl --fields 00080060,00280010 --equals 00080060=CT` 提取私有字段，再用 `convert INPUT_DIR --output NEW_DIR` 转换完整封闭集合。原有三个场景在下文保留。
+
+**输出与验证**：清单/质量为匿名 JSON，CSV/JSONL 为私有原值；转换输出为完整新目录。`examples/data_pipeline` 演示公共库嵌入，`tools/verify_data_processing.py` / `tools/verify_data_consumer.py` 独立复核真实输出。
+
+**失败与边界**：过滤不自动改变 convert 的输入；要转换筛选集必须另建完整闭合集合。未知格式、预算超限、断引用、源变化和已存在输出拒绝。Native 无需 Python但不持久化跨批身份，取消只在对象/提交边界生效；详情见[数据指南](DATA_PROCESSING.zh-CN.md)。
 
 以下用途依赖已经实现的入口与合成验收，不是客户采用、真实来源授权或生产验收声明。
 
@@ -26,7 +34,7 @@
 
 **问题与输入**：教学工具或影像处理应用需要可复用的策略编译和结构解释，不应依赖 MedSeal 私有事务/数据库，也不应把患者值直接显示在可分享报告中。先从自己的独立 MoonBit 模块安装公共包。
 
-**完整步骤**：按 README 执行 `moon add 001-Elsa/medseal@0.2.0` → 创建仅导入 `api/policy` 的 executable → 运行 strict 策略编译示例 → 依据 PUBLIC_API 合约使用 `api/validation` 对 Bytes 创建 ValidatedObject，再经准备好的严格 Context 转换并重新验证 → 使用 `api/explain` 的条件/对象解释生成受限公开结果。需要文件读取/可信授权时使用 Native 提供方，部署审核/交付仍由宿主明确执行。
+**完整步骤**：按 README 执行 `moon add 001-Elsa/medseal@0.4.1`（此前公开基线；0.5.0新增接口使用候选源码） → 创建仅导入 `api/policy` 的 executable → 运行 strict 策略编译示例 → 依据 PUBLIC_API 合约使用 `api/validation` 对 Bytes 创建 ValidatedObject，调用 `convert_collection` 完成封闭集合转换并重新验证（0.5.0还可用命名配置与 `plan_collection`） → 使用 `api/explain` 的条件/对象解释生成受限公开结果。需要文件读取/可信授权时使用 Native 提供方，部署审核/交付仍由宿主明确执行。
 
 **输出与判定**：`public-policy-ok`、不可由 JSON true 伪造的验证/授权状态类型、版本化结构化错误与不包含原患者值的解释。`tools/verify_registry_consumer.py` 在独立模块安装公开版本；`tools/verify_rulebook.py` 验证 Schema、规则索引、实际解释与敏感值金丝雀。
 

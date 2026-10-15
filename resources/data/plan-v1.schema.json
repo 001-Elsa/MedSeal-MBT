@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "plan-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "objects",
+    "patients",
+    "references",
+    "status",
+    "release_authorized"
+  ],
+  "properties": {
+    "schema": {
+      "const": "medseal-plan-v1"
+    },
+    "objects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "patients": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "references": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "status": {
+      "const": "ready-for-conversion"
+    },
+    "release_authorized": {
+      "const": false
+    }
+  }
+}

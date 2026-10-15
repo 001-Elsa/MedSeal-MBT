@@ -20,20 +20,26 @@ pub fn index_pixel_prefix(
   check_preamble(prefix)
   let reader = @byteio.ByteReader::new(prefix)
   reader.skip(132)
-  let state : ParseState = { count: 0, }
+  let state : ParseState = { count: 0, implicit_vr: false, }
   let file_meta = parse_file_meta(reader, state)
   validate_file_meta(file_meta)
   let transfer_syntax = transfer_syntax_of(file_meta)
-  if transfer_syntax != explicit_vr_little_endian_uid {
+  if transfer_syntax != explicit_vr_little_endian_uid &&
+    transfer_syntax != implicit_vr_little_endian_uid {
     raise @model.MedSealError::UnsupportedTransferSyntax(transfer_syntax)
   }
+  state.implicit_vr = transfer_syntax == implicit_vr_little_endian_uid
   let elements : Array[@model.DataElement] = []
-  while reader.remaining() >= 12 {
+  while reader.remaining() >= 8 {
     let saved = reader.position()
     let found = read_tag(reader)
     if found == @model.Tag::new(0x7FE0U, 0x0010U) {
-      let vr = read_vr(reader)
-      let length = read_length(reader, vr)
+      let vr = if state.implicit_vr { @model.Vr::OW } else { read_vr(reader) }
+      let length = if state.implicit_vr {
+        reader.read_u32_le()
+      } else {
+        read_length(reader, vr)
+      }
       if ![@model.Vr::OB, @model.Vr::OW].contains(vr) ||
         length == 0U ||
         length > 128U * 1024U * 1024U ||

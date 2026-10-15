@@ -143,7 +143,6 @@
 | public-error-boundary | implemented-contract / validate | [代码](../api/explain/explain.mbt) | [public-error-boundary-valid](../tools/verify_rulebook.py) | [public-error-boundary-invalid](../tools/verify_rulebook.py) |
 | policy-priority | implemented-contract / validate | [代码](../src/policy/compiler.mbt) | [policy-priority-valid](../tools/verify_rulebook.py) | [policy-priority-invalid](../tools/verify_rulebook.py) |
 | required-sop-conditional | implemented-contract / validate | [代码](../src/conformance/profile.mbt) | [required-sop-conditional-valid](../src/conformance/contracts_test.mbt) | [required-sop-conditional-invalid](../src/conformance/contracts_test.mbt) |
-
 | file-meta-identity | Part 10 SOP Class/Instance 与 dataset 一致 | [代码](../src/verification/file_meta.mbt), [公共验证](../api/validation/validation.mbt) | [sc-baseline](../conformance/manifest.json) | [file-meta-identity-mismatch](../tools/generate_conformance_corpus.py) |
 | temporal-precision | DT/TM 精度、分数秒、显式时区与闰秒边界；低精度不补全 | [代码](../src/date/temporal.mbt), [代码](../src/validator/structural_rules.mbt), [代码](../src/identity/transform.mbt) | [temporal-precision-valid](../src/date/temporal_test.mbt) | [temporal-precision-invalid](../src/date/temporal_test.mbt) |
 

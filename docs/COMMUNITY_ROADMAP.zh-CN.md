@@ -1,10 +1,12 @@
 # MedSeal 社区价值升级：从内部工具到可复用的 MoonBit 影像基础设施
 
+> 0.5.0发行源码新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](DATA_PROCESSING.zh-CN.md)。
+
 制定基线：0.2.3 / `5555225`。本方案继续原仓库，承接 W0–W7；不把旧阶段的通过记录用于证明新增功能。目标是降低其他 MoonBit 开发者处理医疗二进制格式、验证转换和构建离线应用的成本。获奖取决于评审；工程目标用可运行产物验收。
 
-## 1. 重新判断差距
+## 1. 制定时的差距（0.2.3 历史基线）
 
-现有优势是严格的限定范围、关联对象处理、恢复和审核链。主要不足是：
+以下五项描述方案制定时的差距；C1–C6 与 0.5.0 的当前落实情况见第 4 节。制定时优势是严格的限定范围、关联对象处理、恢复和审核链，主要不足是：
 
 1. **公共库还不能顺畅完成实际任务。** 原仓库外消费者只编译策略，转换需要调用内部 identity Context。库有门面，不等于开发者拿到完整工作流。
 2. **评审和新用户无法快速体验核心价值。** 本地工作台依赖 Python/Native/私有状态；缺少直接运行 MoonBit 核心的浏览器入口。
@@ -40,12 +42,13 @@
 
 | 阶段 | 当前状态 | 证据位置 |
 | --- | --- | --- |
-| C1 | 本机及三平台 CI 通过；registry 新版待发布 | `api/validation/collection.mbt`、`examples/consumer`、`tools/verify_consumer.py`；`tmp/c1-consumer.json` 记录四后端实际输出、pydicom 3.0.1 及隔离归档 SHA；七个新增场景、全量 Native124/其余各71 通过；[C1 三平台 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38676792525) |
+| C1 | 当时本机及三平台 CI 通过，后纳入 0.3.0；当前旧接口仍兼容 | `api/validation/collection.mbt`、`examples/consumer`、`tools/verify_consumer.py`；`tmp/c1-consumer.json` 记录四后端实际输出、pydicom 3.0.1 及隔离归档 SHA；七个新增场景、全量 Native124/其余各71 通过；[C1 三平台 CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38676792525) |
 | C2 | 实现、Node/DOM与V5实际Chrome渲染/CSP/下载/窄屏8项通过 | [实验室说明](COMMUNITY_LAB.zh-CN.md)、`web/core`、`tools/build_community_lab.py`、`tools/verify_community_lab.mjs`；本机 `tmp/community-lab/acceptance.json` 的12类Node检查及`browser-acceptance.json`真实浏览器8项通过，验证范围分列；全量 Native126/其余各73 通过 |
 | C3a | DICOM JSON子集实现及本机独立双向验收通过；非C3全部完成 | [JSON矩阵](DICOM_JSON.zh-CN.md)、`api/dicom_json`、`tools/verify_dicom_json.py`；25种VR、5个精度token、22个拒绝；新增11个场景，全量Native137/其余各84通过；关联消费者先经JSON再严格转换 |
 | C4 | V4 许可数学幻影与负载实测完成 | [资源基线](APPLICATION_BENCHMARKS.zh-CN.md)；样本保真与实际逐次测量 |
 | C5 | V3 真实本地 Orthanc 接收、拒绝与重试完成 | [集成证据边界](ORTHANC_INTEGRATION.zh-CN.md)；未声称临床或第三方采用 |
 | C6 | V6 稳定 API、迁移、诊断、贡献入口及干净目录门禁完成；发行回读另核验 | [V6 门禁](V6_ACCEPTANCE.zh-CN.md)、[兼容](API_COMPATIBILITY.zh-CN.md)、[迁移](MIGRATION_0.3.zh-CN.md) |
-| C3 其余候选 | Implicit VR LE 仍为评估项，不在 V1–V6 范围 | 不把未实现的传输语法列为已支持 |
+| C3 后续：0.5.0 | 固定字典内 Implicit VR LE 已实现并完成本机独立验收 | 未知/私有字段和歧义拒绝；写出 Explicit VR LE；不扩张完整标准声明 |
+| 数据处理：0.5.0 | 查询/质量/命名配置与计划/Native SDK 五项规划已落地 | [当前实施与验收](DATA_UPGRADE_STATUS.zh-CN.md)；发行源码，远端 CI/registry 回读另验 |
 
 0.2.x 已发布快照保留；V1–V6 能力已在 0.3.0 发布；0.4.0补齐本机私有文件模式。公开新版本仍必须独立完成包清单、平台回读与消费者核验，不能把本地新增功能写成已发布能力。

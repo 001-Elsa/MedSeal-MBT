@@ -1,7 +1,6 @@
 # Iteration status — current comparison
 
-The original 0.1.1 baseline is bb7e895 (19 commits). Current 0.2.0 release
-contracts include the later P/W work; [original plan](ITERATION_PLAN.md) retains
+The original 0.1.1 baseline is bb7e895 (19 commits). Current 0.5.0 local-candidate contracts include P/W, C/V and data-processing work; [original plan](ITERATION_PLAN.md) retains
 its design baseline. Earlier 91/53-per-backend and 9cbd292 CI results remain
 fixed evidence, not the current test count.
 
@@ -13,7 +12,12 @@ fixed evidence, not the current test count.
 | D validation | Fixed corpus, pydicom, selected dciodvfy, CT research, fault/state/fuzz and RSS records | Synthetic evidence does not certify vendor/clinical inputs |
 | E delivery | GitHub/GitLink history, CI, published Mooncakes 0.2.0, independent consumer/install | Participant completes official application and personal declarations |
 
-Audit source 2c9a49e passed 117 Native and 64 each JS/wasm/wasm-gc, 309 backend
+Current local checks passed Native152 and JS/wasm/wasm-gc99 each,
+475 corpus cases and new/old isolated archive consumers. Query/quality/plans,
+Native streaming SDK and fixed-dictionary Implicit VR LE are implemented; see
+[the 0.5.0 ledger](DATA_UPGRADE_STATUS.zh-CN.md). Remote publication is separate.
+
+Historical audit source 2c9a49e passed 117 Native and 64 each JS/wasm/wasm-gc, 309 backend
 executions. [Three-platform CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38349000368)
 passed; Windows does not run the POSIX private host. New CI results bind their
 own commit. [Plan audit](PLAN_AUDIT.md), [release record](COMPETITION_REMEDIATION.zh-CN.md)

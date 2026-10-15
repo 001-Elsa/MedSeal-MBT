@@ -29,9 +29,17 @@ pub fn write_bytes(
   parsed : @parser.ParsedFile,
   dataset? : @model.DataSet = parsed.dataset,
 ) -> Bytes raise @model.MedSealError {
+  let file_meta = if parsed.transfer_syntax ==
+    @parser.implicit_vr_little_endian_uid {
+    parsed.file_meta.replace_text(
+      @model.transfer_syntax_uid_tag, @parser.explicit_vr_little_endian_uid,
+    )
+  } else {
+    parsed.file_meta
+  }
   let count = [0]
   let size = 132 +
-    encoded_size(parsed.file_meta, 0, count) +
+    encoded_size(file_meta, 0, count) +
     encoded_size(dataset, 0, count)
   if size > 256 * 1024 * 1024 {
     raise @model.MedSealError::InvalidModel("file exceeds 256 MiB")
@@ -43,7 +51,7 @@ pub fn write_bytes(
     writer.write_bytes(Bytes::make(128, b'\x00'))
   }
   writer.write_ascii("DICM")
-  writer.write_bytes(encode_file_meta(parsed.file_meta))
+  writer.write_bytes(encode_file_meta(file_meta))
   writer.write_bytes(encode_dataset(dataset))
   writer.to_bytes()
 }

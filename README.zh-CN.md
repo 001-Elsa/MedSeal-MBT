@@ -1,7 +1,15 @@
 # MedSeal-MBT
 
-面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.4.1 社区发行版**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
+面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.5.0 发行源码版**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
 
+
+## 0.5.0 数据处理与工具库升级
+
+本轮新增公共查询/筛选/分组、CSV/JSONL 导出与匿名清单、独立数据质量检查、命名患者日期配置、不可变集合转换计划、Native 元数据扫描与大集合流式 SDK。二进制解析新增固定字典内的 Implicit VR LE 子集；写出统一使用 Explicit VR LE。
+
+先运行 `tools/moon-local run --target native examples/data_pipeline`；自己的目录可用 `tools/medseal-data summary INPUT_DIR`、`quality INPUT_DIR`、`export INPUT_DIR --output NEW.csv --format csv` 和 `convert INPUT_DIR --output NEW_DIR`。详细说明见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)、[迁移说明](docs/MIGRATION_0.5.zh-CN.md)和[验收账本](docs/DATA_UPGRADE_STATUS.zh-CN.md)。
+
+本地候选源码及打包验收不代表 registry 发布或正式申报。后文 0.4.1 安装命令与历史测量保留其原版本含义，新增接口不能从旧版安装获得。
 
 ## Community upgrade in source / 社区升级源码
 
@@ -37,7 +45,8 @@ These additions are included in the 0.4.1 community release.
 
 | 入口 | 能力 | 适用范围 |
 | --- | --- | --- |
-| MoonBit 公共库 | 策略编译、DICOM 读取/写回、验证、隐私安全的解释及受控授权类型 | 公共门面 `api/*`；文件和授权提供方要求 Native |
+| MoonBit 公共库 | DICOM/JSON、查询筛选/分组/导出、质量检查、集合计划、策略与匿名解释 | 九个公共门面；目录 I/O、流式转换与授权提供方要求 Native |
+| Native 数据工具 | summary、quality、export、convert | 无需 Python；单作业身份、新目录提交、边界取消 |
 | 兼容集合 CLI | 作业内患者假名、身份 UID 映射、完整日期间隔、跨文件引用、清单与摘要 | 映射仅限本次作业，不使用持久身份库 |
 | 私有工程宿主 | 跨批持久身份、增量缓存和去重、已交付历史引用、时间精度、封存恢复、逐对象审核、Ed25519 签名及幂等目录接收 | MoonBit Native + Python 3.12；受控 POSIX 本机部署 |
 | 经典 CT 研究 Profile | 单帧、未压缩 16 位 MONOCHROME2；独立体素/HU/几何核验 | 限定 `ct-classic-research-v1`，三组合成系列验证 |
@@ -45,7 +54,7 @@ These additions are included in the 0.4.1 community release.
 
 历史引用、重复转换/交付控制和恢复已实现；它们通过工程宿主使用。[W0–W7 账本](docs/WINNER_UPGRADE_STATUS.zh-CN.md)保存分阶段证据，旧 P/迭代核对表是对应提交的历史快照。实现完成、合成验证、真实现场验收是不同状态。
 
-## 安装公共库并运行第一个例子
+## 安装此前公开的 0.4.1 公共库
 
 按[官方说明](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)安装 MoonBit。已验证基线为 moon `0.1.20260920` / moonc `0.10.14+7d59c7ec9`。在自己的独立 MoonBit 模块执行：
 
@@ -78,18 +87,17 @@ fn main {
 }
 ```
 
-执行 `moon run --target native app`，预期输出 `public-policy-ok`。这个例子只编译严格策略，不生成审核或放行许可。[公共 API](docs/PUBLIC_API.zh-CN.md)覆盖 `api/dicom`、`api/policy`、`api/validation`、`api/explain` 和 Native `api/authorization`。旧 `src/` 导入继续兼容。
+执行 `moon run --target native app`，预期输出 `public-policy-ok`。这个例子只编译严格策略，不生成审核或放行许可。当前源码的[公共 API](docs/PUBLIC_API.zh-CN.md)覆盖 `api/dicom`、`api/dicom_json`、`api/policy`、`api/validation`、`api/explain`、`api/query`、`api/quality` 及 Native `api/authorization`、`api/native`；新增三包不包含在上述 0.4.1 安装中。旧 `src/` 导入继续兼容。
 
 ## 安装源码命令行与完整演示
 
 ```sh
-git clone https://github.com/001-Elsa/MedSeal-MBT.git
 cd MedSeal-MBT
 moon update
 moon run --target native examples/collection
 ```
 
-示例生成两个合成患者、四个文件和两条引用，执行转换及清单验证，打印新建的 `tmp/demo-...` 目录；样例没有真实患者数据。当前工作区可把 `moon` 换成 `tools/moon-local`，使用 `../moonbit工具链`，不修改系统配置。
+新接口使用本地 0.5.0 候选源码或候选归档；公开仓库地址不证明该候选已经推送。示例生成两个合成患者、四个文件和两条引用，执行转换及清单验证，打印新建的 `tmp/demo-...` 目录；样例没有真实患者数据。当前工作区可把 `moon` 换成 `tools/moon-local`，使用 `../moonbit工具链`，不修改系统配置。
 
 ```sh
 moon run --target native cmd/main -- plan INPUT_DIR --policy examples/research-policy.json
@@ -109,7 +117,7 @@ moon run --target native cmd/main -- anonymize samples/input.dcm --output tmp/si
 
 工程宿主需要 Python 3.12，按[部署与恢复手册](docs/OPERATIONS.zh-CN.md)安装受控离线包，初始化身份库，执行 create/run/resume、review/publish/deliver 和备份轮换。严格策略、运行程序、封存内容或审核变动时重新核验；不能通过修改记录绕过失败。
 
-[增量账本](docs/INCREMENTAL_LEDGER.zh-CN.md)解释来源域、同内容复用、相同 SOP 内容冲突及历史引用边界。[工作台](docs/WORKBENCH.zh-CN.md)复用上述流程。[三类完整场景](docs/USE_CASES.zh-CN.md)覆盖影像开发者批处理、纵向研究增量导入和工具作者嵌入公共库；场景为预期用途与合成验证，不冒称医院采用。
+[增量账本](docs/INCREMENTAL_LEDGER.zh-CN.md)解释来源域、同内容复用、相同 SOP 内容冲突及历史引用边界。[工作台](docs/WORKBENCH.zh-CN.md)复用上述流程。[四类完整场景](docs/USE_CASES.zh-CN.md)覆盖影像开发者批处理、纵向研究增量导入和工具作者嵌入公共库；场景为预期用途与合成验证，不冒称医院采用。
 
 ## 验证与维护
 
@@ -121,6 +129,9 @@ moon test --target all --deny-warn
 moon build --target native
 moon package
 python3.12 -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
+python3.12 tools/check_documentation.py
+python3.12 tools/verify_data_processing.py --record tmp/data-processing-ci.json
+python3.12 tools/verify_data_consumer.py --record tmp/data-consumer-ci.json
 python3.12 tools/verify_with_pydicom.py
 python3.12 tools/verify_ct_research.py --record tmp/ct-research.json
 python3.12 tools/verify_release_readiness.py
@@ -130,7 +141,7 @@ CI 覆盖 Linux/macOS/Windows 核心；POSIX 工程宿主与离线安装验收�
 
 ## 支持与隐私边界
 
-支持 Part 10、Explicit VR Little Endian、ASCII / ISO_IR 192 和已列 Sequence/元数据规则。经典 CT 是限定研究 Profile，MR/SC 元数据检查不等于完整 IOD。压缩传输语法、未知公共 UID 角色、编码和身份冲突明确拒绝。
+支持 Part 10、Explicit VR LE 与固定字典内 Implicit VR LE 输入，二进制写出规范化为 Explicit VR LE；ASCII / ISO_IR 6 / ISO_IR 192 和已列 Sequence/元数据规则。未知/私有 implicit 字段与歧义拒绝；裸 Dataset 解析仍仅 explicit。经典 CT 是限定研究 Profile，MR/SC 元数据检查不等于完整 IOD。压缩传输语法、未知公共 UID 角色、编码和身份冲突明确拒绝。
 
 保留像素字节，不做 OCR、像素涂抹或医疗诊断；未知公共字段与烧录文字仍需人工审查。不声明完整 Annex E 匿名化、PACS/DICOMweb 或真实现场生产验收。合成审核始终标记 synthetic，不能用于患者数据。[安全](SECURITY.md) · [流式上限](docs/STREAMING.md) · [现场门槛](docs/W7_FIELD_EVIDENCE.zh-CN.md)。
 

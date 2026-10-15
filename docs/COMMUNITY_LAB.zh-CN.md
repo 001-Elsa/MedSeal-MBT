@@ -1,4 +1,4 @@
-# MedSeal 离线规则实验室（0.4.1）
+# MedSeal 离线规则实验室（0.5.0 当前源码）
 
 本实验室帮助 MoonBit 开发者理解：一个关联影像集合如何经过严格策略、哪些字段被处理、引用不完整时为什么阻断。它直接运行项目编译出的 MoonBit 核心；JavaScript 只连接控件、渲染表格和下载公开解释，没有另写 DICOM 转换算法。
 
@@ -46,7 +46,7 @@ Node 运行实际编译的 `engine.mjs`，再用 linkedom 模拟页面事件，�
 
 `tmp/community-lab/build.json` 绑定源码文件摘要、固定夹具、编译核心和页面摘要；`acceptance.json` 明确 `rendered_browser_verified:false`、`csp_enforcement_verified:false`。CI 在三个 OS 上重新构建并上传这些产物；配置已存在不等于远端运行成功。
 
-本功能已纳入 0.3.0 社区发行版。新版 Mooncakes/GitLink 发布状态分列在[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)，不会改写旧版本证明。
+该功能最初纳入 0.3.0 社区发行版，0.4.1补齐私有视图修正；当前源码构建使用0.5.0核心。原Node/浏览器测量保留其原阶段，不冒充本轮浏览器重跑。新版 Mooncakes/GitLink 发布状态分列在[社区升级方案](COMMUNITY_ROADMAP.zh-CN.md)，不会改写旧版本证明。
 
 
 ## V5 真实浏览器验收和逐字段比较

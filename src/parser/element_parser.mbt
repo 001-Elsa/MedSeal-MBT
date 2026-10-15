@@ -1,6 +1,7 @@
 ///|
 priv struct ParseState {
   mut count : Int
+  mut implicit_vr : Bool
 }
 
 ///|
@@ -148,8 +149,12 @@ fn parse_element(
   if tag.group == 0xFFFEU {
     raise @model.MedSealError::InvalidSequence(element_offset)
   }
-  let vr = read_vr(reader)
-  let length = read_length(reader, vr)
+  let vr = if state.implicit_vr { implicit_vr_of(tag) } else { read_vr(reader) }
+  let length = if state.implicit_vr {
+    reader.read_u32_le()
+  } else {
+    read_length(reader, vr)
+  }
   let order = state.next()
   if vr == @model.Vr::SQ {
     let items = parse_sequence(reader, state, depth + 1, length)

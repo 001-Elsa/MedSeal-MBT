@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "inventory-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "objects",
+    "studies",
+    "series",
+    "missing_fields",
+    "release_authorized"
+  ],
+  "properties": {
+    "schema": {
+      "const": "medseal-inventory-v1"
+    },
+    "objects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "studies": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "series": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missing_fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "release_authorized": {
+      "const": false
+    }
+  }
+}

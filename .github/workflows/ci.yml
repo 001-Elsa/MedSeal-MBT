@@ -111,6 +111,12 @@ jobs:
       - name: W6 archive consumer acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_consumer.py tmp/w6-consumer-ci.json
+      - name: Public data-processing consumer from isolated archive
+        if: runner.os != 'Windows'
+        run: python tools/verify_data_consumer.py --record tmp/data-consumer-ci.json
+      - name: Native data-processing and Implicit VR oracle
+        if: runner.os != 'Windows'
+        run: python tools/verify_data_processing.py --record tmp/data-processing-ci.json
       - name: W7 operator rehearsal and field-boundary acceptance
         if: runner.os != 'Windows'
         run: python tools/verify_w7_rehearsal.py --record tmp/w7-rehearsal-ci.json
@@ -119,7 +125,7 @@ jobs:
       - name: Package
         run: moon package
       - name: Exact source snapshot in module package
-        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.4.1.zip --record tmp/platform-snapshot-ci.json
+        run: python tools/verify_platform_snapshot.py --archive _build/publish/001-Elsa-medseal-0.5.0.zip --record tmp/platform-snapshot-ci.json
       - name: Source tree remains unchanged after acceptance
         run: git diff --exit-code
       - name: Upload acceptance evidence

@@ -1,5 +1,7 @@
 # Related work and independent contribution
 
+The 0.5.0 source release additionally provides reusable queries/exports, quality, immutable plans and Native directory jobs, plus a pinned-dictionary Implicit VR LE subset. These are current implementation facts; the external ecosystem census below remains dated 2026-10-10, not a new uniqueness search. See the [data ledger](DATA_UPGRADE_STATUS.zh-CN.md).
+
 The baseline is this repository's `bb7e895` / 0.1.1, not a newly renamed project.
 Its parser, recursive basic de-identification, DICOM writer and fixtures remain
 the foundation. New work adds the collection workflow and correctness evidence, followed by

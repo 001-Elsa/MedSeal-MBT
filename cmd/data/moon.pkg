@@ -1,0 +1,16 @@
+import {
+  "moonbitlang/async",
+  "001-Elsa/medseal/api/native",
+  "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/query",
+  "001-Elsa/medseal/api/policy",
+  "001-Elsa/medseal/src/storage",
+  "moonbitlang/core/env",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/string",
+  "moonbitlang/x/sys",
+}
+
+supported_targets = "+native"
+
+pkgtype(kind: "executable")

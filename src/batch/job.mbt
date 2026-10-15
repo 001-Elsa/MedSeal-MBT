@@ -84,6 +84,7 @@ pub async fn plan(
   streamed? : Bool = false,
   program_sha256? : String = "",
   destination? : Json? = None,
+  cancelled? : (() -> Bool)? = None,
 ) -> Job raise @model.MedSealError {
   if @storage.kind(input) != @async_fs.FileKind::Directory {
     raise @model.MedSealError::InvalidArgument(
@@ -123,6 +124,11 @@ pub async fn plan(
   let offsets : Array[Int] = []
   let mut total = 0
   for path in paths {
+    if cancelled is Some(callback) && callback() {
+      raise @model.MedSealError::InvalidArgument(
+        "operation cancelled during planning",
+      )
+    }
     let before = @storage.snapshot(path)
     let (parsed, hash) = if streamed {
       let span = @streaming.inspect(path)
@@ -602,6 +608,9 @@ pub async fn Job::execute(
     }
   }
   // No overwrite; the sibling staging directory keeps the rename on one FS.
+  if checkpoint is Some(callback) {
+    callback("before-commit", self.paths.length())
+  }
   @storage.publish(stage, output, faults~)
   manifest
 }

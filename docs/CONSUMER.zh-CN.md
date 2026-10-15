@@ -1,5 +1,19 @@
 # 仓库外消费者与公开包
 
+## 0.5.0 新数据消费者
+
+`examples/data_pipeline` 只通过公共 API 完成读取、查询/投影、质量检查、命名患者配置、计划与转换；`examples/native_pipeline` 演示异步目录扫描/流式作业。前者在四后端运行，后者要求 Native。
+
+```sh
+moon run --target native examples/data_pipeline
+python3.12 tools/verify_data_consumer.py --record tmp/data-consumer-ci.json
+python3.12 tools/verify_data_processing.py --record tmp/data-processing-ci.json
+```
+
+新消费者从当前候选模块归档隔离运行，实际输出由 pydicom 和 JSON Schema 验证。下文旧集合消费者继续兼容；0.4.1 registry 检查只能证明此前公开契约，不能证明新包已发布。
+
+> 0.5.0发行源码新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](DATA_PROCESSING.zh-CN.md)。
+
 C1 的 `examples/consumer` 仅导入 `api/dicom`、C3a `api/dicom_json`、`api/policy`、`api/validation` 和 MoonBit 标准库。合成夹具也使用公开读写类型构建，不使用 MedSeal `src/`。
 
 ## 当前源码的完整任务

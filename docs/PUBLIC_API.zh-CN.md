@@ -1,19 +1,26 @@
 # 公共 API 与解释契约 v1
 
+> 0.5.0发行源码新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](DATA_PROCESSING.zh-CN.md)。
+
 C1 新增公开 SDK 集合入口（已纳入 0.3.0 快照；发布状态须回读核验）：`api/validation.convert_collection(inputs, policy, uid_seed, date_offsets)`。仅通过 `api/dicom`、`api/policy`、`api/validation` 即可构造、读取、转换并复核影像，无需导入内部 Context。详见[完整消费者](CONSUMER.zh-CN.md)。
 
-该入口要求严格封闭集合，先检查 1–256 个对象、每对象至多 64 MiB、合计至多 128 MiB，再解析/验证所有输入、核对关联、准备单作业身份、逐对象转换并核对全部输出的关系。失败不返回部分结果，也不写文件。`ConvertedCollection.length()`、`private_bytes(index)` 保持输入顺序；索引错误返回类型化异常。`public_report()` 只包含数量、受限决定和 `release_authorized:false`。UID seed/每患者非零偏移必须由宿主显式提供；库没有随机源，也不替代跨作业身份库、审核或事务性文件交付。旧 `convert(ValidatedObject, Context)` 继续兼容。
+该入口要求严格封闭集合，先检查 1–256 个对象、每对象至多 64 MiB、合计至多 128 MiB，再解析/验证所有输入、核对关联、准备单作业身份、逐对象转换并核对全部输出的关系。失败不返回部分结果，也不写文件。`ConvertedCollection.length()`、`private_bytes(index)` 保持输入顺序；索引错误返回类型化异常。`public_report()` 只包含数量、受限决定和 `release_authorized:false`。UID seed/每患者非零偏移必须由宿主显式提供；此可移植接口没有随机源（Native 目录接口另取 OS 熵），也不替代跨作业身份库、审核或事务性文件交付。旧 `convert(ValidatedObject, Context)` 继续兼容。
 
 W0 建立公共门面，旧 `src/` 导入和已有命令继续可用。所有类型状态表示工厂在指定时刻完成过相应核验，不自动授予以后一次文件操作的许可。
 
 | 导入路径（模块前缀 `001-Elsa/medseal/`） | 用途与边界 |
 | --- | --- |
-| `api/dicom` | 读取和写入 Explicit VR Little Endian；单独解析不代表 IOD 合格或允许交付 |
+| `api/dicom` | 读取 Explicit VR LE / 固定字典 Implicit VR LE，写出规范化为 Explicit VR LE；单独解析不代表 IOD 合格或允许交付 |
 | `api/dicom_json` | C3a 已纳入 0.3.0：25种VR的私有 JSON 编解码及 Part 10 重建；保留十进制 token、有界拒绝、pydicom 双向检查；不是公开报告/脱敏，详见[DICOM JSON](DICOM_JSON.zh-CN.md) |
 | `api/policy` | 严格策略编译、规范摘要；身份、日期、结构字段不能被描述字段规则覆盖 |
-| `api/validation` | `validate(Bytes)` 创建不受调用方数组修改影响的 `ValidatedObject`；`convert` 使用已准备的严格 Context，重新验证输出和写回值，返回 `ConvertedObject` |
+| `api/validation` | `plan_collection` / `ConversionOptions.for_patients` 增加命名日期和不可变快照，预算只下调；`validate(Bytes)` 创建不受调用方数组修改影响的 `ValidatedObject`；`convert` 使用已准备的严格 Context，重新验证输出和写回值，返回 `ConvertedObject` |
 | `api/explain` | 配置／对象／当前集合关系的公开解释，及版本化 `ValidationIssue`；原值、原 UID／日期、输入摘要、本机路径、偏移、替换内容与管理员规则 ID 不进入公开出口 |
 | `api/authorization` | Native 受信任提供方；重新核验当前审核门禁或 Ed25519 包，创建 `ReviewEvidence`／`AuthorizedPackage`；输入 JSON 中的 true 不能创建这些状态 |
+| `api/query` | `lookup/values/scalar/integer`、`select/project/group_counts/summary`；表格的 `private_csv/private_jsonl` 含私有原值，匿名清单只有计数 |
+| `api/quality` | `check` 检查完整字节，`check_datasets` 检查元数据；`required_fields`、匿名问题及四类状态；`ready` 不授权 |
+| `api/native` | Native 异步 `scan_directory/quality_directory/plan_directory` 与 `DatasetJob.execute`；无 Python、每作业身份、全新目录与边界取消 |
+
+九个公共包的签名以各包 `pkg.generated.mbti` 为准。查询/质量/计划及 Native 的不同预算、报告 Schema、私有数据和取消边界见[数据处理指南](DATA_PROCESSING.zh-CN.md)。`api/validation` 是内存快照，`api/native` 计划会重新核对磁盘源字节，两者不能混同。
 
 `private_dataset`、`private_bytes` 返回私有内容，只可用于受控处理和交付。解释类型没有这些内容的序列化出口。Bytes 在当前工具链不可变；每次读取 Dataset 都重新解析成独立数组。状态类型构造器为包内私有，没有“已审核=true”工厂，也没有未经核验的反序列化工厂。
 

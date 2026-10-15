@@ -1,7 +1,7 @@
 # MedSeal-MBT acceptance
 
-Current maintained contracts cover the 0.2.3 complete-source snapshot patch, preserving
-the DICOM behavior of the published 0.2.0 engineering preview. Publication of
+Current maintained contracts cover the 0.5.0 local data-processing candidate.
+The previous public baseline is 0.4.1; historical P/W releases retain their own evidence. Publication of
 each immutable version is verified independently in the release record. The original bb7e895 / 0.1.1 history
 is preserved. This accepts the declared subset, not clinical production or all
 DICOM IODs. See [support matrix](docs/SUPPORT_MATRIX.md) and
@@ -9,12 +9,14 @@ DICOM IODs. See [support matrix](docs/SUPPORT_MATRIX.md) and
 
 ## Implemented and exercised
 
-- Bounded Part 10 / Explicit VR Little Endian parsing and binary rewriting;
+- Bounded Part 10 Explicit VR LE and pinned-dictionary Implicit VR LE input;
+  Explicit VR LE binary output, with unknown/private implicit tags rejected;
   supported ASCII/ISO_IR 6/ISO_IR 192, rebuilt File Meta and zero preamble.
 - Research collection patient/UID/date consistency and closed-reference checks.
 - Strict-v1 unknown-field rejection, path/condition/priority rules, 120 classified
   attributes and 141 rulebook entries with implementation/test references.
-- Public api/* facades, structured explanations and checked authorization types.
+- Nine public api/* facades: data queries/exports, quality, immutable plans,
+  Native scans/streaming, structured explanations and checked authorization types.
 - Controlled POSIX private host: encrypted persistent identities, sealed inputs,
   pinned-runtime recovery, streaming pixels, incremental cache and acknowledged
   historical references within the same project/source/destination domain.
@@ -36,6 +38,8 @@ tools/moon-local info
 tools/moon-local build --target native --deny-warn
 tools/moon-local package
 python3.12 tools/check_documentation.py
+python3.12 tools/verify_data_processing.py --record tmp/data-processing-ci.json
+python3.12 tools/verify_data_consumer.py --record tmp/data-consumer-ci.json
 tools/moon-local run --target native examples/collection
 ```
 
@@ -44,7 +48,13 @@ requirements-enterprise.txt. CI installs both and runs fixed-corpus, CT,
 recovery/review/signature, state/fuzz, install, consumer and rehearsal checks.
 Windows runs portable/core checks; POSIX host tests run on Ubuntu/macOS.
 
-The source audit at 2c9a49e passed Native 117 and JS/wasm/wasm-gc 64 each,
+The 0.5.0 local run passed Native 152 and JS/wasm/wasm-gc 99 each;
+475 corpus cases, 18 data-processing acceptance groups and 11 preflight groups
+passed. Old/new archive consumers passed on four backends. Details and original
+record locations are in the [current ledger](docs/DATA_UPGRADE_STATUS.zh-CN.md).
+No 0.5.0 remote CI or registry publication is inferred from these local results.
+
+The historical source audit at 2c9a49e passed Native 117 and JS/wasm/wasm-gc 64 each,
 309 backend executions with shared tests repeated. These are not 309 distinct
 scenarios. [That CI](https://github.com/001-Elsa/MedSeal-MBT/actions/runs/38349000368)
 passed all three jobs. New verification results remain bound to their own commit.

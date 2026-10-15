@@ -65,7 +65,8 @@ def moon_binary():
     return (REPO.parent / "moonbit工具链" / "bin" / "moon").resolve(strict=True)
 
 
-def run_consumer(record_path):
+def run_consumer(record_path, consumer_name="consumer", verifier=None):
+    verifier = verifier or verify_output
     import pydicom
     moon = moon_binary()
     environment = dict(os.environ)
@@ -80,8 +81,8 @@ def run_consumer(record_path):
     if not archives:
         raise AssertionError("published-archive-not-found")
     archive = archives[-1]
-    consumer_files = sorted((REPO / "examples/consumer").glob("*.mbt")) + [REPO / "examples/consumer/moon.pkg"]
-    pkg = (REPO / "examples/consumer/moon.pkg").read_text(encoding="utf-8")
+    consumer_files = sorted((REPO / ("examples/" + consumer_name)).glob("*.mbt")) + [REPO / ("examples/" + consumer_name + "/moon.pkg")]
+    pkg = (REPO / ("examples/" + consumer_name + "/moon.pkg")).read_text(encoding="utf-8")
     for line in pkg.splitlines():
         if '"001-Elsa/medseal/' in line and '"001-Elsa/medseal/api/' not in line:
             raise AssertionError("consumer-imports-internal-package")
@@ -101,7 +102,7 @@ def run_consumer(record_path):
             subprocess.run([str(moon), "check", "--target", target, "--deny-warn", str(app)], cwd=root, env=environment, check=True, stdout=subprocess.DEVNULL)
             subprocess.run([str(moon), "test", "--target", target, "--deny-warn", str(app)], cwd=root, env=environment, check=True, stdout=subprocess.DEVNULL)
             output = subprocess.run([str(moon), "run", "--target", target, str(app)], cwd=root, env=environment, check=True, capture_output=True, text=True).stdout.strip()
-            backends[target] = verify_output(output)
+            backends[target] = verifier(output)
         if any(value != backends["native"] for value in backends.values()):
             raise AssertionError("consumer-cross-backend-byte-difference")
         result = {

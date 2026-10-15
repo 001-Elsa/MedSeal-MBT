@@ -1,0 +1,67 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/query"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn group_counts(Array[@model.DataSet], Array[Step]) -> Array[(String, Int)] raise QueryError
+
+pub fn integer(@model.DataSet, Array[Step]) -> Int64 raise QueryError
+
+pub fn lookup(@model.DataSet, Array[Step]) -> @model.DataElement raise QueryError
+
+pub fn project(Array[@model.DataSet], Array[Column]) -> Table raise QueryError
+
+pub fn scalar(@model.DataSet, Array[Step]) -> String raise QueryError
+
+pub fn select(Array[@model.DataSet], Array[Predicate]) -> Array[Int] raise QueryError
+
+pub fn summary(Array[@model.DataSet], Array[Column]) -> Json raise QueryError
+
+pub fn values(@model.DataSet, Array[Step]) -> Array[String] raise QueryError
+
+// Errors
+pub(all) suberror QueryError {
+  Missing
+  TypeMismatch
+  MultipleValues
+  InvalidNumber
+  InvalidPath
+  BudgetExceeded
+} derive(@debug.Debug)
+pub fn QueryError::code(Self) -> String
+pub fn QueryError::to_repr(Self) -> @debug.Repr
+
+// Types and methods
+pub(all) struct Column {
+  name : String
+  path : Array[Step]
+}
+
+pub(all) enum Predicate {
+  Exists(Array[Step])
+  Equals(Array[Step], String)
+  IntegerRange(Array[Step], Int64, Int64)
+} derive(@debug.Debug)
+pub fn Predicate::to_repr(Self) -> @debug.Repr
+
+pub(all) enum Step {
+  Field(@model.Tag)
+  Item(@model.Tag, Int)
+} derive(Eq, @debug.Debug)
+pub fn Step::equal(Self, Self) -> Bool
+pub fn Step::not_equal(Self, Self) -> Bool
+pub fn Step::to_repr(Self) -> @debug.Repr
+
+pub struct Table {
+  // private fields
+}
+pub fn Table::private_csv(Self) -> String
+pub fn Table::private_jsonl(Self) -> String
+
+// Type aliases
+
+// Traits

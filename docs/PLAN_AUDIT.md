@@ -1,11 +1,11 @@
 # 深化方案逐项核对（当前）
 
-原方案保存在 [ITERATION_PLAN.md](ITERATION_PLAN.md)，最初 research-v1 的缺口随后由 P0–P7 与 W0–W7 分阶段补齐。核对源码基线为 2c9a49e；0.2.0 冻结源码为 bc5b25c，不能将后续文档提交当作原发行源码。
+原方案保存在 [ITERATION_PLAN.md](ITERATION_PLAN.md)，最初 research-v1 的缺口随后由 P0–P7 与 W0–W7 分阶段补齐。原核对源码基线为 2c9a49e；0.2.0 冻结源码为 bc5b25c，不能将后续文档提交当作原发行源码。
 
 | 原方案条目 | 当前结果与入口 | 仍保留的边界 |
 | --- | --- | --- |
-| 工具链/原基线 | 隔离工具链，bb7e895 历史保留，moon-local；当前 117/64×3 | 后端次数不等于独立案例数 |
-| 前导区/File Meta/写后验证 | deidentified writer 与 File Meta identity 规则已实现 | 普通 round-trip 保留原头，须选择正确 API |
+| 工具链/原基线 | 隔离工具链，bb7e895 历史保留，moon-local；历史基线 117/64×3，当前0.5.0本机152/99×3 | 后端次数不等于独立案例数 |
+| 前导区/File Meta/写后验证 | deidentified writer 与 File Meta identity 规则已实现 | explicit 普通写回保留原头；implicit 写回更新传输语法并规范化，均非去标识入口 |
 | 报告隐私/编码/模型 | 匿名报告/公开解释，ASCII/ISO_IR 6/192，writer/VR/VM 限制 | 公开 API 不等于旧 inspect 私有诊断；其他字符集拒绝 |
 | 有界 I/O/路径/独占发布 | 发现计数、链接/别名/同目标竞争、真实进程和 HFS+ ENOSPC 记录 | 单文件两目的地非原子事务；未认证全部存储系统 |
 | JSON 策略/路径/优先级/条件 | research-v1 兼容，strict-v1 编译及三值条件已实现 | 仅分类描述字段，不允许任意身份/结构覆盖 |
@@ -18,6 +18,7 @@
 | SOP Type/研究用途 | strict 所列模块；限定经典 CT 的独立体素/HU/几何检查 | MR/SC/CT 全部 IOD 与真实来源仍未承诺 |
 | 独立互操作/资源 | 475 固定质量案例；pydicom/dciodvfy；1–120MiB与10,000小对象记录 | 合成负载不代表临床/32GiB性能 |
 | 示例/安装/公共消费者 | 集合示例、公共 api/*、离线安装、归档及真实 registry 消费者 | Windows 私有宿主不受支持 |
+| 数据处理增量 | 查询/质量/命名患者计划/Native SDK、固定字典 Implicit VR LE；[本轮账本](DATA_UPGRADE_STATUS.zh-CN.md) | 发行回读另验，不将旧版发布记录当作0.5.0回执 |
 | 平台/材料 | GitHub、GitLink、Mooncakes 0.2.0；姓名韩桢；提交清单 | 飞书由本人提交，声明/回执不由代码制造 |
 
 原计划的十类验收已在支持子集有正反例及 P/W 证据，但这不意味着每个资源上限、所有 SOP、所有故障窗口和真实来源均已认证。能力入口分别见 [支持矩阵](SUPPORT_MATRIX.md)、[企业记录](ENTERPRISE_STATUS.md)、[W 账本](WINNER_UPGRADE_STATUS.zh-CN.md)、[发布记录](COMPETITION_REMEDIATION.zh-CN.md)。旧 JSON 保留当时 SHA 和结果，不改写为本轮运行。

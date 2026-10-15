@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0 - local candidate, unreleased
+
+- Add typed metadata paths, exact bounded integer access, conjunctive filters, grouping, private CSV/JSONL and anonymous inventory.
+- Add independently callable quality reports, required-field constraints, series consistency checks, and explicit failed/unsupported/not-checked states.
+- Add lowered budgets, named patient-date bindings and immutable conversion plans while preserving the original collection entry.
+- Expose bounded Native metadata scanning and streaming collection jobs, detached datasets and cooperative cancellation with stage cleanup.
+- Accept the pinned-dictionary Implicit VR LE subset, normalize binary writes to Explicit VR LE, and reject unknown implicit tags without guessing.
+- Add independent pydicom acceptance, isolated four-backend consumers and measured workload scripts. Publication is a separate operation.
+- Align all maintained Markdown and the primary application with 0.5.0 capabilities, budgets and local-candidate status; add documentation contract regression checks and refresh local delivery copies.
+
+
 ## 0.4.1 - 2026-10-15
 
 - Preserve the full dotted version in offline distribution archive and checksum filenames.

@@ -1,5 +1,7 @@
 # 数据集预检（V2）
 
+0.5.0 另提供无需 Python 的 `api/quality` / `tools/medseal-data quality INPUT_DIR`，目录接口检查元数据，保留坏对象计数与集合 not-checked；它不执行本页 Python 封存/策略影响流程。两者预算和像素检查不同，不能混用 ready；详见[数据指南](DATA_PROCESSING.zh-CN.md)。
+
 入口：`python3.12 tools/dataset_preflight.py INPUT --policy examples/strict-policy.json`，先构建 `moon build --target native cmd/main`。成功退出0，阻断退出1；输出可分享的JSON，不产生转换影像、不授予交付许可。
 
 预检复用 `enterprise_job.scan/seal`：拒绝链接/特殊文件，深度16、目录条目20,000；识别扩展名.dcm或含DICM标记的文件，单独统计非DICOM排除项。当前预检限制256对象、64MiB/对象、合计128MiB；封存到自动清理的0700临时目录，读取前后检查源稳定性，策略至多1MiB并固定副本。失败不会丢弃对象后继续宣称整批可用。

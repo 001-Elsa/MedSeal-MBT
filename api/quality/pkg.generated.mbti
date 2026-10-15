@@ -1,0 +1,56 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/quality"
+
+import {
+  "001-Elsa/medseal/src/model",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn check(Array[Bytes], required_fields? : Array[@model.Tag]) -> Report
+
+pub fn check_datasets(Array[@model.DataSet], required_fields? : Array[@model.Tag]) -> Report
+
+pub fn from_errors(Int, Array[(Int, @model.MedSealError)]) -> Report
+
+// Errors
+
+// Types and methods
+pub(all) enum CheckState {
+  Passed
+  Failed
+  NotChecked
+  Unsupported
+} derive(Eq, @debug.Debug)
+pub fn CheckState::equal(Self, Self) -> Bool
+pub fn CheckState::not_equal(Self, Self) -> Bool
+pub fn CheckState::to_repr(Self) -> @debug.Repr
+
+pub struct Issue {
+  object_index : Int
+  code : String
+  severity : Severity
+  location : String
+  suggestion : String
+}
+
+pub struct Report {
+  issues : Array[Issue]
+  objects : Int
+  object_state : CheckState
+  collection_state : CheckState
+}
+pub fn Report::public_json(Self) -> Json
+pub fn Report::ready(Self) -> Bool
+
+pub(all) enum Severity {
+  Blocking
+  Advisory
+} derive(Eq, @debug.Debug)
+pub fn Severity::equal(Self, Self) -> Bool
+pub fn Severity::not_equal(Self, Self) -> Bool
+pub fn Severity::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

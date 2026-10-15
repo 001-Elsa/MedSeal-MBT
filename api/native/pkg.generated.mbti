@@ -1,0 +1,35 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/native"
+
+import {
+  "001-Elsa/medseal/api/quality",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/policy",
+}
+
+// Values
+pub async fn plan_directory(String, policy? : @policy.Policy, cancelled? : (() -> Bool)?) -> DatasetJob raise @model.MedSealError
+
+pub async fn quality_directory(String, cancelled? : (() -> Bool)?) -> @quality.Report raise @model.MedSealError
+
+pub async fn scan_directory(String, cancelled? : (() -> Bool)?) -> Scan raise @model.MedSealError
+
+// Errors
+
+// Types and methods
+pub struct DatasetJob {
+  // private fields
+}
+pub async fn DatasetJob::execute(Self, String, cancelled? : (() -> Bool)?) -> Unit raise @model.MedSealError
+pub fn DatasetJob::public_report(Self) -> Json
+
+pub struct Scan {
+  // private fields
+}
+pub fn Scan::private_datasets(Self) -> Array[@model.DataSet]
+pub fn Scan::public_report(Self) -> Json
+pub fn Scan::quality_report(Self) -> @quality.Report
+
+// Type aliases
+
+// Traits

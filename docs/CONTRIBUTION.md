@@ -1,5 +1,7 @@
 # Contribution from the existing baseline
 
+0.5.0在上述原创基础上新增数据查询/导出、独立质量、命名配置/不可变计划、Native目录SDK、固定字典Implicit VR LE及独立消费者/基准；对应[实施账本](DATA_UPGRADE_STATUS.zh-CN.md)。下文源码行数普查固定2b088d4，未重新统计，不代表当前规模。
+
 Baseline commit: `bb7e895` (0.1.1). Its 19 commits are preserved.
 
 | Existing foundation | New implementation |

@@ -1,9 +1,13 @@
 # Architecture and safety model
 
+> 0.5.0本地候选新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)。
+
 ## Current entry points and private host
 
-The portable MoonBit public facades live in api/dicom, api/policy,
-api/validation and api/explain. Native api/authorization validates evidence
+The portable MoonBit public facades live in api/dicom, api/dicom_json, api/policy,
+api/validation, api/explain, api/query and api/quality. Native api/native adds
+bounded directory scans and per-job streaming conversion without Python.
+The nine public packages include the Native authorization facade below. Native api/authorization validates evidence
 through an administrator-pinned **eight-file** authorization closure. That is
 separate from the private job coordinator's **ten-adapter** runtime closure.
 Factories prove checks at creation time; operations recheck current evidence.
@@ -60,12 +64,13 @@ in memory and are never serialized into public reports. Job execution is
 single-use; retries require a fresh plan.
 
 The original single-file architecture below remains the basic-mode foundation.
-Its ordinary serialization API preserves source headers; de-identifying writes
-now rebuild them. Supported limits and caveats are in docs/SUPPORT_MATRIX.md.
+Its ordinary serialization API preserves source headers for Explicit VR inputs;
+Implicit VR inputs update File Meta to Explicit VR LE. De-identifying writes
+rebuild headers and clear the preamble. Supported limits and caveats are in docs/SUPPORT_MATRIX.md.
 
 MedSeal-MBT keeps parsing, validation, policy, writing, and CLI concerns in
-separate MoonBit packages. The command entry point only forwards arguments to
-`src/app`; it does not contain DICOM algorithms.
+separate MoonBit packages. The compatible `cmd/main` entry forwards to `src/app`; the new `cmd/data`
+composes public data APIs and filesystem I/O. Neither duplicates DICOM algorithms.
 
 ```text
 DICOM bytes
@@ -97,13 +102,19 @@ DICOM bytes
 | `src/storage` | Bounded filesystem access, exclusive staging and OS entropy |
 | `src/checksum` | SHA-256 file and incremental streaming integrity hashes |
 | `src/batch` | Compatibility collection planning plus strict Native streaming execution |
-| `src/app` | Native CLI workflows, output and exit codes |
+| `src/app` | Compatible Native CLI workflows, output and exit codes |
+| `api/query`, `api/quality` | Portable typed data access/export and independent quality reports |
+| `api/validation` | Validated types, immutable buffered plans and named patient configuration |
+| `api/native` | Detached metadata scans and strict streaming job facade |
+| `cmd/data` | summary/quality/private export/convert composition |
 
 ## Safety invariants
 
 1. A file without a 128-byte preamble and `DICM` marker is rejected.
 2. Required File Meta elements and group length are checked before the dataset.
-3. Only Transfer Syntax `1.2.840.10008.1.2.1` is accepted.
+3. Part 10 accepts Explicit VR LE `1.2.840.10008.1.2.1` and pinned-dictionary
+   Implicit VR LE `1.2.840.10008.1.2`; unknown/private implicit fields or VR
+   ambiguity fail. Binary output is Explicit VR LE. Raw dataset parsing remains explicit.
 4. Reads are bounds-checked before indexing; parser limits are 256 MiB per
    file, 128 MiB per element, 100,000 elements, and 32 Sequence levels.
 5. Pixel Data is stored and written as raw bytes. It is never decoded or edited.
@@ -120,7 +131,7 @@ DICOM bytes
 ## Round-trip policy
 
 The writer emits defined-length Sequences even when the input used undefined
-lengths. This is valid for the supported scope: tag order, VR, nested item
+lengths. This is valid for the supported scope: tag order, resolved VR, nested item
 structure, retained values, and Pixel Data bytes are preserved, while element
 and Sequence lengths are recalculated from the serialized values.
 
@@ -134,8 +145,7 @@ and [review gate](docs/RISK_REVIEW.md) for exact bindings and transitions.
 
 ## Non-goals
 
-Version 0.2.0 does not implement compressed pixel decoding, other transfer
-syntaxes, DICOM networking, PACS/DICOMweb, OCR, pixel redaction, a complete
+The 0.5.0 candidate does not implement compressed pixel decoding, Big Endian, DICOM networking, PACS/DICOMweb, OCR, pixel redaction, a complete
 DICOM dictionary, diagnosis, or a guarantee of complete anonymization.
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。

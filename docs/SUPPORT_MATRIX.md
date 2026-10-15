@@ -1,11 +1,11 @@
 # Support matrix
 
-Applies to 0.4.1, retaining the 0.2.0 behavioral contracts. This is a tested subset, not a full DICOM
+Applies to the 0.5.0 source release, inheriting the 0.4.1 baseline except the explicitly expanded input syntax. This is a tested subset, not a full DICOM
 conformance statement. Do not transfer private-host guarantees to basic commands.
 
 | Area | Supported behavior | Boundary |
 | --- | --- | --- |
-| Format | Part 10, Explicit VR Little Endian | No compressed, other transfer syntaxes, raw-dataset CLI or networking |
+| Format | Part 10, Explicit VR LE and pinned-dictionary Implicit VR LE input; Explicit VR LE output | Unknown/private implicit tags rejected; no compression, BigEndian or complete standard claim |
 | Character sets | Default ASCII, ISO_IR 6, ISO_IR 192 | Other/multivalued character sets rejected; no transcoding |
 | Sequences | Supported defined/undefined item and Sequence lengths | Depth 32; supported strict Sequence contexts only |
 | Basic single file | Metadata editing, optional private-tag removal | Retains identity UIDs; report and DICOM destinations are not one atomic pair |
@@ -17,7 +17,7 @@ conformance statement. Do not transfer private-host guarantees to basic commands
 | References | Closed current collection; private host can use reverified Acknowledged history | History must match project/source/destination; permissive research external mode is weaker |
 | Incremental reuse | Bound private Converted cache and source-content/ownership checks | Cache hit never grants review/publish permission; no remote exactly-once claim |
 | Dates/times | Full DA; strict opt-in DT precision policy; standalone TM not shifted | Incomplete DT cleared; unsupported leap-second shifting blocked; no timezone inference |
-| Pixel path | Buffered public API; private strict streaming with terminal finite OB/OW pixels | Single frame/sample, monochrome 8/16 bit; no pixel inspection or editing |
+| Pixel path | Buffered public API; public Native SDK and private strict streaming with terminal finite OB/OW pixels | Single frame/sample, monochrome 8/16 bit; no pixel inspection or editing |
 | Classic CT research | Single-frame native 16-bit MONOCHROME2, selected CT matrix and independent voxel/HU/geometry checks | Only ct-classic-research-v1; no complete MR/SC/CT IOD or clinical claim |
 | Recovery | Private sealed inputs, immutable schema2 plan, SQLite journal/checkpoints and revalidation | Compatibility batch retries need new plans; no power-loss/network filesystem certification |
 | Review and delivery | Review schema2, signed release schema2, independent verifier and local directory receipts | Human evidence quality and clinical acceptance remain separate; no PACS/DICOMweb |
@@ -70,3 +70,7 @@ the current claim. See [operations](OPERATIONS.zh-CN.md),
 [security](../SECURITY.md) and [field evidence](W7_FIELD_EVIDENCE.zh-CN.md).
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+## 0.5.0 source release additions
+
+Public metadata queries, private CSV/JSONL, anonymous inventory, quality reports, named patient-date plans and Native scanning/streaming are described with exact budgets in the [data-processing guide](DATA_PROCESSING.zh-CN.md). Existing 0.4.1 registry examples install only that historical baseline. No 0.5.0 registry publication is claimed.

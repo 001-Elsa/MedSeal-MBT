@@ -1,0 +1,10 @@
+import {
+  "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/query",
+  "001-Elsa/medseal/api/quality",
+  "001-Elsa/medseal/api/validation",
+  "001-Elsa/medseal/api/policy",
+  "moonbitlang/core/encoding/hex",
+}
+
+pkgtype(kind: "executable")

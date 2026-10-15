@@ -4,6 +4,8 @@ pub(all) suberror MedSealError {
   MissingDicmMarker
   UnexpectedEndOfFile(Int)
   UnsupportedTransferSyntax(String)
+  UnsupportedImplicitTag(Tag)
+  AmbiguousImplicitVr(Tag)
   MissingRequiredFileMeta(Tag)
   InvalidFileMetaGroupLength(UInt, UInt)
   InvalidVr(String, Int)
@@ -32,6 +34,8 @@ pub fn MedSealError::code(self : MedSealError) -> String {
     FileTooSmall => "MEDSEAL-E101"
     MissingDicmMarker => "MEDSEAL-E102"
     UnsupportedTransferSyntax(_) => "MEDSEAL-E103"
+    UnsupportedImplicitTag(_) => "MEDSEAL-E110"
+    AmbiguousImplicitVr(_) => "MEDSEAL-E111"
     MissingRequiredFileMeta(_) => "MEDSEAL-E104"
     InvalidFileMetaGroupLength(_, _) => "MEDSEAL-E105"
     UnexpectedEndOfFile(_) => "MEDSEAL-E201"
@@ -61,7 +65,7 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     MissingDicmMarker => "missing DICM marker at offset 128"
     UnexpectedEndOfFile(offset) => "unexpected end of file at offset \{offset}"
     UnsupportedTransferSyntax(uid) =>
-      "unsupported transfer syntax: \{uid}\nOnly Explicit VR Little Endian is supported in version \{medseal_version}."
+      "unsupported transfer syntax: \{uid}\nSupported: Explicit VR Little Endian and dictionary-bounded Implicit VR Little Endian in version \{medseal_version}."
     MissingRequiredFileMeta(tag) =>
       "missing required File Meta Information element \{tag.to_string()}"
     InvalidFileMetaGroupLength(declared, actual) =>
@@ -82,6 +86,10 @@ pub fn MedSealError::message(self : MedSealError) -> String {
     OutputVerificationFailed(message) =>
       "write-back verification failed: \{message}"
     InvalidArgument(message) => message
+    UnsupportedImplicitTag(_) =>
+      "implicit VR tag is outside the pinned supported dictionary"
+    AmbiguousImplicitVr(_) =>
+      "implicit VR is ambiguous without additional supported context"
     UnsupportedCharacterSet =>
       "only default ASCII and ISO_IR 192 character sets are supported"
     InvalidTextEncoding =>

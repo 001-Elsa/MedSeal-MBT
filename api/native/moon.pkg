@@ -1,0 +1,16 @@
+import {
+  "moonbitlang/core/encoding/utf8",
+  "001-Elsa/medseal/api/dicom",
+  "001-Elsa/medseal/api/policy" @public_policy,
+  "001-Elsa/medseal/api/quality",
+  "001-Elsa/medseal/src/model",
+  "001-Elsa/medseal/src/storage",
+  "001-Elsa/medseal/src/streaming",
+  "001-Elsa/medseal/src/parser",
+  "001-Elsa/medseal/src/verification",
+  "001-Elsa/medseal/src/inventory",
+  "001-Elsa/medseal/src/batch",
+  "moonbitlang/async/fs" @async_fs,
+}
+
+supported_targets = "+native"
