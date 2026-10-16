@@ -1,0 +1,63 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "001-Elsa/medseal/api/evidence"
+
+// Values
+pub fn sha256(Bytes) -> String
+
+// Errors
+
+// Types and methods
+pub(all) struct OutputRecord {
+  id : String
+  sources : Array[SourceRef]
+  changed_fields : Array[String]
+}
+
+pub(all) struct Plan {
+  schema : String
+  plan_id : String
+  input_digest : String
+  rule_digest : String
+  tool_version : String
+  steps : Array[TransformationStep]
+}
+pub fn Plan::new(plan_id~ : String, input_digest~ : String, rule_digest~ : String, tool_version~ : String, steps~ : Array[TransformationStep]) -> Self
+
+pub(all) struct Receipt {
+  schema : String
+  plan_id : String
+  input_digest : String
+  rule_digest : String
+  output_digest : String
+  tool_version : String
+  input_records : Int
+  output_records : Array[OutputRecord]
+  dropped_records : Array[String]
+  warnings : Array[String]
+  status : String
+}
+pub fn Receipt::new(Plan, output_digest~ : String, input_records~ : Int, output_records~ : Array[OutputRecord], dropped_records? : Array[String], warnings? : Array[String]) -> Self
+pub fn Receipt::to_json(Self) -> Json
+pub fn Receipt::verify(Self, Plan, String, String) -> Verification
+
+pub(all) struct SourceRef {
+  source : String
+  record : String
+  step : String
+}
+
+pub(all) struct TransformationStep {
+  id : String
+  description : String
+}
+
+pub(all) struct Verification {
+  valid : Bool
+  code : String
+  message : String
+}
+pub fn Verification::to_json(Self) -> Json
+
+// Type aliases
+
+// Traits
