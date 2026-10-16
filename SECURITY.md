@@ -1,4 +1,5 @@
 # Security Policy
+> **0.6.0 当前边界：** 当前默认入口是 `api/evidence`，用于可验证数据变换证据。本文其余旧版本数字、DICOM流程和历史验收结果按原版本归属，不自动代表新的证据核心。
 
 ## Supported scope and reporting
 
@@ -54,3 +55,6 @@ Windows ACLs or hostile administrators. Real field gates are in
 [W7 field evidence](docs/W7_FIELD_EVIDENCE.zh-CN.md).
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+
+> 当前模块版本：0.6.0。本文中的旧版本数字只表示历史基线；当前默认入口以 `api/evidence` 为准。

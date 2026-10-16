@@ -1,4 +1,5 @@
 # MedSeal-MBT acceptance
+> **0.6.0 当前边界：** 当前默认入口是 `api/evidence`，用于可验证数据变换证据。本文其余旧版本数字、DICOM流程和历史验收结果按原版本归属，不自动代表新的证据核心。
 
 Current maintained contracts cover the 0.5.0 data-processing source release.
 The previous public baseline is 0.4.1; historical P/W releases retain their own evidence. Publication of
@@ -85,3 +86,6 @@ privacy/usability review and storage acceptance remain requires_field. Those
 production goals are not universal contest prerequisites.
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+
+> 当前模块版本：0.6.0。本文中的旧版本数字只表示历史基线；当前默认入口以 `api/evidence` 为准。

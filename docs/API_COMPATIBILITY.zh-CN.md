@@ -1,4 +1,5 @@
 # 0.5.0 发行源码 API 兼容契约
+> **0.6.0 当前边界：** 当前默认入口是 `api/evidence`，用于可验证数据变换证据。本文其余旧版本数字、DICOM流程和历史验收结果按原版本归属，不自动代表新的证据核心。
 
 > 0.5.0发行源码新增查询/质量/计划/Native SDK及固定字典Implicit VR LE；本页旧阶段记录保留其原版本，当前增量见[数据处理指南](DATA_PROCESSING.zh-CN.md)。
 
@@ -40,3 +41,11 @@ moon run --target native app
 以上 `app` 的完整文件见 [README](../README.md)。维护者另从源码目录运行 `python3.12 tools/verify_registry_consumer.py --version 0.4.1 --record tmp/registry-0.4.1.json`；它创建独立目录并从 Mooncakes 下载模块，不允许把当前源码当作回退。没有真实 registry 包时命令失败，不把本地成功误记为发布成功。
 
 > 文档核对：本页只描述已实现入口和发布后核验规则；不代表临床适用或正式申报成功。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)。
+
+
+> 当前模块版本：0.6.0。本文中的旧版本数字只表示历史基线；当前默认入口以 `api/evidence` 为准。
+
+
+## 公共入口清单
+
+兼容公共入口：`api/authorization`, `api/dicom`, `api/dicom_json`, `api/evidence`, `api/explain`, `api/native`, `api/policy`, `api/quality`, `api/query`, `api/validation`。其中 `api/evidence` 是 0.6.0 新的默认入口，其他入口保留各自的历史或平台边界。

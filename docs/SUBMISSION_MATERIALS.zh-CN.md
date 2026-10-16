@@ -1,4 +1,5 @@
 # MedSeal-MBT 提交材料参考
+> **0.6.0 当前边界：** 当前默认入口是 `api/evidence`，用于可验证数据变换证据。本文其余旧版本数字、DICOM流程和历史验收结果按原版本归属，不自动代表新的证据核心。
 
 本页是可核验事实及本人写作/答辩提纲，经过 AI 辅助整理；不代替适用章程要求的本人一页人工 Proposal，不自动确认知识产权、奖励史或协议。
 
@@ -37,3 +38,6 @@
 事实出处：[场景](USE_CASES.zh-CN.md)、[支持矩阵](SUPPORT_MATRIX.md)、[公共 API](PUBLIC_API.zh-CN.md)、[实施账本](WINNER_UPGRADE_STATUS.zh-CN.md)、[贡献](CONTRIBUTION.md)、[第三方](../THIRD_PARTY.md)、[发布](COMPETITION_REMEDIATION.zh-CN.md)。本人应能按源码与演示回答这些问题，再撰写正式说明。
 
 > 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+
+> 当前模块版本：0.6.0。本文中的旧版本数字只表示历史基线；当前默认入口以 `api/evidence` 为准。

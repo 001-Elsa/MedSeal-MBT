@@ -1,4 +1,5 @@
 # MedSeal 0.5.0 数据处理与公共工具库
+> **0.6.0 当前边界：** 当前默认入口是 `api/evidence`，用于可验证数据变换证据。本文其余旧版本数字、DICOM流程和历史验收结果按原版本归属，不自动代表新的证据核心。
 
 ## 报告与机器契约
 
@@ -72,3 +73,6 @@ python3.12 tools/benchmark_data_processing.py --record tmp/data-benchmark.json
 验收分别检查pydicom独立输入/输出、公开报告金丝雀、错误与取消、四后端归档隔离消费。benchmark对1/16/64MiB像素及100/1000对象分别测量扫描与转换，默认每项三次，记录Native子进程RSS/时间；生成夹具和独立读回不计入计时，缓存未清空。只用合成数据，不把本机通过写成临床采用或registry发布。
 
 公开清单、质量报告和转换计划的JSON Schema位于`resources/data/`；新消费者验收使用独立jsonschema验证实际输出。目录quality入口逐对象记录匿名解析错误，保留输入总数，不对成功子集执行集合通过判定。
+
+
+> 当前模块版本：0.6.0。本文中的旧版本数字只表示历史基线；当前默认入口以 `api/evidence` 为准。

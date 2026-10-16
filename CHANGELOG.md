@@ -158,3 +158,10 @@ All notable changes to MedSeal-MBT are documented here.
 - Added privacy-safe JSON audit reports and synthetic test samples.
 
 > 文档核对：本文阶段计数、测量和发行摘要各自绑定原提交；当前状态已核对。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+
+## 0.6.0 - verifiable transformation evidence
+
+- Added the domain-neutral `api/evidence` package for transformation plans, per-record provenance, receipts and independent digest binding checks.
+- Added `examples/evidence` and tests for stale input, changed output and plan mismatch rejection.
+- Changed the default project entry point and package metadata from DICOM processing to verifiable transformation evidence.
+- Kept the DICOM parser, validator and conversion surface as historical and optional compatibility code; it is not counted as new 0.6.0 evidence-core work.
