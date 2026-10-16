@@ -1,154 +1,47 @@
 # MedSeal-MBT
 
-面向关联 DICOM 数据的 MoonBit 元数据转换、一致性检查与可验证交付工具。当前模块版本为 **0.5.0**；真实发布结果以[整改与发布记录](https://github.com/001-Elsa/MedSeal-MBT/blob/master/docs/COMPETITION_REMEDIATION.zh-CN.md)为准。
+MedSeal-MBT 是一个用于**可验证数据变换证据**的 MoonBit 库。它把一次变换收据绑定到输入摘要、规则计划摘要和输出摘要，记录逐条来源关系，并让独立验证者发现输入过期、计划变化、输出变化和来源记录不完整。
 
+当前公开方向与数据格式、业务领域无关。证据核心不替调用方清洗、匿名化、生成、同步或发布数据。变换由调用方负责；本库负责记录已声明的内容、输出记录来自哪里，以及结果是否仍然可以被独立核验。
 
-## 0.5.0 数据处理与工具库升级
+## 0.6.0 公共 API
 
-本轮新增公共查询/筛选/分组、CSV/JSONL 导出与匿名清单、独立数据质量检查、命名患者日期配置、不可变集合转换计划、Native 元数据扫描与大集合流式 SDK。二进制解析新增固定字典内的 Implicit VR LE 子集；写出统一使用 Explicit VR LE。
-
-先运行 `tools/moon-local run --target native examples/data_pipeline`；自己的目录可用 `tools/medseal-data summary INPUT_DIR`、`quality INPUT_DIR`、`export INPUT_DIR --output NEW.csv --format csv` 和 `convert INPUT_DIR --output NEW_DIR`。详细说明见[数据处理指南](docs/DATA_PROCESSING.zh-CN.md)、[迁移说明](docs/MIGRATION_0.5.zh-CN.md)和[验收账本](docs/DATA_UPGRADE_STATUS.zh-CN.md)。
-
-后文安装示例以0.5.0为目标；registry实际可用状态以[同步协议](docs/PLATFORM_SYNC.zh-CN.md)所述本版本外置回读报告为准。源码验收、公开发布与正式申报分别记录，历史测量保留原版本。
-
-## Community upgrade in source / 社区升级源码
-
-C1 adds a complete portable public collection SDK: strict closed-batch
-conversion, bounded inputs, revalidated relationships and privacy-safe reports.
-The source consumer runs on Native, JS, wasm and wasm-gc; an independent pydicom
-oracle checks its actual output. These additions are included in the 0.4.1 community release.
-Run `moon run --target js examples/consumer` from the source checkout.
-See [SDK usage and verification](docs/CONSUMER.zh-CN.md) and
-[六阶段社区升级方案](docs/COMMUNITY_ROADMAP.zh-CN.md).
-
-C2 adds an offline rule lab powered by the compiled MoonBit core. Build with
-`python3.12 tools/build_community_lab.py`, then open
-`tmp/community-lab/index.html` in a regular browser. It uses bundled synthetic
-objects and provides rule/structure views, failure experiments and public JSON
-export. [使用与验收边界](docs/COMMUNITY_LAB.zh-CN.md): Node/DOM contracts pass;
-V5 also verifies actual Chromium rendering, CSP enforcement, downloads, keyboard
-activation and a 390px layout. 0.4.1 adds local read-only file inspection with an isolated Worker, explicit private text reveal, anonymous export and cancellation; no image conversion or release authority.
-
-
-C3a adds public DICOM JSON interchange for 25 VRs, exact decimal token
-preservation, bounded parsing, and Part 10 reconstruction. A bidirectional
-pydicom oracle checks actual output. The full consumer now passes through JSON
-before strict collection conversion. [支持范围与示例](docs/DICOM_JSON.zh-CN.md).
-The [实际应用升级计划](docs/APPLICATION_VALUE_PLAN.zh-CN.md) next prioritizes
-dataset preflight, independent reception, measured workloads and usability.
-V2 adds a bounded dataset preflight with actionable, privacy-safe diagnostics:
-`python3.12 tools/dataset_preflight.py INPUT`. [操作说明](docs/DATASET_PREFLIGHT.zh-CN.md).
-These additions are included in the 0.4.1 community release.
-
-
-## 当前已实现的范围
-
-| 入口 | 能力 | 适用范围 |
-| --- | --- | --- |
-| MoonBit 公共库 | DICOM/JSON、查询筛选/分组/导出、质量检查、集合计划、策略与匿名解释 | 九个公共门面；目录 I/O、流式转换与授权提供方要求 Native |
-| Native 数据工具 | summary、quality、export、convert | 无需 Python；单作业身份、新目录提交、边界取消 |
-| 兼容集合 CLI | 作业内患者假名、身份 UID 映射、完整日期间隔、跨文件引用、清单与摘要 | 映射仅限本次作业，不使用持久身份库 |
-| 私有工程宿主 | 跨批持久身份、增量缓存和去重、已交付历史引用、时间精度、封存恢复、逐对象审核、Ed25519 签名及幂等目录接收 | MoonBit Native + Python 3.12；受控 POSIX 本机部署 |
-| 经典 CT 研究 Profile | 单帧、未压缩 16 位 MONOCHROME2；独立体素/HU/几何核验 | 限定 `ct-classic-research-v1`，三组合成系列验证 |
-| 本地工作台 | 作业状态、解释摘要、分页对象和取消 | 回环地址、会话 capability/CSRF；单机工具 |
-
-历史引用、重复转换/交付控制和恢复已实现；它们通过工程宿主使用。[W0–W7 账本](docs/WINNER_UPGRADE_STATUS.zh-CN.md)保存分阶段证据，旧 P/迭代核对表是对应提交的历史快照。实现完成、合成验证、真实现场验收是不同状态。
-
-## 安装 0.5.0 公共库
-
-按[官方说明](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)安装 MoonBit。已验证基线为 moon `0.1.20260920` / moonc `0.10.14+7d59c7ec9`。在自己的独立 MoonBit 模块执行：
-
-```sh
-moon add 001-Elsa/medseal@0.5.0
-```
-
-创建 `app/moon.pkg`：
+在 MoonBit 模块中导入 `001-Elsa/medseal/api/evidence`：
 
 ```moonbit
 import {
-  "001-Elsa/medseal/api/policy",
-}
-pkgtype(kind: "executable")
-supported_targets = "+native"
-```
-
-创建 `app/main.mbt`：
-
-```moonbit
-///|
-fn main {
-  try {
-    let policy = @policy.strict()
-    ignore(policy)
-    println("public-policy-ok")
-  } catch {
-    _ => println("public-policy-rejected")
-  }
+  "001-Elsa/medseal/api/evidence" @evidence_api,
 }
 ```
 
-执行 `moon run --target native app`，预期输出 `public-policy-ok`。这个例子只编译严格策略，不生成审核或放行许可。当前源码的[公共 API](docs/PUBLIC_API.zh-CN.md)覆盖 `api/dicom`、`api/dicom_json`、`api/policy`、`api/validation`、`api/explain`、`api/query`、`api/quality` 及 Native `api/authorization`、`api/native`；0.5.0之前版本不包含新增数据处理包。旧 `src/` 导入继续兼容。
-
-## 安装源码命令行与完整演示
+创建计划，为输出记录附加来源，生成收据，然后在另一处验证。完整示例见 `examples/evidence`。
 
 ```sh
-cd MedSeal-MBT
-moon update
-moon run --target native examples/collection
+./tools/moon-local run --target native examples/evidence
 ```
 
-新接口使用0.5.0源码或经本版本外置回读核验的官方包。示例生成两个合成患者、四个文件和两条引用，执行转换及清单验证，打印新建的 `tmp/demo-...` 目录；样例没有真实患者数据。当前工作区可把 `moon` 换成 `tools/moon-local`，使用 `../moonbit工具链`，不修改系统配置。
+示例会输出 JSON 收据和独立验证结果。公共 API 保持小而明确：不会自动推断身份、静默修复来源记录，也不会把摘要当成隐私证明。
+
+## 范围与边界
+
+核心支持声明、来源记录、收据序列化和独立绑定检查。CSV、JSONL 及其他格式可以由调用方实现适配器。核心不声称输出已经匿名化、业务上正确、合规或可以公开发布；验证通过只说明输入摘要、计划绑定、输出摘要和来源记录彼此一致。
+
+仓库中的 DICOM 解析、校验和转换代码作为历史成果及可选兼容面保留。它不再是 0.6.0 的默认项目叙事，也不计入新的证据核心功能。详见[公共 API 合同](docs/PUBLIC_API.zh-CN.md)和[迁移说明](docs/MIGRATION_0.6.zh-CN.md)。
+
+## 开发与验证
+
+仓库提供固定的本地 MoonBit 工具入口 `tools/moon-local`：
 
 ```sh
-moon run --target native cmd/main -- plan INPUT_DIR --policy examples/research-policy.json
-moon run --target native cmd/main -- batch INPUT_DIR --output NEW_JOB_DIR --policy examples/research-policy.json
-moon run --target native cmd/main -- verify NEW_JOB_DIR
-moon run --target native cmd/main -- inspect samples/input.dcm --json
-moon run --target native cmd/main -- validate samples/input.dcm --json
-mkdir -p tmp
-moon run --target native cmd/main -- anonymize samples/input.dcm --output tmp/single.dcm --report tmp/single.json --remove-private
+./tools/moon-local info
+./tools/moon-local fmt
+./tools/moon-local check --target native --deny-warn
+./tools/moon-local test --target native --deny-warn
 ```
 
-`plan` 检查患者分组、身份、引用和策略；`batch` 在私有暂存中形成匿名编号 DICOM、逐对象审计和 SHA-256 清单，再发布全新目录。输入/输出不得嵌套，输出目录必须不存在；源内容变化、身份冲突和未授权断裂引用会失败。`verify` 复核完整性及支持的结构，不代表隐私全面合格。
+当前测试覆盖收据绑定、过期输入拒绝、输出变化拒绝和计划不匹配拒绝。旧版 DICOM、应用和赛事证据仍按原版本归属，不会被改写成 0.6.0 的新实测证据。
 
-集合模式每位患者使用同一假名和独立非零日期偏移；同一身份 UID 在 File Meta、主体及受支持引用中一致。basic `anonymize` 保留 UID、使用固定别名，DICOM 与独立报告不能作为同一目录事务发布。具体限制见[策略](docs/POLICY.md)与[支持矩阵](docs/SUPPORT_MATRIX.md)。
 
-## 跨批、审核和交付
+## 公共入口清单
 
-工程宿主需要 Python 3.12，按[部署与恢复手册](docs/OPERATIONS.zh-CN.md)安装受控离线包，初始化身份库，执行 create/run/resume、review/publish/deliver 和备份轮换。严格策略、运行程序、封存内容或审核变动时重新核验；不能通过修改记录绕过失败。
-
-[增量账本](docs/INCREMENTAL_LEDGER.zh-CN.md)解释来源域、同内容复用、相同 SOP 内容冲突及历史引用边界。[工作台](docs/WORKBENCH.zh-CN.md)复用上述流程。[四类完整场景](docs/USE_CASES.zh-CN.md)覆盖影像开发者批处理、纵向研究增量导入和工具作者嵌入公共库；场景为预期用途与合成验证，不冒称医院采用。
-
-## 验证与维护
-
-```sh
-moon info
-moon fmt --check
-moon check --target all --deny-warn
-moon test --target all --deny-warn
-moon build --target native
-moon package
-python3.12 -m pip install -r requirements-qa.txt -r requirements-enterprise.txt
-python3.12 tools/check_documentation.py
-python3.12 tools/verify_data_processing.py --record tmp/data-processing-ci.json
-python3.12 tools/verify_data_consumer.py --record tmp/data-consumer-ci.json
-python3.12 tools/verify_with_pydicom.py
-python3.12 tools/verify_ct_research.py --record tmp/ct-research.json
-python3.12 tools/verify_release_readiness.py
-```
-
-CI 覆盖 Linux/macOS/Windows 核心；POSIX 工程宿主与离线安装验收在 Linux/macOS 执行，Windows 不属于企业部署认证范围。固定语料、生成漂移、失败门禁与独立读取分别验证；证据标明源码版本，不能把配置存在当成执行成功。[贡献指南](CONTRIBUTING.md) · [变更记录](CHANGELOG.md) · [新增贡献与语言边界](docs/CONTRIBUTION.md)。
-
-## 支持与隐私边界
-
-支持 Part 10、Explicit VR LE 与固定字典内 Implicit VR LE 输入，二进制写出规范化为 Explicit VR LE；ASCII / ISO_IR 6 / ISO_IR 192 和已列 Sequence/元数据规则。未知/私有 implicit 字段与歧义拒绝；裸 Dataset 解析仍仅 explicit。经典 CT 是限定研究 Profile，MR/SC 元数据检查不等于完整 IOD。压缩传输语法、未知公共 UID 角色、编码和身份冲突明确拒绝。
-
-保留像素字节，不做 OCR、像素涂抹或医疗诊断；未知公共字段与烧录文字仍需人工审查。不声明完整 Annex E 匿名化、PACS/DICOMweb 或真实现场生产验收。合成审核始终标记 synthetic，不能用于患者数据。[安全](SECURITY.md) · [流式上限](docs/STREAMING.md) · [现场门槛](docs/W7_FIELD_EVIDENCE.zh-CN.md)。
-
-Apache-2.0；[依赖、标准与样例来源](THIRD_PARTY.md)。[GitHub](https://github.com/001-Elsa/MedSeal-MBT) · [GitLink](https://gitlink.org.cn/Hzhhhh/MedSeal-MBT) · [Mooncakes](https://mooncakes.io/docs/001-Elsa/medseal)。
-
-## 文档与提交材料
-
-[全部文档索引 / document audit](docs/DOCUMENTATION_STATUS.zh-CN.md) · [项目提交指南](docs/SUBMISSION_GUIDE.zh-CN.md) · [申报事实与答辩提纲](docs/SUBMISSION_MATERIALS.zh-CN.md)。姓名：韩桢。正式表单由本人提交；项目发布不代表已经取得报名回执。
-
-> 文档核对：本文说明已与当前维护代码和实际入口核对；不扩大医疗/生产保证。见[文档账本](docs/DOCUMENTATION_STATUS.zh-CN.md)；正式申报由韩桢本人完成。
+兼容公共入口：`api/authorization`, `api/dicom`, `api/dicom_json`, `api/evidence`, `api/explain`, `api/native`, `api/policy`, `api/quality`, `api/query`, `api/validation`。其中 `api/evidence` 是 0.6.0 新的默认入口，其他入口保留各自的历史或平台边界。

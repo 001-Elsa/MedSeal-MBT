@@ -11,7 +11,7 @@
 
 name = "001-Elsa/medseal"
 
-version = "0.5.0"
+version = "0.6.0"
 
 readme = "README.mbt.md"
 
@@ -19,11 +19,17 @@ repository = "https://github.com/001-Elsa/MedSeal-MBT"
 
 license = "Apache-2.0"
 
-keywords = [ "dicom", "de-identification", "medical-imaging", "moonbit" ]
+keywords = [
+  "provenance",
+  "reproducibility",
+  "data-transformation",
+  "verification",
+  "moonbit",
+]
 
 preferred_target = "native"
 
-description = "DICOM metadata validation, collection-consistent pseudonymization, UID remapping and verified binary rewriting in MoonBit."
+description = "Domain-neutral data transformation receipts, per-record provenance and independent verification in MoonBit; legacy DICOM compatibility remains available."
 
 import {
   "moonbitlang/async@0.22.4",
